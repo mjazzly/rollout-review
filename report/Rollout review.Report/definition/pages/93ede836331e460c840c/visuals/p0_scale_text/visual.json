@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "6764781b9b0a180c1e01",
+  "name": "p0_scale_text",
   "position": {
-    "x": 28,
-    "y": 410,
-    "z": 6001,
-    "height": 44,
+    "x": 976,
+    "y": 138,
+    "z": 3000,
+    "height": 66,
     "width": 276,
-    "tabOrder": 6001
+    "tabOrder": 1900
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,23 @@
               {
                 "textRuns": [
                   {
-                    "value": "Working when the month's figure meets the threshold. Trend: against two check-ins earlier, flat within 1 point."
+                    "value": "Scale",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "14pt",
+                      "color": "#172529"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Where has it changed the work?",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#4F6166"
+                    }
                   }
                 ]
               }

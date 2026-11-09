@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "45255353026a513a557c",
+  "name": "p0_title",
   "position": {
     "x": 16,
-    "y": 48,
+    "y": 40,
     "z": 1000,
-    "height": 48,
+    "height": 56,
     "width": 1248,
-    "tabOrder": 0
+    "tabOrder": 100
   },
   "visual": {
     "visualType": "textbox",
@@ -22,7 +22,8 @@
                     "value": "Rollout review",
                     "textStyle": {
                       "fontWeight": "bold",
-                      "fontSize": "18pt"
+                      "fontSize": "18pt",
+                      "color": "#172529"
                     }
                   }
                 ]
@@ -30,12 +31,18 @@
               {
                 "textRuns": [
                   {
-                    "value": "Read from the question log, the usage dashboards, the library's records, the run log and the check-in ·"
+                    "value": "Read from the question log, the usage dashboards, the library's records, the run log and the check-in · ",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#4F6166"
+                    }
                   },
                   {
-                    "value": " Week 1 to Week 24, six check-ins",
+                    "value": "Week 1 to Week 24, six check-ins",
                     "textStyle": {
-                      "fontWeight": "bold"
+                      "fontWeight": "bold",
+                      "fontSize": "10pt",
+                      "color": "#4F6166"
                     }
                   }
                 ]

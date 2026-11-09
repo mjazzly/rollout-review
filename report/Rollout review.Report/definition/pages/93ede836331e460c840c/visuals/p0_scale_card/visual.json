@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "f6c57131224e2daed57b",
+  "name": "p0_scale_card",
   "position": {
-    "x": 28,
-    "y": 192,
-    "z": 5000,
-    "height": 150,
+    "x": 976,
+    "y": 204,
+    "z": 3000,
+    "height": 182,
     "width": 276,
-    "tabOrder": 4000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,33 +23,15 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Foundation tile"
+                  "Property": "Scale tile"
                 }
               },
-              "queryRef": "_Measures.Foundation tile",
-              "nativeQueryRef": "Requests matched to a tested prompt that already exists",
-              "displayName": "Requests matched to a tested prompt that already exists"
+              "queryRef": "_Measures.Scale tile",
+              "nativeQueryRef": "Share of people in the air against the baseline, in points",
+              "displayName": "Share of people in the air against the baseline, in points"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "_Measures"
-                  }
-                },
-                "Property": "Foundation tile"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
@@ -64,7 +46,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Foundation verdict"
+                  "Property": "Scale verdict"
                 }
               }
             }
@@ -77,8 +59,8 @@
                 }
               }
             ],
-            "metadata": "_Measures.Foundation tile",
-            "id": "field-5f7a9511-9e5a-c9ee-b1ef-484e98fcc4a8",
+            "metadata": "_Measures.Scale tile",
+            "id": "field-f8ba163d-a53a-4381-92b3-192701e1aa72",
             "order": 0
           }
         },
@@ -92,7 +74,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Foundation trend"
+                  "Property": "Scale trend"
                 }
               }
             }
@@ -105,8 +87,8 @@
                 }
               }
             ],
-            "metadata": "_Measures.Foundation tile",
-            "id": "field-4ab6ba6a-d457-ba63-ff05-9c84b7210d13",
+            "metadata": "_Measures.Scale tile",
+            "id": "field-b1fba515-750f-4fe7-9dd1-1a407f92abfd",
             "order": 1
           }
         },
@@ -120,7 +102,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Foundation threshold"
+                  "Property": "Scale threshold"
                 }
               }
             }
@@ -133,8 +115,8 @@
                 }
               }
             ],
-            "metadata": "_Measures.Foundation tile",
-            "id": "field-7c8a54b8-1c1a-f1dd-0cdc-6e121c3baa51",
+            "metadata": "_Measures.Scale tile",
+            "id": "field-697cea76-142d-4e27-8822-ea054fcd19f1",
             "order": 2
           }
         }
@@ -190,7 +172,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Foundation tile"
+            "metadata": "_Measures.Scale tile"
           }
         }
       ],
@@ -200,13 +182,13 @@
             "valueFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "10D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Foundation tile"
+            "metadata": "_Measures.Scale tile"
           }
         },
         {
@@ -227,8 +209,8 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Foundation tile",
-            "id": "field-5f7a9511-9e5a-c9ee-b1ef-484e98fcc4a8"
+            "metadata": "_Measures.Scale tile",
+            "id": "field-f8ba163d-a53a-4381-92b3-192701e1aa72"
           }
         },
         {
@@ -243,7 +225,7 @@
                           "Entity": "_Measures"
                         }
                       },
-                      "Property": "Foundation verdict colour"
+                      "Property": "Scale verdict colour"
                     }
                   }
                 }
@@ -258,8 +240,8 @@
                 }
               }
             ],
-            "metadata": "_Measures.Foundation tile",
-            "id": "field-5f7a9511-9e5a-c9ee-b1ef-484e98fcc4a8"
+            "metadata": "_Measures.Scale tile",
+            "id": "field-f8ba163d-a53a-4381-92b3-192701e1aa72"
           }
         },
         {
@@ -273,8 +255,8 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Foundation tile",
-            "id": "field-4ab6ba6a-d457-ba63-ff05-9c84b7210d13"
+            "metadata": "_Measures.Scale tile",
+            "id": "field-b1fba515-750f-4fe7-9dd1-1a407f92abfd"
           }
         },
         {
@@ -282,18 +264,57 @@
             "valueFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "9D"
+                }
+              }
+            },
+            "valueFontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4F6166'"
+                    }
+                  }
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Foundation tile",
-            "id": "field-7c8a54b8-1c1a-f1dd-0cdc-6e121c3baa51"
+            "metadata": "_Measures.Scale tile",
+            "id": "field-697cea76-142d-4e27-8822-ea054fcd19f1"
           }
         }
       ],
       "fillCustom": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
         {
           "properties": {
             "show": {

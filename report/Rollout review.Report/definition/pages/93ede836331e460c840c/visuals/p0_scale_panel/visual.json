@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "07f58d270009adb40100",
+  "name": "p0_scale_panel",
   "position": {
-    "x": 16,
+    "x": 964,
     "y": 132,
-    "z": 3000,
-    "height": 328,
+    "z": 2000,
+    "height": 384,
     "width": 300,
-    "tabOrder": 2000
+    "tabOrder": 1800
   },
   "visual": {
     "visualType": "shape",
@@ -65,9 +65,8 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": 0
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -87,7 +86,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -96,6 +95,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "howCreated": "InsertVisualButton"
+  }
 }

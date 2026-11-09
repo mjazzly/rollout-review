@@ -466,84 +466,34 @@ All four checks matched on the PC, 9 Nov 2026 (check 3 once all twelve measures 
 
 ## F. Page 0: Rollout review (front, sponsor)
 
-What the page holds (brief section 6): a header strip, four stage tiles in one row, the stage split by team, and the moved-up count. The page has three blocks in its body (the tile row, the stage split, the moved-up count); a tile is one block built from four pieces that sit on one white panel.
+What the page holds (brief section 6): a header strip, four stage tiles in one row, the stage split by team, and the moved-up count.
 
-Positions are in pixels on the 1280 by 720 page. Set them in **Format**, **General**, **Properties**, **Size** and **Position**. Colours: marine `#2C5F7C`, pale marine `#CFE0EA`, grey `#7E8E92`, ink `#172529`, ink soft `#4F6166`, white `#FFFFFF`. Amber `#B07E23` only comes from the verdict colour measures.
+The first build by hand (old steps 50 to 65) ran out of room: the sizes given were too small for the text, so the question ran into the card label, the reference labels were cut off and the sparkline was too short to draw. Page 0 is now written from the Mac by `scripts/page0_pbir.py`, straight into the project's report files, the way the measures are. The card, line chart, shape and navigator settings copy the ones Desktop wrote on the PC (commit 22ebf37), and the script checks that every visual sits on the page and that nothing overlaps.
 
-### The page
+Layout on the 1280 by 720 page, in pixels:
 
-50. Right-click the **Page 1** tab, **Rename**, type `Checks`. Right-click it again, **Hide page**.
-51. Click **+** beside the page tabs for a new page. Right-click its tab, **Rename**, type `Rollout review`. Drag the tab to the left of `Checks`.
-52. With nothing selected, **Format** pane, **Canvas settings**: **Type** 16:9 (1280 by 720). The page background comes from the theme.
+| Piece | x | y | w | h |
+|---|---|---|---|---|
+| Page navigator | 16 | 8 | 1248 | 30 |
+| Title text box | 16 | 40 | 1248 | 56 |
+| Header line card | 16 | 96 | 1248 | 28 |
+| Tile panels (Foundation, Execution, Refinement, Scale) | 16, 332, 648, 964 | 132 | 300 | 384 |
+| In each tile: stage and question | tile x + 12 | 138 | 276 | 66 |
+| In each tile: card (figure, verdict, trend, threshold) | tile x + 12 | 204 | 276 | 182 |
+| In each tile: sparkline, months 2 to 6 | tile x + 12 | 388 | 276 | 74 |
+| In each tile: rule text, 8 | tile x + 12 | 464 | 276 | 52 |
+| Stage split, baseline | 16 | 528 | 456 | 184 |
+| Stage split, latest (legend on top) | 488 | 528 | 456 | 184 |
+| Moved up since the last count | 960 | 528 | 304 | 184 |
 
-### Header strip
+The script also sets the Checks page to hidden, so the navigator does not list it. Two settings from the old steps are left at Desktop's default because their file names were not in Desktop's own files yet: the reference labels stack one under another rather than side by side, and the Seats arrived label keeps its measure name.
 
-53. **Insert**, **Buttons**, **Navigator**, **Page navigator**. Position x 16, y 12; size w 1248, h 32. Format: **Style**, **Apply settings to State: Default**: fill white, text ink, font 10; **State: Selected**: fill marine, text white. **Shape**: rounded rectangle, rounded corners 8. Hidden pages stay off, so `Checks` is not listed. The strip fills in as pages 1 to 5 are added.
-54. **Insert**, **Text box**. Position x 16, y 48; size w 1248, h 48. Type two lines:
-    - Line 1: `Rollout review`, bold, 18.
-    - Line 2: `Read from the question log, the usage dashboards, the library's records, the run log and the check-in · ` then `Week 1 to Week 24, six check-ins` in bold; the line in 10, ink soft.
-    Turn the text box's **Background** off.
-55. **Build a visual**, **Card** (the newer card). Position x 16, y 96; size w 1248, h 28. **Data**: `Header line`. Format: **Callout values** font 11, ink, not bold, horizontal alignment left; **Labels** off; **Background** off; **Title** off. It reads `1,200 people · 1,167 seats assigned · 505 seats active in Week 24`.
+### On the PC
 
-### Tile 1, Foundation (built once, then copied for the other three)
-
-The tile sits at x 16, y 132, size w 300, h 328. Inside it, every piece is x 28, w 276.
-
-56. **Insert**, **Shapes**, **Rectangle**. Position x 16, y 132; size w 300, h 328. Format: **Fill** white; **Border** off; **Rounded corners** 8. This is the tile's white panel.
-57. **Insert**, **Text box**. Position x 28, y 140; size w 276, h 52. Two lines: `Foundation` in bold, 14, ink; then `Which uses matter most, and where do people get stuck?` in 10, ink soft. **Background** off.
-58. Click an empty part of the page, then **Build a visual**, **Card** (the newer card). Position x 28, y 192; size w 276, h 150. **Data**: `Foundation tile`. In the Data well, double-click `Foundation tile` and rename it for this visual to `Requests matched to a tested prompt that already exists`.
-59. Same card, **Reference labels** well: add `Foundation verdict`, `Foundation trend`, `Foundation threshold`, in that order.
-60. Same card, Format:
-    - **Callout values**: font 28, ink; horizontal alignment left.
-    - **Labels**: on, position below the value, font 10, ink soft, text wrap on.
-    - **Reference labels**: layout horizontal; for each of the three, **Title** off; values font 10.
-    - **Reference labels**, apply settings to `Foundation verdict`: value font bold; value colour **fx**, **Format style** Field value, **Based on field** `Foundation verdict colour`.
-    - **Reference labels**, apply settings to `Foundation threshold`: value font 9, ink soft.
-    - **Background** off; **Title** off; **Divider** off.
-61. Click an empty part of the page, then **Build a visual**, **Line chart**. Position x 28, y 344; size w 276, h 64. **X-axis**: `dim_month[month_label]`. **Y-axis**: `Foundation tile`.
-62. Same chart, **Filters** pane, **Filters on this visual**, `month_label`: **Basic filtering**, tick every month except `Month 1`. The line has five points, months 2 to 6.
-63. Same chart, Format: **X-axis** off; **Y-axis** off, with **Range** minimum 0; **Gridlines** off; **Legend** off; **Title** off; **Background** off; **Lines** colour marine, stroke width 2; **Markers** on, size 3, marine.
-64. **Insert**, **Text box**. Position x 28, y 410; size w 276, h 44. One line, 9, ink soft: `Working when the month's figure meets the threshold. Trend: against two check-ins earlier, flat within 1 point.` **Background** off.
-65. Select the five pieces (the rectangle, both text boxes, the card, the line chart) with Ctrl+click, right-click, **Group**, **Group**. In the **Selection** pane, rename the group `Tile Foundation`.
-
-### Tiles 2 to 4
-
-66. Select the group `Tile Foundation`, Ctrl+C, Ctrl+V. Set the new group's position to x 332, y 132 (Format, Properties). Rename it in the Selection pane.
-67. In the copy, change the pieces as the table says, one tile at a time:
-    - the first text box: the stage name and the question
-    - the card's Data: remove the Foundation figure, add the tile's figure, and rename it to the label in the table
-    - the card's Reference labels: remove the three Foundation ones, add the tile's verdict, trend and threshold, then redo step 60's reference-label settings for them (titles off, verdict bold with its colour measure, threshold 9 ink soft)
-    - the line chart's Y-axis: remove the Foundation figure, add the tile's figure (the month filter stays)
-68. Repeat steps 66 and 67 for the third tile at x 648 and the fourth at x 964.
-
-| Tile | Group, x | Stage | Question | Card figure | Rename the figure to | Reference labels | Verdict colour |
-|---|---|---|---|---|---|---|---|
-| 2 | `Tile Execution`, 332 | Execution | Does it hold up in everyday use? | `Execution tile` | Repeat use within 30 days | `Execution verdict`, `Execution trend`, `Execution threshold` | `Execution verdict colour` |
-| 3 | `Tile Refinement`, 648 | Refinement | What earns its place, and at what cost? | `Refinement tile` | Tested prompts that pass on the smaller model | `Refinement verdict`, `Refinement trend`, `Refinement threshold` | `Refinement verdict colour` |
-| 4 | `Tile Scale`, 964 | Scale | Where has it changed the work? | `Scale tile` | Share of people in the air against the baseline, in points | `Scale verdict`, `Scale trend`, `Scale threshold` | `Scale verdict colour` |
-
-### Stage split by team
-
-Two charts side by side, the same teams in the same order: the baseline on the left, the latest count on the right.
-
-69. Click an empty part of the page, then **Build a visual**, **100% stacked bar chart**. Position x 16, y 476; size w 456, h 228. **Y-axis**: `dim_team[team]`. **X-axis**: `Stage split baseline`. **Legend**: `dim_checkpoint_source[stage]`.
-70. Same chart: **More options** (…), **Sort axis**, `team`, then **Sort ascending**.
-71. Same chart, Format:
-    - **Title**: on, text `Where each team stood at its baseline`; **Subtitle** on: `Stage by source placement, each team at its own baseline month`, 9, ink soft.
-    - **Bars**, colour per legend item: On the ground grey, At the gate pale marine, In the air marine.
-    - **Data labels**: on, 9, 0 decimal places; apply settings to the series `In the air`: colour white.
-    - **X-axis** off; **Legend** off; **Gridlines** off.
-72. Select the chart, Ctrl+C, Ctrl+V. Position the copy x 488, y 476 (same size). In its **X-axis** well, remove `Stage split baseline` and add `Stage split latest`. Title: `Where each team stands now, Month 6`; subtitle: `Stage by source placement, latest count`. **Legend**: on, top, 9.
-
-### Moved up since the last count
-
-73. Click an empty part of the page, then **Build a visual**, **Card** (the newer card). Position x 960, y 476; size w 304, h 228. **Data**: `Moved up since last count`, renamed for this visual to `People who moved up a checkpoint, Month 5 to Month 6`. **Reference labels**: `Seats arrived`, renamed `Seats arrived over the same month, counted apart`.
-74. Same card, Format: **Title** on, `Moved up since the last count`; **Callout values** font 36, ink, left; **Labels** below the value, 10, ink soft, text wrap on; **Reference labels** value 14, ink, title on, title 9 ink soft.
-
-### Save and check
-
-75. **File**, **Save**.
-76. Send a screenshot of the whole page. It should read:
+50. Close Power BI Desktop (save first if it asks). It does not notice files changing underneath it.
+51. In PowerShell, in the rollout-review folder, `git pull`.
+52. Open `report/Rollout review.pbip`. If Desktop reports a problem with a visual, send a screenshot of the message.
+53. Send a screenshot of the whole page. It should read:
     - Header: `1,200 people · 1,167 seats assigned · 505 seats active in Week 24`
     - Foundation: 49.5%, **Working**, ↓ Down, Threshold 40%
     - Execution: 83.6%, **Working**, ↓ Down, Threshold 60%
@@ -551,8 +501,9 @@ Two charts side by side, the same teams in the same order: the baseline on the l
     - Scale: +10.1, **Working**, ↑ Up, Threshold 10 points above baseline
     - Moved up: 98, with Seats arrived 0 beside it
     - Two stage charts, six teams each, Consulting at the top
+    - The navigator lists Rollout review only, not Checks
 
-Fixes come back as a short list. Once page 0 is agreed, it is committed from the PC (brief section 7, step 4).
+Fixes come back as a short list, made in the script and pulled again. Do not move or edit page 0's visuals on the PC until it is agreed: the next run of the script replaces the whole page. Once page 0 is agreed, it is committed from the PC (brief section 7, step 4).
 
 ---
 

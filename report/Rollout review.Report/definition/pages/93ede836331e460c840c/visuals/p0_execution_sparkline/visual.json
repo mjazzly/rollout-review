@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "e3e9f2541a19e6d0130a",
+  "name": "p0_execution_sparkline",
   "position": {
-    "x": 28,
-    "y": 344,
-    "z": 6000,
-    "height": 67,
+    "x": 344,
+    "y": 388,
+    "z": 3000,
+    "height": 74,
     "width": 276,
-    "tabOrder": 5000
+    "tabOrder": 1100
   },
   "visual": {
     "visualType": "lineChart",
@@ -42,17 +42,30 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Foundation tile"
+                  "Property": "Execution tile"
                 }
               },
-              "queryRef": "_Measures.Foundation tile",
-              "nativeQueryRef": "Foundation tile"
+              "queryRef": "_Measures.Execution tile",
+              "nativeQueryRef": "Execution tile"
             }
           ]
         }
       }
     },
     "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "valueAxis": [
         {
           "properties": {
@@ -74,6 +87,36 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2C5F7C'"
+                    }
+                  }
                 }
               }
             }
@@ -141,7 +184,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "c873ec90828d23db67c0",
+        "name": "notMonth1Execution",
         "field": {
           "Column": {
             "Expression": {
@@ -211,20 +254,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "111fcb6899787232e89e",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Foundation tile"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }
