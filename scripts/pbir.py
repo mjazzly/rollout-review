@@ -85,6 +85,7 @@ CHAR_W, BOLD_W, LINE_H, TEXT_PAD, TEXT_INSET = 0.62, 1.08, 1.73, 2, 2
 #   BR  ~/Code/data-answers/dashboard/report/Branch review.Report
 #   S3  confirmed by Megat on the page 0 round 3 screenshot (10 Nov 2026)
 #   P1  confirmed on the page 1 round 2 screenshots (10 Nov 2026)
+#   H1  Megat's hand reference on the page 1 gap chart (commit d1878b6)
 SEEN: dict[tuple[str, str], set[str]] = {
     ("container", "title"): {"show", "text"},                        # RR, BR
     ("container", "subTitle"): {"show"},                             # BR
@@ -118,6 +119,7 @@ SEEN: dict[tuple[str, str], set[str]] = {
     ("clusteredBarChart", "labels"): {"show", "labelDisplayUnits", "labelPrecision"},  # BR
     ("clusteredBarChart", "valueAxis"): {"show", "start", "end"},    # BR
     ("hundredPercentStackedBarChart", "dataPoint"): {"fill"},        # S3 (selector by value)
+    ("hundredPercentStackedBarChart", "labels"): {"show"},          # H1: Megat's hand reference, d1878b6
     ("lineClusteredColumnComboChart", "categoryAxis"): {"showAxisTitle"},  # BR
     ("lineClusteredColumnComboChart", "legend"): {"show"},           # BR
     ("lineClusteredColumnComboChart", "dataPoint"): {"fill", "fillTransparency"},  # BR
@@ -139,9 +141,10 @@ UNCONFIRMED: dict[tuple[str, str], set[str]] = {}
 
 # Written as true, but a screenshot showed they did not take. Not set true again until a
 # hand reference shows the right form. Page 1 round 2: data labels on the 100% stacked gap chart.
-DID_NOT_TAKE: dict[tuple[str, str], set[str]] = {
-    ("hundredPercentStackedBarChart", "labels"): {"show"},
-}
+DID_NOT_TAKE: dict[tuple[str, str], set[str]] = {}
+# (Round 2's labels.show on the 100% stacked gap chart did not show; Megat's hand
+# reference, d1878b6, wrote the same setting, so it is confirmed. The one other
+# difference in that file: Desktop dropped "isDefaultSort": false from the sort.)
 TEXT_STYLE_UNCONFIRMED: set[str] = set()
 
 # Microsoft's axis, legend, label and data colour objects are shared by the cartesian

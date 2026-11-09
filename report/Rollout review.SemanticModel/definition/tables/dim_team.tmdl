@@ -19,10 +19,12 @@ table dim_team
 		annotation SummarizationSetBy = Automatic
 
 	/// The earliest seat_assigned_week among the team's people.
-	column seats_arrive_week = CALCULATE ( MIN ( dim_person[seat_assigned_week] ) )
-		formatString: yyyy-mm-dd
-		lineageTag: 7bc6e433-d95a-403c-ab96-3033bd9eb8f2
+	column seats_arrive_week =
+			CALCULATE ( MIN ( dim_person[seat_assigned_week] ) )
+		dataType: dateTime
+		isDataTypeInferred
 		summarizeBy: none
+		formatString: yyyy-mm-dd
 
 	/// For each team, the first check-in month whose trailing eight weeks start on or after the week the team's seats arrive.
 	column baseline_month =
@@ -31,9 +33,10 @@ table dim_team
 			VAR firstMonth = ROUNDUP ( ( arrivalWeekNo + 7 ) / 4, 0 )
 			RETURN
 			    IF ( NOT ISBLANK ( arrivalWeekNo ) && firstMonth <= 6, firstMonth )
-		formatString: 0
-		lineageTag: 93263faf-1616-418e-b4e3-4d95c1404476
+		dataType: int64
+		isDataTypeInferred
 		summarizeBy: none
+		formatString: 0
 
 	partition dim_team = m
 		mode: import
@@ -47,4 +50,3 @@ table dim_team
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

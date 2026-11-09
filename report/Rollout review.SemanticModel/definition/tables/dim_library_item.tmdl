@@ -106,10 +106,12 @@ table dim_library_item
 		annotation UnderlyingDateTimeDataType = Date
 
 	/// Library items with status retired or merged, counted by the check-in month of their status_week, with merged_into_item_id shown for merged items.
-	column status_month = LOOKUPVALUE ( dim_week[checkin_month], dim_week[week_start], dim_library_item[status_week] )
-		formatString: \M\o\n\t\h 0
-		lineageTag: 680e197c-bacb-4d72-a011-892822cf0873
+	column status_month =
+			LOOKUPVALUE ( dim_week[checkin_month], dim_week[week_start], dim_library_item[status_week] )
+		dataType: int64
+		isDataTypeInferred
 		summarizeBy: none
+		formatString: \M\o\n\t\h 0
 
 	partition dim_library_item = m
 		mode: import
@@ -128,4 +130,3 @@ table dim_library_item
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

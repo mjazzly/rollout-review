@@ -563,7 +563,7 @@ Layout: header as page 0, toggle x 944 (188 wide), month x 1148 (116). Matrix pa
 
 ### Round 4 (10 Nov 2026): fixes from the round 3 screenshot
 
-The hand reference for the gap chart's labels did not reach the repo (origin/main stayed at 4fe579a), so the labels are rebuilt another way:
+Megat's hand reference (commit d1878b6) turned the gap chart's labels on: Desktop wrote `labels.show` true, the same setting round 2 had written, so it is now confirmed for this chart type. The labels then showed percentages, so the chart is rebuilt to show counts:
 
 | Fix asked | What changed |
 |---|---|
