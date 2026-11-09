@@ -1,29 +1,20 @@
 table _Measures
 	lineageTag: 68146057-20ef-42be-b1d5-f386c0081eeb
 
-	column Column1
-		isHidden
-		dataType: string
-		lineageTag: cc560e1b-d198-477a-9c92-f0541d214040
-		summarizeBy: none
-		sourceColumn: Column1
-
-		annotation SummarizationSetBy = Automatic
-
 	/// Helper, not in measures.md. The check-in month in the filter context: the latest month selected, or month 6 when no month is selected.
-	measure 'Check-in month' =
-			MAX ( dim_month[checkin_month] )
+	measure 'Check-in month' = MAX ( dim_month[checkin_month] )
 		formatString: 0
+		lineageTag: 7b462fcd-0f5f-4023-9343-e874b36be1ff
 
 	/// The fourth and last week of a check-in month. The check-in date is the last day of that week.
-	measure 'Check-in week' =
-			MAX ( dim_month[checkin_week] )
+	measure 'Check-in week' = MAX ( dim_month[checkin_week] )
 		formatString: yyyy-mm-dd
+		lineageTag: 34448344-ef57-49be-9784-1a8c729c7e3d
 
 	/// The fourth and last week of a check-in month. The check-in date is the last day of that week.
-	measure 'Check-in date' =
-			MAX ( dim_month[checkin_date] )
+	measure 'Check-in date' = MAX ( dim_month[checkin_date] )
 		formatString: yyyy-mm-dd
+		lineageTag: 824e6192-92af-454f-889d-5e14d365e896
 
 	/// People whose seat_assigned_week is on or before the week.
 	measure 'Assigned seats' =
@@ -37,6 +28,7 @@ table _Measures
 			        )
 			    ) + 0
 		formatString: #,0
+		lineageTag: b3123b33-39cf-4b55-a72e-aaddcc5ecd69
 
 	/// People with days_active of 2 or more in the week, over assigned seats.
 	measure 'Weekly active share' =
@@ -50,11 +42,12 @@ table _Measures
 			RETURN
 			    DIVIDE ( active + 0, [Assigned seats] )
 		formatString: 0.0%
+		lineageTag: 41ce46fa-9564-4ca8-b8e5-2b9d6fbceba9
 
 	/// runs_via_library over runs_total.
-	measure 'Library share' =
-			DIVIDE ( SUM ( fact_usage_week[runs_via_library] ), SUM ( fact_usage_week[runs_total] ) )
+	measure 'Library share' = DIVIDE ( SUM ( fact_usage_week[runs_via_library] ), SUM ( fact_usage_week[runs_total] ) )
 		formatString: 0.0%
+		lineageTag: bd2d3d56-c405-41ce-aab2-ea2eb4ecc2ad
 
 	/// Median tokens per run on the standard tier over median tokens per run on the smaller tier, per item.
 	measure 'Cost index' =
@@ -68,6 +61,7 @@ table _Measures
 			        DIVIDE ( standardMedian, smallerMedian )
 			)
 		formatString: 0.00
+		lineageTag: 5dc06001-7437-4825-9120-7c5cab5d81eb
 
 	/// People who held a seat at both the latest count and the previous count, and whose source checkpoint_id at the latest count is higher than at the previous count.
 	measure 'Moved up' =
@@ -93,6 +87,7 @@ table _Measures
 			RETURN
 			    IF ( m >= 2, COUNTROWS ( movedUp ) + 0 )
 		formatString: #,0
+		lineageTag: 707b8eeb-bd0f-4f90-85dd-6a3a5193d300
 
 	/// People with no seat at the previous count and a seat at the latest count. Always shown beside Moved up and never added into it.
 	measure 'Seats arrived' =
@@ -111,16 +106,17 @@ table _Measures
 			RETURN
 			    IF ( m >= 2, COUNTROWS ( arrived ) + 0 )
 		formatString: #,0
+		lineageTag: 512accd9-34e0-42bb-ac38-7f0e46de4741
 
 	/// People in dim_person.
-	measure Headcount =
-			COUNTROWS ( dim_person )
+	measure Headcount = COUNTROWS ( dim_person )
 		formatString: #,0
+		lineageTag: a776e53f-2825-4cc7-8988-9c99ab12bd57
 
 	/// Assigned seats in the selected week.
-	measure 'Seats assigned' =
-			[Assigned seats]
+	measure 'Seats assigned' = [Assigned seats]
 		formatString: #,0
+		lineageTag: ca973877-e732-49f3-974a-84fa54ee45a7
 
 	/// People with an assigned seat and days_active of 2 or more in the selected week.
 	measure 'Seats active this week' =
@@ -136,6 +132,7 @@ table _Measures
 			        )
 			    ) + 0
 		formatString: #,0
+		lineageTag: 119f518a-a420-46f0-894e-fc77a36fabfd
 
 	/// Share of people in each stage (On the ground, At the gate, In the air) by source placement, for the latest check-in month and for the baseline, with each team taken at its own baseline month.
 	measure 'Stage split latest' =
@@ -152,6 +149,7 @@ table _Measures
 			RETURN
 			    DIVIDE ( inStage + 0, everyone )
 		formatString: 0.0%
+		lineageTag: 5a6828ca-1c91-4ecd-b0c4-b761e71b4ac6
 
 	/// Share of people in each stage (On the ground, At the gate, In the air) by source placement, for the latest check-in month and for the baseline, with each team taken at its own baseline month.
 	measure 'Stage split baseline' =
@@ -177,11 +175,12 @@ table _Measures
 			RETURN
 			    DIVIDE ( inStage + 0, everyone )
 		formatString: 0.0%
+		lineageTag: 91d24c91-ee6b-4ae5-abd4-5741d454190a
 
 	/// Moved up, counted between the latest check-in month and the one before it, shown with Seats arrived for the same two counts beside it.
-	measure 'Moved up since last count' =
-			[Moved up]
+	measure 'Moved up since last count' = [Moved up]
 		formatString: #,0
+		lineageTag: c71ae209-a6cc-467c-9244-8ca0ad49b4d5
 
 	/// Questions asked in the check-in month with action_taken of pointed to library, over all questions asked in the check-in month.
 	measure 'Foundation tile' =
@@ -197,6 +196,7 @@ table _Measures
 			        dim_month[checkin_month] = m
 			    )
 		formatString: 0.0%
+		lineageTag: 09820dd5-68c1-4b6f-9e5c-b957c6546b84
 
 	/// People with another active week starting within 30 days after their first active week, over people whose first active week starts at least 30 days before the check-in date.
 	measure 'Execution tile' =
@@ -231,6 +231,7 @@ table _Measures
 			RETURN
 			    DIVIDE ( COUNTROWS ( repeated ) + 0, COUNTROWS ( eligible ) )
 		formatString: 0.0%
+		lineageTag: 8a375470-efbe-4f3e-8030-05203598a16c
 
 	/// Items live in the check-in week whose latest smaller-tier run on or before the check-in date is passing, over all items live in the check-in week.
 	measure 'Refinement tile' =
@@ -264,6 +265,7 @@ table _Measures
 			RETURN
 			    DIVIDE ( COUNTROWS ( passingItems ) + 0, COUNTROWS ( liveItems ) )
 		formatString: 0.0%
+		lineageTag: 82e7064d-6696-41a9-9c1e-659d08fd23e6
 
 	/// Share of people with a source checkpoint_id of 7, 8 or 9 in the check-in month, minus the same people's share at their team's baseline month, in percentage points. Only teams whose baseline month is on or before the check-in month count. Before any team reaches its baseline month, the tile has no figure.
 	measure 'Scale tile' =
@@ -299,6 +301,7 @@ table _Measures
 			RETURN
 			    IF ( people > 0, ( DIVIDE ( airNow + 0, people ) - DIVIDE ( airAtBaseline + 0, people ) ) * 100 )
 		formatString: +0.0;-0.0;0.0
+		lineageTag: e9aa28d3-8e61-4fe9-aaac-f9ca1a7b08b6
 
 	/// The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
 	measure 'Foundation verdict' =
@@ -306,6 +309,7 @@ table _Measures
 			VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Foundation" )
 			RETURN
 			    IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
+		lineageTag: 63aac9d0-7e0a-4f85-a704-5cc55b262619
 
 	/// The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
 	measure 'Execution verdict' =
@@ -313,6 +317,7 @@ table _Measures
 			VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Execution" )
 			RETURN
 			    IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
+		lineageTag: 360df7d9-7579-4954-8368-ef47d826569c
 
 	/// The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
 	measure 'Refinement verdict' =
@@ -320,6 +325,7 @@ table _Measures
 			VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Refinement" )
 			RETURN
 			    IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
+		lineageTag: 344c27c7-f375-4286-9dcc-881e6ea42315
 
 	/// The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
 	measure 'Scale verdict' =
@@ -327,6 +333,7 @@ table _Measures
 			VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Scale" )
 			RETURN
 			    IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
+		lineageTag: 15815839-a58f-4925-a46f-ca680d050190
 
 	/// The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 	measure 'Foundation trend' =
@@ -344,6 +351,7 @@ table _Measures
 			        pointsDiff > 0, "↑ Up",
 			        "↓ Down"
 			    )
+		lineageTag: 5152beb3-4a8d-49c5-b4ae-6373fdcaee3e
 
 	/// The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 	measure 'Execution trend' =
@@ -361,6 +369,7 @@ table _Measures
 			        pointsDiff > 0, "↑ Up",
 			        "↓ Down"
 			    )
+		lineageTag: 628e41fb-cb32-41c5-9808-49eb3e0ac977
 
 	/// The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 	measure 'Refinement trend' =
@@ -378,6 +387,7 @@ table _Measures
 			        pointsDiff > 0, "↑ Up",
 			        "↓ Down"
 			    )
+		lineageTag: ce5a0ece-755f-47c6-a1bb-3577a76bf71e
 
 	/// The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 	measure 'Scale trend' =
@@ -395,24 +405,26 @@ table _Measures
 			        pointsDiff > 0, "↑ Up",
 			        "↓ Down"
 			    )
+		lineageTag: a7da4399-ed5d-4ff3-a08c-9b787e483e51
 
 	/// The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
-	measure 'Foundation threshold' =
-			"Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Foundation" ), "0%" )
+	measure 'Foundation threshold' = "Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Foundation" ), "0%" )
+		lineageTag: 2cc26ce0-2104-4f41-96b8-97baa87612c8
 
 	/// The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
-	measure 'Execution threshold' =
-			"Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Execution" ), "0%" )
+	measure 'Execution threshold' = "Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Execution" ), "0%" )
+		lineageTag: 8ce4a446-44c9-43a7-a1c1-471f12755cf0
 
 	/// The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
-	measure 'Refinement threshold' =
-			"Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Refinement" ), "0%" )
+	measure 'Refinement threshold' = "Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Refinement" ), "0%" )
+		lineageTag: 64c70474-d177-4ff4-bf30-0250faef9111
 
 	/// The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
 	measure 'Scale threshold' =
 			"Threshold "
 			    & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Scale" ), "0" )
 			    & " points above baseline"
+		lineageTag: 8e076f17-e723-4909-8db9-47da7c3b97cc
 
 	/// People at each checkpoint, per team and check-in month, by check-in placement or by source placement as the page toggle selects.
 	measure 'People at checkpoint' =
@@ -435,6 +447,7 @@ table _Measures
 			        )
 			    ) + 0
 		formatString: #,0
+		lineageTag: 2e4c9094-f5e0-437c-b586-4b3c91ff067c
 
 	/// People whose check-in checkpoint_id is higher than their source checkpoint_id in the check-in month.
 	measure 'Gap higher' =
@@ -447,6 +460,7 @@ table _Measures
 			        fact_placement[checkin_month] = m
 			    ) + 0
 		formatString: #,0
+		lineageTag: 9bc169c9-38e3-4335-a2ef-f8b2fedd1c87
 
 	/// People whose check-in checkpoint_id equals their source checkpoint_id in the check-in month.
 	measure 'Gap level' =
@@ -459,6 +473,7 @@ table _Measures
 			        fact_placement[checkin_month] = m
 			    ) + 0
 		formatString: #,0
+		lineageTag: 196d0f3f-9529-4d60-9772-1317d749c078
 
 	/// People whose check-in checkpoint_id is lower than their source checkpoint_id in the check-in month.
 	measure 'Gap lower' =
@@ -471,11 +486,12 @@ table _Measures
 			        fact_placement[checkin_month] = m
 			    ) + 0
 		formatString: #,0
+		lineageTag: f9e0cfd0-6ea9-4dd8-b7c4-63525136bc4d
 
 	/// Moved up, per team.
-	measure 'Movement up' =
-			[Moved up]
+	measure 'Movement up' = [Moved up]
 		formatString: #,0
+		lineageTag: 5a015a5b-3100-4c60-92dd-0e7b832ac77a
 
 	/// People who held a seat at both counts and whose source checkpoint_id at the latest count equals the previous count.
 	measure 'Movement held' =
@@ -501,6 +517,7 @@ table _Measures
 			RETURN
 			    IF ( m >= 2, COUNTROWS ( held ) + 0 )
 		formatString: #,0
+		lineageTag: ee03fc02-711a-4c1d-b5dc-a106164a2814
 
 	/// People who held a seat at both counts and whose source checkpoint_id at the latest count is lower than at the previous count.
 	measure 'Movement down' =
@@ -526,11 +543,12 @@ table _Measures
 			RETURN
 			    IF ( m >= 2, COUNTROWS ( movedDown ) + 0 )
 		formatString: #,0
+		lineageTag: a0811dc9-f8e1-4c52-9fcc-04e6107db3d1
 
 	/// Seats arrived, per team, shown apart from up, held and down.
-	measure 'Movement seats arrived' =
-			[Seats arrived]
+	measure 'Movement seats arrived' = [Seats arrived]
 		formatString: #,0
+		lineageTag: 30ff1f8b-d9b2-425e-809b-308fa7e9de43
 
 	/// Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
 	measure 'Largest group' =
@@ -540,6 +558,7 @@ table _Measures
 			VAR topId = MAXX ( topRow, dim_checkpoint[checkpoint_id] )
 			RETURN
 			    CALCULATE ( MAX ( dim_checkpoint[checkpoint] ), REMOVEFILTERS ( dim_checkpoint ), dim_checkpoint[checkpoint_id] = topId )
+		lineageTag: 8bc99ee0-8e6f-4dac-8f77-61347b192297
 
 	/// Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
 	measure 'Largest group people' =
@@ -549,6 +568,7 @@ table _Measures
 			RETURN
 			    MAXX ( topRow, [@people] )
 		formatString: #,0
+		lineageTag: bdb7d703-b056-4d98-a1bd-7cc8568392c0
 
 	/// Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
 	measure 'Largest group lever' =
@@ -558,11 +578,12 @@ table _Measures
 			VAR topId = MAXX ( topRow, dim_checkpoint[checkpoint_id] )
 			RETURN
 			    CALCULATE ( MAX ( dim_checkpoint[lever] ), REMOVEFILTERS ( dim_checkpoint ), dim_checkpoint[checkpoint_id] = topId )
+		lineageTag: f06c8cbb-7c3b-49c1-ae8d-8a4ea1be2136
 
 	/// Questions in each category, ranked from most to fewest.
-	measure 'Uses logged and ranked' =
-			COUNTROWS ( fact_question )
+	measure 'Uses logged and ranked' = COUNTROWS ( fact_question )
 		formatString: #,0
+		lineageTag: 24d84bf6-1cfa-4f39-b6b0-62cff0f29867
 
 	/// Library items with answer_key_first true, over all library items.
 	measure 'Prompts tested against an answer key written first' =
@@ -571,6 +592,7 @@ table _Measures
 			    COUNTROWS ( dim_library_item )
 			)
 		formatString: 0.0%
+		lineageTag: 70585748-3544-4732-ae06-bfe9e3f815c5
 
 	/// Questions with action_taken of pointed to library, over all questions.
 	measure 'Requests matched to a tested prompt that already exists' =
@@ -579,6 +601,7 @@ table _Measures
 			    COUNTROWS ( fact_question )
 			)
 		formatString: 0.0%
+		lineageTag: a486abce-ed5a-4878-88ed-8d5a5ed96c79
 
 	/// Weekly active share per team, averaged over the four weeks starting with the week the team's seats arrive.
 	measure 'Usage baseline by team' =
@@ -607,6 +630,7 @@ table _Measures
 			        )
 			)
 		formatString: 0.0%
+		lineageTag: 73d09471-2c34-424c-ba18-cd1b45bdfcf2
 
 	/// Training attendees with a run of the item shown in their session in the session week or the week after, over all training attendees.
 	measure 'First use within two weeks of training' =
@@ -630,6 +654,7 @@ table _Measures
 			RETURN
 			    DIVIDE ( COUNTROWS ( ranShownItem ) + 0, COUNTROWS ( fact_training ) )
 		formatString: 0.0%
+		lineageTag: 6fddf0c8-a43f-481a-be7a-3930f19185f7
 
 	/// People with another active week starting within 30 days after their first active week, over people whose first active week starts at least 30 days before the end of the period.
 	measure 'Repeat use within 30 days' =
@@ -637,6 +662,7 @@ table _Measures
 			RETURN
 			    CALCULATE ( [Execution tile], REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = lastMonth )
 		formatString: 0.0%
+		lineageTag: db07f341-e8ed-4bec-834b-b4d1a9a65600
 
 	/// Questions with repeat_flag true whose category had a live library item in the week they were asked, over all questions with repeat_flag true.
 	measure 'Recurring questions covered by a tested prompt' =
@@ -659,6 +685,7 @@ table _Measures
 			RETURN
 			    DIVIDE ( COUNTROWS ( covered ) + 0, COUNTROWS ( repeatQuestions ) )
 		formatString: 0.0%
+		lineageTag: 54e72e21-a4e8-420e-9215-302bc3104588
 
 	/// Live library items whose latest standard-tier run is passing, over all live library items.
 	measure 'Tested prompts passing their cases' =
@@ -692,6 +719,7 @@ table _Measures
 			RETURN
 			    DIVIDE ( COUNTROWS ( passingItems ) + 0, COUNTROWS ( liveItems ) )
 		formatString: 0.0%
+		lineageTag: 41f2b98c-296e-407a-9d88-8d7981b023b3
 
 	/// Library items whose latest smaller-tier run is passing.
 	measure 'Tested prompts that pass on a smaller model' =
@@ -712,11 +740,12 @@ table _Measures
 			RETURN
 			    COUNTROWS ( passingItems ) + 0
 		formatString: #,0
+		lineageTag: 390e31b8-18f1-4e8c-b5b4-e1f6aec7335f
 
 	/// Median tokens per run, per item and model tier.
-	measure 'Cost per use' =
-			MEDIAN ( fact_test_run[tokens_per_run] )
+	measure 'Cost per use' = MEDIAN ( fact_test_run[tokens_per_run] )
 		formatString: #,0
+		lineageTag: 1a1f14c9-dca8-45a8-9620-5d5a7c74ae93
 
 	/// Library items with status retired or merged, counted by the check-in month of their status_week, with merged_into_item_id shown for merged items.
 	measure 'Prompts retired or merged' =
@@ -728,6 +757,7 @@ table _Measures
 			    )
 			) + 0
 		formatString: #,0
+		lineageTag: aeca31d0-3193-45c5-afa1-c999ca3c9b4a
 
 	/// Check-in responses per team for each answer to q5_if_gone, for the check-in month.
 	measure 'Impact in people''s own words' =
@@ -740,6 +770,7 @@ table _Measures
 			        KEEPFILTERS ( NOT ISBLANK ( fact_checkin[q5_if_gone] ) )
 			    )
 		formatString: #,0
+		lineageTag: 1c32586d-a9b6-4aec-b242-32f68cf767d1
 
 	/// Library items with runs in fact_library_run from 2 or more teams.
 	measure 'Uses taken up beyond the first team' =
@@ -755,6 +786,7 @@ table _Measures
 			    )
 			) + 0
 		formatString: #,0
+		lineageTag: f787cd38-66a7-4102-a73c-fc9b5d83c0e1
 
 	/// Per library item, the earliest week_start in fact_library_run with runs from a team other than the owner_team.
 	measure 'Week the second team started' =
@@ -773,6 +805,7 @@ table _Measures
 			        CALCULATE ( MAX ( dim_week[week_no] ), REMOVEFILTERS ( dim_week ), REMOVEFILTERS ( dim_month ), dim_week[week_start] = firstWeek )
 			    )
 		formatString: \W\e\e\k 0
+		lineageTag: 768d1952-e934-4519-9db8-e96cf8e4c25a
 
 	/// People with a source checkpoint_id of 7, 8 or 9, over all people in the team, per team, for the latest check-in month and the team's baseline month.
 	measure 'Share of people in the air latest' =
@@ -788,6 +821,7 @@ table _Measures
 			        COUNTROWS ( dim_person )
 			    )
 		formatString: 0.0%
+		lineageTag: aa820bf4-a7d7-46d6-985e-0d2b7df0a169
 
 	/// People with a source checkpoint_id of 7, 8 or 9, over all people in the team, per team, for the latest check-in month and the team's baseline month.
 	measure 'Share of people in the air baseline' =
@@ -806,12 +840,14 @@ table _Measures
 			RETURN
 			    DIVIDE ( airAtBaseline + 0, COUNTROWS ( dim_person ) )
 		formatString: 0.0%
+		lineageTag: 1ab9cc81-3b7a-4844-bcf0-92d22070a7c8
 
 	/// Helper, not in measures.md. The week label of the selected week, or Week 24 when no week is selected.
 	measure 'Selected week label' =
 			VAR wk = MAX ( dim_week[week_start] )
 			RETURN
 			    CALCULATE ( SELECTEDVALUE ( dim_week[week_label] ), dim_week[week_start] = wk )
+		lineageTag: dc2ad7df-6c3f-4c6b-8e5a-5a80e1c4670d
 
 	/// Helper, not in measures.md. Headcount, Seats assigned and Seats active this week in one line, for the page 0 header.
 	measure 'Header line' =
@@ -819,32 +855,34 @@ table _Measures
 			    & FORMAT ( [Seats assigned], "#,0" ) & " seats assigned · "
 			    & FORMAT ( [Seats active this week], "#,0" ) & " seats active in "
 			    & [Selected week label]
+		lineageTag: d4e4c6b7-326e-4508-af06-189319c0cfbd
 
 	/// Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
-	measure 'Foundation verdict colour' =
-			IF ( [Foundation verdict] = "Not yet working", "#B07E23", "#172529" )
+	measure 'Foundation verdict colour' = IF ( [Foundation verdict] = "Not yet working", "#B07E23", "#172529" )
+		lineageTag: 221c8595-5119-438a-9ab2-15d7baaedead
 
 	/// Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
-	measure 'Execution verdict colour' =
-			IF ( [Execution verdict] = "Not yet working", "#B07E23", "#172529" )
+	measure 'Execution verdict colour' = IF ( [Execution verdict] = "Not yet working", "#B07E23", "#172529" )
+		lineageTag: fa28040a-deff-4c01-9d6c-7474e23f361b
 
 	/// Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
-	measure 'Refinement verdict colour' =
-			IF ( [Refinement verdict] = "Not yet working", "#B07E23", "#172529" )
+	measure 'Refinement verdict colour' = IF ( [Refinement verdict] = "Not yet working", "#B07E23", "#172529" )
+		lineageTag: 919f042d-b37f-4e42-b15a-207998015017
 
 	/// Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
-	measure 'Scale verdict colour' =
-			IF ( [Scale verdict] = "Not yet working", "#B07E23", "#172529" )
+	measure 'Scale verdict colour' = IF ( [Scale verdict] = "Not yet working", "#B07E23", "#172529" )
+		lineageTag: bd8f6299-b4b6-461a-889d-747a7c6707e8
 
 	/// Helper, not in measures.md. The counts behind Requests matched to a tested prompt that already exists: questions pointed to library, of all questions.
 	measure 'Requests matched count' =
 			FORMAT ( CALCULATE ( COUNTROWS ( fact_question ), fact_question[action_taken] = "pointed to library" ) + 0, "#,0" )
 			    & " of " & FORMAT ( COUNTROWS ( fact_question ) + 0, "#,0" ) & " questions"
+		lineageTag: 0d4fb722-b04e-40f8-9f58-f4ae98d47ed7
 
 	/// Helper, not in measures.md. Questions with repeat_flag true.
-	measure 'Repeat-flagged questions' =
-			CALCULATE ( COUNTROWS ( fact_question ), fact_question[repeat_flag] = TRUE () ) + 0
+	measure 'Repeat-flagged questions' = CALCULATE ( COUNTROWS ( fact_question ), fact_question[repeat_flag] = TRUE () ) + 0
 		formatString: #,0
+		lineageTag: 3f1ce512-697f-44dd-97c3-b1073d86e02e
 
 	/// Helper, not in measures.md. Per library item, the team other than the owner_team with the earliest run in fact_library_run; a tie goes to the team name first in alphabetical order.
 	measure 'Second team' =
@@ -860,6 +898,16 @@ table _Measures
 			VAR topRow = TOPN ( 1, otherTeams, [@first], ASC, fact_library_run[team], ASC )
 			RETURN
 			    IF ( NOT ISBLANK ( ownerTeam ), MAXX ( topRow, fact_library_run[team] ) )
+		lineageTag: 14a43dde-ffe8-4e14-9b93-405dcaf674cb
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: cc560e1b-d198-477a-9c92-f0541d214040
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
 
 	partition _Measures = m
 		mode: import
@@ -871,3 +919,4 @@ table _Measures
 				    #"Changed Type"
 
 	annotation PBI_ResultType = Table
+
