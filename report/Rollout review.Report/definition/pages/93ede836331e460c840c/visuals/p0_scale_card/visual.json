@@ -3,11 +3,11 @@
   "name": "p0_scale_card",
   "position": {
     "x": 976,
-    "y": 238,
+    "y": 204,
     "z": 3000,
-    "height": 124,
+    "height": 158,
     "width": 276,
-    "tabOrder": 2100
+    "tabOrder": 2200
   },
   "visual": {
     "visualType": "cardVisual",
@@ -60,7 +60,7 @@
               }
             ],
             "metadata": "_Measures.Scale tile",
-            "id": "field-08394854-cea2-4c95-a8d1-fc06a4c48465",
+            "id": "field-d3d060da-4d79-4940-8cd6-d8fce0d286c6",
             "order": 0
           }
         },
@@ -88,7 +88,7 @@
               }
             ],
             "metadata": "_Measures.Scale tile",
-            "id": "field-851e6492-7509-4b2d-bd65-45b738215145",
+            "id": "field-23843793-6dda-44ca-8aca-e09a86a2da05",
             "order": 1
           }
         },
@@ -116,7 +116,7 @@
               }
             ],
             "metadata": "_Measures.Scale tile",
-            "id": "field-0e829994-3cd7-4b36-a806-fbf9e6c98f56",
+            "id": "field-ef8239c8-d70b-4dde-bdc9-678e845118e8",
             "order": 2
           }
         }
@@ -219,7 +219,7 @@
           },
           "selector": {
             "metadata": "_Measures.Scale tile",
-            "id": "field-08394854-cea2-4c95-a8d1-fc06a4c48465"
+            "id": "field-d3d060da-4d79-4940-8cd6-d8fce0d286c6"
           }
         },
         {
@@ -250,7 +250,7 @@
               }
             ],
             "metadata": "_Measures.Scale tile",
-            "id": "field-08394854-cea2-4c95-a8d1-fc06a4c48465"
+            "id": "field-d3d060da-4d79-4940-8cd6-d8fce0d286c6"
           }
         },
         {
@@ -265,7 +265,7 @@
           },
           "selector": {
             "metadata": "_Measures.Scale tile",
-            "id": "field-851e6492-7509-4b2d-bd65-45b738215145"
+            "id": "field-23843793-6dda-44ca-8aca-e09a86a2da05"
           }
         },
         {
@@ -291,7 +291,7 @@
           },
           "selector": {
             "metadata": "_Measures.Scale tile",
-            "id": "field-0e829994-3cd7-4b36-a806-fbf9e6c98f56"
+            "id": "field-ef8239c8-d70b-4dde-bdc9-678e845118e8"
           }
         }
       ],

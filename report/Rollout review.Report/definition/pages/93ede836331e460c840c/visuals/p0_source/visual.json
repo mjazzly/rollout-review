@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p0_split_head",
+  "name": "p0_source",
   "position": {
     "x": 16,
-    "y": 500,
+    "y": 68,
     "z": 3000,
-    "height": 26,
-    "width": 520,
-    "tabOrder": 2400
+    "height": 24,
+    "width": 1248,
+    "tabOrder": 300
   },
   "visual": {
     "visualType": "textbox",
@@ -19,9 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "Stage split by team, by source placement",
+                    "value": "Read from the question log, the usage dashboards, the library's records, the run log and the check-in · ",
                     "textStyle": {
-                      "fontSize": "12pt",
+                      "fontSize": "10pt"
+                    }
+                  },
+                  {
+                    "value": "Week 1 to Week 24, six check-ins",
+                    "textStyle": {
+                      "fontSize": "10pt",
                       "fontWeight": "bold"
                     }
                   }

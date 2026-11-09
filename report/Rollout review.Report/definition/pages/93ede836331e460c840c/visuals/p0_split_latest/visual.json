@@ -3,11 +3,11 @@
   "name": "p0_split_latest",
   "position": {
     "x": 488,
-    "y": 528,
+    "y": 510,
     "z": 2000,
-    "height": 184,
+    "height": 206,
     "width": 456,
-    "tabOrder": 2700
+    "tabOrder": 2900
   },
   "visual": {
     "visualType": "hundredPercentStackedBarChart",
@@ -89,20 +89,138 @@
       }
     },
     "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7E8E92'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "dim_checkpoint_source"
+                          }
+                        },
+                        "Property": "stage"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'On the ground'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#CFE0EA'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "dim_checkpoint_source"
+                          }
+                        },
+                        "Property": "stage"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'At the gate'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2C5F7C'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "dim_checkpoint_source"
+                          }
+                        },
+                        "Property": "stage"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'In the air'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
       "labels": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "labelPrecision": {
-              "expr": {
-                "Literal": {
-                  "Value": "0L"
+                  "Value": "false"
                 }
               }
             }
@@ -163,14 +281,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Latest count, Month 6'"
+                  "Value": "false"
                 }
               }
             }

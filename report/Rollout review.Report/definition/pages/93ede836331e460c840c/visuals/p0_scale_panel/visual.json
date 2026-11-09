@@ -3,11 +3,11 @@
   "name": "p0_scale_panel",
   "position": {
     "x": 964,
-    "y": 128,
+    "y": 96,
     "z": 2000,
-    "height": 338,
+    "height": 366,
     "width": 300,
-    "tabOrder": 1800
+    "tabOrder": 1900
   },
   "visual": {
     "visualType": "shape",

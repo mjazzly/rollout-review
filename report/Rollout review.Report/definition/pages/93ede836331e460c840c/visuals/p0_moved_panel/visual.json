@@ -3,11 +3,11 @@
   "name": "p0_moved_panel",
   "position": {
     "x": 960,
-    "y": 500,
+    "y": 488,
     "z": 2000,
-    "height": 212,
+    "height": 228,
     "width": 304,
-    "tabOrder": 2800
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "shape",

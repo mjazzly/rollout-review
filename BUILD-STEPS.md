@@ -472,47 +472,43 @@ What the page holds (brief section 6): a header strip, four stage tiles in one r
 
 Page 0 is written by `scripts/page0_pbir.py`, using the shared checks in `scripts/pbir.py` (brief section 7, steps 5 and 6). `scripts/page0_figures.py` prints the stage split figures from the CSVs.
 
-### Round 2 (10 Nov 2026): the fixes from the first screenshot
+### Round 3 (10 Nov 2026): the fixes from the round 2 screenshot
 
 | Fix asked | What changed |
 |---|---|
-| Sparklines blank | Axes, legend and title off; height 100, the smallest a line chart may be on this page set (276 by 67 and 276 by 74 did not draw) |
-| Stage charts: all six teams, no scrollbar, same order, same plot, one legend | Both charts identical but for the measure and the title, 184 high (24 px per bar), legends off, one shared legend line above them, both sorted by team A to Z |
-| Moved up: title outside its panel, label clipped | A white panel holding a title text box and the card, title off on the card |
-| Execution figure higher than the others | Each figure's label is a text box of fixed height above its card, so the four figures share one line |
-| Shorter tiles, taller bottom row | Tiles 384 to 338 high; bottom row 184 to 212. The rule, the same in all four tiles, is one line under the tile row (brief section 6 puts it in each tile: approve or reject this with the page) |
+| Stage colours on both charts | One `dataPoint.fill` per stage: On the ground `#7E8E92`, At the gate `#CFE0EA`, In the air `#2C5F7C`. Each entry picks its stage by value (`scopeId`), because a `metadata` selector names the stage field as a whole, not one stage. Unconfirmed |
+| Legend squares coloured | `textStyle.color` on each square's run, Megat's pattern. Unconfirmed |
+| No data labels on the stage charts | Labels off |
+| All six teams, no scrollbar | Chart titles moved into text boxes (left title carries "Stage by source placement"), charts 206 high. The check now needs 27 px per bar (round 2 showed bars 26.5 px apart while scrolling) plus 40 px with the title off, 76 with it on |
+| 98 clipped | Moved up card 168 to 184 high, divider off |
+| Threshold missing | Tile card 124 to 158 high: round 2 showed the trend line ending about 120 px into the card, so the threshold needs the next 23 px and the bottom padding |
+| Rule line under the tiles | Approved; brief section 6 updated |
+
+Where the height came from: once the threshold is back, the tile row has no spare (stage and question need 61, the label 38, the card 157, and the sparkline is known to draw at 100, not below). So the header strip gave it: the title and the header line now share one row, with the "Read from" line under them. That freed 30 px, which went to the tile row and the stage charts.
 
 Layout on the 1280 by 720 page, in pixels:
 
 | Piece | x | y | w | h |
 |---|---|---|---|---|
-| Page navigator | 16 | 6 | 1248 | 30 |
-| Title text box | 16 | 38 | 1248 | 56 |
-| Header line card | 16 | 94 | 1248 | 28 |
-| Tile panels | 16, 332, 648, 964 | 128 | 300 | 338 |
-| In each tile: stage and question | tile x + 12 | 134 | 276 | 64 |
-| In each tile: the figure's label | tile x + 12 | 198 | 276 | 40 |
-| In each tile: card (figure, verdict, trend, threshold) | tile x + 12 | 238 | 276 | 124 |
+| Page navigator | 16 | 6 | 1248 | 26 |
+| Title text box, header line card (same row) | 16, 212 | 34 | 196, 1052 | 34 |
+| "Read from" line | 16 | 68 | 1248 | 24 |
+| Tile panels | 16, 332, 648, 964 | 96 | 300 | 366 |
+| In each tile: stage and question | tile x + 12 | 100 | 276 | 64 |
+| In each tile: the figure's label | tile x + 12 | 164 | 276 | 40 |
+| In each tile: card (figure, verdict, trend, threshold) | tile x + 12 | 204 | 276 | 158 |
 | In each tile: sparkline, Month 2 to Month 6 | tile x + 12 | 362 | 276 | 100 |
-| Rule line | 16 | 470 | 1248 | 24 |
-| Stage split heading, legend | 16, 536 | 500 | 520, 408 | 26 |
-| Stage split charts, baseline and latest | 16, 488 | 528 | 456 | 184 |
-| Moved up panel (title, card inside) | 960 | 500 | 304 | 212 |
-
-Settings still to come by hand (brief section 7, step 6), because Desktop has not written them in any of Megat's files yet. Until then these show Desktop's defaults:
-
-- the stage colours in the two stage charts (grey, pale marine, marine), and white data labels on In the air
-- text colour in text boxes (ink soft for secondary lines, and the three legend squares)
+| Rule line | 16 | 464 | 1248 | 22 |
+| Chart titles, legend | 16, 488, 648 | 488 | 456, 160, 296 | 22 |
+| Stage split charts, baseline and latest | 16, 488 | 510 | 456 | 206 |
+| Moved up panel (title, card inside) | 960 | 488 | 304 | 228 |
 
 ### On the PC
 
 50. Close Power BI Desktop (save first if it asks).
 51. In PowerShell, in the rollout-review folder: `git pull`.
 52. Open `report/Rollout review.pbip`.
-53. Format by hand, on these two visuals only, then **File**, **Save**:
-    - The **legend** text box above the stage charts (it reads `■ On the ground ■ At the gate ■ In the air`): select each `■` in turn and set its font colour: the first `#7E8E92`, the second `#CFE0EA`, the third `#2C5F7C` (font colour, **More colours**, hex).
-    - The **right-hand stage chart** (Latest count, Month 6): **Format**, **Bars**, **Colours**: On the ground `#7E8E92`, At the gate `#CFE0EA`, In the air `#2C5F7C`. Then **Data labels**, **Apply settings to** series `In the air`: colour `#FFFFFF`.
-54. Send a screenshot of the whole page, then commit and push (`git add report`, `git commit -m "Page 0: two visuals formatted by hand for setting names"`, `git push`).
+53. Send a screenshot of the whole page. Nothing is formatted by hand.
 
 ### Figures page 0 should show
 
@@ -520,7 +516,7 @@ From check.py and the CSVs (the on-screen checks 1 to 4 in section E matched the
 
 | Piece | Should read |
 |---|---|
-| Header line | `1,200 people · 1,167 seats assigned · 505 seats active in Week 24` |
+| Header row | `Rollout review` then `1,200 people · 1,167 seats assigned · 505 seats active in Week 24` on the same row |
 | Foundation | 49.5%, Working, ↓ Down, Threshold 40%; line 53.9%, 55.4%, 57.2%, 53.1%, 49.5% |
 | Execution | 83.6%, Working, ↓ Down, Threshold 60%; line 86.1%, 85.7%, 84.7%, 83.8%, 83.6% |
 | Refinement | 9.5%, Not yet working (amber), → Flat, Threshold 50%; line 0.0%, 5.6%, 8.7%, 9.5%, 9.5% |
@@ -528,7 +524,7 @@ From check.py and the CSVs (the on-screen checks 1 to 4 in section E matched the
 | Moved up | 98, with Seats arrived 0 |
 | Navigator | Rollout review only (Checks is hidden) |
 
-Stage split, by source placement (`python3 scripts/page0_figures.py`; the labels show whole percentages, so 16.5% shows as 17%):
+Stage split, by source placement (`python3 scripts/page0_figures.py`). No labels on the bars, so these are the segment widths to judge by eye:
 
 | Team | Baseline month | Baseline: ground, gate, air | Month 6: ground, gate, air |
 |---|---:|---|---|

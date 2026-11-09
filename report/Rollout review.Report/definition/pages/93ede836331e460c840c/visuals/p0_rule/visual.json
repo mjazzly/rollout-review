@@ -3,11 +3,11 @@
   "name": "p0_rule",
   "position": {
     "x": 16,
-    "y": 470,
+    "y": 464,
     "z": 3000,
-    "height": 24,
+    "height": 22,
     "width": 1248,
-    "tabOrder": 2300
+    "tabOrder": 2400
   },
   "visual": {
     "visualType": "textbox",

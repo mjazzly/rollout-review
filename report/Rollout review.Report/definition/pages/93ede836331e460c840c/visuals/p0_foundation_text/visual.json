@@ -3,11 +3,11 @@
   "name": "p0_foundation_text",
   "position": {
     "x": 28,
-    "y": 134,
+    "y": 100,
     "z": 3000,
     "height": 64,
     "width": 276,
-    "tabOrder": 400
+    "tabOrder": 500
   },
   "visual": {
     "visualType": "textbox",

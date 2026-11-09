@@ -53,7 +53,7 @@ Star schema, single direction, one-to-many from dimension to fact:
 
 ### Page 0: Rollout review (front, sponsor)
 - Header line: Period, headcount, seats assigned, seats active in Week 24.
-- Four tiles in one row, equal size, one per stage (Foundation, Execution, Refinement, Scale). Each tile: the stage name, its FRAME-04 question in one line, the headline figure large, verdict word, trend arrow beside it (up, flat, down, or "No comparison yet"), threshold printed small, and a 5-point sparkline across months 2 to 6. The rule in one line at the bottom of the tile.
+- Four tiles in one row, equal size, one per stage (Foundation, Execution, Refinement, Scale). Each tile: the stage name, its FRAME-04 question in one line, the headline figure large, verdict word, trend arrow beside it (up, flat, down, or "No comparison yet"), threshold printed small, and a 5-point sparkline across months 2 to 6. The rule, the same for all four, in one line under the tile row (approved on page 0, 10 Nov 2026).
 - Stage split: one stacked bar per team, On the ground, At the gate, In the air by source placement, latest count beside the team's baseline count.
 - Moved up since the last count: one number, with Seats arrived as a separate smaller number beside it, never summed.
 
@@ -96,7 +96,7 @@ Read from the question log and the usage dashboards, with the check-in supplying
 3. Measures go from `measures.dax` into the model files (section 4). `measures.dax` stays the only source for measures.
 4. Pages are written one at a time, in page order, by `scripts/pageN_pbir.py`. A page is fixed and approved before the next one starts.
 5. Before every push the page script checks its own layout and refuses to write the page if any check fails: every visual inside 1280 by 720; nothing overlapping except a panel and the pieces on it; repeated elements sharing one exact size; no chart smaller than Desktop can draw; every format setting name one that Desktop wrote in Megat's own files.
-6. A format setting name is never guessed. When a page needs one not yet seen, Claude Code names one visual for Megat to format by hand and how; he saves and pushes, and Claude Code reads the name from that visual's file and applies it everywhere.
+6. A format setting name is never guessed. It comes from Megat's own files (Desktop wrote it), from the published schema at the `$schema` URL in each visual.json, or from a pattern Megat gives. Anything not from his files is marked unconfirmed and listed with the push. Only when a screenshot shows an unconfirmed name did not take does Claude Code ask for one visual formatted by hand, and read the name from its file.
 7. With every push, Claude Code gives the figures the page should show, from check.py or the CSVs, so the screen can be compared against them.
 8. The project is committed and pushed after each approved page. The Checks page stays hidden until publish.
 

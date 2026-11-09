@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p0_header_line",
   "position": {
-    "x": 16,
-    "y": 94,
+    "x": 212,
+    "y": 34,
     "z": 3000,
-    "height": 28,
-    "width": 1248,
+    "height": 34,
+    "width": 1052,
     "tabOrder": 200
   },
   "visual": {
@@ -63,6 +63,19 @@
           },
           "selector": {
             "metadata": "_Measures.Header line"
+          }
+        }
+      ],
+      "layout": [
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'middle'"
+                }
+              }
+            }
           }
         }
       ],

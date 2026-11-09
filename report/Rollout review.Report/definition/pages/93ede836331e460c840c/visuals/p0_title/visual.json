@@ -3,10 +3,10 @@
   "name": "p0_title",
   "position": {
     "x": 16,
-    "y": 38,
+    "y": 34,
     "z": 3000,
-    "height": 56,
-    "width": 1248,
+    "height": 34,
+    "width": 196,
     "tabOrder": 100
   },
   "visual": {
@@ -22,23 +22,6 @@
                     "value": "Rollout review",
                     "textStyle": {
                       "fontSize": "18pt",
-                      "fontWeight": "bold"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Read from the question log, the usage dashboards, the library's records, the run log and the check-in · ",
-                    "textStyle": {
-                      "fontSize": "10pt"
-                    }
-                  },
-                  {
-                    "value": "Week 1 to Week 24, six check-ins",
-                    "textStyle": {
-                      "fontSize": "10pt",
                       "fontWeight": "bold"
                     }
                   }

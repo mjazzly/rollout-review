@@ -3,11 +3,11 @@
   "name": "p0_foundation_card",
   "position": {
     "x": 28,
-    "y": 238,
+    "y": 204,
     "z": 3000,
-    "height": 124,
+    "height": 158,
     "width": 276,
-    "tabOrder": 600
+    "tabOrder": 700
   },
   "visual": {
     "visualType": "cardVisual",
@@ -60,7 +60,7 @@
               }
             ],
             "metadata": "_Measures.Foundation tile",
-            "id": "field-7326f13f-795f-415c-b736-e819765fe1a5",
+            "id": "field-13b4ac56-a664-4506-bbcb-ffa6980e9a71",
             "order": 0
           }
         },
@@ -88,7 +88,7 @@
               }
             ],
             "metadata": "_Measures.Foundation tile",
-            "id": "field-d151b25e-f914-4d2a-b429-e78a027b1f2b",
+            "id": "field-e571febf-3ef5-4e3d-8457-7190694b78e3",
             "order": 1
           }
         },
@@ -116,7 +116,7 @@
               }
             ],
             "metadata": "_Measures.Foundation tile",
-            "id": "field-75bb4357-d800-4066-bb34-44e838daf345",
+            "id": "field-a93542c0-0f2d-4764-ac79-722479b18cd9",
             "order": 2
           }
         }
@@ -219,7 +219,7 @@
           },
           "selector": {
             "metadata": "_Measures.Foundation tile",
-            "id": "field-7326f13f-795f-415c-b736-e819765fe1a5"
+            "id": "field-13b4ac56-a664-4506-bbcb-ffa6980e9a71"
           }
         },
         {
@@ -250,7 +250,7 @@
               }
             ],
             "metadata": "_Measures.Foundation tile",
-            "id": "field-7326f13f-795f-415c-b736-e819765fe1a5"
+            "id": "field-13b4ac56-a664-4506-bbcb-ffa6980e9a71"
           }
         },
         {
@@ -265,7 +265,7 @@
           },
           "selector": {
             "metadata": "_Measures.Foundation tile",
-            "id": "field-d151b25e-f914-4d2a-b429-e78a027b1f2b"
+            "id": "field-e571febf-3ef5-4e3d-8457-7190694b78e3"
           }
         },
         {
@@ -291,7 +291,7 @@
           },
           "selector": {
             "metadata": "_Measures.Foundation tile",
-            "id": "field-75bb4357-d800-4066-bb34-44e838daf345"
+            "id": "field-a93542c0-0f2d-4764-ac79-722479b18cd9"
           }
         }
       ],

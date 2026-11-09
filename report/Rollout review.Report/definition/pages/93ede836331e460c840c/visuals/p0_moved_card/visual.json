@@ -3,11 +3,11 @@
   "name": "p0_moved_card",
   "position": {
     "x": 972,
-    "y": 538,
+    "y": 526,
     "z": 3000,
-    "height": 168,
+    "height": 184,
     "width": 280,
-    "tabOrder": 3000
+    "tabOrder": 3200
   },
   "visual": {
     "visualType": "cardVisual",
@@ -60,7 +60,7 @@
               }
             ],
             "metadata": "_Measures.Moved up since last count",
-            "id": "field-2ea604b1-1781-490c-bf25-a897da46015b",
+            "id": "field-ec8ae7c0-fc1e-4bb1-906f-e324fe6a3595",
             "order": 0
           }
         }
@@ -117,6 +117,22 @@
           },
           "selector": {
             "metadata": "_Measures.Moved up since last count"
+          }
+        }
+      ],
+      "divider": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],

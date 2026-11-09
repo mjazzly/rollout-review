@@ -8,9 +8,10 @@ below pass:
 2. nothing overlaps, except a panel and the pieces placed on it;
 3. repeated elements share one exact size (visuals given the same `same` key);
 4. no chart is smaller than Desktop can draw (MIN_SIZE below);
-5. every format setting name is one Power BI Desktop wrote in Megat's own files (SEEN
-   below). A setting not in SEEN is never guessed: one visual is formatted by hand on
-   the PC, pushed, and the name is read from its file and added here with its source.
+5. every format setting name is in SEEN (Desktop wrote it in Megat's own files) or in
+   UNCONFIRMED (from the published schema, or a pattern Megat gave). Each push lists the
+   unconfirmed names it used; a name whose screenshot shows it did not take is then
+   read from one visual Megat formats by hand.
 """
 from __future__ import annotations
 
@@ -72,6 +73,14 @@ SEEN: dict[tuple[str, str], set[str]] = {
 }
 TEXT_STYLE_SEEN = {"fontWeight", "fontSize"}                         # RR, BR
 
+# Not yet in Megat's files. Listed with every push until a screenshot shows them working.
+UNCONFIRMED: dict[tuple[str, str], set[str]] = {
+    # Megat's pattern (10 Nov 2026) names dataPoint.fill; the selector picks each stage by
+    # value (scopeId), since a metadata selector names the stage field, not one stage.
+    ("hundredPercentStackedBarChart", "dataPoint"): {"fill"},
+}
+TEXT_STYLE_UNCONFIRMED = {"color"}                                    # Megat's pattern
+
 # Microsoft's axis, legend and label objects are shared by the cartesian charts, so a
 # name seen on one of them counts for the others. Each use is listed by used_by_family().
 CARTESIAN = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart",
@@ -85,8 +94,12 @@ MIN_SIZE = {
     "lineChart": dict(w=200, h=100),
     "hundredPercentStackedBarChart": dict(w=300, h=150),
 }
-BAR_PER_CATEGORY = 22   # px of plot height per bar, after BAR_CHROME for title and padding
-BAR_CHROME = 42
+# Page 0 round 2 screenshot: six bars in a 184-high chart with its title on scrolled,
+# showing four bars 26.5 px apart, the plot starting about 60 px below the chart top and
+# ending about 18 px above its bottom. So: 27 px per bar, plus 76 px with the title on,
+# or 40 px with the title off (an estimate until a screenshot shows it).
+BAR_PER_CATEGORY = 27
+BAR_CHROME = {True: 76, False: 40}
 
 
 # ------------------------------------------------------------------ expression helpers
@@ -241,7 +254,7 @@ class Page:
             m = MIN_SIZE.get(vt)
             if m and (w < m["w"] or h < m["h"]):
                 problems.append(f"{v.name} ({vt}) is {w} by {h}, below {m['w']} by {m['h']}")
-            if v.categories and (h - BAR_CHROME) / v.categories < BAR_PER_CATEGORY:
+            if v.categories and (h - BAR_CHROME[title_on(v.visual)]) / v.categories < BAR_PER_CATEGORY:
                 problems.append(f"{v.name}: {v.categories} bars do not fit without a scrollbar")
         problems += [f"{v.name}: {p}" for v in self.visuals for p in unseen(v.visual)]
         return problems
@@ -270,10 +283,20 @@ class Page:
         fam = used_by_family(self)
         if fam:
             print("Names used through the cartesian family:\n  " + "\n  ".join(fam))
+        unc = used_unconfirmed(self)
+        if unc:
+            print("Unconfirmed names used (not yet in Megat's files):\n  " + "\n  ".join(unc))
+
+
+def title_on(visual: dict) -> bool:
+    for it in visual.get("visualContainerObjects", {}).get("title", []):
+        if it.get("properties", {}).get("show") == lit("false"):
+            return False
+    return True
 
 
 def _allowed(vt: str, obj: str) -> set[str]:
-    names = set(SEEN.get((vt, obj), set()))
+    names = set(SEEN.get((vt, obj), set())) | UNCONFIRMED.get((vt, obj), set())
     if vt in CARTESIAN and obj in FAMILY_OBJECTS:
         for other in CARTESIAN:
             names |= SEEN.get((other, obj), set())
@@ -297,9 +320,27 @@ def unseen(visual: dict) -> list[str]:
         for para in visual["objects"]["general"][0]["properties"]["paragraphs"]:
             for run in para["textRuns"]:
                 for k in run.get("textStyle", {}):
-                    if k not in TEXT_STYLE_SEEN:
+                    if k not in TEXT_STYLE_SEEN | TEXT_STYLE_UNCONFIRMED:
                         out.append(f"text style {k} has not been seen in Desktop's files")
     return out
+
+
+def used_unconfirmed(page: Page) -> list[str]:
+    out = set()
+    for v in page.visuals:
+        vt = v.visual["visualType"]
+        for obj, items in v.visual.get("objects", {}).items():
+            for it in items:
+                for p in it.get("properties", {}):
+                    if p in UNCONFIRMED.get((vt, obj), set()) and p not in SEEN.get((vt, obj), set()):
+                        out.add(f"{vt}: {obj}.{p}")
+        if vt == "textbox":
+            for para in v.visual["objects"]["general"][0]["properties"]["paragraphs"]:
+                for run in para["textRuns"]:
+                    for k in run.get("textStyle", {}):
+                        if k in TEXT_STYLE_UNCONFIRMED:
+                            out.add(f"textbox: textStyle.{k}")
+    return sorted(out)
 
 
 def used_by_family(page: Page) -> list[str]:
@@ -307,7 +348,7 @@ def used_by_family(page: Page) -> list[str]:
     for v in page.visuals:
         vt = v.visual["visualType"]
         for obj, items in v.visual.get("objects", {}).items():
-            own = SEEN.get((vt, obj), set())
+            own = SEEN.get((vt, obj), set()) | UNCONFIRMED.get((vt, obj), set())
             for it in items:
                 for p in it.get("properties", {}):
                     if p not in own:

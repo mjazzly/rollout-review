@@ -9,32 +9,40 @@ page is not written if any fails. Close Power BI Desktop on the PC before pullin
 from __future__ import annotations
 
 from pbir import (
-    OFF, WILDCARD, Page, colour, column, field_id, INK_SOFT, lit,
+    GREY, MARINE, OFF, PALE, WILDCARD, Page, colour, column, field_id, INK_SOFT, lit,
     measure, navigator, panel, proj_column, proj_measure, text, textbox,
 )
 
 PAGE = "93ede836331e460c840c"
 
 # ---------------------------------------------------------------- layout, 1280 by 720
-NAV = (16, 6, 1248, 30)
-TITLE = (16, 38, 1248, 56)
-HEADER_LINE = (16, 94, 1248, 28)
+NAV = (16, 6, 1248, 26)
+# The title and the header line share one row; the "Read from" line sits under them.
+TITLE = (16, 34, 196, 34)              # 18 bold
+HEADER_LINE = (212, 34, 1052, 34)      # card, 11, middle of the row
+SOURCE = (16, 68, 1248, 24)            # 10
 
-TILE_Y, TILE_W, TILE_H = 128, 300, 338
+TILE_Y, TILE_W, TILE_H = 96, 300, 366
 TILE_XS = (16, 332, 648, 964)
-# inside a tile: (offset from the tile top, height); x is tile x + 12, width 276
-IN_TEXT = (6, 64)      # stage name, 14 bold; question, 10 (one or two lines)
-IN_LABEL = (70, 40)    # the figure's label, 10, up to two lines; fixed so figures align
-IN_CARD = (110, 124)   # figure 28, then verdict, trend, threshold
-IN_LINE = (234, 100)   # sparkline, months 2 to 6
+# inside a tile: (offset from the tile top, height); x is tile x + 12, width 276.
+# Heights from the round 2 screenshot: the stage and question need 61, the label 38, the
+# card 157 to show the threshold under the trend, the sparkline drew at 100.
+IN_TEXT = (4, 64)      # stage name, 14 bold; question, 10 (one or two lines)
+IN_LABEL = (68, 40)    # the figure's label, 10, up to two lines; fixed so figures align
+IN_CARD = (108, 158)   # figure 28, then verdict, trend, threshold
+IN_LINE = (266, 100)   # sparkline, months 2 to 6
 
-RULE = (16, 470, 1248, 24)
+RULE = (16, 464, 1248, 22)
 
-SPLIT_HEAD = (16, 500, 520, 26)
-SPLIT_LEGEND = (536, 500, 408, 26)
-SPLIT_BASE = (16, 528, 456, 184)
-SPLIT_LATEST = (488, 528, 456, 184)
-MOVED_PANEL = (960, 500, 304, 212)
+# Stage split: chart titles are text boxes, so the plots get the height; one legend.
+SPLIT_TITLE_BASE = (16, 488, 456, 22)
+SPLIT_TITLE_LATEST = (488, 488, 160, 22)
+SPLIT_LEGEND = (648, 488, 296, 22)
+SPLIT_BASE = (16, 510, 456, 206)
+SPLIT_LATEST = (488, 510, 456, 206)
+MOVED_PANEL = (960, 488, 304, 228)
+
+STAGES = (("On the ground", GREY), ("At the gate", PALE), ("In the air", MARINE))
 
 TILES = (
     ("Foundation", "Which uses matter most, and where do people get stuck?",
@@ -127,8 +135,15 @@ def sparkline(stage: str) -> tuple[dict, dict]:
     return visual, filters
 
 
-def stage_split(measure_name: str, title: str) -> dict:
-    # Identical but for the measure and title, so the two plots share width, height and order.
+def stage_is(stage: str) -> dict:
+    return {"data": [{"scopeId": {"Comparison": {
+        "ComparisonKind": 0,
+        "Left": column("dim_checkpoint_source", "stage"),
+        "Right": {"Literal": {"Value": f"'{stage}'"}}}}}]}
+
+
+def stage_split(measure_name: str) -> dict:
+    # Identical but for the measure, so the two plots share width, height and order.
     return {
         "visualType": "hundredPercentStackedBarChart",
         "query": {
@@ -141,13 +156,15 @@ def stage_split(measure_name: str, title: str) -> dict:
                                "isDefaultSort": False},
         },
         "objects": {
-            "labels": [{"properties": {"show": lit("true"), "labelPrecision": lit("0L")}}],
+            "dataPoint": [{"properties": {"fill": colour(c)}, "selector": stage_is(s)}
+                          for s, c in STAGES],
+            "labels": [{"properties": OFF}],
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
             "valueAxis": [{"properties": {"show": lit("false"), "gridlineShow": lit("false")}}],
         },
         "visualContainerObjects": {
-            "title": [{"properties": {"show": lit("true"), "text": text(title)}}],
+            "title": [{"properties": OFF}],
             "subTitle": [{"properties": OFF}],
         },
         "drillFilterOtherVisuals": True,
@@ -170,6 +187,7 @@ def moved_up_card() -> dict:
                        "selector": {"id": "default"}}],
             "referenceLabelValue": [{"properties": {"valueFontSize": lit("14D")},
                                      "selector": {"metadata": meta}}],
+            "divider": [{"properties": OFF, "selector": {"id": "default"}}],
             "fillCustom": [{"properties": OFF}],
         },
         "visualContainerObjects": {"title": [{"properties": OFF}],
@@ -186,6 +204,7 @@ def header_line() -> dict:
         "objects": {
             "value": [{"properties": {"fontSize": lit("11D")}, "selector": {"id": "default"}}],
             "label": [{"properties": OFF, "selector": {"metadata": "_Measures.Header line"}}],
+            "layout": [{"properties": {"alignment": text("middle")}}],
             "fillCustom": [{"properties": OFF}],
         },
         "visualContainerObjects": {"title": [{"properties": OFF}],
@@ -197,13 +216,12 @@ def header_line() -> dict:
 def build() -> Page:
     p = Page(PAGE)
     p.add("p0_navigator", NAV, navigator(), z=0)
-    p.add("p0_title", TITLE, textbox([
-        [("Rollout review", pt(18, bold=True))],
-        [("Read from the question log, the usage dashboards, the library's records, "
-          "the run log and the check-in · ", pt(10)),
-         ("Week 1 to Week 24, six check-ins", pt(10, bold=True))],
-    ]))
+    p.add("p0_title", TITLE, textbox([[("Rollout review", pt(18, bold=True))]]))
     p.add("p0_header_line", HEADER_LINE, header_line())
+    p.add("p0_source", SOURCE, textbox([[
+        ("Read from the question log, the usage dashboards, the library's records, "
+         "the run log and the check-in · ", pt(10)),
+        ("Week 1 to Week 24, six check-ins", pt(10, bold=True))]]))
 
     for x, (stage, question, label) in zip(TILE_XS, TILES):
         key = stage.lower()
@@ -224,17 +242,18 @@ def build() -> Page:
 
     p.add("p0_rule", RULE, textbox([[(RULE_TEXT, pt(9))]]))
 
-    p.add("p0_split_head", SPLIT_HEAD, textbox([[
-        ("Stage split by team, by source placement", pt(12, bold=True))]]))
-    p.add("p0_split_legend", SPLIT_LEGEND, textbox([[
-        ("■", pt(12)), (" On the ground     ", pt(10)),
-        ("■", pt(12)), (" At the gate     ", pt(10)),
-        ("■", pt(12)), (" In the air", pt(10))]]))
-    p.add("p0_split_baseline", SPLIT_BASE,
-          stage_split("Stage split baseline", "At each team's baseline month"),
+    p.add("p0_split_title_base", SPLIT_TITLE_BASE, textbox([[
+        ("Stage by source placement, at each team's baseline month", pt(10, bold=True))]]))
+    p.add("p0_split_title_latest", SPLIT_TITLE_LATEST, textbox([[
+        ("Latest count, Month 6", pt(10, bold=True))]]))
+    legend = []
+    for n, (stage, hex_) in enumerate(STAGES):
+        legend += [("■", {**pt(12), "color": hex_}),
+                   (f" {stage}" + ("     " if n < 2 else ""), pt(10))]
+    p.add("p0_split_legend", SPLIT_LEGEND, textbox([legend]))
+    p.add("p0_split_baseline", SPLIT_BASE, stage_split("Stage split baseline"),
           z=2000, same="stage chart", categories=6)
-    p.add("p0_split_latest", SPLIT_LATEST,
-          stage_split("Stage split latest", "Latest count, Month 6"),
+    p.add("p0_split_latest", SPLIT_LATEST, stage_split("Stage split latest"),
           z=2000, same="stage chart", categories=6)
 
     mx, my, mw, mh = MOVED_PANEL
