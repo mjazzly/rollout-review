@@ -8,7 +8,8 @@ Power BI visual shows it, so a match is a plain comparison:
 - shares as percentages to one decimal place, e.g. 48.4%
 - changes in a share as percentage points to one decimal place, e.g. +34.8 points
 - counts as whole numbers; the cost index to two decimal places
-- weeks as their week_start date, e.g. 2026-06-29
+- weeks as their week label, Week 1 to Week 24, e.g. Week 7 (no calendar date
+  appears on any page)
 
 Definitions follow measures.md word for word. Run: python3 check.py
 (add --md to print the CHECK.md table rows instead).
@@ -71,12 +72,13 @@ def q(page: int, question: str, sql: str):
 @q(0, "In the last week of the period, how many seats were active, out of how many assigned?", """
 SELECT count(*) FILTER (WHERE u.days_active >= 2) AS active,
        count(*)                                    AS assigned,
-       max(u.week_start)                           AS week
+       max(k.week_no)                              AS week_no
 FROM dim_person p
 JOIN fact_usage_week u ON u.person_id = p.person_id AND u.week_start = (SELECT max(week_start) FROM dim_week)
+JOIN wk k ON k.week_start = u.week_start
 WHERE p.seat_assigned_week <= u.week_start
 """)
-def _(r): return f"{r[0][0]:,} of {r[0][1]:,} seats active (week of {r[0][2]})"
+def _(r): return f"{r[0][0]:,} of {r[0][1]:,} seats active (Week {r[0][2]})"
 
 
 @q(0, "How many people moved up since the last count (month 5 to month 6), and how many seats arrived?", """
@@ -252,12 +254,13 @@ def _(r):
 
 # ---------------------------------------------------------------- Page 5
 @q(5, "Which library item was the first taken up beyond its own team, by which team, and from which week? (Consulting storyline)", """
-SELECT r.item_id, i.owner_team, r.team, min(r.week_start) AS first_week
+SELECT r.item_id, i.owner_team, r.team, min(k.week_no) AS first_week_no
 FROM fact_library_run r JOIN dim_library_item i USING (item_id)
+JOIN wk k ON k.week_start = r.week_start
 WHERE r.team <> i.owner_team
-GROUP BY 1, 2, 3 ORDER BY first_week, r.item_id LIMIT 1
+GROUP BY 1, 2, 3 ORDER BY first_week_no, r.item_id LIMIT 1
 """)
-def _(r): return f"{r[0][0]} ({r[0][1]}), taken up by {r[0][2]} from the week of {r[0][3]}"
+def _(r): return f"{r[0][0]} ({r[0][1]}), taken up by {r[0][2]} from Week {r[0][3]}"
 
 
 @q(5, "What share of Consulting is in the air in month 6, against Consulting's baseline month?", """

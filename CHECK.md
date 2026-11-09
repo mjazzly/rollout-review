@@ -1,5 +1,7 @@
 # The recorded check: Rollout review (DASH-02)
 
+> **Change note.** The expected answers to questions 1 and 16 were reworded from calendar dates to week numbers (Week 24, Week 7) before the Power BI build began, so that they read the way every page labels weeks. No calendar date appears on any page. This was not done to make a match. The figures behind them are unchanged.
+
 Eighteen questions, three per page (pages 0 to 5 in section 6 of `DASH-02-DESIGN.md`). `check.py` answers each one straight from `data/*.csv` with DuckDB and prints the question, the SQL and the answer. Each answer is then read off the matching Power BI visual and compared.
 
 Answers are written the way the visual shows them, so a match is a plain comparison:
@@ -8,7 +10,7 @@ Answers are written the way the visual shows them, so a match is a plain compari
 - A change in a share is in percentage points to one decimal place.
 - Counts are whole numbers.
 - The cost index is to two decimal places.
-- Weeks are shown as their week_start date.
+- Weeks are shown as their week label, Week 1 to Week 24, as every page labels them.
 
 Definitions follow `measures.md`. Every page has at least one question on a planted storyline, and question 4 covers the Finance gap between check-in and source.
 
@@ -20,7 +22,7 @@ python3 check.py
 
 | # | Page | Question | Expected answer | Matched |
 |---:|---:|---|---|---|
-| 1 | 0 | In the last week of the period, how many seats were active, out of how many assigned? | 505 of 1,167 seats active (week of 2026-10-26) | |
+| 1 | 0 | In the last week of the period, how many seats were active, out of how many assigned? | 505 of 1,167 seats active (Week 24) | |
 | 2 | 0 | How many people moved up since the last count (month 5 to month 6), and how many seats arrived? | 98 moved up; 0 seats arrived | |
 | 3 | 0 | What does the Refinement tile show for month 6, with its verdict and trend? (Technology storyline) | 9.5%, Not yet working (threshold 50%); trend Flat (month 4 was 8.7%) | |
 | 4 | 1 | In month 6, how many Finance people place themselves higher, level and lower than the sources do? | Higher 111, level 76, lower 13 | |
@@ -35,7 +37,7 @@ python3 check.py
 | 13 | 4 | Which tested prompts pass on the smaller model? (Technology storyline) | 2 items: LIB-09, LIB-13 | |
 | 14 | 4 | What is the cost index for LIB-09 and LIB-13? | LIB-09 2.02; LIB-13 2.07 | |
 | 15 | 4 | Which prompts were retired or merged, and in which check-in month? | Month 5: LIB-12 retired; Month 5: LIB-14 merged into LIB-10 | |
-| 16 | 5 | Which library item was the first taken up beyond its own team, by which team, and from which week? (Consulting storyline) | LIB-01 (Consulting), taken up by Technology from the week of 2026-06-29 | |
+| 16 | 5 | Which library item was the first taken up beyond its own team, by which team, and from which week? (Consulting storyline) | LIB-01 (Consulting), taken up by Technology from Week 7 | |
 | 17 | 5 | What share of Consulting is in the air in month 6, against Consulting's baseline month? | 60.3% in month 6 against 47.0% in month 3, the baseline (+13.3 points) | |
 | 18 | 5 | In month 6, how many people in each team said that without AI they would lose time every week? | Consulting 162; Technology 90; Finance 86; Operations 73; People 48; Legal 17 | |
 

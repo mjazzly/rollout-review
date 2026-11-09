@@ -1,0 +1,5 @@
+stage,threshold
+Foundation,0.4
+Execution,0.6
+Refinement,0.5
+Scale,10

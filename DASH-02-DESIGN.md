@@ -188,7 +188,7 @@ rollout-review/
   README.md            what it is, the planted storylines, how to rerun
   generate.py          seeded generator, writes data/*.csv
   check.py             answers the question set from the CSVs
-  data/                the fourteen CSVs
+  data/                the fifteen CSVs
   DICTIONARY.md        every table and column
   measures.md          every measure and placement rule
   CHECK.md             questions, expected answers, match record

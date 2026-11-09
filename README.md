@@ -53,7 +53,7 @@ python3 check.py
 |---|---|
 | `generate.py` | Seeded generator. Writes `data/*.csv`, including the derived `fact_placement` |
 | `check.py` | Answers the check's 18 questions from the CSVs with DuckDB |
-| `data/` | The fourteen CSVs |
+| `data/` | The fifteen CSVs |
 | [DICTIONARY.md](DICTIONARY.md) | Every table and column, its grain and its live source |
 | [measures.md](measures.md) | Every measure and placement rule, worded for the DAX descriptions |
 | [CHECK.md](CHECK.md) | The questions, the expected answers and the match record |

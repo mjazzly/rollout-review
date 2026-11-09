@@ -1,6 +1,6 @@
 # Data dictionary: Rollout review (DASH-02)
 
-Every table in `data/`, its grain, the live system that would supply it, and every column. Everything is synthetic, written by `generate.py` (seed 42). To swap in a live backend, replace a CSV with an export that has the same columns.
+Every table in `data/`, its grain, the live system that would supply it, and every column. Everything is synthetic, written by `generate.py` (seed 42), except `dim_threshold`, which is written by hand. To swap in a live backend, replace a CSV with an export that has the same columns.
 
 Conventions across all tables:
 
@@ -26,6 +26,7 @@ Conventions across all tables:
 | dim_checkpoint | dimension | checkpoint | 9 | FRAME-01, copied word for word |
 | dim_library_item | dimension | library item | 23 | The library's records: owner, version, limits and test result |
 | dim_category | dimension | category | 7 | Analyst's category list |
+| dim_threshold | dimension | stage tile | 4 | The programme's own targets (illustrative here, from measures.md) |
 
 ---
 
@@ -226,3 +227,13 @@ An item is **live** in a week when published_week is on or before that week and,
 | Column | Type | Description |
 |---|---|---|
 | category | text | `Rules and allowed use`, `Drafting`, `Summarising`, `Analysis`, `Research`, `Formatting`, `Coding`. Key. |
+
+### dim_threshold
+
+The thresholds the four stage tiles on page 0 are judged against. They are the illustrative programme targets from measures.md ("Stage tiles"): a real programme sets its own, and these are here so the tiles can carry a verdict on the synthetic data. Power BI reads the threshold from this table, so each tile prints its threshold from data rather than a typed label.
+**Grain:** stage tile. **Live source:** the programme's own targets. Written by hand, not by `generate.py`, so rerunning the generator leaves it as it is.
+
+| Column | Type | Description |
+|---|---|---|
+| stage | text | `Foundation`, `Execution`, `Refinement`, `Scale`: the FRAME-04 stage the tile answers. Key. |
+| threshold | decimal | The tile's threshold, in the unit of the tile's own figure. A share for Foundation (0.4, that is 40%), Execution (0.6, 60%) and Refinement (0.5, 50%). Percentage points above baseline for Scale (10). A tile's verdict is Working when its figure meets this value. |

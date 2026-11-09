@@ -1,0 +1,1130 @@
+// =====================================================================
+// Rollout review (DASH-02): measures.dax
+// =====================================================================
+//
+// One block per measure, in the order of measures.md. Each block gives:
+//   Create as    where the object goes (a measure in _Measures, unless it says
+//                a calculated column, or that nothing is created)
+//   format       the format string to set in Measure tools, Format
+//   description  the measures.md definition, word for word. Paste the text after
+//                "description: " into the object's Description property
+//                (Model view, select the object, Properties pane, Description)
+//   the DAX      from the line "Name =" to the end of the block; paste it into
+//                the formula bar. The // lines inside it are comments and can go
+//                in with it.
+//
+// Create everything in file order. Two departures from measures.md order, both
+// because a block reads an object that must exist first:
+//   - the helper "Check-in month" comes first; every month-based measure reads it
+//   - under Stage tiles, the four tile figures come before the Verdict and Trend
+//     blocks, which read them (measures.md prints Verdict and Trend first)
+//
+// Shared terms that are applied inside the measures, with no object of their own:
+// Active week (days_active of 2 or more), Trailing eight weeks and Ever (used only
+// by the placement rules, which generate.py has already applied in fact_placement),
+// Live item, Owns a library item (placement rules only) and Latest run.
+//
+// Format strings, from PBI-BRIEF.md section 4:
+//   shares   0.0%
+//   points   +0.0;-0.0;0.0
+//   index    0.00
+//   counts   #,0
+//
+// Measures that name "the check-in month" or "the latest check-in month" read the
+// month in the filter context: the dim_month slicer selection, the month on a
+// visual's axis, or month 6 when nothing selects a month.
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+// HELPER (not in measures.md)
+// ---------------------------------------------------------------------
+
+// Check-in month
+// Create as: measure in _Measures
+// format: 0
+// description: Helper, not in measures.md. The check-in month in the filter context: the latest month selected, or month 6 when no month is selected.
+Check-in month =
+MAX ( dim_month[checkin_month] )
+
+
+// ---------------------------------------------------------------------
+// SHARED TERMS
+// ---------------------------------------------------------------------
+
+// Check-in week
+// Create as: measure in _Measures
+// format: yyyy-mm-dd (never shown on a page)
+// description: The fourth and last week of a check-in month. The check-in date is the last day of that week.
+Check-in week =
+MAX ( dim_month[checkin_week] )
+
+// Check-in date
+// Create as: measure in _Measures (the same term as Check-in week)
+// format: yyyy-mm-dd (never shown on a page)
+// description: The fourth and last week of a check-in month. The check-in date is the last day of that week.
+Check-in date =
+MAX ( dim_month[checkin_date] )
+
+// Tokens per run
+// Create as: calculated column on fact_test_run (Table view, select fact_test_run, Table tools, New column)
+// format: #,0
+// description: tokens_in plus tokens_out for one test run.
+tokens_per_run =
+fact_test_run[tokens_in] + fact_test_run[tokens_out]
+
+// Team's seats arrive
+// Create as: calculated column on dim_team
+// format: yyyy-mm-dd (never shown on a page)
+// description: The earliest seat_assigned_week among the team's people.
+seats_arrive_week =
+CALCULATE ( MIN ( dim_person[seat_assigned_week] ) )
+
+
+// ---------------------------------------------------------------------
+// SUPPORTING MEASURES (section 8)
+// ---------------------------------------------------------------------
+
+// Assigned seats
+// Create as: measure in _Measures
+// format: #,0
+// description: People whose seat_assigned_week is on or before the week.
+Assigned seats =
+VAR wk = MAX ( dim_week[week_start] )
+RETURN
+    CALCULATE (
+        COUNTROWS ( dim_person ),
+        KEEPFILTERS (
+            NOT ISBLANK ( dim_person[seat_assigned_week] )
+                && dim_person[seat_assigned_week] <= wk
+        )
+    ) + 0
+
+// Weekly active share
+// Create as: measure in _Measures
+// format: 0.0%
+// description: People with days_active of 2 or more in the week, over assigned seats.
+Weekly active share =
+VAR wk = MAX ( dim_week[week_start] )
+VAR active =
+    CALCULATE (
+        COUNTROWS ( fact_usage_week ),
+        fact_usage_week[days_active] >= 2,
+        dim_week[week_start] = wk
+    )
+RETURN
+    DIVIDE ( active + 0, [Assigned seats] )
+
+// Library share
+// Create as: measure in _Measures
+// format: 0.0%
+// description: runs_via_library over runs_total.
+Library share =
+DIVIDE ( SUM ( fact_usage_week[runs_via_library] ), SUM ( fact_usage_week[runs_total] ) )
+
+// Repeat flag
+// Create as: nothing to create. The column fact_question[repeat_flag] already carries it;
+//            paste the description into that column's Description property.
+//            (The count measure "Repeat-flagged questions" is under Display helpers.)
+// description: A question from the same person in the same category within 30 days of an earlier question by that person.
+
+// Passing
+// Create as: calculated column on fact_test_run
+// format: True/False
+// description: A test run where cases_matched equals cases_total.
+passing =
+fact_test_run[cases_matched] = fact_test_run[cases_total]
+
+// Cost index
+// Create as: measure in _Measures (page 4 uses this same measure)
+// format: 0.00
+// description: Median tokens per run on the standard tier over median tokens per run on the smaller tier, per item.
+Cost index =
+IF (
+    HASONEVALUE ( dim_library_item[item_id] ),
+    VAR standardMedian =
+        CALCULATE ( MEDIAN ( fact_test_run[tokens_per_run] ), fact_test_run[model_tier] = "standard" )
+    VAR smallerMedian =
+        CALCULATE ( MEDIAN ( fact_test_run[tokens_per_run] ), fact_test_run[model_tier] = "smaller" )
+    RETURN
+        DIVIDE ( standardMedian, smallerMedian )
+)
+
+// Baseline month
+// Create as: calculated column on dim_team (after seats_arrive_week)
+// format: 0
+// description: For each team, the first check-in month whose trailing eight weeks start on or after the week the team's seats arrive.
+// How it reads: month m's trailing eight weeks start at week 4m - 7, so the first m with
+// 4m - 7 >= the arrival week number is ROUNDUP ( ( week_no + 7 ) / 4 ). With seats as
+// generated: Legal 2; Consulting, Finance, Operations, Technology 3; People 4.
+baseline_month =
+VAR arrivalWeekNo =
+    LOOKUPVALUE ( dim_week[week_no], dim_week[week_start], dim_team[seats_arrive_week] )
+VAR firstMonth = ROUNDUP ( ( arrivalWeekNo + 7 ) / 4, 0 )
+RETURN
+    IF ( NOT ISBLANK ( arrivalWeekNo ) && firstMonth <= 6, firstMonth )
+
+// Moved up
+// Create as: measure in _Measures
+// format: #,0
+// description: People who held a seat at both the latest count and the previous count, and whose source checkpoint_id at the latest count is higher than at the previous count.
+// A person holds a seat at a count when seat_assigned_week is on or before that check-in
+// week; holding one at the previous count means holding one at the latest count too.
+Moved up =
+VAR m = [Check-in month]
+VAR previousWeek =
+    CALCULATE ( MAX ( dim_month[checkin_week] ), REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m - 1 )
+VAR seatedAtBoth =
+    FILTER (
+        dim_person,
+        NOT ISBLANK ( dim_person[seat_assigned_week] )
+            && dim_person[seat_assigned_week] <= previousWeek
+    )
+VAR movedUp =
+    FILTER (
+        seatedAtBoth,
+        VAR latest =
+            CALCULATE ( MAX ( fact_placement[source_checkpoint_id] ), REMOVEFILTERS ( dim_month ), fact_placement[checkin_month] = m )
+        VAR previous =
+            CALCULATE ( MAX ( fact_placement[source_checkpoint_id] ), REMOVEFILTERS ( dim_month ), fact_placement[checkin_month] = m - 1 )
+        RETURN
+            latest > previous
+    )
+RETURN
+    IF ( m >= 2, COUNTROWS ( movedUp ) + 0 )
+
+// Seats arrived
+// Create as: measure in _Measures
+// format: #,0
+// description: People with no seat at the previous count and a seat at the latest count. Always shown beside Moved up and never added into it.
+Seats arrived =
+VAR m = [Check-in month]
+VAR previousWeek =
+    CALCULATE ( MAX ( dim_month[checkin_week] ), REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m - 1 )
+VAR latestWeek =
+    CALCULATE ( MAX ( dim_month[checkin_week] ), REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m )
+VAR arrived =
+    FILTER (
+        dim_person,
+        NOT ISBLANK ( dim_person[seat_assigned_week] )
+            && dim_person[seat_assigned_week] > previousWeek
+            && dim_person[seat_assigned_week] <= latestWeek
+    )
+RETURN
+    IF ( m >= 2, COUNTROWS ( arrived ) + 0 )
+
+
+// ---------------------------------------------------------------------
+// SOURCE PLACEMENT RULES (section 5)
+// ---------------------------------------------------------------------
+
+// Source placement rules
+// Create as: nothing to create. generate.py applies the nine rules and writes the result
+//            to fact_placement[source_checkpoint_id]; Power BI reads it (brief section 4).
+
+// Gap
+// Create as: nothing to create. The column fact_placement[gap] already carries it;
+//            paste the description into that column's Description property.
+// description: Check-in checkpoint_id minus source checkpoint_id, for the same person and check-in month.
+
+
+// ---------------------------------------------------------------------
+// PAGE 0: ROLLOUT REVIEW (front, sponsor)
+// ---------------------------------------------------------------------
+
+// Headcount
+// Create as: measure in _Measures
+// format: #,0
+// description: People in dim_person.
+Headcount =
+COUNTROWS ( dim_person )
+
+// Seats assigned
+// Create as: measure in _Measures
+// format: #,0
+// description: Assigned seats in the selected week.
+Seats assigned =
+[Assigned seats]
+
+// Seats active this week
+// Create as: measure in _Measures
+// format: #,0
+// description: People with an assigned seat and days_active of 2 or more in the selected week.
+Seats active this week =
+VAR wk = MAX ( dim_week[week_start] )
+RETURN
+    CALCULATE (
+        COUNTROWS ( fact_usage_week ),
+        fact_usage_week[days_active] >= 2,
+        dim_week[week_start] = wk,
+        KEEPFILTERS (
+            NOT ISBLANK ( dim_person[seat_assigned_week] )
+                && dim_person[seat_assigned_week] <= wk
+        )
+    ) + 0
+
+// Stage split (two measures: latest and baseline; same description)
+// Create as: measures in _Measures. Visual: team on the axis, dim_checkpoint_source[stage] in the legend.
+// format: 0.0%
+// description: Share of people in each stage (On the ground, At the gate, In the air) by source placement, for the latest check-in month and for the baseline, with each team taken at its own baseline month.
+Stage split latest =
+VAR m = [Check-in month]
+VAR inStage =
+    CALCULATE ( COUNTROWS ( fact_placement ), REMOVEFILTERS ( dim_month ), fact_placement[checkin_month] = m )
+VAR everyone =
+    CALCULATE (
+        COUNTROWS ( fact_placement ),
+        REMOVEFILTERS ( dim_month ),
+        fact_placement[checkin_month] = m,
+        REMOVEFILTERS ( dim_checkpoint_source )
+    )
+RETURN
+    DIVIDE ( inStage + 0, everyone )
+
+// format: 0.0%
+// description: Share of people in each stage (On the ground, At the gate, In the air) by source placement, for the latest check-in month and for the baseline, with each team taken at its own baseline month.
+Stage split baseline =
+VAR inStage =
+    SUMX (
+        VALUES ( dim_team[team] ),
+        VAR b = CALCULATE ( MAX ( dim_team[baseline_month] ) )
+        RETURN
+            CALCULATE ( COUNTROWS ( fact_placement ), REMOVEFILTERS ( dim_month ), fact_placement[checkin_month] = b )
+    )
+VAR everyone =
+    SUMX (
+        VALUES ( dim_team[team] ),
+        VAR b = CALCULATE ( MAX ( dim_team[baseline_month] ) )
+        RETURN
+            CALCULATE (
+                COUNTROWS ( fact_placement ),
+                REMOVEFILTERS ( dim_month ),
+                fact_placement[checkin_month] = b,
+                REMOVEFILTERS ( dim_checkpoint_source )
+            )
+    )
+RETURN
+    DIVIDE ( inStage + 0, everyone )
+
+// Moved up since last count
+// Create as: measure in _Measures. Place [Seats arrived] beside it as its own number.
+// format: #,0
+// description: Moved up, counted between the latest check-in month and the one before it, shown with Seats arrived for the same two counts beside it.
+Moved up since last count =
+[Moved up]
+
+
+// ---------------------------------------------------------------------
+// PAGE 0: STAGE TILES
+// The four tile figures first, then Verdict, Trend and the printed thresholds,
+// which read them. dim_threshold holds each threshold in its tile's own unit:
+// a share for Foundation, Execution and Refinement, percentage points for Scale.
+// ---------------------------------------------------------------------
+
+// Foundation tile: Requests matched to a tested prompt that already exists
+// Create as: measure in _Measures
+// format: 0.0%
+// description: Questions asked in the check-in month with action_taken of pointed to library, over all questions asked in the check-in month.
+Foundation tile =
+VAR m = [Check-in month]
+RETURN
+    CALCULATE (
+        DIVIDE (
+            CALCULATE ( COUNTROWS ( fact_question ), fact_question[action_taken] = "pointed to library" ) + 0,
+            COUNTROWS ( fact_question )
+        ),
+        REMOVEFILTERS ( dim_month ),
+        REMOVEFILTERS ( dim_week ),
+        dim_month[checkin_month] = m
+    )
+
+// Execution tile: Repeat use within 30 days
+// Create as: measure in _Measures
+// format: 0.0%
+// description: People with another active week starting within 30 days after their first active week, over people whose first active week starts at least 30 days before the check-in date.
+Execution tile =
+VAR checkinDate = [Check-in date]
+VAR firstWeeks =
+    ADDCOLUMNS (
+        VALUES ( dim_person[person_id] ),
+        "@first",
+            CALCULATE (
+                MIN ( fact_usage_week[week_start] ),
+                fact_usage_week[days_active] >= 2,
+                REMOVEFILTERS ( dim_week ),
+                REMOVEFILTERS ( dim_month )
+            )
+    )
+VAR eligible =
+    FILTER ( firstWeeks, NOT ISBLANK ( [@first] ) && [@first] <= checkinDate - 30 )
+VAR repeated =
+    FILTER (
+        eligible,
+        VAR firstWeek = [@first]
+        RETURN
+            CALCULATE (
+                COUNTROWS ( fact_usage_week ),
+                fact_usage_week[days_active] >= 2,
+                fact_usage_week[week_start] > firstWeek,
+                fact_usage_week[week_start] <= firstWeek + 30,
+                REMOVEFILTERS ( dim_week ),
+                REMOVEFILTERS ( dim_month )
+            ) > 0
+    )
+RETURN
+    DIVIDE ( COUNTROWS ( repeated ) + 0, COUNTROWS ( eligible ) )
+
+// Refinement tile: Tested prompts that pass on the smaller model
+// Create as: measure in _Measures
+// format: 0.0%
+// description: Items live in the check-in week whose latest smaller-tier run on or before the check-in date is passing, over all items live in the check-in week.
+Refinement tile =
+VAR checkinWeek = [Check-in week]
+VAR checkinDate = [Check-in date]
+VAR liveItems =
+    FILTER (
+        dim_library_item,
+        dim_library_item[published_week] <= checkinWeek
+            && ( ISBLANK ( dim_library_item[status_week] ) || dim_library_item[status_week] > checkinWeek )
+    )
+VAR passingItems =
+    FILTER (
+        liveItems,
+        VAR itemId = dim_library_item[item_id]
+        VAR latestRun =
+            TOPN (
+                1,
+                FILTER (
+                    ALL ( fact_test_run ),
+                    fact_test_run[item_id] = itemId
+                        && fact_test_run[model_tier] = "smaller"
+                        && fact_test_run[run_date] <= checkinDate
+                ),
+                fact_test_run[run_date], DESC,
+                fact_test_run[run_id], DESC
+            )
+        RETURN
+            MAXX ( latestRun, IF ( fact_test_run[passing], 1, 0 ) ) = 1
+    )
+RETURN
+    DIVIDE ( COUNTROWS ( passingItems ) + 0, COUNTROWS ( liveItems ) )
+
+// Scale tile: Share of people in the air against the baseline
+// Create as: measure in _Measures
+// format: +0.0;-0.0;0.0
+// description: Share of people with a source checkpoint_id of 7, 8 or 9 in the check-in month, minus the same people's share at their team's baseline month, in percentage points. Only teams whose baseline month is on or before the check-in month count. Before any team reaches its baseline month, the tile has no figure.
+Scale tile =
+VAR m = [Check-in month]
+VAR teamsCounted =
+    FILTER (
+        VALUES ( dim_team[team] ),
+        VAR b = CALCULATE ( MAX ( dim_team[baseline_month] ) )
+        RETURN
+            NOT ISBLANK ( b ) && b <= m
+    )
+VAR people = CALCULATE ( COUNTROWS ( dim_person ), teamsCounted )
+VAR airNow =
+    CALCULATE (
+        COUNTROWS ( fact_placement ),
+        teamsCounted,
+        fact_placement[source_checkpoint_id] >= 7,
+        REMOVEFILTERS ( dim_month ),
+        fact_placement[checkin_month] = m
+    )
+VAR airAtBaseline =
+    SUMX (
+        teamsCounted,
+        VAR b = CALCULATE ( MAX ( dim_team[baseline_month] ) )
+        RETURN
+            CALCULATE (
+                COUNTROWS ( fact_placement ),
+                fact_placement[source_checkpoint_id] >= 7,
+                REMOVEFILTERS ( dim_month ),
+                fact_placement[checkin_month] = b
+            )
+    )
+RETURN
+    IF ( people > 0, ( DIVIDE ( airNow + 0, people ) - DIVIDE ( airAtBaseline + 0, people ) ) * 100 )
+
+// Verdict (all four tiles): four measures, same description
+// Create as: measures in _Measures
+// format: text
+// description: The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
+Foundation verdict =
+VAR figure = [Foundation tile]
+VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Foundation" )
+RETURN
+    IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
+
+// description: The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
+Execution verdict =
+VAR figure = [Execution tile]
+VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Execution" )
+RETURN
+    IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
+
+// description: The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
+Refinement verdict =
+VAR figure = [Refinement tile]
+VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Refinement" )
+RETURN
+    IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
+
+// description: The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
+Scale verdict =
+VAR figure = [Scale tile]
+VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Scale" )
+RETURN
+    IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
+
+// Trend (all four tiles): four measures, same description
+// Create as: measures in _Measures
+// format: text. The arrow prints beside the word: ↑ Up, → Flat, ↓ Down.
+// description: The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
+Foundation trend =
+VAR m = [Check-in month]
+VAR figure = [Foundation tile]
+VAR twoEarlier =
+    IF ( m >= 3, CALCULATE ( [Foundation tile], REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m - 2 ) )
+VAR pointsDiff = ( figure - twoEarlier ) * 100
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( figure ), BLANK (),
+        ISBLANK ( twoEarlier ), "No comparison yet",
+        ABS ( pointsDiff ) <= 1, "→ Flat",
+        pointsDiff > 0, "↑ Up",
+        "↓ Down"
+    )
+
+// description: The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
+Execution trend =
+VAR m = [Check-in month]
+VAR figure = [Execution tile]
+VAR twoEarlier =
+    IF ( m >= 3, CALCULATE ( [Execution tile], REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m - 2 ) )
+VAR pointsDiff = ( figure - twoEarlier ) * 100
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( figure ), BLANK (),
+        ISBLANK ( twoEarlier ), "No comparison yet",
+        ABS ( pointsDiff ) <= 1, "→ Flat",
+        pointsDiff > 0, "↑ Up",
+        "↓ Down"
+    )
+
+// description: The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
+Refinement trend =
+VAR m = [Check-in month]
+VAR figure = [Refinement tile]
+VAR twoEarlier =
+    IF ( m >= 3, CALCULATE ( [Refinement tile], REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m - 2 ) )
+VAR pointsDiff = ( figure - twoEarlier ) * 100
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( figure ), BLANK (),
+        ISBLANK ( twoEarlier ), "No comparison yet",
+        ABS ( pointsDiff ) <= 1, "→ Flat",
+        pointsDiff > 0, "↑ Up",
+        "↓ Down"
+    )
+
+// The Scale figure is already in percentage points, so the difference is not multiplied by 100.
+// description: The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
+Scale trend =
+VAR m = [Check-in month]
+VAR figure = [Scale tile]
+VAR twoEarlier =
+    IF ( m >= 3, CALCULATE ( [Scale tile], REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m - 2 ) )
+VAR pointsDiff = figure - twoEarlier
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( figure ), BLANK (),
+        ISBLANK ( twoEarlier ), "No comparison yet",
+        ABS ( pointsDiff ) <= 1, "→ Flat",
+        pointsDiff > 0, "↑ Up",
+        "↓ Down"
+    )
+
+// Thresholds: four measures that print each tile's threshold from dim_threshold, same description
+// Create as: measures in _Measures
+// format: text
+// description: The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
+Foundation threshold =
+"Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Foundation" ), "0%" )
+
+// description: The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
+Execution threshold =
+"Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Execution" ), "0%" )
+
+// description: The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
+Refinement threshold =
+"Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Refinement" ), "0%" )
+
+// description: The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
+Scale threshold =
+"Threshold "
+    & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Scale" ), "0" )
+    & " points above baseline"
+
+
+// ---------------------------------------------------------------------
+// PAGE 1: WHERE PEOPLE SIT (FRAME-01)
+// ---------------------------------------------------------------------
+
+// People at checkpoint
+// Create as: measure in _Measures. Visual axis: dim_checkpoint[checkpoint]. The page toggle is
+//            a single-select slicer on placement_toggle[placement]; with no selection it reads Source.
+// format: #,0
+// description: People at each checkpoint, per team and check-in month, by check-in placement or by source placement as the page toggle selects.
+People at checkpoint =
+VAR m = [Check-in month]
+VAR placement = SELECTEDVALUE ( placement_toggle[placement], "Source" )
+RETURN
+    IF (
+        placement = "Check-in",
+        CALCULATE (
+            COUNTROWS ( fact_placement ),
+            REMOVEFILTERS ( dim_month ),
+            fact_placement[checkin_month] = m
+        ),
+        CALCULATE (
+            COUNTROWS ( fact_placement ),
+            REMOVEFILTERS ( dim_month ),
+            fact_placement[checkin_month] = m,
+            REMOVEFILTERS ( dim_checkpoint ),
+            TREATAS ( VALUES ( dim_checkpoint[checkpoint_id] ), dim_checkpoint_source[checkpoint_id] )
+        )
+    ) + 0
+
+// Gap: higher
+// Create as: measure in _Measures, named "Gap higher"
+// format: #,0
+// description: People whose check-in checkpoint_id is higher than their source checkpoint_id in the check-in month.
+Gap higher =
+VAR m = [Check-in month]
+RETURN
+    CALCULATE (
+        COUNTROWS ( fact_placement ),
+        fact_placement[gap] > 0,
+        REMOVEFILTERS ( dim_month ),
+        fact_placement[checkin_month] = m
+    ) + 0
+
+// Gap: level
+// Create as: measure in _Measures, named "Gap level"
+// format: #,0
+// description: People whose check-in checkpoint_id equals their source checkpoint_id in the check-in month.
+Gap level =
+VAR m = [Check-in month]
+RETURN
+    CALCULATE (
+        COUNTROWS ( fact_placement ),
+        fact_placement[gap] = 0,
+        REMOVEFILTERS ( dim_month ),
+        fact_placement[checkin_month] = m
+    ) + 0
+
+// Gap: lower
+// Create as: measure in _Measures, named "Gap lower"
+// format: #,0
+// description: People whose check-in checkpoint_id is lower than their source checkpoint_id in the check-in month.
+Gap lower =
+VAR m = [Check-in month]
+RETURN
+    CALCULATE (
+        COUNTROWS ( fact_placement ),
+        fact_placement[gap] < 0,
+        REMOVEFILTERS ( dim_month ),
+        fact_placement[checkin_month] = m
+    ) + 0
+
+// Movement: up
+// Create as: measure in _Measures, named "Movement up"
+// format: #,0
+// description: Moved up, per team.
+Movement up =
+[Moved up]
+
+// Movement: held
+// Create as: measure in _Measures, named "Movement held"
+// format: #,0
+// description: People who held a seat at both counts and whose source checkpoint_id at the latest count equals the previous count.
+Movement held =
+VAR m = [Check-in month]
+VAR previousWeek =
+    CALCULATE ( MAX ( dim_month[checkin_week] ), REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m - 1 )
+VAR seatedAtBoth =
+    FILTER (
+        dim_person,
+        NOT ISBLANK ( dim_person[seat_assigned_week] )
+            && dim_person[seat_assigned_week] <= previousWeek
+    )
+VAR held =
+    FILTER (
+        seatedAtBoth,
+        VAR latest =
+            CALCULATE ( MAX ( fact_placement[source_checkpoint_id] ), REMOVEFILTERS ( dim_month ), fact_placement[checkin_month] = m )
+        VAR previous =
+            CALCULATE ( MAX ( fact_placement[source_checkpoint_id] ), REMOVEFILTERS ( dim_month ), fact_placement[checkin_month] = m - 1 )
+        RETURN
+            latest = previous
+    )
+RETURN
+    IF ( m >= 2, COUNTROWS ( held ) + 0 )
+
+// Movement: down
+// Create as: measure in _Measures, named "Movement down"
+// format: #,0
+// description: People who held a seat at both counts and whose source checkpoint_id at the latest count is lower than at the previous count.
+Movement down =
+VAR m = [Check-in month]
+VAR previousWeek =
+    CALCULATE ( MAX ( dim_month[checkin_week] ), REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = m - 1 )
+VAR seatedAtBoth =
+    FILTER (
+        dim_person,
+        NOT ISBLANK ( dim_person[seat_assigned_week] )
+            && dim_person[seat_assigned_week] <= previousWeek
+    )
+VAR movedDown =
+    FILTER (
+        seatedAtBoth,
+        VAR latest =
+            CALCULATE ( MAX ( fact_placement[source_checkpoint_id] ), REMOVEFILTERS ( dim_month ), fact_placement[checkin_month] = m )
+        VAR previous =
+            CALCULATE ( MAX ( fact_placement[source_checkpoint_id] ), REMOVEFILTERS ( dim_month ), fact_placement[checkin_month] = m - 1 )
+        RETURN
+            latest < previous
+    )
+RETURN
+    IF ( m >= 2, COUNTROWS ( movedDown ) + 0 )
+
+// Movement: seats arrived
+// Create as: measure in _Measures, named "Movement seats arrived"
+// format: #,0
+// description: Seats arrived, per team, shown apart from up, held and down.
+Movement seats arrived =
+[Seats arrived]
+
+// Largest group (three measures: the checkpoint, its people and its lever; same description)
+// Create as: measures in _Measures. Visual: a table with dim_team[team] and the three measures.
+// format: text; #,0 for Largest group people
+// description: Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
+Largest group =
+VAR counts =
+    ADDCOLUMNS ( ALL ( dim_checkpoint[checkpoint_id] ), "@people", [People at checkpoint] )
+VAR topRow = TOPN ( 1, counts, [@people], DESC, dim_checkpoint[checkpoint_id], ASC )
+VAR topId = MAXX ( topRow, dim_checkpoint[checkpoint_id] )
+RETURN
+    CALCULATE ( MAX ( dim_checkpoint[checkpoint] ), REMOVEFILTERS ( dim_checkpoint ), dim_checkpoint[checkpoint_id] = topId )
+
+// description: Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
+Largest group people =
+VAR counts =
+    ADDCOLUMNS ( ALL ( dim_checkpoint[checkpoint_id] ), "@people", [People at checkpoint] )
+VAR topRow = TOPN ( 1, counts, [@people], DESC, dim_checkpoint[checkpoint_id], ASC )
+RETURN
+    MAXX ( topRow, [@people] )
+
+// description: Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
+Largest group lever =
+VAR counts =
+    ADDCOLUMNS ( ALL ( dim_checkpoint[checkpoint_id] ), "@people", [People at checkpoint] )
+VAR topRow = TOPN ( 1, counts, [@people], DESC, dim_checkpoint[checkpoint_id], ASC )
+VAR topId = MAXX ( topRow, dim_checkpoint[checkpoint_id] )
+RETURN
+    CALCULATE ( MAX ( dim_checkpoint[lever] ), REMOVEFILTERS ( dim_checkpoint ), dim_checkpoint[checkpoint_id] = topId )
+
+
+// ---------------------------------------------------------------------
+// PAGE 2: FOUNDATION. Which uses matter most, and where do people get stuck?
+// ---------------------------------------------------------------------
+
+// Uses logged and ranked
+// Create as: measure in _Measures. Visual: dim_category[category] on the axis, sorted by this measure, descending.
+// format: #,0
+// description: Questions in each category, ranked from most to fewest.
+Uses logged and ranked =
+COUNTROWS ( fact_question )
+
+// Prompts tested against an answer key written first
+// Create as: measure in _Measures
+// format: 0.0%
+// description: Library items with answer_key_first true, over all library items.
+Prompts tested against an answer key written first =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0,
+    COUNTROWS ( dim_library_item )
+)
+
+// Requests matched to a tested prompt that already exists
+// Create as: measure in _Measures
+// format: 0.0%
+// description: Questions with action_taken of pointed to library, over all questions.
+Requests matched to a tested prompt that already exists =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( fact_question ), fact_question[action_taken] = "pointed to library" ) + 0,
+    COUNTROWS ( fact_question )
+)
+
+// Usage baseline by team
+// Create as: measure in _Measures. Reads one team at a time (dim_team[team] on the axis).
+// format: 0.0%
+// description: Weekly active share per team, averaged over the four weeks starting with the week the team's seats arrive.
+Usage baseline by team =
+IF (
+    HASONEVALUE ( dim_team[team] ),
+    VAR firstWeek = SELECTEDVALUE ( dim_team[seats_arrive_week] )
+    VAR baselineWeeks =
+        CALCULATETABLE (
+            VALUES ( dim_week[week_start] ),
+            REMOVEFILTERS ( dim_month ),
+            REMOVEFILTERS ( dim_week ),
+            dim_week[week_start] >= firstWeek,
+            dim_week[week_start] <= firstWeek + 21
+        )
+    RETURN
+        AVERAGEX (
+            baselineWeeks,
+            VAR wk = dim_week[week_start]
+            RETURN
+                CALCULATE (
+                    [Weekly active share],
+                    REMOVEFILTERS ( dim_month ),
+                    REMOVEFILTERS ( dim_week ),
+                    dim_week[week_start] = wk
+                )
+        )
+)
+
+
+// ---------------------------------------------------------------------
+// PAGE 3: EXECUTION. Does it hold up in everyday use?
+// ---------------------------------------------------------------------
+
+// First use within two weeks of training
+// Create as: measure in _Measures
+// format: 0.0%
+// description: Training attendees with a run of the item shown in their session in the session week or the week after, over all training attendees.
+First use within two weeks of training =
+VAR ranShownItem =
+    FILTER (
+        fact_training,
+        VAR personId = fact_training[person_id]
+        VAR itemId = fact_training[item_id_shown]
+        VAR sessionWeek = fact_training[session_week]
+        RETURN
+            CALCULATE (
+                COUNTROWS ( fact_library_run_person ),
+                REMOVEFILTERS ( dim_week ),
+                REMOVEFILTERS ( dim_month ),
+                fact_library_run_person[person_id] = personId,
+                fact_library_run_person[item_id] = itemId,
+                fact_library_run_person[week_start] >= sessionWeek,
+                fact_library_run_person[week_start] <= sessionWeek + 7
+            ) > 0
+    )
+RETURN
+    DIVIDE ( COUNTROWS ( ranShownItem ) + 0, COUNTROWS ( fact_training ) )
+
+// Repeat use within 30 days
+// Create as: measure in _Measures. The Execution tile's rule read at the end of the period,
+//            which is the check-in date of the last check-in month (2026-11-01).
+//            For the page's "by month" view, use [Execution tile] against dim_month.
+// format: 0.0%
+// description: People with another active week starting within 30 days after their first active week, over people whose first active week starts at least 30 days before the end of the period.
+Repeat use within 30 days =
+VAR lastMonth = CALCULATE ( MAX ( dim_month[checkin_month] ), REMOVEFILTERS ( dim_month ) )
+RETURN
+    CALCULATE ( [Execution tile], REMOVEFILTERS ( dim_month ), dim_month[checkin_month] = lastMonth )
+
+// Recurring questions covered by a tested prompt
+// Create as: measure in _Measures
+// format: 0.0%
+// description: Questions with repeat_flag true whose category had a live library item in the week they were asked, over all questions with repeat_flag true.
+Recurring questions covered by a tested prompt =
+VAR repeatQuestions = FILTER ( fact_question, fact_question[repeat_flag] )
+VAR covered =
+    FILTER (
+        repeatQuestions,
+        VAR questionCategory = fact_question[category]
+        VAR askedWeek = fact_question[question_week]
+        RETURN
+            NOT ISEMPTY (
+                FILTER (
+                    ALL ( dim_library_item ),
+                    dim_library_item[category] = questionCategory
+                        && dim_library_item[published_week] <= askedWeek
+                        && ( ISBLANK ( dim_library_item[status_week] ) || dim_library_item[status_week] > askedWeek )
+                )
+            )
+    )
+RETURN
+    DIVIDE ( COUNTROWS ( covered ) + 0, COUNTROWS ( repeatQuestions ) )
+
+// Tested prompts passing their cases
+// Create as: measure in _Measures. "Live" and "latest" are read at the check-in week and
+//            check-in date of the check-in month (month 6, the end of the period, by default).
+// format: 0.0%
+// description: Live library items whose latest standard-tier run is passing, over all live library items.
+Tested prompts passing their cases =
+VAR checkinWeek = [Check-in week]
+VAR checkinDate = [Check-in date]
+VAR liveItems =
+    FILTER (
+        dim_library_item,
+        dim_library_item[published_week] <= checkinWeek
+            && ( ISBLANK ( dim_library_item[status_week] ) || dim_library_item[status_week] > checkinWeek )
+    )
+VAR passingItems =
+    FILTER (
+        liveItems,
+        VAR itemId = dim_library_item[item_id]
+        VAR latestRun =
+            TOPN (
+                1,
+                FILTER (
+                    ALL ( fact_test_run ),
+                    fact_test_run[item_id] = itemId
+                        && fact_test_run[model_tier] = "standard"
+                        && fact_test_run[run_date] <= checkinDate
+                ),
+                fact_test_run[run_date], DESC,
+                fact_test_run[run_id], DESC
+            )
+        RETURN
+            MAXX ( latestRun, IF ( fact_test_run[passing], 1, 0 ) ) = 1
+    )
+RETURN
+    DIVIDE ( COUNTROWS ( passingItems ) + 0, COUNTROWS ( liveItems ) )
+
+
+// ---------------------------------------------------------------------
+// PAGE 4: REFINEMENT. What earns its place, and at what cost?
+// ---------------------------------------------------------------------
+
+// Tested prompts that pass on a smaller model
+// Create as: measure in _Measures. A count; by item it reads 1 or 0.
+// format: #,0
+// description: Library items whose latest smaller-tier run is passing.
+Tested prompts that pass on a smaller model =
+VAR passingItems =
+    FILTER (
+        dim_library_item,
+        VAR itemId = dim_library_item[item_id]
+        VAR latestRun =
+            TOPN (
+                1,
+                FILTER ( ALL ( fact_test_run ), fact_test_run[item_id] = itemId && fact_test_run[model_tier] = "smaller" ),
+                fact_test_run[run_date], DESC,
+                fact_test_run[run_id], DESC
+            )
+        RETURN
+            MAXX ( latestRun, IF ( fact_test_run[passing], 1, 0 ) ) = 1
+    )
+RETURN
+    COUNTROWS ( passingItems ) + 0
+
+// Cost per use
+// Create as: measure in _Measures. Visual: dim_library_item[item_id] on the axis, fact_test_run[model_tier] in the legend.
+// format: #,0
+// description: Median tokens per run, per item and model tier.
+Cost per use =
+MEDIAN ( fact_test_run[tokens_per_run] )
+
+// Cost index
+// Create as: nothing to create. It is the measure under Supporting measures, same definition.
+// description: Median tokens per run on the standard tier over median tokens per run on the smaller tier, per item.
+
+// Prompts retired or merged
+// Create as: first the calculated column status_month on dim_library_item, then the measure in _Measures.
+//            Visual: dim_month[month_label] on the axis; a table beside it with item_id, status,
+//            merged_into_item_id and status_month shows merged_into.
+// format: column 0 (it shows as "Month 5" with the format string "Month "0); measure #,0
+// description: Library items with status retired or merged, counted by the check-in month of their status_week, with merged_into_item_id shown for merged items.
+status_month =
+LOOKUPVALUE ( dim_week[checkin_month], dim_week[week_start], dim_library_item[status_week] )
+
+// description: Library items with status retired or merged, counted by the check-in month of their status_week, with merged_into_item_id shown for merged items.
+Prompts retired or merged =
+COUNTROWS (
+    FILTER (
+        dim_library_item,
+        dim_library_item[status] IN { "retired", "merged" }
+            && dim_library_item[status_month] IN VALUES ( dim_month[checkin_month] )
+    )
+) + 0
+
+
+// ---------------------------------------------------------------------
+// PAGE 5: SCALE. Where has it changed the work?
+// ---------------------------------------------------------------------
+
+// Impact in people's own words
+// Create as: measure in _Measures. Visual: dim_team[team] on the axis, fact_checkin[q5_if_gone] in the legend.
+// format: #,0
+// description: Check-in responses per team for each answer to q5_if_gone, for the check-in month.
+Impact in people's own words =
+VAR m = [Check-in month]
+RETURN
+    CALCULATE (
+        COUNTROWS ( fact_checkin ),
+        REMOVEFILTERS ( dim_month ),
+        fact_checkin[checkin_month] = m,
+        KEEPFILTERS ( NOT ISBLANK ( fact_checkin[q5_if_gone] ) )
+    )
+
+// Uses taken up beyond the first team
+// Create as: measure in _Measures. A count over the whole period; by item it reads 1 or 0.
+// format: #,0
+// description: Library items with runs in fact_library_run from 2 or more teams.
+Uses taken up beyond the first team =
+COUNTROWS (
+    FILTER (
+        dim_library_item,
+        CALCULATE (
+            DISTINCTCOUNT ( fact_library_run[team] ),
+            REMOVEFILTERS ( dim_team ),
+            REMOVEFILTERS ( dim_week ),
+            REMOVEFILTERS ( dim_month )
+        ) >= 2
+    )
+) + 0
+
+// Week the second team started
+// Create as: measure in _Measures. Reads one item at a time. It returns the week's week_no
+//            and the format string prints it as the week label ("Week 7"), since no calendar
+//            date appears on a page; it sorts in week order.
+// format: "Week "0
+// description: Per library item, the earliest week_start in fact_library_run with runs from a team other than the owner_team.
+Week the second team started =
+VAR ownerTeam = SELECTEDVALUE ( dim_library_item[owner_team] )
+VAR firstWeek =
+    CALCULATE (
+        MIN ( fact_library_run[week_start] ),
+        fact_library_run[team] <> ownerTeam,
+        REMOVEFILTERS ( dim_team ),
+        REMOVEFILTERS ( dim_week ),
+        REMOVEFILTERS ( dim_month )
+    )
+RETURN
+    IF (
+        NOT ISBLANK ( ownerTeam ) && NOT ISBLANK ( firstWeek ),
+        CALCULATE ( MAX ( dim_week[week_no] ), REMOVEFILTERS ( dim_week ), REMOVEFILTERS ( dim_month ), dim_week[week_start] = firstWeek )
+    )
+
+// Share of people in the air (two measures: latest and baseline; same description)
+// Create as: measures in _Measures. Visual: dim_team[team] on the axis, both measures as values.
+// format: 0.0%
+// description: People with a source checkpoint_id of 7, 8 or 9, over all people in the team, per team, for the latest check-in month and the team's baseline month.
+Share of people in the air latest =
+VAR m = [Check-in month]
+RETURN
+    DIVIDE (
+        CALCULATE (
+            COUNTROWS ( fact_placement ),
+            fact_placement[source_checkpoint_id] >= 7,
+            REMOVEFILTERS ( dim_month ),
+            fact_placement[checkin_month] = m
+        ) + 0,
+        COUNTROWS ( dim_person )
+    )
+
+// description: People with a source checkpoint_id of 7, 8 or 9, over all people in the team, per team, for the latest check-in month and the team's baseline month.
+Share of people in the air baseline =
+VAR airAtBaseline =
+    SUMX (
+        VALUES ( dim_team[team] ),
+        VAR b = CALCULATE ( MAX ( dim_team[baseline_month] ) )
+        RETURN
+            CALCULATE (
+                COUNTROWS ( fact_placement ),
+                fact_placement[source_checkpoint_id] >= 7,
+                REMOVEFILTERS ( dim_month ),
+                fact_placement[checkin_month] = b
+            )
+    )
+RETURN
+    DIVIDE ( airAtBaseline + 0, COUNTROWS ( dim_person ) )
+
+
+// =====================================================================
+// DISPLAY HELPERS (not in measures.md)
+// Labels, colours and counts the pages print. They define no new figure; each
+// reads a measure above. Their descriptions are written here, not in measures.md.
+// =====================================================================
+
+// Selected week label
+// Create as: measure in _Measures
+// format: text
+// description: Helper, not in measures.md. The week label of the selected week, or Week 24 when no week is selected.
+Selected week label =
+VAR wk = MAX ( dim_week[week_start] )
+RETURN
+    CALCULATE ( SELECTEDVALUE ( dim_week[week_label] ), dim_week[week_start] = wk )
+
+// Header line
+// Create as: measure in _Measures. Page 0 header.
+// format: text
+// description: Helper, not in measures.md. Headcount, Seats assigned and Seats active this week in one line, for the page 0 header.
+Header line =
+FORMAT ( [Headcount], "#,0" ) & " people · "
+    & FORMAT ( [Seats assigned], "#,0" ) & " seats assigned · "
+    & FORMAT ( [Seats active this week], "#,0" ) & " seats active in "
+    & [Selected week label]
+
+// Verdict colours: four measures for the tiles' verdict text (Format, conditional formatting, Field value).
+// Amber only for the attention state, ink otherwise.
+// format: text
+// description: Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
+Foundation verdict colour =
+IF ( [Foundation verdict] = "Not yet working", "#B07E23", "#172529" )
+
+// description: Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
+Execution verdict colour =
+IF ( [Execution verdict] = "Not yet working", "#B07E23", "#172529" )
+
+// description: Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
+Refinement verdict colour =
+IF ( [Refinement verdict] = "Not yet working", "#B07E23", "#172529" )
+
+// description: Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
+Scale verdict colour =
+IF ( [Scale verdict] = "Not yet working", "#B07E23", "#172529" )
+
+// Requests matched count
+// Create as: measure in _Measures. Page 2, beside the share, so CHECK question 7 reads the count (385 of 778).
+// format: text
+// description: Helper, not in measures.md. The counts behind Requests matched to a tested prompt that already exists: questions pointed to library, of all questions.
+Requests matched count =
+FORMAT ( CALCULATE ( COUNTROWS ( fact_question ), fact_question[action_taken] = "pointed to library" ) + 0, "#,0" )
+    & " of " & FORMAT ( COUNTROWS ( fact_question ) + 0, "#,0" ) & " questions"
+
+// Repeat-flagged questions
+// Create as: measure in _Measures. Page 3, for CHECK question 12 (Operations, Summarising, by month).
+// format: #,0
+// description: Helper, not in measures.md. Questions with repeat_flag true.
+Repeat-flagged questions =
+CALCULATE ( COUNTROWS ( fact_question ), fact_question[repeat_flag] = TRUE () ) + 0
+
+// Second team
+// Create as: measure in _Measures. Page 5, beside Week the second team started (CHECK question 16).
+// format: text
+// description: Helper, not in measures.md. Per library item, the team other than the owner_team with the earliest run in fact_library_run; a tie goes to the team name first in alphabetical order.
+Second team =
+VAR ownerTeam = SELECTEDVALUE ( dim_library_item[owner_team] )
+VAR otherTeams =
+    CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( fact_library_run[team] ), "@first", CALCULATE ( MIN ( fact_library_run[week_start] ) ) ),
+        fact_library_run[team] <> ownerTeam,
+        REMOVEFILTERS ( dim_team ),
+        REMOVEFILTERS ( dim_week ),
+        REMOVEFILTERS ( dim_month )
+    )
+VAR topRow = TOPN ( 1, otherTeams, [@first], ASC, fact_library_run[team], ASC )
+RETURN
+    IF ( NOT ISBLANK ( ownerTeam ), MAXX ( topRow, fact_library_run[team] ) )
