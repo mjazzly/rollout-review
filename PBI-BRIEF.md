@@ -4,14 +4,14 @@ Read DASH-02-DESIGN.md, measures.md, DICTIONARY.md and CHECK.md before this file
 
 ## 1. How this build runs
 
-- Claude Code runs on the Mac in this folder and drafts everything written: the DAX measures file, the theme file, and page-by-page build instructions. It never touches the PC.
-- Megat builds on the PC in Power BI Desktop over Remote Desktop, following the instructions, and sends screenshots of the PC screen back as the feedback channel.
+- Claude Code runs on the Mac in this folder and writes everything: the DAX measures file, the theme file, the model's measures, and every report page, as the project's report files (one script per page under `scripts/`). It never touches the PC. (Changed on 10 Nov 2026, after page 0 built by hand ran out of room: pages are now written from the Mac, not built by hand.)
+- Megat builds nothing and moves nothing by hand on the PC. His part for each page: close Power BI Desktop, `git pull`, open the .pbip, send a screenshot of the page, approve or list fixes.
 - The PC has the repo cloned at `C:\repos\rollout-review` (clone it there if not yet; Git on the PC already carries the noreply identity from the data-answers build). The report is saved as a Power BI project, `report/Rollout review.pbip`, and committed from the PC on Megat's word. (Changed from a .pbix on 9 Nov 2026, after the model check, so the measures go into the model's text files from the Mac, as for Branch review.)
 - Nothing is published until the check in section 8 is recorded.
 
 ## 2. Data load
 
-- Get Data from the `data` folder: load all fourteen CSVs as separate queries, names as the file names without `.csv`.
+- Get Data from the `data` folder: load all fifteen CSVs as separate queries, names as the file names without `.csv`.
 - Set the folder path as a Power Query parameter `DataFolder` (default `C:\repos\rollout-review\data`) so the file opens on any machine by changing one value.
 - Types: every `*_week`, `week_start`, `*_date` column as Date; every `*_id` as Text except `checkpoint_id`, `checkin_checkpoint_id`, `source_checkpoint_id` and `gap` as Whole Number; percentages and counts as Whole Number or Decimal as the dictionary says; booleans as True/False.
 - Add to `dim_week` in Power Query: `week_no` (1 to 24, from the row order of `week_start`) and `week_label` = "Week " & week_no. Sort `week_label` by `week_no`. Every axis and slicer uses `week_label` or `checkin_month`; **no calendar date appears on any page**.
@@ -91,14 +91,18 @@ Read from the question log and the usage dashboards, with the check-in supplying
 
 ## 7. Build loop
 
-1. Claude Code writes `measures.dax`, `theme.json`, `data/dim_threshold.csv`, and `BUILD-STEPS.md` (section 2 to 6 turned into numbered on-screen steps per page, each step one action in Power BI Desktop).
+1. Claude Code writes `measures.dax`, `theme.json`, `data/dim_threshold.csv`, and `BUILD-STEPS.md` (the data load and model steps, then one section per page).
 2. Megat loads data and model on the PC, sends a screenshot of the model view. Claude Code checks relationships against section 3 before any measure is created.
-3. Measures pasted in, one page built at a time in page order, a screenshot per page back to Claude Code, fixes written as a short list, applied, next page.
-4. The project is committed from the PC after page 0 and after page 5 on Megat's word, and whenever Claude Code needs to read or write the model files.
+3. Measures go from `measures.dax` into the model files (section 4). `measures.dax` stays the only source for measures.
+4. Pages are written one at a time, in page order, by `scripts/pageN_pbir.py`. A page is fixed and approved before the next one starts.
+5. Before every push the page script checks its own layout and refuses to write the page if any check fails: every visual inside 1280 by 720; nothing overlapping except a panel and the pieces on it; repeated elements sharing one exact size; no chart smaller than Desktop can draw; every format setting name one that Desktop wrote in Megat's own files.
+6. A format setting name is never guessed. When a page needs one not yet seen, Claude Code names one visual for Megat to format by hand and how; he saves and pushes, and Claude Code reads the name from that visual's file and applies it everywhere.
+7. With every push, Claude Code gives the figures the page should show, from check.py or the CSVs, so the screen can be compared against them.
+8. The project is committed and pushed after each approved page. The Checks page stays hidden until publish.
 
 ## 8. The check
 
-- Open CHECK.md. For each of the eighteen questions, read the figure from the named page with the filter state the question implies (the whole period unless a month or team is named). Write the figure read from the visual in the "matched" column as Yes with the figure, or No with what the visual showed.
+- When all six pages are approved, Claude Code fills the "matched" column in CHECK.md from Megat's screenshots, question by question: for each of the eighteen questions, the figure read from the named page with the filter state the question implies (the whole period unless a month or team is named), as Yes with the figure, or No with what the visual showed. Megat confirms each row. Where a screenshot does not show the figure, Claude Code names the page and filter state to screenshot.
 - Watch question 7: the whole-period share and the month 6 Foundation tile both round to 49.5%, so confirm the count (385 of 778) rather than the percentage alone.
 - Any No is fixed in the measure or the visual, never in CHECK.md, and the check is rerun for that question.
 - The final count (for example 18 of 18) is written at the top of CHECK.md and committed. That count is the figure the site page carries.

@@ -3,9 +3,9 @@
   "name": "p0_refinement_panel",
   "position": {
     "x": 648,
-    "y": 132,
+    "y": 128,
     "z": 2000,
-    "height": 384,
+    "height": 338,
     "width": 300,
     "tabOrder": 1300
   },

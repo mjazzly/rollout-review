@@ -3,9 +3,9 @@
   "name": "p0_foundation_panel",
   "position": {
     "x": 16,
-    "y": 132,
+    "y": 128,
     "z": 2000,
-    "height": 384,
+    "height": 338,
     "width": 300,
     "tabOrder": 300
   },

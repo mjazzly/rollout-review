@@ -4,6 +4,8 @@ The on-screen steps for `PBI-BRIEF.md` sections 2 to 6, on the PC over Remote De
 
 This first part covers the data load and the model that pages 0 to 5 all read (brief sections 2 and 3). It ends at the model view screenshot (step 31). Section D then saves it as a Power BI project; the measures (`measures.dax`) and the page steps follow.
 
+From page 0 on, pages are not built by hand. Each page is written from the Mac by its script (`scripts/pageN_pbir.py`), and the steps on the PC are the same every time: close Desktop, pull, open, screenshot, approve (section F onwards; brief section 7).
+
 ## What the model adds to the brief
 
 Four things the brief's section 3 table does not list. Each one is there so a measure or slicer can work:
@@ -468,45 +470,77 @@ All four checks matched on the PC, 9 Nov 2026 (check 3 once all twelve measures 
 
 What the page holds (brief section 6): a header strip, four stage tiles in one row, the stage split by team, and the moved-up count.
 
-The first build by hand (old steps 50 to 65) ran out of room: the sizes given were too small for the text, so the question ran into the card label, the reference labels were cut off and the sparkline was too short to draw. Page 0 is now written from the Mac by `scripts/page0_pbir.py`, straight into the project's report files, the way the measures are. The card, line chart, shape and navigator settings copy the ones Desktop wrote on the PC (commit 22ebf37), and the script checks that every visual sits on the page and that nothing overlaps.
+Page 0 is written by `scripts/page0_pbir.py`, using the shared checks in `scripts/pbir.py` (brief section 7, steps 5 and 6). `scripts/page0_figures.py` prints the stage split figures from the CSVs.
+
+### Round 2 (10 Nov 2026): the fixes from the first screenshot
+
+| Fix asked | What changed |
+|---|---|
+| Sparklines blank | Axes, legend and title off; height 100, the smallest a line chart may be on this page set (276 by 67 and 276 by 74 did not draw) |
+| Stage charts: all six teams, no scrollbar, same order, same plot, one legend | Both charts identical but for the measure and the title, 184 high (24 px per bar), legends off, one shared legend line above them, both sorted by team A to Z |
+| Moved up: title outside its panel, label clipped | A white panel holding a title text box and the card, title off on the card |
+| Execution figure higher than the others | Each figure's label is a text box of fixed height above its card, so the four figures share one line |
+| Shorter tiles, taller bottom row | Tiles 384 to 338 high; bottom row 184 to 212. The rule, the same in all four tiles, is one line under the tile row (brief section 6 puts it in each tile: approve or reject this with the page) |
 
 Layout on the 1280 by 720 page, in pixels:
 
 | Piece | x | y | w | h |
 |---|---|---|---|---|
-| Page navigator | 16 | 8 | 1248 | 30 |
-| Title text box | 16 | 40 | 1248 | 56 |
-| Header line card | 16 | 96 | 1248 | 28 |
-| Tile panels (Foundation, Execution, Refinement, Scale) | 16, 332, 648, 964 | 132 | 300 | 384 |
-| In each tile: stage and question | tile x + 12 | 138 | 276 | 66 |
-| In each tile: card (figure, verdict, trend, threshold) | tile x + 12 | 204 | 276 | 182 |
-| In each tile: sparkline, months 2 to 6 | tile x + 12 | 388 | 276 | 74 |
-| In each tile: rule text, 8 | tile x + 12 | 464 | 276 | 52 |
-| Stage split, baseline | 16 | 528 | 456 | 184 |
-| Stage split, latest (legend on top) | 488 | 528 | 456 | 184 |
-| Moved up since the last count | 960 | 528 | 304 | 184 |
+| Page navigator | 16 | 6 | 1248 | 30 |
+| Title text box | 16 | 38 | 1248 | 56 |
+| Header line card | 16 | 94 | 1248 | 28 |
+| Tile panels | 16, 332, 648, 964 | 128 | 300 | 338 |
+| In each tile: stage and question | tile x + 12 | 134 | 276 | 64 |
+| In each tile: the figure's label | tile x + 12 | 198 | 276 | 40 |
+| In each tile: card (figure, verdict, trend, threshold) | tile x + 12 | 238 | 276 | 124 |
+| In each tile: sparkline, Month 2 to Month 6 | tile x + 12 | 362 | 276 | 100 |
+| Rule line | 16 | 470 | 1248 | 24 |
+| Stage split heading, legend | 16, 536 | 500 | 520, 408 | 26 |
+| Stage split charts, baseline and latest | 16, 488 | 528 | 456 | 184 |
+| Moved up panel (title, card inside) | 960 | 500 | 304 | 212 |
 
-The script also sets the Checks page to hidden, so the navigator does not list it. Two settings from the old steps are left at Desktop's default because their file names were not in Desktop's own files yet: the reference labels stack one under another rather than side by side, and the Seats arrived label keeps its measure name.
+Settings still to come by hand (brief section 7, step 6), because Desktop has not written them in any of Megat's files yet. Until then these show Desktop's defaults:
+
+- the stage colours in the two stage charts (grey, pale marine, marine), and white data labels on In the air
+- text colour in text boxes (ink soft for secondary lines, and the three legend squares)
 
 ### On the PC
 
-50. Close Power BI Desktop (save first if it asks). It does not notice files changing underneath it.
-51. In PowerShell, in the rollout-review folder, `git pull`.
-52. Open `report/Rollout review.pbip`. If Desktop reports a problem with a visual, send a screenshot of the message.
-53. Send a screenshot of the whole page. It should read:
-    - Header: `1,200 people · 1,167 seats assigned · 505 seats active in Week 24`
-    - Foundation: 49.5%, **Working**, ↓ Down, Threshold 40%
-    - Execution: 83.6%, **Working**, ↓ Down, Threshold 60%
-    - Refinement: 9.5%, **Not yet working** in amber, → Flat, Threshold 50%
-    - Scale: +10.1, **Working**, ↑ Up, Threshold 10 points above baseline
-    - Moved up: 98, with Seats arrived 0 beside it
-    - Two stage charts, six teams each, Consulting at the top
-    - The navigator lists Rollout review only, not Checks
+50. Close Power BI Desktop (save first if it asks).
+51. In PowerShell, in the rollout-review folder: `git pull`.
+52. Open `report/Rollout review.pbip`.
+53. Format by hand, on these two visuals only, then **File**, **Save**:
+    - The **legend** text box above the stage charts (it reads `■ On the ground ■ At the gate ■ In the air`): select each `■` in turn and set its font colour: the first `#7E8E92`, the second `#CFE0EA`, the third `#2C5F7C` (font colour, **More colours**, hex).
+    - The **right-hand stage chart** (Latest count, Month 6): **Format**, **Bars**, **Colours**: On the ground `#7E8E92`, At the gate `#CFE0EA`, In the air `#2C5F7C`. Then **Data labels**, **Apply settings to** series `In the air`: colour `#FFFFFF`.
+54. Send a screenshot of the whole page, then commit and push (`git add report`, `git commit -m "Page 0: two visuals formatted by hand for setting names"`, `git push`).
 
-Fixes come back as a short list, made in the script and pulled again. Do not move or edit page 0's visuals on the PC until it is agreed: the next run of the script replaces the whole page. Once page 0 is agreed, it is committed from the PC (brief section 7, step 4).
+### Figures page 0 should show
 
----
+From check.py and the CSVs (the on-screen checks 1 to 4 in section E matched these):
+
+| Piece | Should read |
+|---|---|
+| Header line | `1,200 people · 1,167 seats assigned · 505 seats active in Week 24` |
+| Foundation | 49.5%, Working, ↓ Down, Threshold 40%; line 53.9%, 55.4%, 57.2%, 53.1%, 49.5% |
+| Execution | 83.6%, Working, ↓ Down, Threshold 60%; line 86.1%, 85.7%, 84.7%, 83.8%, 83.6% |
+| Refinement | 9.5%, Not yet working (amber), → Flat, Threshold 50%; line 0.0%, 5.6%, 8.7%, 9.5%, 9.5% |
+| Scale | +10.1, Working, ↑ Up, Threshold 10 points above baseline; line 0.0, 0.0, +4.9, +8.6, +10.1 |
+| Moved up | 98, with Seats arrived 0 |
+| Navigator | Rollout review only (Checks is hidden) |
+
+Stage split, by source placement (`python3 scripts/page0_figures.py`; the labels show whole percentages, so 16.5% shows as 17%):
+
+| Team | Baseline month | Baseline: ground, gate, air | Month 6: ground, gate, air |
+|---|---:|---|---|
+| Consulting | 3 | 12.0%, 41.0%, 47.0% | 9.0%, 30.7%, 60.3% |
+| Finance | 3 | 16.5%, 74.0%, 9.5% | 17.0%, 70.0%, 13.0% |
+| Legal | 2 | 71.7%, 21.7%, 6.7% | 79.2%, 13.3%, 7.5% |
+| Operations | 3 | 30.4%, 60.4%, 9.2% | 22.8%, 50.4%, 26.8% |
+| People | 4 | 33.8%, 43.8%, 22.3% | 37.7%, 32.3%, 30.0% |
+| Technology | 3 | 20.0%, 37.5%, 42.5% | 19.5%, 28.5%, 52.0% |
+
+The In the air shares match check 4 (section E, step 48).
 
 ## Next
 
-- G. Page 1, Where people sit, then pages 2 to 5, one page at a time, a screenshot per page
+- G. Page 1, Where people sit, written by `scripts/page1_pbir.py` once page 0 is approved; then pages 2 to 5 the same way, one at a time

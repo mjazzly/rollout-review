@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p0_moved_up",
+  "name": "p0_moved_card",
   "position": {
-    "x": 960,
-    "y": 528,
-    "z": 2000,
-    "height": 184,
-    "width": 304,
-    "tabOrder": 2500
+    "x": 972,
+    "y": 538,
+    "z": 3000,
+    "height": 168,
+    "width": 280,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -60,7 +60,7 @@
               }
             ],
             "metadata": "_Measures.Moved up since last count",
-            "id": "field-739e9f11-f9bb-4bfe-a2fb-f546c79ca31c",
+            "id": "field-2ea604b1-1781-490c-bf25-a897da46015b",
             "order": 0
           }
         }
@@ -141,14 +141,20 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
-            },
-            "text": {
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Moved up since the last count'"
+                  "Value": "false"
                 }
               }
             }

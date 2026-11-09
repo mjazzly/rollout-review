@@ -3,8 +3,8 @@
   "name": "p0_title",
   "position": {
     "x": 16,
-    "y": 40,
-    "z": 1000,
+    "y": 38,
+    "z": 3000,
     "height": 56,
     "width": 1248,
     "tabOrder": 100
@@ -21,9 +21,8 @@
                   {
                     "value": "Rollout review",
                     "textStyle": {
-                      "fontWeight": "bold",
                       "fontSize": "18pt",
-                      "color": "#172529"
+                      "fontWeight": "bold"
                     }
                   }
                 ]
@@ -33,16 +32,14 @@
                   {
                     "value": "Read from the question log, the usage dashboards, the library's records, the run log and the check-in · ",
                     "textStyle": {
-                      "fontSize": "10pt",
-                      "color": "#4F6166"
+                      "fontSize": "10pt"
                     }
                   },
                   {
                     "value": "Week 1 to Week 24, six check-ins",
                     "textStyle": {
-                      "fontWeight": "bold",
                       "fontSize": "10pt",
-                      "color": "#4F6166"
+                      "fontWeight": "bold"
                     }
                   }
                 ]
@@ -54,6 +51,19 @@
     },
     "visualContainerObjects": {
       "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
         {
           "properties": {
             "show": {

@@ -3,11 +3,11 @@
   "name": "p0_refinement_card",
   "position": {
     "x": 660,
-    "y": 204,
+    "y": 238,
     "z": 3000,
-    "height": 182,
+    "height": 124,
     "width": 276,
-    "tabOrder": 1500
+    "tabOrder": 1600
   },
   "visual": {
     "visualType": "cardVisual",
@@ -60,7 +60,7 @@
               }
             ],
             "metadata": "_Measures.Refinement tile",
-            "id": "field-1a451baa-16a2-4af8-bd8f-0f0b2b1ecef6",
+            "id": "field-0c11b3e5-3739-475f-8ec4-e7edffcbf12f",
             "order": 0
           }
         },
@@ -88,7 +88,7 @@
               }
             ],
             "metadata": "_Measures.Refinement tile",
-            "id": "field-654b2d48-75cd-49c7-9178-65280feef5c3",
+            "id": "field-a6405e7c-5fe2-49a1-9bdb-0bb697769ff5",
             "order": 1
           }
         },
@@ -116,7 +116,7 @@
               }
             ],
             "metadata": "_Measures.Refinement tile",
-            "id": "field-f707f6fa-b07e-467e-a792-42f723eea8de",
+            "id": "field-81975472-dd72-4007-8492-6a613824bcab",
             "order": 2
           }
         }
@@ -140,17 +140,26 @@
       "label": [
         {
           "properties": {
-            "fontSize": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "false"
                 }
               }
-            },
-            "textWrap": {
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Refinement tile"
+          }
+        }
+      ],
+      "divider": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -210,7 +219,7 @@
           },
           "selector": {
             "metadata": "_Measures.Refinement tile",
-            "id": "field-1a451baa-16a2-4af8-bd8f-0f0b2b1ecef6"
+            "id": "field-0c11b3e5-3739-475f-8ec4-e7edffcbf12f"
           }
         },
         {
@@ -241,7 +250,7 @@
               }
             ],
             "metadata": "_Measures.Refinement tile",
-            "id": "field-1a451baa-16a2-4af8-bd8f-0f0b2b1ecef6"
+            "id": "field-0c11b3e5-3739-475f-8ec4-e7edffcbf12f"
           }
         },
         {
@@ -256,7 +265,7 @@
           },
           "selector": {
             "metadata": "_Measures.Refinement tile",
-            "id": "field-654b2d48-75cd-49c7-9178-65280feef5c3"
+            "id": "field-a6405e7c-5fe2-49a1-9bdb-0bb697769ff5"
           }
         },
         {
@@ -282,7 +291,7 @@
           },
           "selector": {
             "metadata": "_Measures.Refinement tile",
-            "id": "field-f707f6fa-b07e-467e-a792-42f723eea8de"
+            "id": "field-81975472-dd72-4007-8492-6a613824bcab"
           }
         }
       ],

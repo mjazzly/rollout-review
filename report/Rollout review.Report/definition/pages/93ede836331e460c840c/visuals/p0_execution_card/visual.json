@@ -3,11 +3,11 @@
   "name": "p0_execution_card",
   "position": {
     "x": 344,
-    "y": 204,
+    "y": 238,
     "z": 3000,
-    "height": 182,
+    "height": 124,
     "width": 276,
-    "tabOrder": 1000
+    "tabOrder": 1100
   },
   "visual": {
     "visualType": "cardVisual",
@@ -60,7 +60,7 @@
               }
             ],
             "metadata": "_Measures.Execution tile",
-            "id": "field-b79c95f5-75d3-4792-abfa-cff9383217f1",
+            "id": "field-7990a7f7-e8ca-4985-8d39-53d630218232",
             "order": 0
           }
         },
@@ -88,7 +88,7 @@
               }
             ],
             "metadata": "_Measures.Execution tile",
-            "id": "field-b621f866-a47d-4d5a-bc99-2fa7d601045d",
+            "id": "field-999d4207-40ee-4c51-be74-4bcfd22b4f53",
             "order": 1
           }
         },
@@ -116,7 +116,7 @@
               }
             ],
             "metadata": "_Measures.Execution tile",
-            "id": "field-d2bf1400-94d3-448c-8d70-e39512fdc6e4",
+            "id": "field-e572b285-3a3a-49f8-be6b-a26c8357fd95",
             "order": 2
           }
         }
@@ -140,17 +140,26 @@
       "label": [
         {
           "properties": {
-            "fontSize": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "false"
                 }
               }
-            },
-            "textWrap": {
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Execution tile"
+          }
+        }
+      ],
+      "divider": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -210,7 +219,7 @@
           },
           "selector": {
             "metadata": "_Measures.Execution tile",
-            "id": "field-b79c95f5-75d3-4792-abfa-cff9383217f1"
+            "id": "field-7990a7f7-e8ca-4985-8d39-53d630218232"
           }
         },
         {
@@ -241,7 +250,7 @@
               }
             ],
             "metadata": "_Measures.Execution tile",
-            "id": "field-b79c95f5-75d3-4792-abfa-cff9383217f1"
+            "id": "field-7990a7f7-e8ca-4985-8d39-53d630218232"
           }
         },
         {
@@ -256,7 +265,7 @@
           },
           "selector": {
             "metadata": "_Measures.Execution tile",
-            "id": "field-b621f866-a47d-4d5a-bc99-2fa7d601045d"
+            "id": "field-999d4207-40ee-4c51-be74-4bcfd22b4f53"
           }
         },
         {
@@ -282,7 +291,7 @@
           },
           "selector": {
             "metadata": "_Measures.Execution tile",
-            "id": "field-d2bf1400-94d3-448c-8d70-e39512fdc6e4"
+            "id": "field-e572b285-3a3a-49f8-be6b-a26c8357fd95"
           }
         }
       ],

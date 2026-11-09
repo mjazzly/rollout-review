@@ -3,11 +3,11 @@
   "name": "p0_foundation_card",
   "position": {
     "x": 28,
-    "y": 204,
+    "y": 238,
     "z": 3000,
-    "height": 182,
+    "height": 124,
     "width": 276,
-    "tabOrder": 500
+    "tabOrder": 600
   },
   "visual": {
     "visualType": "cardVisual",
@@ -60,7 +60,7 @@
               }
             ],
             "metadata": "_Measures.Foundation tile",
-            "id": "field-52d915a2-23ea-4291-9032-1a9edeea4aec",
+            "id": "field-7326f13f-795f-415c-b736-e819765fe1a5",
             "order": 0
           }
         },
@@ -88,7 +88,7 @@
               }
             ],
             "metadata": "_Measures.Foundation tile",
-            "id": "field-2857165e-4119-490b-8425-c30927a74017",
+            "id": "field-d151b25e-f914-4d2a-b429-e78a027b1f2b",
             "order": 1
           }
         },
@@ -116,7 +116,7 @@
               }
             ],
             "metadata": "_Measures.Foundation tile",
-            "id": "field-8f807e4a-f768-4e60-a143-f991c55628c1",
+            "id": "field-75bb4357-d800-4066-bb34-44e838daf345",
             "order": 2
           }
         }
@@ -140,17 +140,26 @@
       "label": [
         {
           "properties": {
-            "fontSize": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "false"
                 }
               }
-            },
-            "textWrap": {
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Foundation tile"
+          }
+        }
+      ],
+      "divider": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -210,7 +219,7 @@
           },
           "selector": {
             "metadata": "_Measures.Foundation tile",
-            "id": "field-52d915a2-23ea-4291-9032-1a9edeea4aec"
+            "id": "field-7326f13f-795f-415c-b736-e819765fe1a5"
           }
         },
         {
@@ -241,7 +250,7 @@
               }
             ],
             "metadata": "_Measures.Foundation tile",
-            "id": "field-52d915a2-23ea-4291-9032-1a9edeea4aec"
+            "id": "field-7326f13f-795f-415c-b736-e819765fe1a5"
           }
         },
         {
@@ -256,7 +265,7 @@
           },
           "selector": {
             "metadata": "_Measures.Foundation tile",
-            "id": "field-2857165e-4119-490b-8425-c30927a74017"
+            "id": "field-d151b25e-f914-4d2a-b429-e78a027b1f2b"
           }
         },
         {
@@ -282,7 +291,7 @@
           },
           "selector": {
             "metadata": "_Measures.Foundation tile",
-            "id": "field-8f807e4a-f768-4e60-a143-f991c55628c1"
+            "id": "field-75bb4357-d800-4066-bb34-44e838daf345"
           }
         }
       ],

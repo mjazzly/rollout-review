@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p0_foundation_rule",
+  "name": "p0_split_head",
   "position": {
-    "x": 28,
-    "y": 464,
+    "x": 16,
+    "y": 500,
     "z": 3000,
-    "height": 52,
-    "width": 276,
-    "tabOrder": 700
+    "height": 26,
+    "width": 520,
+    "tabOrder": 2400
   },
   "visual": {
     "visualType": "textbox",
@@ -19,10 +19,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Working when the month's figure meets the threshold. Trend: against two check-ins earlier, flat within 1 point.",
+                    "value": "Stage split by team, by source placement",
                     "textStyle": {
-                      "fontSize": "8pt",
-                      "color": "#4F6166"
+                      "fontSize": "12pt",
+                      "fontWeight": "bold"
                     }
                   }
                 ]
@@ -34,6 +34,19 @@
     },
     "visualContainerObjects": {
       "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
         {
           "properties": {
             "show": {

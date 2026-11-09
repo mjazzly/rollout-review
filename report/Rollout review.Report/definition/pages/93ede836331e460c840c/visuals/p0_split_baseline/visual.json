@@ -7,7 +7,7 @@
     "z": 2000,
     "height": 184,
     "width": 456,
-    "tabOrder": 2300
+    "tabOrder": 2600
   },
   "visual": {
     "visualType": "hundredPercentStackedBarChart",
@@ -89,131 +89,6 @@
       }
     },
     "objects": {
-      "dataPoint": [
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#7E8E92'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "dim_checkpoint_source"
-                          }
-                        },
-                        "Property": "stage"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'On the ground'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#CFE0EA'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "dim_checkpoint_source"
-                          }
-                        },
-                        "Property": "stage"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'At the gate'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#2C5F7C'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "dim_checkpoint_source"
-                          }
-                        },
-                        "Property": "stage"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'In the air'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ],
       "labels": [
         {
           "properties": {
@@ -224,13 +99,6 @@
                 }
               }
             },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
-                }
-              }
-            },
             "labelPrecision": {
               "expr": {
                 "Literal": {
@@ -238,47 +106,6 @@
                 }
               }
             }
-          }
-        },
-        {
-          "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "dim_checkpoint_source"
-                          }
-                        },
-                        "Property": "stage"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'In the air'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
           }
         }
       ],
@@ -302,13 +129,6 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
                 }
               }
             }
@@ -350,7 +170,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Where each team stood at its baseline'"
+                  "Value": "'At each team''s baseline month'"
                 }
               }
             }
@@ -363,32 +183,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Stage by source placement, each team at its own baseline month'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#4F6166'"
-                    }
-                  }
+                  "Value": "false"
                 }
               }
             }

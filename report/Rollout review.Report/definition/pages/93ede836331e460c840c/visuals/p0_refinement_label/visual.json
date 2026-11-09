@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p0_scale_rule",
+  "name": "p0_refinement_label",
   "position": {
-    "x": 976,
-    "y": 464,
+    "x": 660,
+    "y": 198,
     "z": 3000,
-    "height": 52,
+    "height": 40,
     "width": 276,
-    "tabOrder": 2200
+    "tabOrder": 1500
   },
   "visual": {
     "visualType": "textbox",
@@ -19,10 +19,9 @@
               {
                 "textRuns": [
                   {
-                    "value": "Working when the month's figure meets the threshold. Trend: against two check-ins earlier, flat within 1 point.",
+                    "value": "Tested prompts that pass on the smaller model",
                     "textStyle": {
-                      "fontSize": "8pt",
-                      "color": "#4F6166"
+                      "fontSize": "10pt"
                     }
                   }
                 ]
@@ -34,6 +33,19 @@
     },
     "visualContainerObjects": {
       "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
         {
           "properties": {
             "show": {
