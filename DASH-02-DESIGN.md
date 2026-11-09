@@ -107,7 +107,7 @@ Six pages, at most four visuals each. Every page states the frame question it an
 
 ### Page 0: Rollout review (front, sponsor)
 - Header line: period, headcount, seats assigned, seats active this week
-- **Four stage tiles**, Foundation, Execution, Refinement, Scale, each carrying its FRAME-04 question, one headline measure, a 24-week sparkline and a verdict rule printed under it. Verdict "working" means the threshold is met and the figure is higher than two months earlier. Thresholds are illustrative programme targets that a real programme sets for itself; they are held in `measures.md` and printed on each tile:
+- **Four stage tiles**, Foundation, Execution, Refinement, Scale, each carrying its FRAME-04 question, one headline measure, a 24-week sparkline, a verdict rule printed under it, and a trend. Verdict "Working" means the threshold is met and "Not yet working" means it is not, with no trend condition. Trend is a separate field: up, flat or down against two months earlier (flat within 1 point), or "No comparison yet" when there is no figure two months earlier. Thresholds are illustrative programme targets that a real programme sets for itself; they are held in `measures.md` and printed on each tile:
   - Foundation: requests matched to a tested prompt that already exists (share of questions with action_taken = pointed to library); threshold 40%
   - Execution: repeat use within 30 days (share of first-time users active again within 30 days); threshold 60%
   - Refinement: tested prompts that pass on the smaller model (share of active items whose latest smaller-tier run passed); threshold 50%

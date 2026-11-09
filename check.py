@@ -44,8 +44,17 @@ def pct(x: float) -> str:
     return f"{100 * x:.1f}%"
 
 
-def verdict(now: float, before: float, threshold: float) -> str:
-    return "Working" if now >= threshold and now > before else "Not yet working"
+def verdict(now: float, threshold: float) -> str:
+    """Working when the figure meets the threshold; no trend condition (measures.md)."""
+    return "Working" if now >= threshold else "Not yet working"
+
+
+def trend(now: float, before: float | None) -> str:
+    """Against two check-in months earlier; flat within 1 point (shares are fractions here)."""
+    if before is None:
+        return "No comparison yet"
+    diff = 100 * (now - before)
+    return "Flat" if abs(diff) <= 1 else "Up" if diff > 0 else "Down"
 
 
 Q = []  # (page, question, sql, format(rows) -> str)
@@ -84,7 +93,7 @@ FROM s
 def _(r): return f"{r[0][0]} moved up; {r[0][1]} seats arrived"
 
 
-@q(0, "What does the Refinement tile show for month 6, and what is its verdict? (Technology storyline)", """
+@q(0, "What does the Refinement tile show for month 6, with its verdict and trend? (Technology storyline)", """
 WITH live AS (
   SELECT cw.m, i.item_id FROM cw
   JOIN dim_library_item i ON i.published_week <= cw.w AND (i.status_week IS NULL OR i.status_week > cw.w)),
@@ -98,7 +107,7 @@ WHERE live.m IN (4, 6) GROUP BY 1 ORDER BY 1
 """)
 def _(r):
     before, now = r[0][1], r[1][1]
-    return f"{pct(now)}, {verdict(now, before, 0.50)} (threshold 50%; month 4 was {pct(before)})"
+    return f"{pct(now)}, {verdict(now, 0.50)} (threshold 50%); trend {trend(now, before)} (month 4 was {pct(before)})"
 
 
 # ---------------------------------------------------------------- Page 1
@@ -139,11 +148,12 @@ def _(r): return f"{r[0][0]} moved up; {r[0][1]} seats arrived"
 
 
 # ---------------------------------------------------------------- Page 2
-@q(2, "Which use comes up most often in the question log, and how many questions is that?", """
-SELECT category, count(*) AS questions FROM fact_question
-GROUP BY 1 ORDER BY questions DESC, category LIMIT 1
+@q(2, "What share of requests were matched to a tested prompt that already exists?", """
+SELECT avg(CASE WHEN action_taken = 'pointed to library' THEN 1 ELSE 0 END) AS share,
+       count(*) FILTER (WHERE action_taken = 'pointed to library') AS matched, count(*) AS questions
+FROM fact_question
 """)
-def _(r): return f"{r[0][0]}, {r[0][1]} questions"
+def _(r): return f"{pct(r[0][0])} ({r[0][1]} of {r[0][2]} questions)"
 
 
 @q(2, "Which use led the ranking in month 1, and which in month 6?", """

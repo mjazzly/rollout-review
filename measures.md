@@ -69,9 +69,11 @@ Notes on how the rules read against FRAME-01's page wording:
 
 ### Stage tiles
 
-Each tile shows one headline figure for the latest check-in month, a 24-week sparkline, and its verdict rule printed underneath.
+Each tile shows one headline figure for the latest check-in month, a 24-week sparkline, a verdict with its rule printed underneath, and a trend.
 
-**Verdict rule (all four tiles).** The verdict is Working when the figure for the check-in month meets the tile's threshold and is higher than the figure for two check-in months earlier. Otherwise it is Not yet working. When there is no figure for two check-in months earlier, the verdict is No comparison yet.
+**Verdict (all four tiles).** The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
+
+**Trend (all four tiles).** The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 
 **The thresholds are illustrative programme targets.** A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
 

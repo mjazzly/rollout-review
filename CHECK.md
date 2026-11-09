@@ -22,11 +22,11 @@ python3 check.py
 |---:|---:|---|---|---|
 | 1 | 0 | In the last week of the period, how many seats were active, out of how many assigned? | 505 of 1,167 seats active (week of 2026-10-26) | |
 | 2 | 0 | How many people moved up since the last count (month 5 to month 6), and how many seats arrived? | 98 moved up; 0 seats arrived | |
-| 3 | 0 | What does the Refinement tile show for month 6, and what is its verdict? (Technology storyline) | 9.5%, Not yet working (threshold 50%; month 4 was 8.7%) | |
+| 3 | 0 | What does the Refinement tile show for month 6, with its verdict and trend? (Technology storyline) | 9.5%, Not yet working (threshold 50%); trend Flat (month 4 was 8.7%) | |
 | 4 | 1 | In month 6, how many Finance people place themselves higher, level and lower than the sources do? | Higher 111, level 76, lower 13 | |
 | 5 | 1 | In month 6, what is Legal's largest group by source placement, how many people are in it, and what is its lever? | Ticket held, 84 people. Lever: A first task done side by side with someone who already uses AI | |
 | 6 | 1 | How many Operations people moved up between month 3 and month 4, and how many Operations seats arrived? | 87 moved up; 0 seats arrived | |
-| 7 | 2 | Which use comes up most often in the question log, and how many questions is that? | Rules and allowed use, 242 questions | |
+| 7 | 2 | What share of requests were matched to a tested prompt that already exists? | 49.5% (385 of 778 questions) | |
 | 8 | 2 | Which use led the ranking in month 1, and which in month 6? | Month 1: Rules and allowed use, 52 questions; Month 6: Analysis, 23 questions | |
 | 9 | 2 | Which team had the lowest usage baseline, and what was it? (Legal storyline) | Legal, 11.9% | |
 | 10 | 3 | What share of training attendees ran the item they were shown within two weeks of the session? | 44.5% (174 of 391 attendees) | |
