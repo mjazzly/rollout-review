@@ -1,0 +1,10 @@
+checkpoint_id,checkpoint,stage,how_you_tell,lever
+1,No ticket,On the ground,Has no AI they are allowed to use for work yet,"Access, and a reason to use AI in the first week"
+2,Ticket held,On the ground,"Is allowed to use AI for work, but has not tried it yet",A first task done side by side with someone who already uses AI
+3,Checked in,On the ground,"Tried AI once or twice, then stopped",A second task that fits their actual week
+4,Through security,At the gate,"Is still working out what AI is allowed for, or has just read the rules",A worked example from their own role
+5,Waiting to board,At the gate,Uses AI only in the weeks a reminder goes out,One recurring task tied to a day of the week
+6,Boarding,At the gate,Has used AI once on real work that went to someone else,Make that recurring task part of their routine
+7,Takeoff,In the air,"Uses AI every week on one task, for a month or more","A second task, and a place to share what works"
+8,Above the clouds,In the air,Uses AI on several tasks and shares what works,Ask them to show their team
+9,Frequent flyer,In the air,"AI is part of how they work every week, and colleagues come to them with questions","Give them a prompt to look after in the library, and point new starters their way"
