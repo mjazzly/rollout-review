@@ -6,7 +6,7 @@
     "y": 36,
     "z": 3000,
     "height": 34,
-    "width": 1248,
+    "width": 144,
     "tabOrder": 100
   },
   "visual": {
@@ -24,13 +24,6 @@
                       "fontSize": "18pt",
                       "fontWeight": "bold",
                       "color": "#172529"
-                    }
-                  },
-                  {
-                    "value": "   Which uses matter most, and where do people get stuck?",
-                    "textStyle": {
-                      "fontSize": "14pt",
-                      "color": "#4F6166"
                     }
                   }
                 ]

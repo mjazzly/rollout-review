@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p0_source",
+  "name": "p3_passing_sub",
   "position": {
-    "x": 16,
-    "y": 70,
+    "x": 858,
+    "y": 402,
     "z": 3000,
-    "height": 22,
-    "width": 1248,
-    "tabOrder": 300
+    "height": 18,
+    "width": 394,
+    "tabOrder": 2200
   },
   "visual": {
     "visualType": "textbox",
@@ -19,17 +19,9 @@
               {
                 "textRuns": [
                   {
-                    "value": "Read from the question log, the usage dashboards, the library's records, the run log and the check-in · ",
+                    "value": "Live prompts at Week 24, latest standard run",
                     "textStyle": {
-                      "fontSize": "10pt",
-                      "color": "#4F6166"
-                    }
-                  },
-                  {
-                    "value": "Week 1 to Week 24, six check-ins",
-                    "textStyle": {
-                      "fontSize": "10pt",
-                      "fontWeight": "bold",
+                      "fontSize": "9pt",
                       "color": "#4F6166"
                     }
                   }

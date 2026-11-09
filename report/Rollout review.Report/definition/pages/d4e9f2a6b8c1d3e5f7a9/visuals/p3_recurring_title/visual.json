@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p2_key_caption",
+  "name": "p3_recurring_title",
   "position": {
-    "x": 344,
-    "y": 518,
+    "x": 28,
+    "y": 382,
     "z": 3000,
-    "height": 34,
-    "width": 276,
-    "tabOrder": 1800
+    "height": 20,
+    "width": 790,
+    "tabOrder": 1500
   },
   "visual": {
     "visualType": "textbox",
@@ -19,10 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "Prompts tested against an answer key written first",
+                    "value": "Recurring questions covered by a tested prompt",
                     "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#4F6166"
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
                     }
                   }
                 ]

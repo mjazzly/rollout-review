@@ -3,11 +3,11 @@
   "name": "p1_largest_table",
   "position": {
     "x": 686,
-    "y": 408,
+    "y": 414,
     "z": 3000,
-    "height": 304,
+    "height": 298,
     "width": 566,
-    "tabOrder": 2500
+    "tabOrder": 2600
   },
   "visual": {
     "visualType": "tableEx",
@@ -42,8 +42,8 @@
                 }
               },
               "queryRef": "_Measures.Largest group with people",
-              "nativeQueryRef": "Largest group, people",
-              "displayName": "Largest group, people"
+              "nativeQueryRef": "Largest group",
+              "displayName": "Largest group"
             },
             {
               "field": {
@@ -101,7 +101,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "72D"
+                  "Value": "90D"
                 }
               }
             }
@@ -129,7 +129,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "310D"
+                  "Value": "292D"
                 }
               }
             }

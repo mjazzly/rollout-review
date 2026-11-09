@@ -6,8 +6,8 @@
     "y": 470,
     "z": 3000,
     "height": 20,
-    "width": 276,
-    "tabOrder": 1000
+    "width": 388,
+    "tabOrder": 1300
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "The Foundation headline",
+                    "value": "Requests matched to a tested prompt that already exists",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

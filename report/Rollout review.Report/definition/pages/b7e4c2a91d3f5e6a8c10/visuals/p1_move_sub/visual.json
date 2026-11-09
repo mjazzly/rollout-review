@@ -3,11 +3,11 @@
   "name": "p1_move_sub",
   "position": {
     "x": 396,
-    "y": 406,
+    "y": 412,
     "z": 3000,
     "height": 18,
-    "width": 250,
-    "tabOrder": 1800
+    "width": 150,
+    "tabOrder": 1900
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Follows the month, not the toggle",
+                    "value": "Month only, not the toggle",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

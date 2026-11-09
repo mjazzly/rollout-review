@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_gap_legend",
   "position": {
-    "x": 28,
-    "y": 434,
+    "x": 178,
+    "y": 412,
     "z": 3000,
-    "height": 20,
-    "width": 328,
-    "tabOrder": 1400
+    "height": 18,
+    "width": 178,
+    "tabOrder": 1500
   },
   "visual": {
     "visualType": "textbox",
@@ -26,7 +26,7 @@
                     }
                   },
                   {
-                    "value": " Higher   ",
+                    "value": " Higher  ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -40,7 +40,7 @@
                     }
                   },
                   {
-                    "value": " Level   ",
+                    "value": " Level  ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

@@ -3,11 +3,11 @@
   "name": "p1_matrix_panel",
   "position": {
     "x": 16,
-    "y": 96,
+    "y": 102,
     "z": 2000,
     "height": 280,
     "width": 1248,
-    "tabOrder": 500
+    "tabOrder": 600
   },
   "visual": {
     "visualType": "shape",

@@ -5,9 +5,9 @@
     "x": 944,
     "y": 36,
     "z": 3000,
-    "height": 56,
+    "height": 62,
     "width": 188,
-    "tabOrder": 300
+    "tabOrder": 400
   },
   "visual": {
     "visualType": "slicer",

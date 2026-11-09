@@ -24,7 +24,11 @@ below passes:
    every entry on one line; a table holds text only (charts first); every CHECK.md
    question for the page names the visual and field it is read from, shown without
    hovering (Page.answers);
-8. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
+8. page 2's standing rules: no more than two lines of text (a title and one grey subtitle)
+   before the first visual in a panel, a caption sitting on its visual aside; no working
+   terms from the notes (WORKING_TERMS) anywhere on a page; every number shown in one of
+   NUMBER_FORMATS (counts whole, percentages one decimal, points one decimal with a sign);
+9. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
    screenshot confirmed it) or in UNCONFIRMED (from the published schema, or a pattern
    Megat gave). Each push lists the unconfirmed names it used.
 """
@@ -61,7 +65,14 @@ COL_GAP = 16         # between panels side by side in a row
 ROW_GAP = 4          # between rows on the page (the header strip's pieces touch)
 TEXT_SNUG = 6        # a text box is at most this much taller than its text
 INSET_TYPES = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart", "tableEx",
-               "pivotTable"}
+               "pivotTable", "barChart", "clusteredColumnChart"}
+COLUMN_TYPES = {"clusteredColumnChart"}   # categories run across: the per-bar check uses width
+
+# Page 2 standing rules (10 Nov 2026)
+WORKING_TERMS = ("headline", "FRAME-", "storyline", "helper", "measures.md", "CHECK.md", "DASH-",
+                 "repeat-flagged", "repeat_flag", "Foundation tile", "Execution tile",
+                 "Refinement tile", "Scale tile", "scratch")
+NUMBER_FORMATS = {"#,0": "count", "0.0%": "percentage", "+0.0;-0.0;0.0": "points"}
 
 # Text measured on the page 0 screenshots (10 Nov 2026): a 10pt line of 44 to 45
 # characters filled a 276 px text box, so about 0.62 px per character per point, with
@@ -136,7 +147,7 @@ TEXT_STYLE_UNCONFIRMED: set[str] = set()
 # Microsoft's axis, legend, label and data colour objects are shared by the cartesian
 # charts, so a name seen on one of them counts for the others. Each use is listed.
 CARTESIAN = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart",
-             "lineClusteredColumnComboChart"}
+             "lineClusteredColumnComboChart", "barChart", "clusteredColumnChart"}
 FAMILY_OBJECTS = {"categoryAxis", "valueAxis", "legend", "labels", "dataPoint"}
 
 # Smallest sizes Desktop drew on page 0. A line chart at 276 by 67 and 276 by 74 did not
@@ -147,6 +158,8 @@ MIN_SIZE = {
     "lineChart": dict(w=200, h=100),
     "hundredPercentStackedBarChart": dict(w=240, h=150),   # drew at 432 wide; 240 untested
     "clusteredBarChart": dict(w=150, h=150),
+    "barChart": dict(w=240, h=150),
+    "clusteredColumnChart": dict(w=200, h=120),
 }
 BAR_PER_CATEGORY = 27
 BAR_CHROME = {True: 76, False: 40}
@@ -316,6 +329,42 @@ def navigator() -> dict:
     }
 
 
+def text_width(runs: list[tuple[str, dict]]) -> float:
+    """Estimated width of one line of text runs."""
+    w = 0.0
+    for value, style in runs:
+        size = _run_size(style)
+        w += len(value) * CHAR_W * size * (BOLD_W if (style or {}).get("fontWeight") == "bold" else 1)
+    return w
+
+
+HEADER_NAV = (16, 4, 1248, 32)
+HEADER_TITLE_Y, HEADER_TITLE_H = 36, 34
+HEADER_SECOND_Y, HEADER_SECOND_H = 74, 24     # the question: its own line, 4 px below the title
+HEADER_BODY_Y = 102                           # the body starts ROW_GAP below the question
+
+
+def header(p: "Page", prefix: str, title: str, sources: str, period: str,
+           question: str | None, right: int = 1264, second_w: int | None = None) -> None:
+    """Every page's header: navigator; the title, with the sources in small grey text at the
+    right of its row (ending at `right`, left of any slicers); the question on its own line
+    below. Page 0 puts its header line card on the second line instead of a question."""
+    p.add(f"{prefix}_navigator", HEADER_NAV, navigator(), z=0)
+    t_runs = [(title, pt(18, bold=True, color=INK))]
+    tw = int(text_width(t_runs) * 1.1) + 12
+    p.add(f"{prefix}_title", (16, HEADER_TITLE_Y, tw, HEADER_TITLE_H), textbox([t_runs]))
+    s_runs = [(sources + " · ", pt(9, color=INK_SOFT)), (period, pt(9, bold=True, color=INK_SOFT))]
+    sw = int(text_width(s_runs) * 1.08) + 8
+    sx = right - sw
+    if sx < 16 + tw + 16:
+        raise SystemExit(f"{prefix}: the sources line does not fit beside the title")
+    blank = [[("\u00a0", pt(9, color=INK_SOFT))]]
+    p.add(f"{prefix}_sources", (sx, HEADER_TITLE_Y, sw, HEADER_TITLE_H), textbox(blank + [s_runs]))
+    if question:
+        p.add(f"{prefix}_question", (16, HEADER_SECOND_Y, second_w or right - 16, HEADER_SECOND_H),
+              textbox([[(question, pt(12, color=INK_SOFT))]]))
+
+
 def value_card(measure_name: str, size: int, color: dict | None = None,
                display: str | None = None) -> dict:
     """A card showing one value and nothing else: no label, no divider, no left padding,
@@ -476,7 +525,10 @@ class Page:
             m = MIN_SIZE.get(v.vt)
             if m and (w < m["w"] or h < m["h"]):
                 problems.append(f"{v.name} ({v.vt}) is {w} by {h}, below {m['w']} by {m['h']}")
-            if v.categories:
+            if v.categories and v.vt in COLUMN_TYPES:
+                if (w - 20) / v.categories < BAR_PER_CATEGORY:
+                    problems.append(f"{v.name}: {v.categories} columns do not fit across {w} px")
+            elif v.categories:
                 need = v.categories * BAR_PER_CATEGORY + BAR_CHROME[title_on(v.visual)]
                 if h < need:
                     problems.append(f"{v.name}: {v.categories} bars need {need} px, it is {h}")
@@ -488,6 +540,9 @@ class Page:
         problems += self._labels()
         problems += self._tables_hold_text()
         problems += self._answers()
+        problems += self._panel_text()
+        problems += self._words()
+        problems += self._formats()
         problems += self._spacing()
         problems += self._text_fit()
         # 7 setting names
@@ -499,7 +554,7 @@ class Page:
         for v in self.visuals:
             objs = v.visual.get("objects", {})
             labels_on = any(it.get("properties", {}).get("show") == lit("true") for it in objs.get("labels", []))
-            if v.categories and labels_on:
+            if v.categories and labels_on and v.vt not in COLUMN_TYPES:
                 per_cat = (v.box[3] - BAR_CHROME[title_on(v.visual)]) / v.categories
                 if v.vt == "clusteredBarChart":
                     pad = DEFAULT_INNER_PADDING
@@ -525,6 +580,64 @@ class Page:
                     runs = [(r["value"], r.get("textStyle")) for r in para["textRuns"]]
                     if wrapped_lines(runs, int((v.box[2] - 2 * TEXT_INSET) / LEGEND_SAFETY) + 2 * TEXT_INSET) > 1:
                         out.append(f"{v.name}: legend does not fit on one line with room to spare")
+        return out
+
+    def _panel_text(self) -> list[str]:
+        """At most two lines of text (title, subtitle) above the first visual in a panel."""
+        out = []
+        for pname in {v.on for v in self.visuals if v.on}:
+            members = [v for v in self.visuals if v.on == pname]
+            charts = [v for v in members if v.vt != "textbox"]
+            if not charts:
+                continue
+            first = min(v.top for v in charts)
+            rows: dict[int, int] = {}
+            for t in members:
+                if t.vt != "textbox" or t.bottom > first:
+                    continue
+                sits_on = any(c.top == t.bottom and _overlap_x(c, t) for c in charts)
+                if sits_on:
+                    continue   # a caption on its visual
+                paras = [pa for pa in t.visual["objects"]["general"][0]["properties"]["paragraphs"]
+                         if "".join(r["value"] for r in pa["textRuns"]).strip("\u00a0 ")]
+                rows[t.top] = max(rows.get(t.top, 0), len(paras))
+            if sum(rows.values()) > 2:
+                out.append(f"{pname}: {sum(rows.values())} lines of text before its first visual, not 2")
+        return out
+
+    def _words(self) -> list[str]:
+        out = []
+        for v in self.visuals:
+            texts = []
+            if v.vt == "textbox":
+                for pa in v.visual["objects"]["general"][0]["properties"]["paragraphs"]:
+                    texts += [r["value"] for r in pa["textRuns"]]
+            for role in v.visual.get("query", {}).get("queryState", {}).values():
+                texts += [pr.get("displayName", "") for pr in role["projections"]]
+            for objs in (v.visual.get("objects", {}), v.visual.get("visualContainerObjects", {})):
+                for it in objs.get("header", []) + objs.get("title", []):
+                    t = it.get("properties", {}).get("text")
+                    if t:
+                        texts.append(t["expr"]["Literal"]["Value"])
+            for t in texts:
+                for w in WORKING_TERMS:
+                    if w.lower() in t.lower():
+                        out.append(f"{v.name}: working term '{w}' in \"{t[:50]}\"")
+        return out
+
+    def _formats(self) -> list[str]:
+        out = []
+        fmts = model_formats()
+        for v in self.visuals:
+            for role in v.visual.get("query", {}).get("queryState", {}).values():
+                for pr in role["projections"]:
+                    f = pr["field"]
+                    if "Measure" not in f:
+                        continue
+                    name = f["Measure"]["Property"]
+                    fmt = fmts.get(("Measure", name))
+                    if fmt not in NUMBER_FORMATS and fmt not in ("text", "dynamic"):
+                        out.append(f"{v.name}: {name} is formatted '{fmt}', not a count, percentage or points")
         return out
 
     def _tables_hold_text(self) -> list[str]:
@@ -590,7 +703,7 @@ class Page:
             for g1, g2 in zip(ordered, ordered[1:]):
                 top2 = min(v.top for v in g2)
                 gap = top2 - max(v.bottom for v in g1)
-                inset = any(v.vt in INSET_TYPES for v in g2 if v.top == top2)
+                inset = all(v.vt in INSET_TYPES for v in g2 if v.top == top2)
                 want = GROUP_GAP - CHART_INSET if inset else GROUP_GAP
                 if gap != want:
                     out.append(f"{pname}: gap above {g2[0].group or g2[0].name} is {gap}, not {want}")
@@ -677,6 +790,12 @@ class Page:
 def model_fields() -> dict[tuple[str, str], str]:
     """("Measure" or "Column", name) -> "text" or "number", read from the model's TMDL files:
     a measure with no format string, or a column of data type string, is text."""
+    return {k: ("text" if v == "text" else "number") for k, v in model_formats().items()}
+
+
+def model_formats() -> dict[tuple[str, str], str]:
+    """("Measure" or "Column", name) -> the format string, "text", "dynamic" (a dynamic
+    format string) or "column" (a non-text column)."""
     out: dict[tuple[str, str], str] = {}
     tables = PAGES.parent.parent.parent / "Rollout review.SemanticModel" / "definition" / "tables"
     for f in tables.glob("*.tmdl"):
@@ -688,11 +807,13 @@ def model_fields() -> dict[tuple[str, str], str]:
                 name = m.group(2)
                 name = name[1:-1].replace("''", "'") if name.startswith("'") else name
                 cur = ("Measure" if m.group(1) == "measure" else "Column", name)
-                out[cur] = "text" if cur[0] == "Measure" else "number"
+                out[cur] = "text" if cur[0] == "Measure" else "column"
             elif re.match(r"\t[^\t]", line):
                 cur = None
             elif cur and line.strip().startswith("formatString:") and cur[0] == "Measure":
-                out[cur] = "number"
+                out[cur] = line.strip().split(":", 1)[1].strip()
+            elif cur and line.strip().startswith("formatStringDefinition") and cur[0] == "Measure":
+                out[cur] = "dynamic"
             elif cur and line.strip() == "dataType: string":
                 out[cur] = "text"
     return out

@@ -3,14 +3,14 @@
   "name": "p1_gap_chart",
   "position": {
     "x": 28,
-    "y": 454,
+    "y": 432,
     "z": 3000,
-    "height": 258,
+    "height": 280,
     "width": 328,
-    "tabOrder": 1500
+    "tabOrder": 1600
   },
   "visual": {
-    "visualType": "hundredPercentStackedBarChart",
+    "visualType": "barChart",
     "query": {
       "queryState": {
         "Category": {
@@ -42,10 +42,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Gap higher"
+                  "Property": "Gap higher share"
                 }
               },
-              "queryRef": "_Measures.Gap higher",
+              "queryRef": "_Measures.Gap higher share",
               "nativeQueryRef": "Higher",
               "displayName": "Higher"
             },
@@ -57,10 +57,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Gap level"
+                  "Property": "Gap level share"
                 }
               },
-              "queryRef": "_Measures.Gap level",
+              "queryRef": "_Measures.Gap level share",
               "nativeQueryRef": "Level",
               "displayName": "Level"
             },
@@ -72,10 +72,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Gap lower"
+                  "Property": "Gap lower share"
                 }
               },
-              "queryRef": "_Measures.Gap lower",
+              "queryRef": "_Measures.Gap lower share",
               "nativeQueryRef": "Lower",
               "displayName": "Lower"
             }
@@ -117,7 +117,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Gap higher"
+            "metadata": "_Measures.Gap higher share"
           }
         },
         {
@@ -135,7 +135,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Gap level"
+            "metadata": "_Measures.Gap level share"
           }
         },
         {
@@ -153,7 +153,20 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Gap lower"
+            "metadata": "_Measures.Gap lower share"
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
           }
         }
       ],
@@ -190,6 +203,20 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             },

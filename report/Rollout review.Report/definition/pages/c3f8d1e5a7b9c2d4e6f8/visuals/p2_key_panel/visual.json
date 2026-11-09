@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p2_key_panel",
   "position": {
-    "x": 332,
+    "x": 444,
     "y": 464,
     "z": 2000,
     "height": 252,
-    "width": 300,
-    "tabOrder": 1500
+    "width": 412,
+    "tabOrder": 1700
   },
   "visual": {
     "visualType": "shape",

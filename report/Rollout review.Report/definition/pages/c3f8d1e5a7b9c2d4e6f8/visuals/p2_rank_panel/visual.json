@@ -3,11 +3,11 @@
   "name": "p2_rank_panel",
   "position": {
     "x": 16,
-    "y": 96,
+    "y": 102,
     "z": 2000,
-    "height": 364,
+    "height": 358,
     "width": 1248,
-    "tabOrder": 300
+    "tabOrder": 400
   },
   "visual": {
     "visualType": "shape",

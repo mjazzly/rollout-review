@@ -580,6 +580,21 @@ table _Measures
 			    CALCULATE ( MAX ( dim_checkpoint[lever] ), REMOVEFILTERS ( dim_checkpoint ), dim_checkpoint[checkpoint_id] = topId )
 		lineageTag: 3b6d68a5-7cf6-45ec-ac07-c8fb55362040
 
+	/// Helper, not in measures.md. Gap higher over everyone placed in the month, shown with the Gap higher count as its label.
+	measure 'Gap higher share' =
+			DIVIDE ( [Gap higher], [Gap higher] + [Gap level] + [Gap lower] )
+		formatStringDefinition = """" & FORMAT ( [Gap higher], "#,0" ) & """"
+
+	/// Helper, not in measures.md. Gap level over everyone placed in the month, shown with the Gap level count as its label.
+	measure 'Gap level share' =
+			DIVIDE ( [Gap level], [Gap higher] + [Gap level] + [Gap lower] )
+		formatStringDefinition = """" & FORMAT ( [Gap level], "#,0" ) & """"
+
+	/// Helper, not in measures.md. Gap lower over everyone placed in the month, shown with the Gap lower count as its label.
+	measure 'Gap lower share' =
+			DIVIDE ( [Gap lower], [Gap higher] + [Gap level] + [Gap lower] )
+		formatStringDefinition = """" & FORMAT ( [Gap lower], "#,0" ) & """"
+
 	/// Questions in each category, ranked from most to fewest.
 	measure 'Uses logged and ranked' = COUNTROWS ( fact_question )
 		formatString: #,0
@@ -631,6 +646,16 @@ table _Measures
 			)
 		formatString: 0.0%
 		lineageTag: 082b1239-8d98-4065-b555-a9744de0417a
+
+	/// Helper, not in measures.md. Questions in Rules and allowed use.
+	measure 'Rules questions' =
+			CALCULATE ( COUNTROWS ( fact_question ), fact_question[category] = "Rules and allowed use" ) + 0
+		formatString: #,0
+
+	/// Helper, not in measures.md. Questions in every use other than Rules and allowed use.
+	measure 'Other questions' =
+			CALCULATE ( COUNTROWS ( fact_question ), fact_question[category] <> "Rules and allowed use" ) + 0
+		formatString: #,0
 
 	/// Training attendees with a run of the item shown in their session in the session week or the week after, over all training attendees.
 	measure 'First use within two weeks of training' =
@@ -720,6 +745,125 @@ table _Measures
 			    DIVIDE ( COUNTROWS ( passingItems ) + 0, COUNTROWS ( liveItems ) )
 		formatString: 0.0%
 		lineageTag: 59e6cb00-fac0-44fb-8037-2404bb56a310
+
+	/// Helper, not in measures.md. Attendees who ran the item they were shown within two weeks, and all attendees, as "174 of 391 attendees".
+	measure 'First use count' =
+			VAR ran =
+			    COUNTROWS (
+			        FILTER (
+			            fact_training,
+			            VAR personId = fact_training[person_id]
+			            VAR itemId = fact_training[item_id_shown]
+			            VAR sessionWeek = fact_training[session_week]
+			            RETURN
+			                CALCULATE (
+			                    COUNTROWS ( fact_library_run_person ),
+			                    REMOVEFILTERS ( dim_week ),
+			                    REMOVEFILTERS ( dim_month ),
+			                    fact_library_run_person[person_id] = personId,
+			                    fact_library_run_person[item_id] = itemId,
+			                    fact_library_run_person[week_start] >= sessionWeek,
+			                    fact_library_run_person[week_start] <= sessionWeek + 7
+			                ) > 0
+			        )
+			    )
+			RETURN
+			    FORMAT ( ran + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( fact_training ) + 0, "#,0" ) & " attendees"
+
+	/// Helper, not in measures.md. Recurring questions covered by a tested prompt, and all recurring questions, as "127 of 142 recurring questions".
+	measure 'Recurring covered count' =
+			VAR repeatQuestions = FILTER ( fact_question, fact_question[repeat_flag] )
+			VAR covered =
+			    FILTER (
+			        repeatQuestions,
+			        VAR questionCategory = fact_question[category]
+			        VAR askedWeek = fact_question[question_week]
+			        RETURN
+			            NOT ISEMPTY (
+			                FILTER (
+			                    ALL ( dim_library_item ),
+			                    dim_library_item[category] = questionCategory
+			                        && dim_library_item[published_week] <= askedWeek
+			                        && ( ISBLANK ( dim_library_item[status_week] ) || dim_library_item[status_week] > askedWeek )
+			                )
+			            )
+			    )
+			RETURN
+			    FORMAT ( COUNTROWS ( covered ) + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( repeatQuestions ) + 0, "#,0" ) & " recurring questions"
+
+	/// Helper, not in measures.md. The colour of a use-by-month cell: recurring questions, from white at none to marine (#2C5F7C) at 20 or more.
+	measure 'Recurring shade' =
+			VAR s = MIN ( 1, [Repeat-flagged questions] / 20 )
+			VAR r = ROUND ( 255 + ( 44 - 255 ) * s, 0 )
+			VAR g = ROUND ( 255 + ( 95 - 255 ) * s, 0 )
+			VAR b = ROUND ( 255 + ( 124 - 255 ) * s, 0 )
+			VAR h = "0123456789ABCDEF"
+			RETURN
+			    "#" & MID ( h, INT ( r / 16 ) + 1, 1 ) & MID ( h, MOD ( r, 16 ) + 1, 1 )
+			        & MID ( h, INT ( g / 16 ) + 1, 1 ) & MID ( h, MOD ( g, 16 ) + 1, 1 )
+			        & MID ( h, INT ( b / 16 ) + 1, 1 ) & MID ( h, MOD ( b, 16 ) + 1, 1 )
+
+	/// Helper, not in measures.md. White on a cell with 11 or more recurring questions, ink otherwise.
+	measure 'Recurring text colour' =
+			IF ( [Repeat-flagged questions] >= 11, "#FFFFFF", "#172529" )
+
+	/// Helper, not in measures.md. Live library items whose latest standard-tier run is passing, and all live items, as "17 of 21 live prompts".
+	measure 'Passing count' =
+			VAR checkinWeek = [Check-in week]
+			VAR checkinDate = [Check-in date]
+			VAR liveItems =
+			    FILTER (
+			        dim_library_item,
+			        dim_library_item[published_week] <= checkinWeek
+			            && ( ISBLANK ( dim_library_item[status_week] ) || dim_library_item[status_week] > checkinWeek )
+			    )
+			VAR passingItems =
+			    FILTER (
+			        liveItems,
+			        VAR itemId = dim_library_item[item_id]
+			        VAR latestRun =
+			            TOPN (
+			                1,
+			                FILTER (
+			                    ALL ( fact_test_run ),
+			                    fact_test_run[item_id] = itemId
+			                        && fact_test_run[model_tier] = "standard"
+			                        && fact_test_run[run_date] <= checkinDate
+			                ),
+			                fact_test_run[run_date], DESC,
+			                fact_test_run[run_id], DESC
+			            )
+			        RETURN
+			            MAXX ( latestRun, IF ( fact_test_run[passing], 1, 0 ) ) = 1
+			    )
+			RETURN
+			    FORMAT ( COUNTROWS ( passingItems ) + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( liveItems ) + 0, "#,0" ) & " live prompts"
+
+	/// Helper, not in measures.md. For a live library item whose latest standard-tier run is not passing, its cases matched out of its cases, as "8 of 9 cases"; blank for every other item, so the table lists only the items not passing.
+	measure 'Cases matched when not passing' =
+			VAR checkinWeek = [Check-in week]
+			VAR checkinDate = [Check-in date]
+			VAR isLive =
+			    SELECTEDVALUE ( dim_library_item[published_week] ) <= checkinWeek
+			        && ( ISBLANK ( SELECTEDVALUE ( dim_library_item[status_week] ) ) || SELECTEDVALUE ( dim_library_item[status_week] ) > checkinWeek )
+			VAR itemId = SELECTEDVALUE ( dim_library_item[item_id] )
+			VAR latestRun =
+			    TOPN (
+			        1,
+			        FILTER (
+			            ALL ( fact_test_run ),
+			            fact_test_run[item_id] = itemId
+			                && fact_test_run[model_tier] = "standard"
+			                && fact_test_run[run_date] <= checkinDate
+			        ),
+			        fact_test_run[run_date], DESC,
+			        fact_test_run[run_id], DESC
+			    )
+			VAR matched = MAXX ( latestRun, fact_test_run[cases_matched] )
+			VAR total = MAXX ( latestRun, fact_test_run[cases_total] )
+			RETURN
+			    IF ( HASONEVALUE ( dim_library_item[item_id] ) && isLive && NOT ISBLANK ( total ) && matched < total,
+			        FORMAT ( matched, "#,0" ) & " of " & FORMAT ( total, "#,0" ) & " cases" )
 
 	/// Library items whose latest smaller-tier run is passing.
 	measure 'Tested prompts that pass on a smaller model' =

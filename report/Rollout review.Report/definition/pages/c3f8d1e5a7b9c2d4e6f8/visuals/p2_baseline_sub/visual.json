@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p2_baseline_sub",
   "position": {
-    "x": 660,
+    "x": 884,
     "y": 490,
     "z": 3000,
     "height": 18,
-    "width": 592,
-    "tabOrder": 2300
+    "width": 368,
+    "tabOrder": 2400
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Weekly active share over each team's first four weeks after its seats arrive",
+                    "value": "Weekly active share, each team's first four weeks with seats",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

@@ -9,21 +9,20 @@ page is not written if any fails. Close Power BI Desktop on the PC before pullin
 from __future__ import annotations
 
 from pbir import (
-    INK, INK_SOFT, OFF, STAGES, Page, caption, colour, column, filter_in, lit,
-    measure_colour, navigator, panel, proj_column, proj_measure, pt, text,
+    INK, INK_SOFT, OFF, STAGES, Page, caption, colour, column, filter_in, header, lit,
+    measure_colour, panel, proj_column, proj_measure, pt, text,
     textbox, value_card, value_is, NO_FRAME,
 )
 
 PAGE = "93ede836331e460c840c"
 
 # ---------------------------------------------------------------- header strip
-NAV = (16, 4, 1248, 32)                 # 32 high, so the page name reads centred
-TITLE = (16, 36, 196, 34)               # 18 bold
-HEADER_LINE = (212, 36, 1052, 34)       # card, 11, middle of the row
-SOURCE = (16, 70, 1248, 22)             # 10
+# pbir.header(): the title with the sources at the right of its row (round 5, every page);
+# page 0 has no question, so its header line card sits on the second line
+HEADER_LINE = (16, 70, 1248, 24)        # card, 11, middle of the row
 
 # ---------------------------------------------------------------- tiles
-TILE_Y, TILE_W, TILE_H = 96, 300, 350
+TILE_Y, TILE_W, TILE_H = 98, 300, 350
 TILE_XS = (16, 332, 648, 964)
 # Inside a tile, four groups 10 apart (2 above the sparkline, which pads itself):
 #   a  stage name and question
@@ -39,10 +38,10 @@ C_TREND = (200, 24)         # 10
 C_THRESHOLD = (224, 24)     # 9, grey
 D_LINE = (250, 100)
 
-RULE = (16, 450, 1248, 22)
+RULE = (16, 452, 1248, 22)
 
 # ---------------------------------------------------------------- bottom row
-BOTTOM_Y, BOTTOM_H = 476, 240
+BOTTOM_Y, BOTTOM_H = 478, 238
 SPLIT_BASE = (16, BOTTOM_Y, 456, BOTTOM_H)
 SPLIT_LATEST = (488, BOTTOM_Y, 456, BOTTOM_H)
 MOVED = (960, BOTTOM_Y, 304, BOTTOM_H)
@@ -131,13 +130,10 @@ def panel_title(s: str) -> dict:
 
 def build() -> Page:
     p = Page(PAGE, "Rollout review")
-    p.add("p0_navigator", NAV, navigator(), z=0)
-    p.add("p0_title", TITLE, textbox([[("Rollout review", pt(18, bold=True, color=INK))]]))
+    header(p, "p0", "Rollout review",
+           "Read from the question log, the usage dashboards, the library's records, the run log and the check-in",
+           "Week 1 to Week 24, six check-ins", question=None)
     p.add("p0_header_line", HEADER_LINE, header_line())
-    p.add("p0_source", SOURCE, textbox([[
-        ("Read from the question log, the usage dashboards, the library's records, "
-         "the run log and the check-in · ", pt(10, color=INK_SOFT)),
-        ("Week 1 to Week 24, six check-ins", pt(10, bold=True, color=INK_SOFT))]]))
 
     for x, (stage, question, label) in zip(TILE_XS, TILES):
         key = stage.lower()
@@ -172,7 +168,7 @@ def build() -> Page:
         x, y, w, h = box
         p.add(pan, box, panel(), z=2000, row="bottom")
         p.add(f"{pan}_title", (x + 12, y + 6, title_w, 22), panel_title(title), on=pan, group="t")
-        p.add(f"{pan}_chart", (x + 12, y + 30, w - 24, 206), stage_split(m), on=pan, group="c",
+        p.add(f"{pan}_chart", (x + 12, y + 30, w - 24, 204), stage_split(m), on=pan, group="c",
               same="stage chart", categories=6)
     legend = []
     for n, (stage, hex_) in enumerate(STAGES):

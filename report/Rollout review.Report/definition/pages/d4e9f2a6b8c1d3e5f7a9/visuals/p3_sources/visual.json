@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p2_source",
+  "name": "p3_sources",
   "position": {
-    "x": 16,
-    "y": 70,
+    "x": 610,
+    "y": 36,
     "z": 3000,
-    "height": 22,
-    "width": 1248,
+    "height": 34,
+    "width": 522,
     "tabOrder": 200
   },
   "visual": {
@@ -19,16 +19,27 @@
               {
                 "textRuns": [
                   {
-                    "value": "Read from the question log, the usage dashboards and the library's records · ",
+                    "value": " ",
                     "textStyle": {
-                      "fontSize": "10pt",
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Read from the usage dashboards, the question log and the run log · ",
+                    "textStyle": {
+                      "fontSize": "9pt",
                       "color": "#4F6166"
                     }
                   },
                   {
-                    "value": "Week 1 to Week 24; the ranking compares Month 1 with Month 6",
+                    "value": "Week 1 to Week 24",
                     "textStyle": {
-                      "fontSize": "10pt",
+                      "fontSize": "9pt",
                       "fontWeight": "bold",
                       "color": "#4F6166"
                     }

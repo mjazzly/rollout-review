@@ -6,6 +6,7 @@ left margin, with the DAX below it) carries, in the comment lines directly above
 
     // Create as: ...          "calculated column on <table>" for a column; a measure otherwise
     // format: <string>        the format string; "text" or "none" for no format string
+    // format expression: <DAX>  optional: a dynamic format string (the label a visual shows)
     // description: <text>     the Description, word for word
 
 Measures go into _Measures; calculated columns into the table the Create as line names.
@@ -46,6 +47,7 @@ class Obj:
     kind: str  # "measure" or "column"
     table: str
     fmt: str | None
+    fmt_expr: str | None
     description: str
     body: list[str]
     line: int
@@ -75,6 +77,7 @@ def parse() -> list[Obj]:
         create = next((l for l in run if l.startswith("// Create as:")), "")
         fmt_line = next((l for l in run if l.startswith("// format:")), None)
         desc_line = next((l for l in run if l.startswith("// description:")), None)
+        expr_line = next((l for l in run if l.startswith("// format expression:")), None)
         col = re.search(r"calculated column on (\w+)", create)
         if fmt_line is None:
             problems.append(f"line {start + 1}: {name}: no '// format:' line above it")
@@ -89,6 +92,7 @@ def parse() -> list[Obj]:
             kind="column" if col else "measure",
             table=col.group(1) if col else MEASURE_TABLE,
             fmt=fmt,
+            fmt_expr=expr_line.split("format expression:", 1)[1].strip() if expr_line else None,
             description=desc_line.split("description:", 1)[1].strip() if desc_line else "",
             body=body,
             line=start + 1,
@@ -117,8 +121,10 @@ def tmdl(o: Obj) -> list[str]:
     out += ["\t\t\t" + l if l.strip() else "" for l in o.body]
     if o.kind == "column":
         out += [f"\t\tdataType: {COLUMN_TYPES[o.name]}", "\t\tisDataTypeInferred", "\t\tsummarizeBy: none"]
-    if o.fmt:
+    if o.fmt and not o.fmt_expr:   # a dynamic format string replaces the static one
         out.append(f"\t\tformatString: {o.fmt}")
+    if o.fmt_expr:
+        out.append(f"\t\tformatStringDefinition = {o.fmt_expr}")
     out.append("")
     return out
 

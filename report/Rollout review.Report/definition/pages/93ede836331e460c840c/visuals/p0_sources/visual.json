@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p1_source",
+  "name": "p0_sources",
   "position": {
-    "x": 16,
-    "y": 70,
+    "x": 421,
+    "y": 36,
     "z": 3000,
-    "height": 22,
-    "width": 912,
+    "height": 34,
+    "width": 843,
     "tabOrder": 200
   },
   "visual": {
@@ -19,16 +19,27 @@
               {
                 "textRuns": [
                   {
-                    "value": "Read from the check-in, the usage dashboards, the library's records and the question log · ",
+                    "value": " ",
                     "textStyle": {
-                      "fontSize": "10pt",
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Read from the question log, the usage dashboards, the library's records, the run log and the check-in · ",
+                    "textStyle": {
+                      "fontSize": "9pt",
                       "color": "#4F6166"
                     }
                   },
                   {
-                    "value": "Month 6 shown; pick another month at the top right",
+                    "value": "Week 1 to Week 24, six check-ins",
                     "textStyle": {
-                      "fontSize": "10pt",
+                      "fontSize": "9pt",
                       "fontWeight": "bold",
                       "color": "#4F6166"
                     }

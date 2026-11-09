@@ -502,6 +502,10 @@ Layout on the 1280 by 720 page, in pixels:
 | Rule line | 16 | 450 | 1248 | 22 |
 | Bottom panels: baseline, latest, moved up | 16, 488, 960 | 476 | 456, 456, 304 | 240 |
 
+### Round 5 (10 Nov 2026): the shared header
+
+Megat asked for one header on every page: the title; the sources and period in small grey text at the right of the title's row; the question on its own line below. Page 0 has no question, so its header line card sits on the second line, directly under the title (y 70, 24 high). The body moves down 2 px: tiles at y 98, the rule line at y 452, the bottom panels at y 478, 238 high (charts 204). Nothing else on page 0 changed. It needs approving again.
+
 ### On the PC (pages 0 and 1 together)
 
 50. Close Power BI Desktop (save first if it asks).
@@ -557,16 +561,27 @@ The standing rules from page 1 are now in `scripts/pbir.py`: tables sized to col
 
 Layout: header as page 0, toggle x 944 (188 wide), month x 1148 (116). Matrix panel x 16, y 96, 1248 by 280. Bottom panels at y 380, 336 high: the gap x 16 (352), movement x 384 (274), largest group x 674 (590).
 
+### Round 4 (10 Nov 2026): fixes from the round 3 screenshot
+
+The hand reference for the gap chart's labels did not reach the repo (origin/main stayed at 4fe579a), so the labels are rebuilt another way:
+
+| Fix asked | What changed |
+|---|---|
+| Gap labels as counts, not percentages | A plain stacked bar (`barChart`) of three helper share measures, `Gap higher share`, `Gap level share` and `Gap lower share`. They add to 1, so every bar runs full width and Finance's 13 has 16 px. Each carries a dynamic format string that prints its count, so the labels read 111 / 76 / 13. A custom label field would need a setting name not yet in Megat's files; the dynamic format string lives in `measures.dax` |
+| Team column, no name breaks | 72 to 90 px; the lever column 310 to 292 (a 46-character lever still fits one line) |
+| Toggle selected in marine, white text | Still waits for the hand reference (step 54) |
+| Header | The shared header (section F, round 5), with the month note on the second line |
+| Two lines before the first visual | The gap and movement panels put the subtitle and legend on one line ("Month only, not the toggle"); Seats arrived moves under the movement chart |
+
 ### On the PC (pages 1 and 2)
 
 50. Close Power BI Desktop (save first if it asks).
 51. In PowerShell, in the rollout-review folder: `git pull`.
 52. Open `report/Rollout review.pbip` and go to **Where people sit**.
 53. Send a screenshot of page 1 as it opens, then of **Foundation**.
-54. Two hand references on page 1, then save:
-    - **The gap chart** (The gap: check-in against source): **Format visual**, **Visual**, **Data labels**: On. Nothing else.
+54. One hand reference on page 1, then save:
     - **The Placement toggle**: with it selected, click **Button slicer** in the Visualizations pane to change its type (placement stays in the field well). Then in **Format visual**, set the selected state: fill `#2C5F7C`, text `#FFFFFF` (in the button slicer this is under the style or values card, **Apply settings to**, **Selected**). If the pane does not offer that, send a screenshot of it.
-55. Commit and push: `git add report`, `git commit -m "Page 1: gap labels and toggle formatted by hand"`, `git push`. I read both settings from their files and write them into the scripts.
+55. Commit and push: `git add report`, `git commit -m "Page 1: toggle formatted by hand"`, `git push`. I read the settings from its file and write them into the scripts.
 
 ### Figures page 1 should show
 
@@ -593,7 +608,7 @@ As it opens (Source, Month 6). Matrix: count, with the team's share in brackets 
 | People | 24, 91, 15 | 15, 6 | Takeoff, 37 |
 | Technology | 29, 141, 30 | 15, 9 | Takeoff, 101 |
 
-Seats arrived: 0. The gap counts show once the labels are on (step 54).
+Seats arrived: 0.
 
 Toggle on **Check-in** (Month 6): the full matrix is printed by `python3 scripts/page1_figures.py`; the cells to look at are Consulting Checked in 30 and Above the clouds 24, Finance Takeoff 100, and the largest groups (Consulting Takeoff 156, Finance Takeoff 100, Legal Ticket held 74, Operations Boarding 75, People Takeoff 39, Technology Takeoff 80). Month on **Month 4** (Source): movement Up, Down: Consulting 33, 11; Finance 22, 10; Legal 7, 4; Operations 87, 12; People 37, 1; Technology 24, 12. Seats arrived 0.
 
@@ -620,7 +635,16 @@ Written by `scripts/page2_pbir.py`; figures from `python3 scripts/page2_figures.
 
 No toggle or month slicer on this page. Layout: ranking panel x 16, y 96, 1248 by 364 (charts 604 by 304); bottom panels at y 464, 252 high: headline x 16 (300), answer key x 332 (300), baseline x 648 (616).
 
+### Round 2 (10 Nov 2026)
+
+- The shared header: "Foundation", then "Which uses matter most, and where do people get stuck?" on its own line; the sources at the right of the title's row.
+- The top panel in three parts: Month 1 ranked and Month 6 ranked (392 wide each, one scale, 0 to 60), and every month as two lines, Rules and allowed use (amber) and all other uses (marine), counts on the points, scale 0 to 125. Helper measures `Rules questions` and `Other questions`.
+- The two share panels (412 wide, so the measure's name fits one line) are titled with the measure's name, then a grey caption for the period, the figure, and its count line directly under it. "The Foundation headline" is gone.
+- Baseline panel 392 wide.
+
 ### Figures page 2 should show
+
+By month (the line chart): Rules and allowed use 52, 60, 56, 34, 24, 16; all other uses 36, 94, 101, 104, 106, 95.
 
 | Use | Month 1 | Month 6 |
 |---|---:|---:|
@@ -635,7 +659,7 @@ No toggle or month slicer on this page. Layout: ranking panel x 16, y 96, 1248 b
 
 Month 1 ranks Rules and allowed use first; Month 6 ranks Analysis first, then Coding and Formatting tied on 18.
 
-- The Foundation headline: **49.5%**, "385 of 778 questions" (whole period; the page 0 tile's Month 6 figure is also 49.5%, so the count is the check)
+- Requests matched to a tested prompt that already exists: **49.5%**, "385 of 778 questions" (whole period; page 0's Month 6 figure is also 49.5%, so the count is the check)
 - Prompts tested against an answer key written first: **69.6%**, "16 of 23 library items"
 - Usage baseline by team: Consulting 51.2%, Finance 27.9%, Legal 11.9%, Operations 27.8%, People 37.4%, Technology 51.2%
 
@@ -643,10 +667,55 @@ Month 1 ranks Rules and allowed use first; Month 6 ranks Analysis first, then Co
 
 | Q | Read from | Should read |
 |---|---|---|
-| 7 | The Foundation headline, figure and count | 49.5% (385 of 778 questions) |
+| 7 | Requests matched to a tested prompt that already exists, figure and count | 49.5% (385 of 778 questions) |
 | 8 | The two ranking charts, top bar of each | Month 1: Rules and allowed use, 52; Month 6: Analysis, 23 |
 | 9 | Usage baseline by team, shortest bar | Legal, 11.9% |
 
+## I. Page 3: Execution
+
+Written by `scripts/page3_pbir.py`; figures from `python3 scripts/page3_figures.py` (add a team, for example `Operations`, for the page with the team slicer moved). Header: "Execution", then "Does it hold up in everyday use?".
+
+| Piece | Built as | Follows |
+|---|---|---|
+| Team | A dropdown at the top right, all teams to start. Added so CHECK.md question 12 (Operations) can be read on the page | |
+| First use within two weeks of training | Figure with its count ("174 of 391 attendees", helper `First use count`) | team |
+| Repeat use within 30 days, by month | Columns for Month 2 to Month 6, shares on the columns, scale 0 to 100% (Month 1 has no figure: nobody's first active week is 30 days old yet) | team |
+| Recurring questions covered by a tested prompt | Figure with its count ("127 of 142 recurring questions", helper `Recurring covered count`), beside a grid: recurring questions in each use by month, shaded white to marine at 20 or more (helpers `Recurring shade`, `Recurring text colour`) | team |
+| Tested prompts passing their cases | Figure with its count ("17 of 21 live prompts", helper `Passing count`), and under it the live prompts not passing at their latest run, by name, with cases matched (a table: text; helper `Cases matched when not passing`) | the whole library |
+
+Layout: top row at y 102, 270 high: first use x 16 (412), repeat use x 444 (820). Bottom row at y 376, 340 high: recurring x 16 (814), passing x 846 (418).
+
+### Figures page 3 should show
+
+All teams (as it opens):
+
+- First use within two weeks of training: **44.5%**, "174 of 391 attendees"
+- Repeat use within 30 days: Month 2 86.1%, Month 3 85.7%, Month 4 84.7%, Month 5 83.8%, Month 6 83.6%
+- Recurring questions covered by a tested prompt: **89.4%**, "127 of 142 recurring questions"
+- Tested prompts passing their cases: **81.0%**, "17 of 21 live prompts". Not passing: Market scan in five questions, 8 of 9 cases; Shift handover summary, 9 of 10; What may I use it for: quick check, 11 of 12; Workplan from meeting notes, 8 of 9
+
+Recurring questions grid, all teams:
+
+| Use | Month 1 | Month 2 | Month 3 | Month 4 | Month 5 | Month 6 |
+|---|---:|---:|---:|---:|---:|---:|
+| Analysis | 0 | 1 | 0 | 0 | 0 | 0 |
+| Coding | 0 | 0 | 1 | 0 | 0 | 0 |
+| Drafting | 0 | 2 | 0 | 2 | 2 | 1 |
+| Formatting | 0 | 1 | 1 | 1 | 0 | 1 |
+| Research | 0 | 0 | 2 | 0 | 0 | 0 |
+| Rules and allowed use | 15 | 36 | 25 | 17 | 12 | 5 |
+| Summarising | 0 | 8 | 8 | 0 | 1 | 0 |
+
+With the team on **Operations**, the Summarising row reads 0, 8, 8, 0, 0, 0.
+
+### CHECK.md questions on page 3
+
+| Q | Read from | Should read |
+|---|---|---|
+| 10 | First use within two weeks of training, figure and count | 44.5% (174 of 391 attendees) |
+| 11 | Recurring questions covered by a tested prompt, figure and count | 89.4% (127 of 142 recurring questions) |
+| 12 | The grid with the team on Operations, Summarising row | 8 + 8 = 16 in Months 2 and 3; 0 in Months 4 to 6 |
+
 ## Next
 
-- I. Page 3, Execution, written by `scripts/page3_pbir.py` once pages 1 and 2 are approved; then pages 4 and 5 the same way
+- J. Page 4, Refinement, written by `scripts/page4_pbir.py` once pages 1 to 3 are approved; then page 5 the same way

@@ -24,6 +24,14 @@ for m in (1, 6):
         print(f"  {cat}: {n}")
 print(f"Largest bar on either chart: {max(n for *_, n in rank)}")
 
+print("\nQuestions by month: Rules and allowed use against all other uses")
+for m, r, o in c.execute("""
+    SELECT w.checkin_month, count(*) FILTER (WHERE category = 'Rules and allowed use'),
+           count(*) FILTER (WHERE category <> 'Rules and allowed use')
+    FROM fact_question q JOIN dim_week w ON w.week_start = date_trunc('week', q.question_date)
+    GROUP BY 1 ORDER BY 1""").fetchall():
+    print(f"  Month {m}: {r} and {o}")
+
 share, matched, total = c.execute("""
     SELECT avg(CASE WHEN action_taken = 'pointed to library' THEN 1 ELSE 0 END),
            count(*) FILTER (WHERE action_taken = 'pointed to library'), count(*) FROM fact_question""").fetchone()

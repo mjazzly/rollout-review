@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p2_baseline_chart",
   "position": {
-    "x": 660,
+    "x": 884,
     "y": 510,
     "z": 3000,
     "height": 202,
-    "width": 592,
-    "tabOrder": 2400
+    "width": 368,
+    "tabOrder": 2500
   },
   "visual": {
     "visualType": "clusteredBarChart",
