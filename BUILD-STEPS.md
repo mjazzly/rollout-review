@@ -2,7 +2,7 @@
 
 The on-screen steps for `PBI-BRIEF.md` sections 2 to 6, on the PC over Remote Desktop. One action per step. When a step says "send a screenshot", stop there and wait for the reply before going on.
 
-This first part covers the data load and the model that pages 0 to 5 all read (brief sections 2 and 3). It ends at the model view screenshot. The measures (`measures.dax`) and the page steps follow once the model is checked.
+This first part covers the data load and the model that pages 0 to 5 all read (brief sections 2 and 3). It ends at the model view screenshot (step 31). Section D then saves it as a Power BI project; the measures (`measures.dax`) and the page steps follow.
 
 ## What the model adds to the brief
 
@@ -370,11 +370,28 @@ If Power BI refuses any row other than R9 and R21 as ambiguous, stop and send a 
 30. In **Model view**, right-click the canvas background and choose **Fit to screen** (or use the zoom slider at the bottom right) so all nineteen tables show, dragging any off-screen table into view.
 31. Send two screenshots: the **model view** with every table and line visible, and the **Manage relationships** list (scroll it and send a second if it does not fit). Stop here.
 
+Model checked on the Mac, 9 Nov 2026: 27 relationships, 25 active, R9 and R21 inactive, all many to one and single direction; nineteen tables. Then the build switched from a .pbix to a Power BI project (PBI-BRIEF.md section 1), so the measures go into the model's text files from the Mac.
+
 ---
 
-## Next, once the model is checked
+## D. Save as a Power BI project
 
-Written after the model view screenshot comes back:
+The .pbix from step 29 becomes a project in `report\`: one `.pbip` file and two folders beside it, `Rollout review.SemanticModel` (the model, as text) and `Rollout review.Report`. The repo's `.gitignore` keeps Power BI's local cache (which holds the loaded data) and the old .pbix out of git.
 
-- D. Theme (`theme.json`, Design ribbon, Import theme), and the calculated columns and measures from `measures.dax` in file order, each with its Description and format string
-- E. Page 0, then pages 1 to 5, one page at a time, a screenshot per page
+32. In PowerShell: `cd C:\repos\rollout-review`, then `git pull`. This brings the `.gitignore` the project needs; check that `dir -Force` lists `.gitignore`.
+33. In Power BI Desktop, **File**, **Options and settings**, **Options**, **GLOBAL**, **Preview features**: if **Power BI Project (.pbip) save option** and **Store semantic model using TMDL format** are listed, tick both, click **OK** and restart Power BI Desktop, reopening `rollout-review.pbix`. If neither is listed, both are already standard (as on Branch review's 2.159); go on.
+34. **File**, **Save as**, **Browse this device**. In the dialog, set **Save as type** to **Power BI project files (\*.pbip)**.
+35. Go to `C:\repos\rollout-review`, make a new folder `report`, open it, set **File name** to `Rollout review`, and click **Save**. The title bar now reads **Rollout review**.
+36. Close Power BI Desktop.
+37. In PowerShell, check what git will take: `git status`. It should list `report/` and nothing ending in `.pbix` or `cache.abf`. Then: `git add report` and `git status` again: the new files are under `report/Rollout review.SemanticModel/` and `report/Rollout review.Report/`, with no `cache.abf` and no `localSettings.json`. If either shows, stop and send a screenshot.
+38. `git commit -m "Power BI project: data load and model"`, then `git push`.
+39. Tell me it is pushed. I pull on the Mac, check the model text (column types, sort orders, relationships), and write the measures and calculated columns into it with their descriptions and format strings. You then pull on the PC and reopen the project (section E, written once the measures are in).
+
+`rollout-review.pbix` can be deleted once the project opens cleanly; git ignores it either way.
+
+---
+
+## Next
+
+- E. Pull the measures, reopen the project, refresh, import the theme, and read a few figures off a scratch page against CHECK.md before any page is built
+- F. Page 0, then pages 1 to 5, one page at a time, a screenshot per page

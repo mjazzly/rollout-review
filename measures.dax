@@ -54,14 +54,16 @@ MAX ( dim_month[checkin_month] )
 
 // Check-in week
 // Create as: measure in _Measures
-// format: yyyy-mm-dd (never shown on a page)
+// format: yyyy-mm-dd
+// Never shown on a page.
 // description: The fourth and last week of a check-in month. The check-in date is the last day of that week.
 Check-in week =
 MAX ( dim_month[checkin_week] )
 
 // Check-in date
 // Create as: measure in _Measures (the same term as Check-in week)
-// format: yyyy-mm-dd (never shown on a page)
+// format: yyyy-mm-dd
+// Never shown on a page.
 // description: The fourth and last week of a check-in month. The check-in date is the last day of that week.
 Check-in date =
 MAX ( dim_month[checkin_date] )
@@ -75,7 +77,8 @@ fact_test_run[tokens_in] + fact_test_run[tokens_out]
 
 // Team's seats arrive
 // Create as: calculated column on dim_team
-// format: yyyy-mm-dd (never shown on a page)
+// format: yyyy-mm-dd
+// Never shown on a page.
 // description: The earliest seat_assigned_week among the team's people.
 seats_arrive_week =
 CALCULATE ( MIN ( dim_person[seat_assigned_week] ) )
@@ -130,7 +133,7 @@ DIVIDE ( SUM ( fact_usage_week[runs_via_library] ), SUM ( fact_usage_week[runs_t
 
 // Passing
 // Create as: calculated column on fact_test_run
-// format: True/False
+// format: none
 // description: A test run where cases_matched equals cases_total.
 passing =
 fact_test_run[cases_matched] = fact_test_run[cases_total]
@@ -456,6 +459,7 @@ VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stag
 RETURN
     IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
 
+// format: text
 // description: The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
 Execution verdict =
 VAR figure = [Execution tile]
@@ -463,6 +467,7 @@ VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stag
 RETURN
     IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
 
+// format: text
 // description: The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
 Refinement verdict =
 VAR figure = [Refinement tile]
@@ -470,6 +475,7 @@ VAR threshold = CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stag
 RETURN
     IF ( NOT ISBLANK ( figure ), IF ( figure >= threshold, "Working", "Not yet working" ) )
 
+// format: text
 // description: The verdict is Working when the figure for the check-in month meets the tile's threshold, and Not yet working when it does not. Trend plays no part in it.
 Scale verdict =
 VAR figure = [Scale tile]
@@ -479,7 +485,8 @@ RETURN
 
 // Trend (all four tiles): four measures, same description
 // Create as: measures in _Measures
-// format: text. The arrow prints beside the word: ↑ Up, → Flat, ↓ Down.
+// format: text
+// The arrow prints beside the word: ↑ Up, → Flat, ↓ Down.
 // description: The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 Foundation trend =
 VAR m = [Check-in month]
@@ -497,6 +504,7 @@ RETURN
         "↓ Down"
     )
 
+// format: text
 // description: The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 Execution trend =
 VAR m = [Check-in month]
@@ -514,6 +522,7 @@ RETURN
         "↓ Down"
     )
 
+// format: text
 // description: The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 Refinement trend =
 VAR m = [Check-in month]
@@ -532,6 +541,7 @@ RETURN
     )
 
 // The Scale figure is already in percentage points, so the difference is not multiplied by 100.
+// format: text
 // description: The trend compares the figure for the check-in month with the figure for two check-in months earlier. It is Flat when the two are within 1 percentage point of each other, Up when the figure is higher by more than that, and Down when it is lower by more than that. When there is no figure for two check-in months earlier, the trend is No comparison yet.
 Scale trend =
 VAR m = [Check-in month]
@@ -556,14 +566,17 @@ RETURN
 Foundation threshold =
 "Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Foundation" ), "0%" )
 
+// format: text
 // description: The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
 Execution threshold =
 "Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Execution" ), "0%" )
 
+// format: text
 // description: The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
 Refinement threshold =
 "Threshold " & FORMAT ( CALCULATE ( MAX ( dim_threshold[threshold] ), dim_threshold[stage] = "Refinement" ), "0%" )
 
+// format: text
 // description: The thresholds are illustrative programme targets. A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
 Scale threshold =
 "Threshold "
@@ -712,7 +725,7 @@ Movement seats arrived =
 
 // Largest group (three measures: the checkpoint, its people and its lever; same description)
 // Create as: measures in _Measures. Visual: a table with dim_team[team] and the three measures.
-// format: text; #,0 for Largest group people
+// format: text
 // description: Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
 Largest group =
 VAR counts =
@@ -722,6 +735,7 @@ VAR topId = MAXX ( topRow, dim_checkpoint[checkpoint_id] )
 RETURN
     CALCULATE ( MAX ( dim_checkpoint[checkpoint] ), REMOVEFILTERS ( dim_checkpoint ), dim_checkpoint[checkpoint_id] = topId )
 
+// format: #,0
 // description: Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
 Largest group people =
 VAR counts =
@@ -730,6 +744,7 @@ VAR topRow = TOPN ( 1, counts, [@people], DESC, dim_checkpoint[checkpoint_id], A
 RETURN
     MAXX ( topRow, [@people] )
 
+// format: text
 // description: Per team, the checkpoint with the most people under the placement the page toggle selects, for the check-in month, shown with its lever from dim_checkpoint. A tie goes to the lower checkpoint_id.
 Largest group lever =
 VAR counts =
@@ -940,15 +955,18 @@ MEDIAN ( fact_test_run[tokens_per_run] )
 // Create as: nothing to create. It is the measure under Supporting measures, same definition.
 // description: Median tokens per run on the standard tier over median tokens per run on the smaller tier, per item.
 
-// Prompts retired or merged
-// Create as: first the calculated column status_month on dim_library_item, then the measure in _Measures.
-//            Visual: dim_month[month_label] on the axis; a table beside it with item_id, status,
-//            merged_into_item_id and status_month shows merged_into.
-// format: column 0 (it shows as "Month 5" with the format string "Month "0); measure #,0
+// Prompts retired or merged (a calculated column, then the measure; same description)
+// Visual: dim_month[month_label] on the axis; a table beside it with item_id, status,
+// merged_into_item_id and status_month shows merged_into.
+// Create as: calculated column on dim_library_item
+// format: \M\o\n\t\h 0
+// The format string prints the month number as "Month 5".
 // description: Library items with status retired or merged, counted by the check-in month of their status_week, with merged_into_item_id shown for merged items.
 status_month =
 LOOKUPVALUE ( dim_week[checkin_month], dim_week[week_start], dim_library_item[status_week] )
 
+// Create as: measure in _Measures
+// format: #,0
 // description: Library items with status retired or merged, counted by the check-in month of their status_week, with merged_into_item_id shown for merged items.
 Prompts retired or merged =
 COUNTROWS (
@@ -999,7 +1017,7 @@ COUNTROWS (
 // Create as: measure in _Measures. Reads one item at a time. It returns the week's week_no
 //            and the format string prints it as the week label ("Week 7"), since no calendar
 //            date appears on a page; it sorts in week order.
-// format: "Week "0
+// format: \W\e\e\k 0
 // description: Per library item, the earliest week_start in fact_library_run with runs from a team other than the owner_team.
 Week the second team started =
 VAR ownerTeam = SELECTEDVALUE ( dim_library_item[owner_team] )
@@ -1034,6 +1052,7 @@ RETURN
         COUNTROWS ( dim_person )
     )
 
+// format: 0.0%
 // description: People with a source checkpoint_id of 7, 8 or 9, over all people in the team, per team, for the latest check-in month and the team's baseline month.
 Share of people in the air baseline =
 VAR airAtBaseline =
@@ -1084,14 +1103,17 @@ FORMAT ( [Headcount], "#,0" ) & " people · "
 Foundation verdict colour =
 IF ( [Foundation verdict] = "Not yet working", "#B07E23", "#172529" )
 
+// format: text
 // description: Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
 Execution verdict colour =
 IF ( [Execution verdict] = "Not yet working", "#B07E23", "#172529" )
 
+// format: text
 // description: Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
 Refinement verdict colour =
 IF ( [Refinement verdict] = "Not yet working", "#B07E23", "#172529" )
 
+// format: text
 // description: Helper, not in measures.md. Amber when the tile's verdict is Not yet working, ink otherwise.
 Scale verdict colour =
 IF ( [Scale verdict] = "Not yet working", "#B07E23", "#172529" )

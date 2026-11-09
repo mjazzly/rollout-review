@@ -6,7 +6,7 @@ Read DASH-02-DESIGN.md, measures.md, DICTIONARY.md and CHECK.md before this file
 
 - Claude Code runs on the Mac in this folder and drafts everything written: the DAX measures file, the theme file, and page-by-page build instructions. It never touches the PC.
 - Megat builds on the PC in Power BI Desktop over Remote Desktop, following the instructions, and sends screenshots of the PC screen back as the feedback channel.
-- The PC has the repo cloned at `C:\repos\rollout-review` (clone it there if not yet; Git on the PC already carries the noreply identity from the data-answers build). The .pbix is saved in the repo root as `rollout-review.pbix` and committed from the PC on Megat's word.
+- The PC has the repo cloned at `C:\repos\rollout-review` (clone it there if not yet; Git on the PC already carries the noreply identity from the data-answers build). The report is saved as a Power BI project, `report/Rollout review.pbip`, and committed from the PC on Megat's word. (Changed from a .pbix on 9 Nov 2026, after the model check, so the measures go into the model's text files from the Mac, as for Branch review.)
 - Nothing is published until the check in section 8 is recorded.
 
 ## 2. Data load
@@ -35,7 +35,7 @@ Star schema, single direction, one-to-many from dimension to fact:
 
 ## 4. Measures
 
-- Claude Code writes `measures.dax`: one block per measure, in the order of measures.md, each with the measure name, the DAX, and a `// description:` line carrying the measures.md definition word for word. Megat creates each measure in Power BI by pasting the DAX, then pastes the description into the measure's Description property. The page, the check and the repo then say the same words.
+- Claude Code writes `measures.dax`: one block per measure, in the order of measures.md, each with the measure name, the DAX, and a `// description:` line carrying the measures.md definition word for word. Claude Code writes each measure from `measures.dax` into the project's model files (TMDL) on the Mac, with its description and format string, pushes, and Megat pulls on the PC, where Power BI reloads the project. The page, the check and the repo then say the same words.
 - Put all measures in a dedicated empty table `_Measures`.
 - Headline measures for the four tiles, their thresholds, and the verdict and trend rules come from measures.md as amended (verdict from threshold alone; trend up, flat within 1 point, or down against two months earlier; "No comparison yet" where there is no earlier figure). Thresholds live in a small `dim_threshold` table (stage, threshold) loaded from a two-column CSV Claude Code adds to `data/`, so the tile prints the threshold from data rather than a typed label.
 - Placement measures read `fact_placement`; they do not recompute trailing windows in DAX.
@@ -94,7 +94,7 @@ Read from the question log and the usage dashboards, with the check-in supplying
 1. Claude Code writes `measures.dax`, `theme.json`, `data/dim_threshold.csv`, and `BUILD-STEPS.md` (section 2 to 6 turned into numbered on-screen steps per page, each step one action in Power BI Desktop).
 2. Megat loads data and model on the PC, sends a screenshot of the model view. Claude Code checks relationships against section 3 before any measure is created.
 3. Measures pasted in, one page built at a time in page order, a screenshot per page back to Claude Code, fixes written as a short list, applied, next page.
-4. The .pbix is committed from the PC after page 0 and after page 5 on Megat's word.
+4. The project is committed from the PC after page 0 and after page 5 on Megat's word, and whenever Claude Code needs to read or write the model files.
 
 ## 8. The check
 

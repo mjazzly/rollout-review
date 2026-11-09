@@ -1,0 +1,10 @@
+# never in the public repo
+.DS_Store
+
+# Power BI Desktop's local cache (holds the loaded data) and per-user settings inside the
+# report project; the project may write its own ignore file too, this holds if it does not
+report/**/.pbi/cache.abf
+report/**/.pbi/localSettings.json
+
+# the .pbix from before the switch to a Power BI project; the .pbip is the record
+*.pbix
