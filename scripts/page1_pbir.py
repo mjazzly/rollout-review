@@ -3,114 +3,174 @@
 
     python3 scripts/page1_pbir.py
 
-Brief section 6, page 1: the nine checkpoints as a bar chart per team on one scale, with
-a toggle between check-in and source placement; the gap per team; movement between the
-two latest counts with seat arrivals apart; the largest group per team with its lever.
-Every visual on the page is replaced; the checks in scripts/pbir.py run first.
+Round 2 design (Megat, 10 Nov 2026), nothing on the page scrolls:
+- top, full width: a matrix, teams by the nine checkpoints under their stage names, counts
+  shaded by the team's share at each checkpoint; follows the placement toggle;
+- bottom row, one top edge and height: the gap (higher, level, lower per team), movement
+  (up and down per team, seats arrived apart), and the largest group with its lever.
+A month slicer (Month 6 to start) lets CHECK.md question 6 (Month 3 to Month 4) be read
+on the page. Every visual on the page is replaced; the checks in scripts/pbir.py run first.
 """
 from __future__ import annotations
 
 from pbir import (
-    INK, INK_SOFT, OFF, STAGES, NO_FRAME, Page, colour, column, filter_in, lit, navigator,
-    panel, proj_column, proj_measure, pt, set_page_order, text, textbox, value_is,
+    AMBER, GREY, INK, INK_SOFT, MARINE, OFF, PALE, NO_FRAME, Page, caption, colour, column,
+    lit, measure_colour, navigator, panel, proj_column, proj_measure, pt, set_page_order,
+    table_height, text, textbox, value_card, wrapped_lines, MATRIX_HEADER, TABLE_SLACK,
 )
 
 PAGE = "b7e4c2a91d3f5e6a8c10"
 PAGE0 = "93ede836331e460c840c"
 
 TEAMS = ("Consulting", "Finance", "Legal", "Operations", "People", "Technology")
-CHECKPOINTS = ("No ticket", "Ticket held", "Checked in", "Through security", "Waiting to board",
-               "Boarding", "Takeoff", "Above the clouds", "Frequent flyer")
-STAGE_OF = {c: STAGES[i // 3][1] for i, c in enumerate(CHECKPOINTS)}   # 1-3 ground, 4-6 gate, 7-9 air
-# One scale for all six teams and both placements: the largest bar at Month 6 is 174
-# (Consulting, Takeoff, source placement), so every chart runs 0 to 180.
-SCALE_END = 180
+STAGE_NAMES = ("On the ground", "At the gate", "In the air")
 
 # ---------------------------------------------------------------- header strip
 NAV = (16, 4, 1248, 32)
 TITLE = (16, 36, 240, 34)
-SOURCE = (16, 70, 972, 22)
-TOGGLE = (1004, 36, 260, 56)
+SOURCE = (16, 70, 836, 22)
+TOGGLE = (868, 36, 248, 56)
+MONTH = (1132, 36, 132, 56)
 
 # ---------------------------------------------------------------- body
-SPLIT = (16, 96, 1248, 345)            # panel: title row, then six team charts
-CHART_W, CHART_H, CHART_GAP = 197, 283, 8
-TABLES_Y, TABLES_H = 445, 271
-GAP_PANEL = (16, TABLES_Y, 264, TABLES_H)
-MOVE_PANEL = (296, TABLES_Y, 332, TABLES_H)
-LARGEST_PANEL = (644, TABLES_Y, 620, TABLES_H)
+MATRIX_PANEL = (16, 96, 1248, 288)
+TEAM_COL, CP_COL = 120, 116            # matrix column widths: team, then each checkpoint
+BOTTOM_Y, BOTTOM_H = 388, 328
+GAP_PANEL = (16, BOTTOM_Y, 300, BOTTOM_H)
+MOVE_PANEL = (332, BOTTOM_Y, 300, BOTTOM_H)
+LARGEST_PANEL = (648, BOTTOM_Y, 616, BOTTOM_H)
+LARGEST_COLS = (("Team", 84), ("Largest group", 120), ("People", 60), ("Lever", 304))
+
+# The levers of the checkpoints that are a team's largest group at Month 6, under either
+# placement (scripts/page1_figures.py); the table is sized for them to wrap
+LEVERS = {
+    "Consulting": "A second task, and a place to share what works",
+    "Finance": "One recurring task tied to a day of the week",
+    "Legal": "A first task done side by side with someone who already uses AI",
+    "Operations": "Make that recurring task part of their routine",
+    "People": "A second task, and a place to share what works",
+    "Technology": "A second task, and a place to share what works",
+}
 
 
-def team_chart(team: str) -> dict:
-    cp = column("dim_checkpoint", "checkpoint")
+def sort_by_team() -> dict:
+    return {"sort": [{"field": column("dim_team", "team"), "direction": "Ascending"}], "isDefaultSort": False}
+
+
+def series_colour(measure_name: str, hex_: str) -> dict:
+    # Branch review's pattern: one dataPoint per measure, picked by its queryRef
+    return {"properties": {"fill": colour(hex_)}, "selector": {"metadata": f"_Measures.{measure_name}"}}
+
+
+def matrix() -> dict:
+    cell = "_Measures.People at checkpoint"
+    return {
+        "visualType": "pivotTable",
+        "query": {
+            "queryState": {
+                "Rows": {"projections": [proj_column("dim_team", "team", active=True, display="Team")]},
+                "Columns": {"projections": [proj_column("dim_checkpoint", "checkpoint", active=True)]},
+                "Values": {"projections": [proj_measure("People at checkpoint")]},
+            },
+            "sortDefinition": sort_by_team(),
+        },
+        "objects": {
+            "subTotals": [{"properties": {"rowSubtotals": lit("false"), "columnSubtotals": lit("false")}}],
+            "values": [{"properties": {"backColor": measure_colour("Checkpoint shade"),
+                                       "fontColor": measure_colour("Checkpoint text colour")},
+                        "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}], "metadata": cell}}],
+            "columnWidth": [
+                {"properties": {"value": lit(f"{TEAM_COL}D")}, "selector": {"metadata": "dim_team.team"}},
+                {"properties": {"value": lit(f"{CP_COL}D")}, "selector": {"metadata": cell}},
+            ],
+        },
+        "visualContainerObjects": NO_FRAME,
+        "drillFilterOtherVisuals": True,
+    }
+
+
+def gap_chart() -> dict:
+    series = (("Gap higher", "Higher", AMBER), ("Gap level", "Level", PALE), ("Gap lower", "Lower", GREY))
+    return {
+        "visualType": "hundredPercentStackedBarChart",
+        "query": {
+            "queryState": {
+                "Category": {"projections": [proj_column("dim_team", "team", active=True)]},
+                "Y": {"projections": [proj_measure(m, d) for m, d, _ in series]},
+            },
+            "sortDefinition": sort_by_team(),
+        },
+        "objects": {
+            "dataPoint": [series_colour(m, c) for m, _, c in series],
+            "labels": [{"properties": {"show": lit("true")}}],
+            "legend": [{"properties": OFF}],
+            "categoryAxis": [{"properties": {"show": lit("true")}}],
+            "valueAxis": [{"properties": {"show": lit("false"), "gridlineShow": lit("false")}}],
+        },
+        "visualContainerObjects": {"title": [{"properties": OFF}], "subTitle": [{"properties": OFF}],
+                                   "background": [{"properties": OFF}]},
+        "drillFilterOtherVisuals": True,
+    }
+
+
+def movement_chart() -> dict:
+    series = (("Movement up", "Up", MARINE), ("Movement down", "Down", GREY))
     return {
         "visualType": "clusteredBarChart",
         "query": {
             "queryState": {
-                "Category": {"projections": [proj_column("dim_checkpoint", "checkpoint", active=True)]},
-                "Y": {"projections": [proj_measure("People at checkpoint")]},
+                "Category": {"projections": [proj_column("dim_team", "team", active=True)]},
+                "Y": {"projections": [proj_measure(m, d) for m, d, _ in series]},
             },
-            "sortDefinition": {"sort": [{"field": cp, "direction": "Ascending"}], "isDefaultSort": False},
+            "sortDefinition": sort_by_team(),
         },
         "objects": {
-            "dataPoint": [{"properties": {"fill": colour(STAGE_OF[c])},
-                           "selector": value_is("dim_checkpoint", "checkpoint", c)} for c in CHECKPOINTS],
+            "dataPoint": [series_colour(m, c) for m, _, c in series],
             "labels": [{"properties": {"show": lit("true")}}],
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
-            "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"),
-                                          "end": lit(f"{SCALE_END}D"), "gridlineShow": lit("false")}}],
+            "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "gridlineShow": lit("false")}}],
         },
-        "visualContainerObjects": NO_FRAME,
+        "visualContainerObjects": {"title": [{"properties": OFF}], "background": [{"properties": OFF}]},
         "drillFilterOtherVisuals": True,
     }
 
 
-def toggle() -> dict:
-    # as Desktop wrote Branch review's month slicer: a dropdown, one value always picked
+def slicer(table: str, col: str, start: str, header: str, buttons: bool) -> dict:
+    objects = {
+        "data": [{"properties": {"mode": text("Basic" if buttons else "Dropdown")}}],
+        "selection": [{"properties": {"singleSelect": lit("true"), "strictSingleSelect": lit("true")}}],
+        "general": [{"properties": {"filter": {"filter": {
+            "Version": 2, "From": [{"Name": "f", "Entity": table, "Type": 0}],
+            "Where": [{"Condition": {"In": {
+                "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "f"}}, "Property": col}}],
+                "Values": [[{"Literal": {"Value": f"'{start}'"}}]]}}}]}}}}],
+        "header": [{"properties": {"text": text(header)}}],
+    }
+    if buttons:
+        objects["general"][0]["properties"]["orientation"] = lit("1D")   # horizontal: two buttons
     return {
         "visualType": "slicer",
-        "query": {"queryState": {"Values": {"projections": [
-            proj_column("placement_toggle", "placement", active=True)]}}},
-        "objects": {
-            "data": [{"properties": {"mode": text("Dropdown")}}],
-            "selection": [{"properties": {"singleSelect": lit("true"), "strictSingleSelect": lit("true")}}],
-            "general": [{"properties": {"filter": {"filter": {
-                "Version": 2, "From": [{"Name": "f", "Entity": "placement_toggle", "Type": 0}],
-                "Where": [{"Condition": {"In": {
-                    "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "f"}},
-                                                "Property": "placement"}}],
-                    "Values": [[{"Literal": {"Value": "'Source'"}}]]}}}]}}}}],
-            "header": [{"properties": {"text": text("Placement: Source or Check-in")}}],
-        },
+        "query": {"queryState": {"Values": {"projections": [proj_column(table, col, active=True)]}}},
+        "objects": objects,
         "drillFilterOtherVisuals": True,
     }
 
 
-def table(columns: list[tuple[dict, int]]) -> dict:
-    """columns: (projection, width in px). Sorted by team, no totals."""
-    return {
-        "visualType": "tableEx",
-        "query": {
-            "queryState": {"Values": {"projections": [c for c, _ in columns]}},
-            "sortDefinition": {"sort": [{"field": column("dim_team", "team"), "direction": "Ascending"}]},
-        },
-        "objects": {
-            "total": [{"properties": {"totals": lit("false")}}],
-            "columnWidth": [{"properties": {"value": lit(f"{w}D")}, "selector": {"metadata": c["queryRef"]}}
-                            for c, w in columns],
-        },
-        "visualContainerObjects": NO_FRAME,
-        "drillFilterOtherVisuals": True,
-    }
+def legend(items: tuple[tuple[str, str], ...]) -> list:
+    runs = []
+    for n, (name, hex_) in enumerate(items):
+        runs += [("■", pt(9, color=hex_)), (f" {name}" + ("   " if n < len(items) - 1 else ""),
+                                            pt(9, color=INK_SOFT))]
+    return [runs]
 
 
-def title(s: str) -> dict:
+def heading(s: str) -> dict:
     return textbox([[(s, pt(10, bold=True, color=INK))]])
 
 
-def team() -> dict:
-    return proj_column("dim_team", "team", display="Team")
+def subtitle(s: str) -> dict:
+    return textbox([[(s, pt(9, color=INK_SOFT))]])
 
 
 def build() -> Page:
@@ -120,51 +180,79 @@ def build() -> Page:
     p.add("p1_source", SOURCE, textbox([[
         ("Read from the check-in, the usage dashboards, the library's records and the question log · ",
          pt(10, color=INK_SOFT)),
-        ("Month 6, the latest of six check-ins", pt(10, bold=True, color=INK_SOFT))]]))
-    p.add("p1_toggle", TOGGLE, toggle())
+        ("the month picked, Month 6 to start", pt(10, bold=True, color=INK_SOFT))]]))
+    p.add("p1_toggle", TOGGLE, slicer("placement_toggle", "placement", "Source", "Placement", buttons=True))
+    p.add("p1_month", MONTH, slicer("dim_month", "month_label", "Month 6", "Month", buttons=False))
 
-    # the nine checkpoints, one chart per team, one scale
-    x, y, w, h = SPLIT
-    p.add("p1_split_panel", SPLIT, panel(), z=2000)
-    legend_w = 282
-    p.add("p1_split_title", (x + 12, y + 6, w - 24 - legend_w, 22),
-          title("People at each checkpoint, by team, under the placement picked above · one scale for all six"),
-          on="p1_split_panel", group="t")
-    legend = []
-    for n, (stage, hex_) in enumerate(STAGES):
-        legend += [("■", pt(9, color=hex_)),
-                   (f" {stage}" + ("   " if n < 2 else ""), pt(9, color=INK_SOFT))]
-    p.add("p1_split_legend", (x + w - 12 - legend_w, y + 6, legend_w, 22), textbox([legend]),
-          on="p1_split_panel", group="t")
-    for i, t in enumerate(TEAMS):
-        cx = x + 12 + i * (CHART_W + CHART_GAP)
-        key = t.lower()
-        p.add(f"p1_{key}_name", (cx, y + 38, CHART_W, 20), textbox([[(t, pt(10, bold=True, color=INK))]]),
-              on="p1_split_panel", group="c", same="team name")
-        p.add(f"p1_{key}_chart", (cx, y + 58, CHART_W, CHART_H), team_chart(t),
-              on="p1_split_panel", group="c", same="team chart", categories=9,
-              extra={"filterConfig": {"filters": [filter_in("dim_team", "team", [t], f"team{t}")]}})
+    # ---- the matrix: teams by checkpoints, stage names over their three checkpoints
+    x, y, w, h = MATRIX_PANEL
+    pan = "p1_matrix_panel"
+    p.add(pan, MATRIX_PANEL, panel(), z=2000)
+    p.add("p1_matrix_title", (x + 12, y + 6, w - 24, 20), heading("People at each checkpoint, by team"),
+          on=pan, group="t")
+    p.add("p1_matrix_sub", (x + 12, y + 26, w - 24, 18), subtitle(
+        "Follows the placement toggle and the month · each cell is shaded by the team's share at that "
+        "checkpoint, white at none to marine at 60% or more"), on=pan, group="t")
+    for k, stage in enumerate(STAGE_NAMES):
+        p.add(f"p1_stage_{k + 1}", (x + 12 + TEAM_COL + k * 3 * CP_COL, y + 54, 3 * CP_COL, 20),
+              heading(stage), on=pan, group="m", same="stage name")
+    p.add("p1_matrix", (x + 12, y + 74, w - 24, 210), matrix(), on=pan, group="m",
+          need_w=TEAM_COL + 9 * CP_COL + TABLE_SLACK, need_h=MATRIX_HEADER + 6 * 26)
 
-    # the three tables: one top edge, one height
-    tables = (
-        ("p1_gap", GAP_PANEL, "The gap: check-in against source", [
-            (team(), 84), (proj_measure("Gap higher", "Higher"), 50),
-            (proj_measure("Gap level", "Level"), 50), (proj_measure("Gap lower", "Lower"), 50)]),
-        ("p1_move", MOVE_PANEL, "Movement, Month 5 to Month 6", [
-            (team(), 84), (proj_measure("Movement up", "Up"), 48), (proj_measure("Movement held", "Held"), 48),
-            (proj_measure("Movement down", "Down"), 48),
-            (proj_measure("Movement seats arrived", "Seats arrived, apart"), 70)]),
-        ("p1_largest", LARGEST_PANEL, "Largest group per team, under the placement picked, and its lever", [
-            (team(), 84), (proj_measure("Largest group", "Largest group"), 116),
-            (proj_measure("Largest group people", "People"), 56),
-            (proj_measure("Largest group lever", "Lever"), 330)]),
-    )
-    for key, box, heading, cols in tables:
-        x, y, w, h = box
-        pan = f"{key}_panel"
-        p.add(pan, box, panel(), z=2000, row="tables")
-        p.add(f"{key}_title", (x + 12, y + 6, w - 24, 22), title(heading), on=pan, group="t")
-        p.add(f"{key}_table", (x + 12, y + 30, w - 24, h - 34), table(cols), on=pan, group="c")
+    # ---- the gap
+    x, y, w, h = GAP_PANEL
+    pan, inner = "p1_gap_panel", w - 24
+    p.add(pan, GAP_PANEL, panel(), z=2000, row="bottom")
+    p.add("p1_gap_title", (x + 12, y + 6, inner, 20), heading("The gap: check-in against source"),
+          on=pan, group="t")
+    p.add("p1_gap_sub", (x + 12, y + 26, inner, 18), subtitle("Follows the month, not the toggle"),
+          on=pan, group="t")
+    p.add("p1_gap_legend", (x + 12, y + 54, inner, 20),
+          textbox(legend((("Higher", AMBER), ("Level", PALE), ("Lower", GREY)))), on=pan, group="c")
+    p.add("p1_gap_chart", (x + 12, y + 74, inner, 246), gap_chart(), on=pan, group="c", categories=6)
+
+    # ---- movement, with seats arrived apart
+    x, y, w, h = MOVE_PANEL
+    pan, inner = "p1_move_panel", w - 24
+    p.add(pan, MOVE_PANEL, panel(), z=2000, row="bottom")
+    p.add("p1_move_title", (x + 12, y + 6, inner, 20), heading("Movement since the previous count"),
+          on=pan, group="t")
+    p.add("p1_move_sub", (x + 12, y + 26, 196, 18), subtitle("Follows the month, not the toggle"),
+          on=pan, group="t")
+    p.add("p1_move_legend", (x + 12 + 196, y + 26, 80, 18),
+          textbox(legend((("Up", MARINE), ("Down", GREY)))), on=pan, group="t")
+    p.add("p1_move_chart", (x + 12, y + 46, inner, 224), movement_chart(), on=pan, group="c", categories=6)
+    p.add("p1_seats_caption", (x + 12, y + 280, inner, 18),
+          caption("Seats arrived, all teams, counted apart", 9, inner, 1), on=pan, group="s")
+    p.add("p1_seats_figure", (x + 12, y + 298, inner, 26), value_card("Seats arrived", 12),
+          on=pan, group="s")
+
+    # ---- largest group and its lever
+    x, y, w, h = LARGEST_PANEL
+    pan, inner = "p1_largest_panel", w - 24
+    p.add(pan, LARGEST_PANEL, panel(), z=2000, row="bottom")
+    p.add("p1_largest_title", (x + 12, y + 6, inner, 20), heading("Largest group per team, and its lever"),
+          on=pan, group="t")
+    p.add("p1_largest_sub", (x + 12, y + 26, inner, 18), subtitle("Follows the placement toggle and the month"),
+          on=pan, group="t")
+    widths = dict(LARGEST_COLS)
+    lever_lines = [wrapped_lines([(LEVERS[t], pt(10))], widths["Lever"] - 10) for t in TEAMS]
+    cols = [(proj_column("dim_team", "team", display="Team"), widths["Team"]),
+            (proj_measure("Largest group", "Largest group"), widths["Largest group"]),
+            (proj_measure("Largest group people", "People"), widths["People"]),
+            (proj_measure("Largest group lever", "Lever"), widths["Lever"])]
+    p.add("p1_largest_table", (x + 12, y + 46, inner, 278), {
+        "visualType": "tableEx",
+        "query": {"queryState": {"Values": {"projections": [c for c, _ in cols]}},
+                  "sortDefinition": sort_by_team()},
+        "objects": {
+            "total": [{"properties": {"totals": lit("false")}}],
+            "columnWidth": [{"properties": {"value": lit(f"{wd}D")}, "selector": {"metadata": c["queryRef"]}}
+                            for c, wd in cols],
+        },
+        "visualContainerObjects": NO_FRAME,
+        "drillFilterOtherVisuals": True,
+    }, on=pan, group="c", need_w=sum(widths.values()) + TABLE_SLACK, need_h=table_height(lever_lines))
     return p
 
 

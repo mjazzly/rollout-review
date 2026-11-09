@@ -3,11 +3,11 @@
   "name": "p1_gap_panel",
   "position": {
     "x": 16,
-    "y": 445,
+    "y": 388,
     "z": 2000,
-    "height": 271,
-    "width": 264,
-    "tabOrder": 1900
+    "height": 328,
+    "width": 300,
+    "tabOrder": 1200
   },
   "visual": {
     "visualType": "shape",

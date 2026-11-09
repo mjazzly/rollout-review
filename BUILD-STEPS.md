@@ -538,37 +538,62 @@ Stage split, by source placement (`python3 scripts/page0_figures.py`):
 
 ## G. Page 1: Where people sit (FRAME-01)
 
-Written by `scripts/page1_pbir.py`; figures from `python3 scripts/page1_figures.py`. Month 6 throughout (no month slicer on this page, so the measures read the latest check-in).
+Written by `scripts/page1_pbir.py`; figures from `python3 scripts/page1_figures.py` (add a month number, for example `4`, for the page with the month slicer moved).
 
-What the page holds (brief section 6, page 1):
+### Round 2 (10 Nov 2026): redesign, nothing scrolls
 
-| Piece | Built as |
-|---|---|
-| Placement toggle | A dropdown slicer on `placement_toggle[placement]`, one value always picked, Source to start. It drives the six charts and the largest group table |
-| Nine checkpoints per team, one scale | Six bar charts in one row, one per team (a team filter on each), checkpoints No ticket to Frequent flyer top to bottom, bars coloured by stage (grey, pale marine, marine, as on page 0), counts on the bars, every axis 0 to 180 (the largest bar is 174) |
-| The gap | A table: team, Higher, Level, Lower (check-in against source; the toggle does not change it) |
-| Movement | A table: team, Up, Held, Down, and Seats arrived in its own column (source placement, Month 5 to Month 6) |
-| Largest group | A table: team, largest group, people, lever (follows the toggle) |
+Round 1 (six small bar charts, three tables) was hard to read: 54 truncated checkpoint names, thin bars, three tables cut off by scrollbars. The new design:
 
-Layout: the same header strip as page 0, with the toggle at x 1004, y 36 (260 by 56). The chart panel at x 16, y 96 (1248 by 345): title row, then six team names and charts, 197 by 283 each, 8 apart. The three table panels at y 445, 271 high: x 16 (264 wide), 296 (332), 644 (620).
+| Piece | Built as | Follows |
+|---|---|---|
+| Placement toggle | Two buttons, Source and Check-in, Source to start (a list slicer laid out across: `general.orientation`, unconfirmed). If the buttons do not show, it falls back to a list | |
+| Month | A dropdown, Month 6 to start. Added so CHECK.md question 6 (Month 3 to Month 4) can be read on the page | |
+| People at each checkpoint, by team | A matrix: six teams down, the nine checkpoints across in order, names in full, the three stage names over their checkpoints, counts in the cells shaded by the team's share at that checkpoint (white at none, marine at 60% or more; white text on cells at 33% or more), no totals. Shading comes from two helper measures in `measures.dax`, `Checkpoint shade` and `Checkpoint text colour` | toggle, month |
+| The gap: check-in against source | One bar per team split Higher (amber), Level (pale marine), Lower (grey), counts on the bars. The bars are 100% stacked, so even Legal's 10 and Finance's 13 have room for their label | month |
+| Movement since the previous count | Two bars per team, Up (marine) and Down (grey), counts on the bars. Held is left off. Seats arrived is one number under the chart, all teams, counted apart (CHECK.md question 6 asks for it) | month |
+| Largest group per team, and its lever | A table: team, largest group, people, lever, wrapped; sized so all six rows show | toggle, month |
+
+Unconfirmed in this round (not in Megat's files yet): the matrix's `subTotals.rowSubtotals` and `columnSubtotals` (totals off), `values.backColor` and `values.fontColor` (shading), `columnWidth.value` (fixed widths, so the stage names line up over their checkpoints), and the query roles `Rows`, `Columns`, `Values`; the toggle's `general.orientation`. If the shading does not take, the hand reference is: on the matrix, **Format**, **Cell elements**, **Background color** on, **fx**, **Format style** Field value, **What field should we base this on?** `Checkpoint shade`.
+
+Layout: the header strip as page 0, with the toggle at x 868 and the month at x 1132 (y 36, 56 high). Matrix panel x 16, y 96, 1248 by 288 (team column 120, each checkpoint 116). Bottom panels at y 388, 328 high: the gap x 16 (300 wide), movement x 332 (300), largest group x 648 (616). The page checks now also require a table's columns plus 24 px to fit its width, and its header and rows to fit its height (`TABLE_ROW` 26, `TABLE_LINE` 18, `TABLE_HEADER` 46, measured on the round 1 screenshot).
+
+### On the PC
+
+50. Close Power BI Desktop (save first if it asks).
+51. In PowerShell, in the rollout-review folder: `git pull`.
+52. Open `report/Rollout review.pbip` and go to **Where people sit**.
+53. Send three screenshots: the page as it opens; with the toggle on **Check-in**; with the toggle back on Source and the month on **Month 4**.
 
 ### Figures page 1 should show
 
-People at each checkpoint, Month 6, **Source** (the toggle as it opens):
+As it opens (Source, Month 6). Matrix: count, with the team's share in brackets as a guide to the shading (the share is not on the page):
 
 | Checkpoint | Consulting | Finance | Legal | Operations | People | Technology |
 |---|---:|---:|---:|---:|---:|---:|
 | No ticket | 2 | 3 | 0 | 6 | 10 | 12 |
-| Ticket held | 15 | 14 | 84 | 40 | 28 | 20 |
+| Ticket held | 15 | 14 | 84 (70%) | 40 | 28 (22%) | 20 |
 | Checked in | 10 | 17 | 11 | 11 | 11 | 7 |
 | Through security | 0 | 3 | 2 | 1 | 2 | 0 |
-| Waiting to board | 11 | 112 | 9 | 30 | 21 | 12 |
-| Boarding | 81 | 25 | 5 | 95 | 19 | 45 |
-| Takeoff | 174 | 24 | 7 | 64 | 37 | 101 |
+| Waiting to board | 11 | 112 (56%) | 9 | 30 | 21 | 12 |
+| Boarding | 81 (27%) | 25 | 5 | 95 (38%) | 19 | 45 (22%) |
+| Takeoff | 174 (58%) | 24 | 7 | 64 (26%) | 37 (28%) | 101 (50%) |
 | Above the clouds | 3 | 2 | 2 | 2 | 2 | 1 |
 | Frequent flyer | 4 | 0 | 0 | 1 | 0 | 2 |
 
-The same with the toggle on **Check-in**:
+The darkest cells (white text): Legal Ticket held, Consulting Takeoff, Finance Waiting to board, Technology Takeoff, Operations Boarding.
+
+| Team | Gap: Higher, Level, Lower | Movement: Up, Down | Largest group (Source) |
+|---|---|---|---|
+| Consulting | 45, 209, 46 | 33, 18 | Takeoff, 174 |
+| Finance | 111, 76, 13 | 11, 13 | Waiting to board, 112 |
+| Legal | 19, 91, 10 | 6, 4 | Ticket held, 84 |
+| Operations | 42, 157, 51 | 18, 17 | Boarding, 95 |
+| People | 24, 91, 15 | 15, 6 | Takeoff, 37 |
+| Technology | 29, 141, 30 | 15, 9 | Takeoff, 101 |
+
+Seats arrived, all teams: 0. Levers: Takeoff "A second task, and a place to share what works"; Waiting to board "One recurring task tied to a day of the week"; Ticket held "A first task done side by side with someone who already uses AI"; Boarding "Make that recurring task part of their routine".
+
+Toggle on **Check-in** (Month 6): the matrix becomes
 
 | Checkpoint | Consulting | Finance | Legal | Operations | People | Technology |
 |---|---:|---:|---:|---:|---:|---:|
@@ -582,18 +607,17 @@ The same with the toggle on **Check-in**:
 | Above the clouds | 24 | 5 | 3 | 9 | 4 | 15 |
 | Frequent flyer | 4 | 0 | 0 | 1 | 0 | 2 |
 
-Tables:
+and the largest groups become Consulting Takeoff 156, Finance Takeoff 100, Legal Ticket held 74, Operations Boarding 75, People Takeoff 39, Technology Takeoff 80. The gap and movement do not change.
 
-| Team | Higher | Level | Lower | Up | Held | Down | Seats arrived | Largest group, Source | Largest group, Check-in |
-|---|---:|---:|---:|---:|---:|---:|---:|---|---|
-| Consulting | 45 | 209 | 46 | 33 | 247 | 18 | 0 | Takeoff, 174 | Takeoff, 156 |
-| Finance | 111 | 76 | 13 | 11 | 173 | 13 | 0 | Waiting to board, 112 | Takeoff, 100 |
-| Legal | 19 | 91 | 10 | 6 | 110 | 4 | 0 | Ticket held, 84 | Ticket held, 74 |
-| Operations | 42 | 157 | 51 | 18 | 209 | 17 | 0 | Boarding, 95 | Boarding, 75 |
-| People | 24 | 91 | 15 | 15 | 99 | 6 | 0 | Takeoff, 37 | Takeoff, 39 |
-| Technology | 29 | 141 | 30 | 15 | 164 | 9 | 0 | Takeoff, 101 | Takeoff, 80 |
+Month on **Month 4** (Source): movement Up, Down: Consulting 33, 11; Finance 22, 10; Legal 7, 4; Operations 87, 12; People 37, 1; Technology 24, 12. Seats arrived 0.
 
-The Up column adds to 98, page 0's Moved up. The gap and the Source largest groups match check 4 (section E, step 48). Levers: Takeoff "A second task, and a place to share what works"; Waiting to board "One recurring task tied to a day of the week"; Ticket held "A first task done side by side with someone who already uses AI"; Boarding "Make that recurring task part of their routine".
+### CHECK.md questions on this page
+
+| Q | Read from | Should read |
+|---|---|---|
+| 4 | The gap, Finance's bar (Month 6) | Higher 111, level 76, lower 13 |
+| 5 | Largest group table, Legal row (Source, Month 6) | Ticket held, 84, "A first task done side by side with someone who already uses AI" |
+| 6 | Movement, Operations, and Seats arrived (month on Month 4) | 87 moved up; 0 seats arrived |
 
 ## Next
 

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_largest_title",
   "position": {
-    "x": 656,
-    "y": 451,
+    "x": 660,
+    "y": 394,
     "z": 3000,
-    "height": 22,
-    "width": 596,
-    "tabOrder": 2600
+    "height": 20,
+    "width": 592,
+    "tabOrder": 2500
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Largest group per team, under the placement picked, and its lever",
+                    "value": "Largest group per team, and its lever",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

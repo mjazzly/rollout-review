@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """The figures page 1 (Where people sit) should show at Month 6, read from the CSVs.
 
-    python3 scripts/page1_figures.py
+    python3 scripts/page1_figures.py          the page as it opens (Month 6)
+    python3 scripts/page1_figures.py 4        with the month slicer on Month 4
 
-Uses check.py's views (wk, cw, tb). Movement is Month 5 to Month 6, by source placement,
-for people seated by the Month 5 check-in week; seats arrived are counted apart.
+Uses check.py's views (wk, cw, tb). Movement is the previous month to the month picked,
+by source placement, for people seated by the previous check-in week; seats arrived are
+counted apart. Matrix shading: the team's share at a checkpoint, full marine at 60%.
 """
 import sys
 from pathlib import Path
@@ -13,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from check import connect  # noqa: E402
 
 c = connect()
-M = 6
+M = int(sys.argv[1]) if len(sys.argv) > 1 else 6
 checkpoints = c.execute("SELECT checkpoint_id, checkpoint FROM dim_checkpoint ORDER BY 1").fetchall()
 teams = [t for (t,) in c.execute("SELECT team FROM dim_team ORDER BY 1").fetchall()]
 
@@ -30,8 +32,10 @@ for title, col in (("Source placement (the default)", "source_checkpoint_id"),
     n = counts(col)
     print(f"\nPeople at each checkpoint, Month {M}, {title}")
     print("| Checkpoint | " + " | ".join(teams) + " |\n|---|" + "---:|" * len(teams))
+    size = {t: sum(n.get((t, k), 0) for k, _ in checkpoints) for t in teams}
     for k, name in checkpoints:
-        print(f"| {k} {name} | " + " | ".join(str(n.get((t, k), 0)) for t in teams) + " |")
+        print(f"| {k} {name} | " + " | ".join(
+            f"{n.get((t, k), 0)} ({100 * n.get((t, k), 0) / size[t]:.0f}%)" for t in teams) + " |")
     biggest = {}
     for t in teams:
         k = max((n.get((t, k), 0), -k) for k, _ in checkpoints)
@@ -48,7 +52,7 @@ for t, h, l, lo in c.execute(f"""
         GROUP BY 1 ORDER BY 1""").fetchall():
     print(f"| {t} | {h} | {l} | {lo} |")
 
-print(f"\nMovement, Month {M - 1} to Month {M} (source placement)")
+print(f"\nMovement, Month {M - 1} to Month {M} (source placement; seats arrived shown as one total)")
 print("| Team | Up | Held | Down | Seats arrived |\n|---|---:|---:|---:|---:|")
 for row in c.execute(f"""
         WITH s AS (

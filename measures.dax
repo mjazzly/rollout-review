@@ -755,6 +755,33 @@ RETURN
     CALCULATE ( MAX ( dim_checkpoint[lever] ), REMOVEFILTERS ( dim_checkpoint ), dim_checkpoint[checkpoint_id] = topId )
 
 
+// Checkpoint shade
+// Create as: measure in _Measures. The cell background of the page 1 matrix (team by checkpoint).
+// format: text
+// description: Helper, not in measures.md. The colour of a team-by-checkpoint cell: the team's share of people at that checkpoint, under the placement the page toggle selects, from white at none to marine (#2C5F7C) at 60% or more.
+Checkpoint shade =
+VAR people = [People at checkpoint]
+VAR everyone = CALCULATE ( [People at checkpoint], REMOVEFILTERS ( dim_checkpoint ) )
+VAR s = MIN ( 1, DIVIDE ( people, everyone ) / 0.6 )
+VAR r = ROUND ( 255 + ( 44 - 255 ) * s, 0 )
+VAR g = ROUND ( 255 + ( 95 - 255 ) * s, 0 )
+VAR b = ROUND ( 255 + ( 124 - 255 ) * s, 0 )
+VAR h = "0123456789ABCDEF"
+RETURN
+    "#" & MID ( h, INT ( r / 16 ) + 1, 1 ) & MID ( h, MOD ( r, 16 ) + 1, 1 )
+        & MID ( h, INT ( g / 16 ) + 1, 1 ) & MID ( h, MOD ( g, 16 ) + 1, 1 )
+        & MID ( h, INT ( b / 16 ) + 1, 1 ) & MID ( h, MOD ( b, 16 ) + 1, 1 )
+
+// Checkpoint text colour
+// Create as: measure in _Measures. The cell text colour of the page 1 matrix, so counts stay readable on dark cells.
+// format: text
+// description: Helper, not in measures.md. White on a cell shaded past the middle (a share of 33% or more), ink otherwise.
+Checkpoint text colour =
+VAR share = DIVIDE ( [People at checkpoint], CALCULATE ( [People at checkpoint], REMOVEFILTERS ( dim_checkpoint ) ) )
+RETURN
+    IF ( share >= 0.33, "#FFFFFF", "#172529" )
+
+
 // ---------------------------------------------------------------------
 // PAGE 2: FOUNDATION. Which uses matter most, and where do people get stuck?
 // ---------------------------------------------------------------------

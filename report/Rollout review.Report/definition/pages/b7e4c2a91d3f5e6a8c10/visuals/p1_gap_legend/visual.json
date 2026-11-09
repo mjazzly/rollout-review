@@ -1,0 +1,100 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "p1_gap_legend",
+  "position": {
+    "x": 28,
+    "y": 442,
+    "z": 3000,
+    "height": 20,
+    "width": 276,
+    "tabOrder": 1500
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "■",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#B07E23"
+                    }
+                  },
+                  {
+                    "value": " Higher   ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  },
+                  {
+                    "value": "■",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#CFE0EA"
+                    }
+                  },
+                  {
+                    "value": " Level   ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  },
+                  {
+                    "value": "■",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#7E8E92"
+                    }
+                  },
+                  {
+                    "value": " Lower",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

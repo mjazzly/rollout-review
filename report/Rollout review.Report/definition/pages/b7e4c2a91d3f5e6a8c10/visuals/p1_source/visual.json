@@ -6,7 +6,7 @@
     "y": 70,
     "z": 3000,
     "height": 22,
-    "width": 972,
+    "width": 836,
     "tabOrder": 200
   },
   "visual": {
@@ -26,7 +26,7 @@
                     }
                   },
                   {
-                    "value": "Month 6, the latest of six check-ins",
+                    "value": "the month picked, Month 6 to start",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

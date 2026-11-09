@@ -52,7 +52,8 @@ CAPTION_GAP = 0      # a caption sits directly on the number or chart it labels
 COL_GAP = 16         # between panels side by side in a row
 ROW_GAP = 4          # between rows on the page (the header strip's pieces touch)
 TEXT_SNUG = 6        # a text box is at most this much taller than its text
-INSET_TYPES = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart", "tableEx"}
+INSET_TYPES = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart", "tableEx",
+               "pivotTable"}
 
 # Text measured on the page 0 screenshots (10 Nov 2026): a 10pt line of 44 to 45
 # characters filled a 276 px text box, so about 0.62 px per character per point, with
@@ -111,7 +112,12 @@ SEEN: dict[tuple[str, str], set[str]] = {
 TEXT_STYLE_SEEN = {"fontWeight", "fontSize", "color"}                # RR, BR; color S3
 
 # Not yet in Megat's files or confirmed on screen. Listed with every push.
-UNCONFIRMED: dict[tuple[str, str], set[str]] = {}
+UNCONFIRMED: dict[tuple[str, str], set[str]] = {
+    ("pivotTable", "subTotals"): {"rowSubtotals", "columnSubtotals"},   # page 1 matrix, no totals
+    ("pivotTable", "values"): {"backColor", "fontColor"},               # as tableEx in BR
+    ("pivotTable", "columnWidth"): {"value"},                           # as tableEx in BR
+    ("slicer", "general"): {"orientation"},                             # 1 = horizontal: buttons
+}
 TEXT_STYLE_UNCONFIRMED: set[str] = set()
 
 # Microsoft's axis, legend, label and data colour objects are shared by the cartesian
@@ -126,11 +132,21 @@ FAMILY_OBJECTS = {"categoryAxis", "valueAxis", "legend", "labels", "dataPoint"}
 # with the chart title off or 76 px with it on.
 MIN_SIZE = {
     "lineChart": dict(w=200, h=100),
-    "hundredPercentStackedBarChart": dict(w=300, h=150),
+    "hundredPercentStackedBarChart": dict(w=240, h=150),   # drew at 432 wide; 240 untested
     "clusteredBarChart": dict(w=150, h=150),
 }
 BAR_PER_CATEGORY = 27
 BAR_CHROME = {True: 76, False: 40}
+
+# Tables and matrices must show every row and column without a scrollbar. Page 1 round 1
+# screenshot: a one-line row is about 26 px, each wrapped line adds about 18, a header
+# with the sort arrow is about 46, and columns adding to 234 px in a 240 px table scrolled.
+TABLE_ROW, TABLE_LINE, TABLE_HEADER, MATRIX_HEADER, TABLE_SLACK = 26, 18, 46, 34, 24
+
+
+def table_height(row_lines: list[int], header: int = TABLE_HEADER) -> int:
+    """Height a table needs to show every row: row_lines is the lines each row wraps to."""
+    return header + sum(TABLE_ROW + (n - 1) * TABLE_LINE for n in row_lines)
 
 
 # ------------------------------------------------------------------ expression helpers
@@ -345,6 +361,8 @@ class Visual:
     same: str | None = None              # repeated elements with the same key share one size
     row: str | None = None               # panels that share one top edge and height
     categories: int = 0                  # bars in a bar chart, for the per-bar check
+    need_w: int = 0                      # a table's columns plus TABLE_SLACK, so it does not scroll
+    need_h: int = 0                      # a table's header and rows (table_height)
     extra: dict = field(default_factory=dict)
 
     @property
@@ -422,6 +440,11 @@ class Page:
                 need = v.categories * BAR_PER_CATEGORY + BAR_CHROME[title_on(v.visual)]
                 if h < need:
                     problems.append(f"{v.name}: {v.categories} bars need {need} px, it is {h}")
+        for v in vs:
+            if v.need_w and v.box[2] < v.need_w:
+                problems.append(f"{v.name}: columns need {v.need_w} px, it is {v.box[2]}")
+            if v.need_h and v.box[3] < v.need_h:
+                problems.append(f"{v.name}: rows need {v.need_h} px, it is {v.box[3]}")
         problems += self._spacing()
         problems += self._text_fit()
         # 7 setting names

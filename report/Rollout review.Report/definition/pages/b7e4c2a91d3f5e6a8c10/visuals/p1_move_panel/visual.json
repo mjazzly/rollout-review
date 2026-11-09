@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_move_panel",
   "position": {
-    "x": 296,
-    "y": 445,
+    "x": 332,
+    "y": 388,
     "z": 2000,
-    "height": 271,
-    "width": 332,
-    "tabOrder": 2200
+    "height": 328,
+    "width": 300,
+    "tabOrder": 1700
   },
   "visual": {
     "visualType": "shape",

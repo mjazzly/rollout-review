@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_toggle",
   "position": {
-    "x": 1004,
+    "x": 868,
     "y": 36,
     "z": 3000,
     "height": 56,
-    "width": 260,
+    "width": 248,
     "tabOrder": 300
   },
   "visual": {
@@ -41,7 +41,7 @@
             "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dropdown'"
+                  "Value": "'Basic'"
                 }
               }
             }
@@ -111,6 +111,13 @@
                   }
                 ]
               }
+            },
+            "orientation": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
             }
           }
         }
@@ -121,7 +128,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Placement: Source or Check-in'"
+                  "Value": "'Placement'"
                 }
               }
             }
