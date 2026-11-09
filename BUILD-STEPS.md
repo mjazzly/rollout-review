@@ -472,43 +472,40 @@ What the page holds (brief section 6): a header strip, four stage tiles in one r
 
 Page 0 is written by `scripts/page0_pbir.py`, using the shared checks in `scripts/pbir.py` (brief section 7, steps 5 and 6). `scripts/page0_figures.py` prints the stage split figures from the CSVs.
 
-### Round 3 (10 Nov 2026): the fixes from the round 2 screenshot
+### Round 4 (10 Nov 2026): polish, from the round 3 screenshot
+
+Round 3 confirmed `dataPoint.fill` (one entry per stage, picked by value) and `textStyle.color`; both are now in the confirmed list in `scripts/pbir.py`. The rule line under the tiles is approved.
 
 | Fix asked | What changed |
 |---|---|
-| Stage colours on both charts | One `dataPoint.fill` per stage: On the ground `#7E8E92`, At the gate `#CFE0EA`, In the air `#2C5F7C`. Each entry picks its stage by value (`scopeId`), because a `metadata` selector names the stage field as a whole, not one stage. Unconfirmed |
-| Legend squares coloured | `textStyle.color` on each square's run, Megat's pattern. Unconfirmed |
-| No data labels on the stage charts | Labels off |
-| All six teams, no scrollbar | Chart titles moved into text boxes (left title carries "Stage by source placement"), charts 206 high. The check now needs 27 px per bar (round 2 showed bars 26.5 px apart while scrolling) plus 40 px with the title off, 76 with it on |
-| 98 clipped | Moved up card 168 to 184 high, divider off |
-| Threshold missing | Tile card 124 to 158 high: round 2 showed the trend line ending about 120 px into the card, so the threshold needs the next 23 px and the bottom padding |
-| Rule line under the tiles | Approved; brief section 6 updated |
+| Navigator name at the bottom edge | Bar 26 to 32 high; at 32 (page 0 built by hand) the name read centred |
+| Tile spacing: four groups, even gaps | Each tile is now (a) stage and question, (b) a 9pt grey caption sitting directly on the figure, (c) verdict, trend and threshold, (d) the sparkline, 10 px apart (2 above the sparkline, which pads itself). The figure, verdict, trend and threshold are each their own card with no label, divider or left padding, so the card's built-in gaps are gone. A one-line caption gets a blank line above it, so every caption touches its figure and the four figures share one line |
+| Bottom panels: one top edge, one height | The two charts and Moved up are each a white panel, 240 high from y 476, with the title inside. Moved up is now caption-on-figure twice: the 98, then Seats arrived |
+| Spacing as a standing rule | Constants in `scripts/pbir.py` (`PANEL_PAD_X` 12, `PANEL_PAD_TOP` 6, `GROUP_GAP` 10, `CHART_INSET` 8, `CAPTION_GAP` 0, `COL_GAP` 16, `ROW_GAP` 4, `TEXT_SNUG` 6), checked on every page with a text-fit estimate measured from the page 0 screenshots |
 
-Where the height came from: once the threshold is back, the tile row has no spare (stage and question need 61, the label 38, the card 157, and the sparkline is known to draw at 100, not below). So the header strip gave it: the title and the header line now share one row, with the "Read from" line under them. That freed 30 px, which went to the tile row and the stage charts.
+Not bold any more: the verdict is now a card value, and Desktop has not written a bold setting for a card value in Megat's files. It keeps its colour (amber when Not yet working).
 
 Layout on the 1280 by 720 page, in pixels:
 
 | Piece | x | y | w | h |
 |---|---|---|---|---|
-| Page navigator | 16 | 6 | 1248 | 26 |
-| Title text box, header line card (same row) | 16, 212 | 34 | 196, 1052 | 34 |
-| "Read from" line | 16 | 68 | 1248 | 24 |
-| Tile panels | 16, 332, 648, 964 | 96 | 300 | 366 |
-| In each tile: stage and question | tile x + 12 | 100 | 276 | 64 |
-| In each tile: the figure's label | tile x + 12 | 164 | 276 | 40 |
-| In each tile: card (figure, verdict, trend, threshold) | tile x + 12 | 204 | 276 | 158 |
-| In each tile: sparkline, Month 2 to Month 6 | tile x + 12 | 362 | 276 | 100 |
-| Rule line | 16 | 464 | 1248 | 22 |
-| Chart titles, legend | 16, 488, 648 | 488 | 456, 160, 296 | 22 |
-| Stage split charts, baseline and latest | 16, 488 | 510 | 456 | 206 |
-| Moved up panel (title, card inside) | 960 | 488 | 304 | 228 |
+| Page navigator | 16 | 4 | 1248 | 32 |
+| Title, header line (same row) | 16, 212 | 36 | 196, 1052 | 34 |
+| "Read from" line | 16 | 70 | 1248 | 22 |
+| Tile panels | 16, 332, 648, 964 | 96 | 300 | 350 |
+| (a) stage and question | tile x + 12 | 102 | 276 | 62 |
+| (b) caption, then figure | tile x + 12 | 174, 208 | 276 | 34, 54 |
+| (c) verdict, trend, threshold | tile x + 12 | 272, 296, 320 | 276 | 24 each |
+| (d) sparkline | tile x + 12 | 346 | 276 | 100 |
+| Rule line | 16 | 450 | 1248 | 22 |
+| Bottom panels: baseline, latest, moved up | 16, 488, 960 | 476 | 456, 456, 304 | 240 |
 
-### On the PC
+### On the PC (pages 0 and 1 together)
 
 50. Close Power BI Desktop (save first if it asks).
 51. In PowerShell, in the rollout-review folder: `git pull`.
 52. Open `report/Rollout review.pbip`.
-53. Send a screenshot of the whole page. Nothing is formatted by hand.
+53. Send a screenshot of page 0, then click **Where people sit** in the navigator and send a screenshot of page 1. Then pick **Check-in** in the Placement toggle and send page 1 again.
 
 ### Figures page 0 should show
 
@@ -516,15 +513,15 @@ From check.py and the CSVs (the on-screen checks 1 to 4 in section E matched the
 
 | Piece | Should read |
 |---|---|
-| Header row | `Rollout review` then `1,200 people · 1,167 seats assigned · 505 seats active in Week 24` on the same row |
+| Header row | `Rollout review` then `1,200 people · 1,167 seats assigned · 505 seats active in Week 24` |
 | Foundation | 49.5%, Working, ↓ Down, Threshold 40%; line 53.9%, 55.4%, 57.2%, 53.1%, 49.5% |
 | Execution | 83.6%, Working, ↓ Down, Threshold 60%; line 86.1%, 85.7%, 84.7%, 83.8%, 83.6% |
 | Refinement | 9.5%, Not yet working (amber), → Flat, Threshold 50%; line 0.0%, 5.6%, 8.7%, 9.5%, 9.5% |
 | Scale | +10.1, Working, ↑ Up, Threshold 10 points above baseline; line 0.0, 0.0, +4.9, +8.6, +10.1 |
-| Moved up | 98, with Seats arrived 0 |
-| Navigator | Rollout review only (Checks is hidden) |
+| Moved up | 98; Seats arrived 0 |
+| Navigator | Rollout review, Where people sit (Checks is hidden) |
 
-Stage split, by source placement (`python3 scripts/page0_figures.py`). No labels on the bars, so these are the segment widths to judge by eye:
+Stage split, by source placement (`python3 scripts/page0_figures.py`):
 
 | Team | Baseline month | Baseline: ground, gate, air | Month 6: ground, gate, air |
 |---|---:|---|---|
@@ -535,8 +532,67 @@ Stage split, by source placement (`python3 scripts/page0_figures.py`). No labels
 | People | 4 | 33.8%, 43.8%, 22.3% | 37.7%, 32.3%, 30.0% |
 | Technology | 3 | 20.0%, 37.5%, 42.5% | 19.5%, 28.5%, 52.0% |
 
-The In the air shares match check 4 (section E, step 48).
+---
+
+## G. Page 1: Where people sit (FRAME-01)
+
+Written by `scripts/page1_pbir.py`; figures from `python3 scripts/page1_figures.py`. Month 6 throughout (no month slicer on this page, so the measures read the latest check-in).
+
+What the page holds (brief section 6, page 1):
+
+| Piece | Built as |
+|---|---|
+| Placement toggle | A dropdown slicer on `placement_toggle[placement]`, one value always picked, Source to start. It drives the six charts and the largest group table |
+| Nine checkpoints per team, one scale | Six bar charts in one row, one per team (a team filter on each), checkpoints No ticket to Frequent flyer top to bottom, bars coloured by stage (grey, pale marine, marine, as on page 0), counts on the bars, every axis 0 to 180 (the largest bar is 174) |
+| The gap | A table: team, Higher, Level, Lower (check-in against source; the toggle does not change it) |
+| Movement | A table: team, Up, Held, Down, and Seats arrived in its own column (source placement, Month 5 to Month 6) |
+| Largest group | A table: team, largest group, people, lever (follows the toggle) |
+
+Layout: the same header strip as page 0, with the toggle at x 1004, y 36 (260 by 56). The chart panel at x 16, y 96 (1248 by 345): title row, then six team names and charts, 197 by 283 each, 8 apart. The three table panels at y 445, 271 high: x 16 (264 wide), 296 (332), 644 (620).
+
+### Figures page 1 should show
+
+People at each checkpoint, Month 6, **Source** (the toggle as it opens):
+
+| Checkpoint | Consulting | Finance | Legal | Operations | People | Technology |
+|---|---:|---:|---:|---:|---:|---:|
+| No ticket | 2 | 3 | 0 | 6 | 10 | 12 |
+| Ticket held | 15 | 14 | 84 | 40 | 28 | 20 |
+| Checked in | 10 | 17 | 11 | 11 | 11 | 7 |
+| Through security | 0 | 3 | 2 | 1 | 2 | 0 |
+| Waiting to board | 11 | 112 | 9 | 30 | 21 | 12 |
+| Boarding | 81 | 25 | 5 | 95 | 19 | 45 |
+| Takeoff | 174 | 24 | 7 | 64 | 37 | 101 |
+| Above the clouds | 3 | 2 | 2 | 2 | 2 | 1 |
+| Frequent flyer | 4 | 0 | 0 | 1 | 0 | 2 |
+
+The same with the toggle on **Check-in**:
+
+| Checkpoint | Consulting | Finance | Legal | Operations | People | Technology |
+|---|---:|---:|---:|---:|---:|---:|
+| No ticket | 2 | 3 | 0 | 6 | 10 | 12 |
+| Ticket held | 15 | 12 | 74 | 35 | 22 | 15 |
+| Checked in | 30 | 14 | 17 | 28 | 17 | 19 |
+| Through security | 1 | 11 | 10 | 15 | 6 | 5 |
+| Waiting to board | 12 | 26 | 6 | 25 | 18 | 8 |
+| Boarding | 56 | 29 | 5 | 75 | 14 | 44 |
+| Takeoff | 156 | 100 | 5 | 56 | 39 | 80 |
+| Above the clouds | 24 | 5 | 3 | 9 | 4 | 15 |
+| Frequent flyer | 4 | 0 | 0 | 1 | 0 | 2 |
+
+Tables:
+
+| Team | Higher | Level | Lower | Up | Held | Down | Seats arrived | Largest group, Source | Largest group, Check-in |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|
+| Consulting | 45 | 209 | 46 | 33 | 247 | 18 | 0 | Takeoff, 174 | Takeoff, 156 |
+| Finance | 111 | 76 | 13 | 11 | 173 | 13 | 0 | Waiting to board, 112 | Takeoff, 100 |
+| Legal | 19 | 91 | 10 | 6 | 110 | 4 | 0 | Ticket held, 84 | Ticket held, 74 |
+| Operations | 42 | 157 | 51 | 18 | 209 | 17 | 0 | Boarding, 95 | Boarding, 75 |
+| People | 24 | 91 | 15 | 15 | 99 | 6 | 0 | Takeoff, 37 | Takeoff, 39 |
+| Technology | 29 | 141 | 30 | 15 | 164 | 9 | 0 | Takeoff, 101 | Takeoff, 80 |
+
+The Up column adds to 98, page 0's Moved up. The gap and the Source largest groups match check 4 (section E, step 48). Levers: Takeoff "A second task, and a place to share what works"; Waiting to board "One recurring task tied to a day of the week"; Ticket held "A first task done side by side with someone who already uses AI"; Boarding "Make that recurring task part of their routine".
 
 ## Next
 
-- G. Page 1, Where people sit, written by `scripts/page1_pbir.py` once page 0 is approved; then pages 2 to 5 the same way, one at a time
+- H. Page 2, Foundation, written by `scripts/page2_pbir.py` once pages 0 and 1 are approved; then pages 3 to 5 the same way, one at a time

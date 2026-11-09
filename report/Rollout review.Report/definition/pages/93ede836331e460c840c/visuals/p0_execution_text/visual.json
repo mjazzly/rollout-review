@@ -3,11 +3,11 @@
   "name": "p0_execution_text",
   "position": {
     "x": 344,
-    "y": 100,
+    "y": 102,
     "z": 3000,
-    "height": 64,
+    "height": 62,
     "width": 276,
-    "tabOrder": 1000
+    "tabOrder": 1300
   },
   "visual": {
     "visualType": "textbox",
@@ -22,7 +22,8 @@
                     "value": "Execution",
                     "textStyle": {
                       "fontSize": "14pt",
-                      "fontWeight": "bold"
+                      "fontWeight": "bold",
+                      "color": "#172529"
                     }
                   }
                 ]
@@ -32,7 +33,8 @@
                   {
                     "value": "Does it hold up in everyday use?",
                     "textStyle": {
-                      "fontSize": "10pt"
+                      "fontSize": "10pt",
+                      "color": "#4F6166"
                     }
                   }
                 ]
@@ -43,7 +45,7 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
+      "title": [
         {
           "properties": {
             "show": {
@@ -56,7 +58,7 @@
           }
         }
       ],
-      "title": [
+      "background": [
         {
           "properties": {
             "show": {

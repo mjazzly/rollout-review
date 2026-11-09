@@ -3,11 +3,11 @@
   "name": "p0_scale_sparkline",
   "position": {
     "x": 976,
-    "y": 362,
+    "y": 346,
     "z": 3000,
     "height": 100,
     "width": 276,
-    "tabOrder": 2300
+    "tabOrder": 3500
   },
   "visual": {
     "visualType": "lineChart",

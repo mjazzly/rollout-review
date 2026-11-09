@@ -5,9 +5,9 @@
     "x": 964,
     "y": 96,
     "z": 2000,
-    "height": 366,
+    "height": 350,
     "width": 300,
-    "tabOrder": 1900
+    "tabOrder": 2800
   },
   "visual": {
     "visualType": "shape",

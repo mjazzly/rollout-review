@@ -3,9 +3,9 @@
   "name": "p0_source",
   "position": {
     "x": 16,
-    "y": 68,
+    "y": 70,
     "z": 3000,
-    "height": 24,
+    "height": 22,
     "width": 1248,
     "tabOrder": 300
   },
@@ -21,14 +21,16 @@
                   {
                     "value": "Read from the question log, the usage dashboards, the library's records, the run log and the check-in · ",
                     "textStyle": {
-                      "fontSize": "10pt"
+                      "fontSize": "10pt",
+                      "color": "#4F6166"
                     }
                   },
                   {
                     "value": "Week 1 to Week 24, six check-ins",
                     "textStyle": {
                       "fontSize": "10pt",
-                      "fontWeight": "bold"
+                      "fontWeight": "bold",
+                      "color": "#4F6166"
                     }
                   }
                 ]
@@ -39,7 +41,7 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
+      "title": [
         {
           "properties": {
             "show": {
@@ -52,7 +54,7 @@
           }
         }
       ],
-      "title": [
+      "background": [
         {
           "properties": {
             "show": {

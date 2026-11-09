@@ -3,7 +3,7 @@
   "name": "p0_title",
   "position": {
     "x": 16,
-    "y": 34,
+    "y": 36,
     "z": 3000,
     "height": 34,
     "width": 196,
@@ -22,7 +22,8 @@
                     "value": "Rollout review",
                     "textStyle": {
                       "fontSize": "18pt",
-                      "fontWeight": "bold"
+                      "fontWeight": "bold",
+                      "color": "#172529"
                     }
                   }
                 ]
@@ -33,7 +34,7 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
+      "title": [
         {
           "properties": {
             "show": {
@@ -46,7 +47,7 @@
           }
         }
       ],
-      "title": [
+      "background": [
         {
           "properties": {
             "show": {

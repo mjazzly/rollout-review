@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p0_split_legend",
   "position": {
-    "x": 648,
-    "y": 488,
+    "x": 650,
+    "y": 482,
     "z": 3000,
     "height": 22,
-    "width": 296,
-    "tabOrder": 2700
+    "width": 282,
+    "tabOrder": 4300
   },
   "visual": {
     "visualType": "textbox",
@@ -21,40 +21,43 @@
                   {
                     "value": "■",
                     "textStyle": {
-                      "fontSize": "12pt",
+                      "fontSize": "9pt",
                       "color": "#7E8E92"
                     }
                   },
                   {
-                    "value": " On the ground     ",
+                    "value": " On the ground   ",
                     "textStyle": {
-                      "fontSize": "10pt"
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
                     }
                   },
                   {
                     "value": "■",
                     "textStyle": {
-                      "fontSize": "12pt",
+                      "fontSize": "9pt",
                       "color": "#CFE0EA"
                     }
                   },
                   {
-                    "value": " At the gate     ",
+                    "value": " At the gate   ",
                     "textStyle": {
-                      "fontSize": "10pt"
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
                     }
                   },
                   {
                     "value": "■",
                     "textStyle": {
-                      "fontSize": "12pt",
+                      "fontSize": "9pt",
                       "color": "#2C5F7C"
                     }
                   },
                   {
                     "value": " In the air",
                     "textStyle": {
-                      "fontSize": "10pt"
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
                     }
                   }
                 ]
@@ -65,7 +68,7 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
+      "title": [
         {
           "properties": {
             "show": {
@@ -78,7 +81,7 @@
           }
         }
       ],
-      "title": [
+      "background": [
         {
           "properties": {
             "show": {

@@ -3,11 +3,11 @@
   "name": "p0_moved_title",
   "position": {
     "x": 972,
-    "y": 494,
+    "y": 482,
     "z": 3000,
-    "height": 30,
+    "height": 22,
     "width": 280,
-    "tabOrder": 3100
+    "tabOrder": 4500
   },
   "visual": {
     "visualType": "textbox",
@@ -21,8 +21,9 @@
                   {
                     "value": "Moved up since the last count",
                     "textStyle": {
-                      "fontSize": "12pt",
-                      "fontWeight": "bold"
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
                     }
                   }
                 ]
@@ -33,7 +34,7 @@
       ]
     },
     "visualContainerObjects": {
-      "background": [
+      "title": [
         {
           "properties": {
             "show": {
@@ -46,7 +47,7 @@
           }
         }
       ],
-      "title": [
+      "background": [
         {
           "properties": {
             "show": {

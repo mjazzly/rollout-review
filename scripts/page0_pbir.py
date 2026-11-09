@@ -9,40 +9,43 @@ page is not written if any fails. Close Power BI Desktop on the PC before pullin
 from __future__ import annotations
 
 from pbir import (
-    GREY, MARINE, OFF, PALE, WILDCARD, Page, colour, column, field_id, INK_SOFT, lit,
-    measure, navigator, panel, proj_column, proj_measure, text, textbox,
+    INK, INK_SOFT, OFF, STAGES, Page, caption, colour, column, filter_in, lit,
+    measure_colour, navigator, panel, proj_column, proj_measure, pt, text,
+    textbox, value_card, value_is, NO_FRAME,
 )
 
 PAGE = "93ede836331e460c840c"
 
-# ---------------------------------------------------------------- layout, 1280 by 720
-NAV = (16, 6, 1248, 26)
-# The title and the header line share one row; the "Read from" line sits under them.
-TITLE = (16, 34, 196, 34)              # 18 bold
-HEADER_LINE = (212, 34, 1052, 34)      # card, 11, middle of the row
-SOURCE = (16, 68, 1248, 24)            # 10
+# ---------------------------------------------------------------- header strip
+NAV = (16, 4, 1248, 32)                 # 32 high, so the page name reads centred
+TITLE = (16, 36, 196, 34)               # 18 bold
+HEADER_LINE = (212, 36, 1052, 34)       # card, 11, middle of the row
+SOURCE = (16, 70, 1248, 22)             # 10
 
-TILE_Y, TILE_W, TILE_H = 96, 300, 366
+# ---------------------------------------------------------------- tiles
+TILE_Y, TILE_W, TILE_H = 96, 300, 350
 TILE_XS = (16, 332, 648, 964)
-# inside a tile: (offset from the tile top, height); x is tile x + 12, width 276.
-# Heights from the round 2 screenshot: the stage and question need 61, the label 38, the
-# card 157 to show the threshold under the trend, the sparkline drew at 100.
-IN_TEXT = (4, 64)      # stage name, 14 bold; question, 10 (one or two lines)
-IN_LABEL = (68, 40)    # the figure's label, 10, up to two lines; fixed so figures align
-IN_CARD = (108, 158)   # figure 28, then verdict, trend, threshold
-IN_LINE = (266, 100)   # sparkline, months 2 to 6
+# Inside a tile, four groups 10 apart (2 above the sparkline, which pads itself):
+#   a  stage name and question
+#   b  the figure's caption, sitting on the figure
+#   c  verdict, trend, threshold
+#   d  sparkline, Month 2 to Month 6
+# (offset from the tile top, height); x is tile x + 12, width 276
+A_TEXT = (6, 62)
+B_CAPTION = (78, 34)        # 9, grey, two lines; a one-line caption sits on the bottom
+B_FIGURE = (112, 54)        # 28
+C_VERDICT = (176, 24)       # 10, amber when Not yet working
+C_TREND = (200, 24)         # 10
+C_THRESHOLD = (224, 24)     # 9, grey
+D_LINE = (250, 100)
 
-RULE = (16, 464, 1248, 22)
+RULE = (16, 450, 1248, 22)
 
-# Stage split: chart titles are text boxes, so the plots get the height; one legend.
-SPLIT_TITLE_BASE = (16, 488, 456, 22)
-SPLIT_TITLE_LATEST = (488, 488, 160, 22)
-SPLIT_LEGEND = (648, 488, 296, 22)
-SPLIT_BASE = (16, 510, 456, 206)
-SPLIT_LATEST = (488, 510, 456, 206)
-MOVED_PANEL = (960, 488, 304, 228)
-
-STAGES = (("On the ground", GREY), ("At the gate", PALE), ("In the air", MARINE))
+# ---------------------------------------------------------------- bottom row
+BOTTOM_Y, BOTTOM_H = 476, 240
+SPLIT_BASE = (16, BOTTOM_Y, 456, BOTTOM_H)
+SPLIT_LATEST = (488, BOTTOM_Y, 456, BOTTOM_H)
+MOVED = (960, BOTTOM_Y, 304, BOTTOM_H)
 
 TILES = (
     ("Foundation", "Which uses matter most, and where do people get stuck?",
@@ -57,54 +60,10 @@ RULE_TEXT = ("How to read a tile: Working when the month's figure meets the thre
              "Trend: against two check-ins earlier, flat within 1 point. "
              "The line runs from Month 2 to Month 6.")
 
-BOLD = {"fontWeight": "bold"}
-
-
-def pt(n: int, bold: bool = False) -> dict:
-    return {"fontSize": f"{n}pt", **(BOLD if bold else {})}
-
 
 # ---------------------------------------------------------------- visuals
-def tile_card(stage: str, label: str) -> dict:
-    tile = f"{stage} tile"
-    meta = f"_Measures.{tile}"
-    ids = {k: field_id() for k in ("verdict", "trend", "threshold")}
-
-    def ref(kind: str, order: int) -> dict:
-        return {"properties": {"value": {"expr": measure(f"{stage} {kind}")}},
-                "selector": {"data": WILDCARD, "metadata": meta, "id": ids[kind], "order": order}}
-
+def sparkline(stage: str) -> dict:
     return {
-        "visualType": "cardVisual",
-        "query": {"queryState": {"Data": {"projections": [proj_measure(tile, label)]}}},
-        "objects": {
-            "referenceLabel": [ref("verdict", 0), ref("trend", 1), ref("threshold", 2)],
-            "value": [{"properties": {"fontSize": lit("28D")}, "selector": {"id": "default"}}],
-            # the label is a text box above the card, so all four figures share one line
-            "label": [{"properties": OFF, "selector": {"metadata": meta}}],
-            "divider": [{"properties": OFF, "selector": {"id": "default"}}],
-            "referenceLabelTitle": [{"properties": OFF, "selector": {"metadata": meta}}],
-            "referenceLabelValue": [
-                {"properties": {"valueFontSize": lit("10D")}, "selector": {"metadata": meta}},
-                {"properties": {"valueBold": lit("true"), "valueFontSize": lit("10D")},
-                 "selector": {"metadata": meta, "id": ids["verdict"]}},
-                {"properties": {"valueFontColor": {"solid": {"color": {"expr": measure(f"{stage} verdict colour")}}}},
-                 "selector": {"data": WILDCARD, "metadata": meta, "id": ids["verdict"]}},
-                {"properties": {"valueFontSize": lit("10D")},
-                 "selector": {"metadata": meta, "id": ids["trend"]}},
-                {"properties": {"valueFontSize": lit("9D"), "valueFontColor": colour(INK_SOFT)},
-                 "selector": {"metadata": meta, "id": ids["threshold"]}},
-            ],
-            "fillCustom": [{"properties": OFF}],
-        },
-        "visualContainerObjects": {"title": [{"properties": OFF}],
-                                   "background": [{"properties": OFF}]},
-        "drillFilterOtherVisuals": True,
-    }
-
-
-def sparkline(stage: str) -> tuple[dict, dict]:
-    visual = {
         "visualType": "lineChart",
         "query": {"queryState": {
             "Category": {"projections": [proj_column("dim_month", "month_label", active=True)]},
@@ -117,29 +76,9 @@ def sparkline(stage: str) -> tuple[dict, dict]:
             "lineStyles": [{"properties": {"strokeWidth": lit("2D"), "showMarker": lit("true"),
                                            "markerSize": lit("3D")}}],
         },
-        "visualContainerObjects": {"title": [{"properties": OFF}],
-                                   "background": [{"properties": OFF}]},
+        "visualContainerObjects": NO_FRAME,
         "drillFilterOtherVisuals": True,
     }
-    filters = {"filters": [{
-        "name": f"notMonth1{stage}",
-        "field": column("dim_month", "month_label"),
-        "type": "Categorical",
-        "filter": {"Version": 2, "From": [{"Name": "d", "Entity": "dim_month", "Type": 0}],
-                   "Where": [{"Condition": {"Not": {"Expression": {"In": {
-                       "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "d"}},
-                                                   "Property": "month_label"}}],
-                       "Values": [[{"Literal": {"Value": "'Month 1'"}}]]}}}}}]},
-        "objects": {"general": [{"properties": {"isInvertedSelectionMode": lit("true")}}]},
-    }]}
-    return visual, filters
-
-
-def stage_is(stage: str) -> dict:
-    return {"data": [{"scopeId": {"Comparison": {
-        "ComparisonKind": 0,
-        "Left": column("dim_checkpoint_source", "stage"),
-        "Right": {"Literal": {"Value": f"'{stage}'"}}}}}]}
 
 
 def stage_split(measure_name: str) -> dict:
@@ -156,48 +95,22 @@ def stage_split(measure_name: str) -> dict:
                                "isDefaultSort": False},
         },
         "objects": {
-            "dataPoint": [{"properties": {"fill": colour(c)}, "selector": stage_is(s)}
+            "dataPoint": [{"properties": {"fill": colour(c)},
+                           "selector": value_is("dim_checkpoint_source", "stage", s)}
                           for s, c in STAGES],
             "labels": [{"properties": OFF}],
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
             "valueAxis": [{"properties": {"show": lit("false"), "gridlineShow": lit("false")}}],
         },
-        "visualContainerObjects": {
-            "title": [{"properties": OFF}],
-            "subTitle": [{"properties": OFF}],
-        },
-        "drillFilterOtherVisuals": True,
-    }
-
-
-def moved_up_card() -> dict:
-    main = "Moved up since last count"
-    meta = f"_Measures.{main}"
-    return {
-        "visualType": "cardVisual",
-        "query": {"queryState": {"Data": {"projections": [
-            proj_measure(main, "People who moved up a checkpoint, Month 5 to Month 6")]}}},
-        "objects": {
-            "referenceLabel": [{"properties": {"value": {"expr": measure("Seats arrived")}},
-                                "selector": {"data": WILDCARD, "metadata": meta,
-                                             "id": field_id(), "order": 0}}],
-            "value": [{"properties": {"fontSize": lit("36D")}, "selector": {"id": "default"}}],
-            "label": [{"properties": {"fontSize": lit("10D"), "textWrap": lit("true")},
-                       "selector": {"id": "default"}}],
-            "referenceLabelValue": [{"properties": {"valueFontSize": lit("14D")},
-                                     "selector": {"metadata": meta}}],
-            "divider": [{"properties": OFF, "selector": {"id": "default"}}],
-            "fillCustom": [{"properties": OFF}],
-        },
-        "visualContainerObjects": {"title": [{"properties": OFF}],
+        "visualContainerObjects": {"title": [{"properties": OFF}], "subTitle": [{"properties": OFF}],
                                    "background": [{"properties": OFF}]},
         "drillFilterOtherVisuals": True,
     }
 
 
 def header_line() -> dict:
-    # as Desktop wrote it on the PC
+    # as Desktop wrote it on the PC, centred in its row
     return {
         "visualType": "cardVisual",
         "query": {"queryState": {"Data": {"projections": [proj_measure("Header line")]}}},
@@ -207,61 +120,83 @@ def header_line() -> dict:
             "layout": [{"properties": {"alignment": text("middle")}}],
             "fillCustom": [{"properties": OFF}],
         },
-        "visualContainerObjects": {"title": [{"properties": OFF}],
-                                   "background": [{"properties": OFF}]},
+        "visualContainerObjects": NO_FRAME,
         "drillFilterOtherVisuals": True,
     }
 
 
+def panel_title(s: str) -> dict:
+    return textbox([[(s, pt(10, bold=True, color=INK))]])
+
+
 def build() -> Page:
-    p = Page(PAGE)
+    p = Page(PAGE, "Rollout review")
     p.add("p0_navigator", NAV, navigator(), z=0)
-    p.add("p0_title", TITLE, textbox([[("Rollout review", pt(18, bold=True))]]))
+    p.add("p0_title", TITLE, textbox([[("Rollout review", pt(18, bold=True, color=INK))]]))
     p.add("p0_header_line", HEADER_LINE, header_line())
     p.add("p0_source", SOURCE, textbox([[
         ("Read from the question log, the usage dashboards, the library's records, "
-         "the run log and the check-in · ", pt(10)),
-        ("Week 1 to Week 24, six check-ins", pt(10, bold=True))]]))
+         "the run log and the check-in · ", pt(10, color=INK_SOFT)),
+        ("Week 1 to Week 24, six check-ins", pt(10, bold=True, color=INK_SOFT))]]))
 
     for x, (stage, question, label) in zip(TILE_XS, TILES):
         key = stage.lower()
         pan = f"p0_{key}_panel"
 
-        def inner(off_h):
-            return (x + 12, TILE_Y + off_h[0], TILE_W - 24, off_h[1])
+        def piece(name, off_h, visual, group, same, **kw):
+            box = (x + 12, TILE_Y + off_h[0], TILE_W - 24, off_h[1])
+            p.add(f"p0_{key}_{name}", box, visual, on=pan, group=group, same=same, **kw)
 
         p.add(pan, (x, TILE_Y, TILE_W, TILE_H), panel(), z=2000, same="tile")
-        p.add(f"p0_{key}_text", inner(IN_TEXT), textbox([
-            [(stage, pt(14, bold=True))], [(question, pt(10))]]), on=pan, same="tile text")
-        p.add(f"p0_{key}_label", inner(IN_LABEL), textbox([[(label, pt(10))]]),
-              on=pan, same="tile label")
-        p.add(f"p0_{key}_card", inner(IN_CARD), tile_card(stage, label), on=pan, same="tile card")
-        line, filters = sparkline(stage)
-        p.add(f"p0_{key}_sparkline", inner(IN_LINE), line, on=pan, same="sparkline",
-              extra={"filterConfig": filters})
+        piece("text", A_TEXT, textbox([[(stage, pt(14, bold=True, color=INK))],
+                                       [(question, pt(10, color=INK_SOFT))]]), "a", "tile text")
+        piece("caption", B_CAPTION, caption(label, 9, TILE_W - 24, 2), "b", "tile caption")
+        piece("figure", B_FIGURE, value_card(f"{stage} tile", 28, display=label), "b", "tile figure")
+        piece("verdict", C_VERDICT,
+              value_card(f"{stage} verdict", 10, measure_colour(f"{stage} verdict colour")),
+              "c", "tile line")
+        piece("trend", C_TREND, value_card(f"{stage} trend", 10), "c", "tile line")
+        piece("threshold", C_THRESHOLD, value_card(f"{stage} threshold", 9, colour(INK_SOFT)),
+              "c", "tile line")
+        piece("sparkline", D_LINE, sparkline(stage), "d", "sparkline",
+              extra={"filterConfig": {"filters": [
+                  filter_in("dim_month", "month_label", ["Month 1"], f"notMonth1{stage}", negate=True)]}})
 
-    p.add("p0_rule", RULE, textbox([[(RULE_TEXT, pt(9))]]))
+    p.add("p0_rule", RULE, textbox([[(RULE_TEXT, pt(9, color=INK_SOFT))]]))
 
-    p.add("p0_split_title_base", SPLIT_TITLE_BASE, textbox([[
-        ("Stage by source placement, at each team's baseline month", pt(10, bold=True))]]))
-    p.add("p0_split_title_latest", SPLIT_TITLE_LATEST, textbox([[
-        ("Latest count, Month 6", pt(10, bold=True))]]))
+    # stage split: two panels, each a title then its chart; the shared legend on the right one
+    for pan, box, title, title_w, m in (
+            ("p0_split_base_panel", SPLIT_BASE,
+             "Stage by source placement, at each team's baseline month", 432, "Stage split baseline"),
+            ("p0_split_latest_panel", SPLIT_LATEST, "Latest count, Month 6", 150, "Stage split latest")):
+        x, y, w, h = box
+        p.add(pan, box, panel(), z=2000, row="bottom")
+        p.add(f"{pan}_title", (x + 12, y + 6, title_w, 22), panel_title(title), on=pan, group="t")
+        p.add(f"{pan}_chart", (x + 12, y + 30, w - 24, 206), stage_split(m), on=pan, group="c",
+              same="stage chart", categories=6)
     legend = []
     for n, (stage, hex_) in enumerate(STAGES):
-        legend += [("■", {**pt(12), "color": hex_}),
-                   (f" {stage}" + ("     " if n < 2 else ""), pt(10))]
-    p.add("p0_split_legend", SPLIT_LEGEND, textbox([legend]))
-    p.add("p0_split_baseline", SPLIT_BASE, stage_split("Stage split baseline"),
-          z=2000, same="stage chart", categories=6)
-    p.add("p0_split_latest", SPLIT_LATEST, stage_split("Stage split latest"),
-          z=2000, same="stage chart", categories=6)
+        legend += [("■", pt(9, color=hex_)),
+                   (f" {stage}" + ("   " if n < 2 else ""), pt(9, color=INK_SOFT))]
+    p.add("p0_split_legend", (SPLIT_LATEST[0] + 12 + 150, SPLIT_LATEST[1] + 6, 282, 22),
+          textbox([legend]), on="p0_split_latest_panel", group="t")
 
-    mx, my, mw, mh = MOVED_PANEL
-    p.add("p0_moved_panel", MOVED_PANEL, panel(), z=2000)
-    p.add("p0_moved_title", (mx + 12, my + 6, mw - 24, 30), textbox([[
-        ("Moved up since the last count", pt(12, bold=True))]]), on="p0_moved_panel")
-    p.add("p0_moved_card", (mx + 12, my + 38, mw - 24, mh - 44), moved_up_card(),
-          on="p0_moved_panel")
+    # moved up: title; the count with its caption; seats arrived with its caption, apart
+    x, y, w, h = MOVED
+    inner = w - 24
+    p.add("p0_moved_panel", MOVED, panel(), z=2000, row="bottom")
+    p.add("p0_moved_title", (x + 12, y + 6, inner, 22), panel_title("Moved up since the last count"),
+          on="p0_moved_panel", group="t")
+    p.add("p0_moved_caption", (x + 12, y + 38, inner, 34),
+          caption("People who moved up a checkpoint,\nMonth 5 to Month 6", 9, inner, 2),
+          on="p0_moved_panel", group="b")
+    p.add("p0_moved_figure", (x + 12, y + 72, inner, 62), value_card("Moved up since last count", 36),
+          on="p0_moved_panel", group="b")
+    p.add("p0_seats_caption", (x + 12, y + 144, inner, 18),
+          caption("Seats arrived over the same month, counted apart", 9, inner, 1),
+          on="p0_moved_panel", group="c")
+    p.add("p0_seats_figure", (x + 12, y + 162, inner, 30), value_card("Seats arrived", 14),
+          on="p0_moved_panel", group="c")
     return p
 
 
