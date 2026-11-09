@@ -470,6 +470,8 @@ All four checks matched on the PC, 9 Nov 2026 (check 3 once all twelve measures 
 
 What the page holds (brief section 6): a header strip, four stage tiles in one row, the stage split by team, and the moved-up count.
 
+**Approved by Megat on 10 Nov 2026, as pushed in round 4 (commit 821a169).** Rerunning `scripts/page0_pbir.py` reproduces it exactly; any later change to page 0 goes through a new round.
+
 Page 0 is written by `scripts/page0_pbir.py`, using the shared checks in `scripts/pbir.py` (brief section 7, steps 5 and 6). `scripts/page0_figures.py` prints the stage split figures from the CSVs.
 
 ### Round 4 (10 Nov 2026): polish, from the round 3 screenshot
