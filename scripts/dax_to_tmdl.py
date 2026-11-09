@@ -163,6 +163,12 @@ def write(objs: list[Obj]) -> None:
         header, blocks = children(lines)
         ours = {(o.kind, o.name) for o in items}
         kept = [b for b in blocks if block_name(b) not in ours]
+        if table == MEASURE_TABLE:
+            # hide the placeholder column from Enter data, so the table shows as a measure table
+            for b in kept:
+                if block_name(b) == ("column", "Column1") and "\t\tisHidden" not in b:
+                    head = next(i for i, l in enumerate(b) if l.startswith("\tcolumn"))
+                    b.insert(head + 1, "\t\tisHidden")
         # new objects go before the first partition, after the existing columns and measures
         cut = next((i for i, b in enumerate(kept) if any(l.startswith("\tpartition") for l in b)), len(kept))
         new = [l for o in items for l in tmdl(o)]

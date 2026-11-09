@@ -391,7 +391,79 @@ The .pbix from step 29 becomes a project in `report\`: one `.pbip` file and two 
 
 ---
 
+Pushed from the PC as `8dbed88`, 9 Nov 2026. Model text checked on the Mac: every column type as BUILD-STEPS section B sets it, the six sort orders in place, the 27 relationships with R9 and R21 inactive and none two-way, and no auto date/time tables.
+
+---
+
+## E. Measures in, theme, and a check on the screen
+
+The 67 measures and 5 calculated columns from `measures.dax` are written into the model files by `scripts/dax_to_tmdl.py`, each with its description and format string. `_Measures` keeps its one empty column, now hidden, so the table shows as a measure table. Before any page is built, a scratch page reads a set of figures against the CSVs.
+
+40. Close Power BI Desktop if it is open. In PowerShell: `git pull`.
+41. Open `C:\repos\rollout-review\report\Rollout review.pbip`.
+42. **Home**, **Refresh**. The calculated columns are worked out on refresh. If a message says a measure or column has an error, stop and send a screenshot.
+43. In the **Data** pane, check:
+    - `_Measures` sits at the top with the measure icon and holds 67 measures, with no warning triangle on any
+    - `dim_team` has `seats_arrive_week` and `baseline_month`; `fact_test_run` has `tokens_per_run` and `passing`; `dim_library_item` has `status_month`
+44. Import the theme: in Report view, the **View** ribbon (called **Design** in some versions), **Themes**, **Browse for themes** (or **Import theme**), and pick `C:\repos\rollout-review\theme.json`. The page background turns light grey.
+
+### The scratch page
+
+Report view, on the blank page that is already there. Each check is one Table visual: **Build a visual**, **Table**, then tick the fields listed, in order. A table with only measures shows one row. Turn the visual's **Totals** off (Format, Visual, Totals) where it has a row field.
+
+45. **Check 1, page 0 and the shares.** A table with: `Seats assigned`, `Seats active this week`, `Moved up since last count`, `Seats arrived`, `Requests matched to a tested prompt that already exists`, `Requests matched count`, `First use within two weeks of training`, `Recurring questions covered by a tested prompt`, `Tested prompts that pass on a smaller model`. Expected:
+
+    | Measure | Expected |
+    |---|---|
+    | Seats assigned | 1,167 |
+    | Seats active this week | 505 |
+    | Moved up since last count | 98 |
+    | Seats arrived | 0 |
+    | Requests matched to a tested prompt that already exists | 49.5% |
+    | Requests matched count | 385 of 778 questions |
+    | First use within two weeks of training | 44.5% |
+    | Recurring questions covered by a tested prompt | 89.4% |
+    | Tested prompts that pass on a smaller model | 2 |
+
+46. **Check 2, the tiles by month.** A table with `dim_month[month_label]`, then `Foundation tile`, `Execution tile`, `Refinement tile`, `Scale tile`. Expected (blank means the cell is empty):
+
+    | Month | Foundation | Execution | Refinement | Scale |
+    |---|---:|---:|---:|---:|
+    | Month 1 | 13.6% | blank | 0.0% | blank |
+    | Month 2 | 53.9% | 86.1% | 0.0% | 0.0 |
+    | Month 3 | 55.4% | 85.7% | 5.6% | 0.0 |
+    | Month 4 | 57.2% | 84.7% | 8.7% | +4.9 |
+    | Month 5 | 53.1% | 83.8% | 9.5% | +8.6 |
+    | Month 6 | 49.5% | 83.6% | 9.5% | +10.1 |
+
+    Scale reads 0.0 in months 2 and 3 by its definition: a team counts from its baseline month, where it is compared with itself.
+
+47. **Check 3, verdicts, trends and thresholds** (month 6, nothing selected). A table with the twelve measures `Foundation verdict`, `Foundation trend`, `Foundation threshold`, then the same three for Execution, Refinement and Scale. Expected:
+
+    | Tile | Verdict | Trend | Threshold |
+    |---|---|---|---|
+    | Foundation | Working | ↓ Down | Threshold 40% |
+    | Execution | Working | ↓ Down | Threshold 60% |
+    | Refinement | Not yet working | → Flat | Threshold 50% |
+    | Scale | Working | ↑ Up | Threshold 10 points above baseline |
+
+48. **Check 4, by team** (month 6, Source placement). A table with `dim_team[team]`, `baseline_month`, `Usage baseline by team`, `Share of people in the air latest`, `Share of people in the air baseline`, `Gap higher`, `Gap level`, `Gap lower`, `Largest group`, `Largest group people`. Expected:
+
+    | Team | baseline_month | Usage baseline | In the air, latest | In the air, baseline | Higher | Level | Lower | Largest group | People |
+    |---|---:|---:|---:|---:|---:|---:|---:|---|---:|
+    | Consulting | 3 | 51.2% | 60.3% | 47.0% | 45 | 209 | 46 | Takeoff | 174 |
+    | Finance | 3 | 27.9% | 13.0% | 9.5% | 111 | 76 | 13 | Waiting to board | 112 |
+    | Legal | 2 | 11.9% | 7.5% | 6.7% | 19 | 91 | 10 | Ticket held | 84 |
+    | Operations | 3 | 27.8% | 26.8% | 9.2% | 42 | 157 | 51 | Boarding | 95 |
+    | People | 4 | 37.4% | 30.0% | 22.3% | 24 | 91 | 15 | Takeoff | 37 |
+    | Technology | 3 | 51.2% | 52.0% | 42.5% | 29 | 141 | 30 | Takeoff | 101 |
+
+49. Send a screenshot of the four tables (two if they do not fit). Any cell that differs, I fix in `measures.dax` and the model files, never in the expected figures. Do not save or commit yet.
+
+The scratch page is deleted before page 0 is built.
+
+---
+
 ## Next
 
-- E. Pull the measures, reopen the project, refresh, import the theme, and read a few figures off a scratch page against CHECK.md before any page is built
 - F. Page 0, then pages 1 to 5, one page at a time, a screenshot per page
