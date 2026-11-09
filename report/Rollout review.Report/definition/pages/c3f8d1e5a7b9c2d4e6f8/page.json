@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "c3f8d1e5a7b9c2d4e6f8",
+  "displayName": "Foundation",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

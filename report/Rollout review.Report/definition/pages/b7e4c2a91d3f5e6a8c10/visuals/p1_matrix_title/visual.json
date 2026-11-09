@@ -25,6 +25,13 @@
                       "fontWeight": "bold",
                       "color": "#172529"
                     }
+                  },
+                  {
+                    "value": " · follows the placement toggle and the month · each cell is shaded by the team's share at that checkpoint, white at none to marine at 60% or more",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
                   }
                 ]
               }

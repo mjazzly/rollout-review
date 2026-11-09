@@ -782,6 +782,14 @@ RETURN
     IF ( share >= 0.33, "#FFFFFF", "#172529" )
 
 
+// Largest group with people
+// Create as: measure in _Measures. Page 1 table: the largest group and its people in one cell, so the lever has room.
+// format: text
+// description: Helper, not in measures.md. Largest group and Largest group people together, for example "Ticket held, 84".
+Largest group with people =
+[Largest group] & ", " & FORMAT ( [Largest group people], "#,0" )
+
+
 // ---------------------------------------------------------------------
 // PAGE 2: FOUNDATION. Which uses matter most, and where do people get stuck?
 // ---------------------------------------------------------------------
@@ -842,6 +850,15 @@ IF (
                 )
         )
 )
+
+
+// Answer key first count
+// Create as: measure in _Measures. Page 2, under Prompts tested against an answer key written first.
+// format: text
+// description: Helper, not in measures.md. Library items with answer_key_first true and all library items, as "16 of 23 library items".
+Answer key first count =
+FORMAT ( CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0, "#,0" )
+    & " of " & FORMAT ( COUNTROWS ( dim_library_item ) + 0, "#,0" ) & " library items"
 
 
 // ---------------------------------------------------------------------

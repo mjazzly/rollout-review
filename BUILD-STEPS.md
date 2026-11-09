@@ -540,29 +540,33 @@ Stage split, by source placement (`python3 scripts/page0_figures.py`):
 
 Written by `scripts/page1_pbir.py`; figures from `python3 scripts/page1_figures.py` (add a month number, for example `4`, for the page with the month slicer moved).
 
-### Round 2 (10 Nov 2026): redesign, nothing scrolls
+### Round 3 (10 Nov 2026): fixes from the round 2 screenshots
 
-Round 1 (six small bar charts, three tables) was hard to read: 54 truncated checkpoint names, thin bars, three tables cut off by scrollbars. The new design:
+Round 2 confirmed the matrix (totals off, cell shading, column widths, its Rows, Columns and Values roles) and the toggle as two buttons. Two settings did not take: data labels on the gap chart (a 100% stacked bar), and there is no setting yet for the selected button's colour. Both wait for a hand reference (step 54).
 
-| Piece | Built as | Follows |
-|---|---|---|
-| Placement toggle | Two buttons, Source and Check-in, Source to start (a list slicer laid out across: `general.orientation`, unconfirmed). If the buttons do not show, it falls back to a list | |
-| Month | A dropdown, Month 6 to start. Added so CHECK.md question 6 (Month 3 to Month 4) can be read on the page | |
-| People at each checkpoint, by team | A matrix: six teams down, the nine checkpoints across in order, names in full, the three stage names over their checkpoints, counts in the cells shaded by the team's share at that checkpoint (white at none, marine at 60% or more; white text on cells at 33% or more), no totals. Shading comes from two helper measures in `measures.dax`, `Checkpoint shade` and `Checkpoint text colour` | toggle, month |
-| The gap: check-in against source | One bar per team split Higher (amber), Level (pale marine), Lower (grey), counts on the bars. The bars are 100% stacked, so even Legal's 10 and Finance's 13 have room for their label | month |
-| Movement since the previous count | Two bars per team, Up (marine) and Down (grey), counts on the bars. Held is left off. Seats arrived is one number under the chart, all teams, counted apart (CHECK.md question 6 asks for it) | month |
-| Largest group per team, and its lever | A table: team, largest group, people, lever, wrapped; sized so all six rows show | toggle, month |
+| Fix asked | What changed |
+|---|---|
+| Heat grid: all six rows | Matrix 220 high. Round 2 showed a 48 px header (with the sort arrow), 25 px rows and 18 px kept clear at the bottom, so six rows need 216 |
+| Movement: labels on bars, legend cut | 10% between teams (`categoryAxis.innerPadding`, seen in Branch review), so each bar is 16 px, taller than its 14 px label; the legend has 104 px; Seats arrived sits on the legend row |
+| Gap: counts on all three segments | Panel 300 to 352 wide, so Finance's 13 (the thinnest segment, 6.5% of its bar) gets 15 px of bar. Labels wait for the hand reference |
+| Lever table: no sideways scrollbar | Three columns (team; largest group with its people, as "Ticket held, 84"; lever), sized to the round 2 measure: each column takes about 12 px more than its width. The lever column is 310, so a 46-character lever stays on one line |
+| Toggle: selected in marine, white text | Waits for the hand reference: a Button slicer formatted by hand |
+| Header line | "Month 6 shown; pick another month at the top right" |
 
-Unconfirmed in this round (not in Megat's files yet): the matrix's `subTotals.rowSubtotals` and `columnSubtotals` (totals off), `values.backColor` and `values.fontColor` (shading), `columnWidth.value` (fixed widths, so the stage names line up over their checkpoints), and the query roles `Rows`, `Columns`, `Values`; the toggle's `general.orientation`. If the shading does not take, the hand reference is: on the matrix, **Format**, **Cell elements**, **Background color** on, **fx**, **Format style** Field value, **What field should we base this on?** `Checkpoint shade`.
+The standing rules from page 1 are now in `scripts/pbir.py`: tables sized to columns and rows (`table_width`, `table_height`), bar thickness and segment width against a 14 px label, a fixed value axis 15% past the longest bar, legends on one line with 15% to spare, tables holding text only (read from the model's format strings), and each CHECK.md question for the page tied to the visual and field it is read from.
 
-Layout: the header strip as page 0, with the toggle at x 868 and the month at x 1132 (y 36, 56 high). Matrix panel x 16, y 96, 1248 by 288 (team column 120, each checkpoint 116). Bottom panels at y 388, 328 high: the gap x 16 (300 wide), movement x 332 (300), largest group x 648 (616). The page checks now also require a table's columns plus 24 px to fit its width, and its header and rows to fit its height (`TABLE_ROW` 26, `TABLE_LINE` 18, `TABLE_HEADER` 46, measured on the round 1 screenshot).
+Layout: header as page 0, toggle x 944 (188 wide), month x 1148 (116). Matrix panel x 16, y 96, 1248 by 280. Bottom panels at y 380, 336 high: the gap x 16 (352), movement x 384 (274), largest group x 674 (590).
 
-### On the PC
+### On the PC (pages 1 and 2)
 
 50. Close Power BI Desktop (save first if it asks).
 51. In PowerShell, in the rollout-review folder: `git pull`.
 52. Open `report/Rollout review.pbip` and go to **Where people sit**.
-53. Send three screenshots: the page as it opens; with the toggle on **Check-in**; with the toggle back on Source and the month on **Month 4**.
+53. Send a screenshot of page 1 as it opens, then of **Foundation**.
+54. Two hand references on page 1, then save:
+    - **The gap chart** (The gap: check-in against source): **Format visual**, **Visual**, **Data labels**: On. Nothing else.
+    - **The Placement toggle**: with it selected, click **Button slicer** in the Visualizations pane to change its type (placement stays in the field well). Then in **Format visual**, set the selected state: fill `#2C5F7C`, text `#FFFFFF` (in the button slicer this is under the style or values card, **Apply settings to**, **Selected**). If the pane does not offer that, send a screenshot of it.
+55. Commit and push: `git add report`, `git commit -m "Page 1: gap labels and toggle formatted by hand"`, `git push`. I read both settings from their files and write them into the scripts.
 
 ### Figures page 1 should show
 
@@ -580,9 +584,7 @@ As it opens (Source, Month 6). Matrix: count, with the team's share in brackets 
 | Above the clouds | 3 | 2 | 2 | 2 | 2 | 1 |
 | Frequent flyer | 4 | 0 | 0 | 1 | 0 | 2 |
 
-The darkest cells (white text): Legal Ticket held, Consulting Takeoff, Finance Waiting to board, Technology Takeoff, Operations Boarding.
-
-| Team | Gap: Higher, Level, Lower | Movement: Up, Down | Largest group (Source) |
+| Team | Gap: Higher, Level, Lower | Movement: Up, Down | Largest group, people |
 |---|---|---|---|
 | Consulting | 45, 209, 46 | 33, 18 | Takeoff, 174 |
 | Finance | 111, 76, 13 | 11, 13 | Waiting to board, 112 |
@@ -591,34 +593,60 @@ The darkest cells (white text): Legal Ticket held, Consulting Takeoff, Finance W
 | People | 24, 91, 15 | 15, 6 | Takeoff, 37 |
 | Technology | 29, 141, 30 | 15, 9 | Takeoff, 101 |
 
-Seats arrived, all teams: 0. Levers: Takeoff "A second task, and a place to share what works"; Waiting to board "One recurring task tied to a day of the week"; Ticket held "A first task done side by side with someone who already uses AI"; Boarding "Make that recurring task part of their routine".
+Seats arrived: 0. The gap counts show once the labels are on (step 54).
 
-Toggle on **Check-in** (Month 6): the matrix becomes
+Toggle on **Check-in** (Month 6): the full matrix is printed by `python3 scripts/page1_figures.py`; the cells to look at are Consulting Checked in 30 and Above the clouds 24, Finance Takeoff 100, and the largest groups (Consulting Takeoff 156, Finance Takeoff 100, Legal Ticket held 74, Operations Boarding 75, People Takeoff 39, Technology Takeoff 80). Month on **Month 4** (Source): movement Up, Down: Consulting 33, 11; Finance 22, 10; Legal 7, 4; Operations 87, 12; People 37, 1; Technology 24, 12. Seats arrived 0.
 
-| Checkpoint | Consulting | Finance | Legal | Operations | People | Technology |
-|---|---:|---:|---:|---:|---:|---:|
-| No ticket | 2 | 3 | 0 | 6 | 10 | 12 |
-| Ticket held | 15 | 12 | 74 | 35 | 22 | 15 |
-| Checked in | 30 | 14 | 17 | 28 | 17 | 19 |
-| Through security | 1 | 11 | 10 | 15 | 6 | 5 |
-| Waiting to board | 12 | 26 | 6 | 25 | 18 | 8 |
-| Boarding | 56 | 29 | 5 | 75 | 14 | 44 |
-| Takeoff | 156 | 100 | 5 | 56 | 39 | 80 |
-| Above the clouds | 24 | 5 | 3 | 9 | 4 | 15 |
-| Frequent flyer | 4 | 0 | 0 | 1 | 0 | 2 |
-
-and the largest groups become Consulting Takeoff 156, Finance Takeoff 100, Legal Ticket held 74, Operations Boarding 75, People Takeoff 39, Technology Takeoff 80. The gap and movement do not change.
-
-Month on **Month 4** (Source): movement Up, Down: Consulting 33, 11; Finance 22, 10; Legal 7, 4; Operations 87, 12; People 37, 1; Technology 24, 12. Seats arrived 0.
-
-### CHECK.md questions on this page
+### CHECK.md questions on page 1
 
 | Q | Read from | Should read |
 |---|---|---|
 | 4 | The gap, Finance's bar (Month 6) | Higher 111, level 76, lower 13 |
-| 5 | Largest group table, Legal row (Source, Month 6) | Ticket held, 84, "A first task done side by side with someone who already uses AI" |
+| 5 | Largest group table, Legal row (Source, Month 6) | Ticket held, 84; "A first task done side by side with someone who already uses AI" |
 | 6 | Movement, Operations, and Seats arrived (month on Month 4) | 87 moved up; 0 seats arrived |
+
+---
+
+## H. Page 2: Foundation
+
+Written by `scripts/page2_pbir.py`; figures from `python3 scripts/page2_figures.py`. Header: "Foundation" with its question, "Which uses matter most, and where do people get stuck?"
+
+| Piece | Built as | Period |
+|---|---|---|
+| Uses logged and ranked | Two bar charts side by side, Month 1 and Month 6, questions in each use, most first, one scale (0 to 60), counts on the bars. Two charts in place of a month slicer, so the change is on the page without a click | Month 1, Month 6 |
+| The Foundation headline | Caption on the figure: Requests matched to a tested prompt that already exists, with the count under it ("385 of 778 questions", the helper `Requests matched count`) | whole period |
+| Tested before going in the library | Prompts tested against an answer key written first, with "16 of 23 library items" under it (new helper `Answer key first count`) | all items |
+| Usage baseline by team | One bar per team, A to Z, shares on the bars, scale 0 to 60% | each team's first four weeks |
+
+No toggle or month slicer on this page. Layout: ranking panel x 16, y 96, 1248 by 364 (charts 604 by 304); bottom panels at y 464, 252 high: headline x 16 (300), answer key x 332 (300), baseline x 648 (616).
+
+### Figures page 2 should show
+
+| Use | Month 1 | Month 6 |
+|---|---:|---:|
+| Rules and allowed use | 52 | 16 |
+| Drafting | 12 | 13 |
+| Analysis | 9 | 23 |
+| Summarising | 8 | 14 |
+| Coding | 4 | 18 |
+| Formatting | 2 | 18 |
+| Research | 1 | 9 |
+| All questions | 88 | 111 |
+
+Month 1 ranks Rules and allowed use first; Month 6 ranks Analysis first, then Coding and Formatting tied on 18.
+
+- The Foundation headline: **49.5%**, "385 of 778 questions" (whole period; the page 0 tile's Month 6 figure is also 49.5%, so the count is the check)
+- Prompts tested against an answer key written first: **69.6%**, "16 of 23 library items"
+- Usage baseline by team: Consulting 51.2%, Finance 27.9%, Legal 11.9%, Operations 27.8%, People 37.4%, Technology 51.2%
+
+### CHECK.md questions on page 2
+
+| Q | Read from | Should read |
+|---|---|---|
+| 7 | The Foundation headline, figure and count | 49.5% (385 of 778 questions) |
+| 8 | The two ranking charts, top bar of each | Month 1: Rules and allowed use, 52; Month 6: Analysis, 23 |
+| 9 | Usage baseline by team, shortest bar | Legal, 11.9% |
 
 ## Next
 
-- H. Page 2, Foundation, written by `scripts/page2_pbir.py` once pages 0 and 1 are approved; then pages 3 to 5 the same way, one at a time
+- I. Page 3, Execution, written by `scripts/page3_pbir.py` once pages 1 and 2 are approved; then pages 4 and 5 the same way

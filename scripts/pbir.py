@@ -17,7 +17,14 @@ below passes:
 6. text fits: each text box is tall enough for its text as Desktop wraps it (estimated
    from the page 0 screenshots), and no more than TEXT_SNUG taller, so a text box does
    not add hidden space (boxes of one `same` set are sized to the tallest of the set);
-7. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
+7. page 1's standing rules: nothing scrolls (tables and matrices sized to their columns
+   and rows, bar charts to their bars, text boxes to their text); a data label never
+   touches a bar (clustered bars at least LABEL_H thick, stacked segments at least
+   LABEL_MIN_PX wide, a fixed value axis LABEL_ROOM past the longest bar); a legend shows
+   every entry on one line; a table holds text only (charts first); every CHECK.md
+   question for the page names the visual and field it is read from, shown without
+   hovering (Page.answers);
+8. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
    screenshot confirmed it) or in UNCONFIRMED (from the published schema, or a pattern
    Megat gave). Each push lists the unconfirmed names it used.
 """
@@ -25,6 +32,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import shutil
 import uuid
 from dataclasses import dataclass, field
@@ -65,6 +73,7 @@ CHAR_W, BOLD_W, LINE_H, TEXT_PAD, TEXT_INSET = 0.62, 1.08, 1.73, 2, 2
 #   RR  rollout-review, commit 22ebf37 (page 0 built by hand)
 #   BR  ~/Code/data-answers/dashboard/report/Branch review.Report
 #   S3  confirmed by Megat on the page 0 round 3 screenshot (10 Nov 2026)
+#   P1  confirmed on the page 1 round 2 screenshots (10 Nov 2026)
 SEEN: dict[tuple[str, str], set[str]] = {
     ("container", "title"): {"show", "text"},                        # RR, BR
     ("container", "subTitle"): {"show"},                             # BR
@@ -103,20 +112,24 @@ SEEN: dict[tuple[str, str], set[str]] = {
     ("lineClusteredColumnComboChart", "dataPoint"): {"fill", "fillTransparency"},  # BR
     ("slicer", "data"): {"mode"},                                    # BR
     ("slicer", "selection"): {"singleSelect", "strictSingleSelect", "selectAllCheckboxEnabled"},  # BR
-    ("slicer", "general"): {"filter"},                               # BR
     ("slicer", "header"): {"text"},                                  # BR
     ("tableEx", "total"): {"totals"},                                # BR
     ("tableEx", "columnWidth"): {"value"},                           # BR
     ("tableEx", "values"): {"backColor", "fontColor"},               # BR
+    ("pivotTable", "subTotals"): {"rowSubtotals", "columnSubtotals"},  # P1: page 1 round 2 screenshot
+    ("pivotTable", "values"): {"backColor", "fontColor"},            # P1
+    ("pivotTable", "columnWidth"): {"value"},                        # P1
+    ("slicer", "general"): {"filter", "orientation"},                # BR; orientation P1
 }
 TEXT_STYLE_SEEN = {"fontWeight", "fontSize", "color"}                # RR, BR; color S3
 
 # Not yet in Megat's files or confirmed on screen. Listed with every push.
-UNCONFIRMED: dict[tuple[str, str], set[str]] = {
-    ("pivotTable", "subTotals"): {"rowSubtotals", "columnSubtotals"},   # page 1 matrix, no totals
-    ("pivotTable", "values"): {"backColor", "fontColor"},               # as tableEx in BR
-    ("pivotTable", "columnWidth"): {"value"},                           # as tableEx in BR
-    ("slicer", "general"): {"orientation"},                             # 1 = horizontal: buttons
+UNCONFIRMED: dict[tuple[str, str], set[str]] = {}
+
+# Written as true, but a screenshot showed they did not take. Not set true again until a
+# hand reference shows the right form. Page 1 round 2: data labels on the 100% stacked gap chart.
+DID_NOT_TAKE: dict[tuple[str, str], set[str]] = {
+    ("hundredPercentStackedBarChart", "labels"): {"show"},
 }
 TEXT_STYLE_UNCONFIRMED: set[str] = set()
 
@@ -138,15 +151,35 @@ MIN_SIZE = {
 BAR_PER_CATEGORY = 27
 BAR_CHROME = {True: 76, False: 40}
 
-# Tables and matrices must show every row and column without a scrollbar. Page 1 round 1
-# screenshot: a one-line row is about 26 px, each wrapped line adds about 18, a header
-# with the sort arrow is about 46, and columns adding to 234 px in a 240 px table scrolled.
-TABLE_ROW, TABLE_LINE, TABLE_HEADER, MATRIX_HEADER, TABLE_SLACK = 26, 18, 46, 34, 24
+# Tables and matrices must show every row and column without a scrollbar. Page 1 round 2
+# screenshots: a one-line row is 25 px, a two-line row 42 (17 a line), a header with the
+# sort arrow 48, and the bottom 18 px of the box is kept clear (the matrix clipped its
+# last row there). Columns adding to 560 px in a 592 px table still scrolled sideways, so
+# each column takes about 12 px more than its width, plus 12.
+TABLE_ROW, TABLE_LINE, TABLE_HEADER, TABLE_BOTTOM = 25, 17, 48, 18
+COLUMN_PAD, TABLE_EDGE = 12, 12
+TABLE_SLACK = 24   # kept for the round 1 calls; table_width() is the rule now
 
 
 def table_height(row_lines: list[int], header: int = TABLE_HEADER) -> int:
     """Height a table needs to show every row: row_lines is the lines each row wraps to."""
-    return header + sum(TABLE_ROW + (n - 1) * TABLE_LINE for n in row_lines)
+    return header + sum(TABLE_ROW + (n - 1) * TABLE_LINE for n in row_lines) + TABLE_BOTTOM
+
+
+def table_width(widths: list[int], pad: int = COLUMN_PAD) -> int:
+    """Width a table needs so it does not scroll sideways. A matrix pads less: 120 + 9 x 116
+    in 1224 px showed no scrollbar (page 1 round 2), so 4 a column."""
+    return sum(widths) + pad * len(widths) + TABLE_EDGE
+
+
+MATRIX_COLUMN_PAD = 4
+
+
+# Data labels (page 1 round 2): on clustered bars thinner than a label, the label of the
+# lower bar sat on the bar above. A 9pt label is about 14 px tall; a two-digit label needs
+# a segment about 16 px wide. Category names take about 70 px left of a bar chart's plot.
+LABEL_H, LABEL_MIN_PX, AXIS_LABEL_W, DEFAULT_INNER_PADDING, LABEL_ROOM = 14, 16, 70, 20, 1.15
+LEGEND_SAFETY = 1.15   # a legend's text, estimated, fits its box with this much to spare
 
 
 # ------------------------------------------------------------------ expression helpers
@@ -361,8 +394,12 @@ class Visual:
     same: str | None = None              # repeated elements with the same key share one size
     row: str | None = None               # panels that share one top edge and height
     categories: int = 0                  # bars in a bar chart, for the per-bar check
-    need_w: int = 0                      # a table's columns plus TABLE_SLACK, so it does not scroll
+    need_w: int = 0                      # a table's width need (table_width), so it does not scroll
     need_h: int = 0                      # a table's header and rows (table_height)
+    series: int = 1                      # bars side by side in each category (clustered)
+    label_min_share: float = 0.0         # stacked: the thinnest labelled segment, as a share of its bar
+    max_value: float = 0.0               # the longest bar, when the value axis end is fixed
+    legend: bool = False                 # a legend text box: every entry on one line
     extra: dict = field(default_factory=dict)
 
     @property
@@ -394,6 +431,9 @@ def _overlap_x(a: Visual, b: Visual) -> bool:
 class Page:
     id: str
     display_name: str
+    number: int | None = None            # page number in CHECK.md
+    answers: dict = field(default_factory=dict)   # CHECK.md question -> [(visual, field shown)]
+    awaiting: dict = field(default_factory=dict)  # visual -> the hand reference it waits for
     visuals: list[Visual] = field(default_factory=list)
 
     def add(self, name, box, visual, **kw) -> Visual:
@@ -445,11 +485,87 @@ class Page:
                 problems.append(f"{v.name}: columns need {v.need_w} px, it is {v.box[2]}")
             if v.need_h and v.box[3] < v.need_h:
                 problems.append(f"{v.name}: rows need {v.need_h} px, it is {v.box[3]}")
+        problems += self._labels()
+        problems += self._tables_hold_text()
+        problems += self._answers()
         problems += self._spacing()
         problems += self._text_fit()
         # 7 setting names
         problems += [f"{v.name}: {p}" for v in vs for p in unseen(v.visual)]
         return problems
+
+    def _labels(self) -> list[str]:
+        out = []
+        for v in self.visuals:
+            objs = v.visual.get("objects", {})
+            labels_on = any(it.get("properties", {}).get("show") == lit("true") for it in objs.get("labels", []))
+            if v.categories and labels_on:
+                per_cat = (v.box[3] - BAR_CHROME[title_on(v.visual)]) / v.categories
+                if v.vt == "clusteredBarChart":
+                    pad = DEFAULT_INNER_PADDING
+                    for it in objs.get("categoryAxis", []):
+                        val = it.get("properties", {}).get("innerPadding")
+                        if val:
+                            pad = float(val["expr"]["Literal"]["Value"].rstrip("LD"))
+                    thick = per_cat * (1 - pad / 100) / v.series
+                    if thick < LABEL_H:
+                        out.append(f"{v.name}: bars {thick:.1f} px thick, a label needs {LABEL_H}")
+                if v.label_min_share:
+                    seg = (v.box[2] - AXIS_LABEL_W - 10) * v.label_min_share
+                    if seg < LABEL_MIN_PX:
+                        out.append(f"{v.name}: thinnest segment {seg:.1f} px, a label needs {LABEL_MIN_PX}")
+            for it in objs.get("valueAxis", []):
+                end = it.get("properties", {}).get("end")
+                if end and v.max_value:
+                    e = float(end["expr"]["Literal"]["Value"].rstrip("LD"))
+                    if e < LABEL_ROOM * v.max_value:
+                        out.append(f"{v.name}: axis ends at {e}, under {LABEL_ROOM} x the longest bar {v.max_value}")
+            if v.legend:
+                for para in v.visual["objects"]["general"][0]["properties"]["paragraphs"]:
+                    runs = [(r["value"], r.get("textStyle")) for r in para["textRuns"]]
+                    if wrapped_lines(runs, int((v.box[2] - 2 * TEXT_INSET) / LEGEND_SAFETY) + 2 * TEXT_INSET) > 1:
+                        out.append(f"{v.name}: legend does not fit on one line with room to spare")
+        return out
+
+    def _tables_hold_text(self) -> list[str]:
+        out = []
+        kinds = model_fields()
+        for v in self.visuals:
+            if v.vt != "tableEx":
+                continue
+            for role in v.visual["query"]["queryState"].values():
+                for pr in role["projections"]:
+                    f = pr["field"]
+                    key = ("Measure" if "Measure" in f else "Column",
+                           next(iter(f.values()))["Property"])
+                    if kinds.get(key) != "text":
+                        out.append(f"{v.name}: {key[1]} is not text; a table holds text only, numbers go in charts")
+        return out
+
+    def _answers(self) -> list[str]:
+        out = []
+        if self.number is None:
+            return out
+        wanted = check_questions(self.number)
+        if set(wanted) != set(self.answers):
+            out.append(f"CHECK.md questions for page {self.number} are {sorted(wanted)}; "
+                       f"the page answers {sorted(self.answers)}")
+        for q, reads in self.answers.items():
+            for name, prop in reads:
+                v = next((x for x in self.visuals if x.name == name), None)
+                if v is None:
+                    out.append(f"question {q}: no visual {name}")
+                    continue
+                props = [next(iter(pr["field"].values()))["Property"]
+                         for role in v.visual.get("query", {}).get("queryState", {}).values()
+                         for pr in role["projections"]]
+                if prop not in props:
+                    out.append(f"question {q}: {name} does not show {prop}")
+                if v.categories and name not in self.awaiting and not any(
+                        it.get("properties", {}).get("show") == lit("true")
+                                            for it in v.visual.get("objects", {}).get("labels", [])):
+                    out.append(f"question {q}: {name} has no data labels, so the figure needs a hover")
+        return out
 
     def _spacing(self) -> list[str]:
         out = []
@@ -554,6 +670,42 @@ class Page:
             print("  Names used through the cartesian family:\n    " + "\n    ".join(fam))
         unc = used_unconfirmed(self)
         print("  Unconfirmed names: " + (", ".join(unc) if unc else "none"))
+        for name, note in self.awaiting.items():
+            print(f"  Waiting for a hand reference: {name}: {note}")
+
+
+def model_fields() -> dict[tuple[str, str], str]:
+    """("Measure" or "Column", name) -> "text" or "number", read from the model's TMDL files:
+    a measure with no format string, or a column of data type string, is text."""
+    out: dict[tuple[str, str], str] = {}
+    tables = PAGES.parent.parent.parent / "Rollout review.SemanticModel" / "definition" / "tables"
+    for f in tables.glob("*.tmdl"):
+        lines = f.read_text(encoding="utf-8-sig").splitlines()
+        cur = None
+        for line in lines:
+            m = re.match(r"\t(measure|column) ('(?:[^']|'')*'|[^ =]+)", line)
+            if m:
+                name = m.group(2)
+                name = name[1:-1].replace("''", "'") if name.startswith("'") else name
+                cur = ("Measure" if m.group(1) == "measure" else "Column", name)
+                out[cur] = "text" if cur[0] == "Measure" else "number"
+            elif re.match(r"\t[^\t]", line):
+                cur = None
+            elif cur and line.strip().startswith("formatString:") and cur[0] == "Measure":
+                out[cur] = "number"
+            elif cur and line.strip() == "dataType: string":
+                out[cur] = "text"
+    return out
+
+
+def check_questions(page: int) -> list[int]:
+    """CHECK.md question numbers whose page column is this page."""
+    out = []
+    for line in (ROOT / "CHECK.md").read_text(encoding="utf-8").splitlines():
+        m = re.match(r"\|\s*(\d+)\s*\|\s*(\d+)\s*\|", line)
+        if m and int(m.group(2)) == page:
+            out.append(int(m.group(1)))
+    return out
 
 
 def set_page_order(order: list[str]) -> None:
@@ -584,6 +736,11 @@ def _allowed(vt: str, obj: str) -> set[str]:
 def unseen(visual: dict) -> list[str]:
     vt = visual["visualType"]
     out = []
+    for obj, items in visual.get("objects", {}).items():
+        for it in items:
+            for p, val in it.get("properties", {}).items():
+                if p in DID_NOT_TAKE.get((vt, obj), set()) and val == lit("true"):
+                    out.append(f"setting {obj}.{p} true on {vt} did not take on screen; needs a hand reference")
     for obj, items in visual.get("objects", {}).items():
         for it in items:
             for p in it.get("properties", {}):

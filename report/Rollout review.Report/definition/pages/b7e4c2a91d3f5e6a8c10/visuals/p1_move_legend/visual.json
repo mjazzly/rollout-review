@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_move_legend",
   "position": {
-    "x": 540,
-    "y": 414,
+    "x": 396,
+    "y": 434,
     "z": 3000,
-    "height": 18,
-    "width": 80,
-    "tabOrder": 2000
+    "height": 23,
+    "width": 104,
+    "tabOrder": 1900
   },
   "visual": {
     "visualType": "textbox",

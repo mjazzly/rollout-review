@@ -3,11 +3,11 @@
   "name": "p1_gap_chart",
   "position": {
     "x": 28,
-    "y": 462,
+    "y": 454,
     "z": 3000,
-    "height": 246,
-    "width": 276,
-    "tabOrder": 1600
+    "height": 258,
+    "width": 328,
+    "tabOrder": 1500
   },
   "visual": {
     "visualType": "hundredPercentStackedBarChart",
@@ -155,19 +155,6 @@
           },
           "selector": {
             "metadata": "_Measures.Gap lower"
-          }
-        }
-      ],
-      "labels": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
           }
         }
       ],

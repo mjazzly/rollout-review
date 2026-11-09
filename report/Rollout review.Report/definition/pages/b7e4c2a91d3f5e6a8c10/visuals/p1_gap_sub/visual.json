@@ -3,11 +3,11 @@
   "name": "p1_gap_sub",
   "position": {
     "x": 28,
-    "y": 414,
+    "y": 406,
     "z": 3000,
     "height": 18,
-    "width": 276,
-    "tabOrder": 1400
+    "width": 328,
+    "tabOrder": 1300
   },
   "visual": {
     "visualType": "textbox",

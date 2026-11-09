@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_move_chart",
   "position": {
-    "x": 344,
-    "y": 434,
+    "x": 396,
+    "y": 457,
     "z": 3000,
-    "height": 224,
-    "width": 276,
-    "tabOrder": 2100
+    "height": 255,
+    "width": 250,
+    "tabOrder": 2200
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -158,6 +158,13 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "innerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "10L"
                 }
               }
             }

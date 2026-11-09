@@ -3,11 +3,11 @@
   "name": "p1_stage_3",
   "position": {
     "x": 844,
-    "y": 150,
+    "y": 132,
     "z": 3000,
     "height": 20,
     "width": 348,
-    "tabOrder": 1000
+    "tabOrder": 900
   },
   "visual": {
     "visualType": "textbox",

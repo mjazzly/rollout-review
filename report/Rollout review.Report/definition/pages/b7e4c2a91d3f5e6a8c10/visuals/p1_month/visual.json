@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_month",
   "position": {
-    "x": 1132,
+    "x": 1148,
     "y": 36,
     "z": 3000,
     "height": 56,
-    "width": 132,
+    "width": 116,
     "tabOrder": 400
   },
   "visual": {

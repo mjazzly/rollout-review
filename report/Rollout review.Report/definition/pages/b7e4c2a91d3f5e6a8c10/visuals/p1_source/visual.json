@@ -6,7 +6,7 @@
     "y": 70,
     "z": 3000,
     "height": 22,
-    "width": 836,
+    "width": 912,
     "tabOrder": 200
   },
   "visual": {
@@ -26,7 +26,7 @@
                     }
                   },
                   {
-                    "value": "the month picked, Month 6 to start",
+                    "value": "Month 6 shown; pick another month at the top right",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

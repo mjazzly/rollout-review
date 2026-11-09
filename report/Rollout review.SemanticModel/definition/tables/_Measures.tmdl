@@ -579,6 +579,10 @@ table _Measures
 			RETURN
 			    IF ( share >= 0.33, "#FFFFFF", "#172529" )
 
+	/// Helper, not in measures.md. Largest group and Largest group people together, for example "Ticket held, 84".
+	measure 'Largest group with people' =
+			[Largest group] & ", " & FORMAT ( [Largest group people], "#,0" )
+
 	/// Questions in each category, ranked from most to fewest.
 	measure 'Uses logged and ranked' =
 			COUNTROWS ( fact_question )
@@ -627,6 +631,11 @@ table _Measures
 			        )
 			)
 		formatString: 0.0%
+
+	/// Helper, not in measures.md. Library items with answer_key_first true and all library items, as "16 of 23 library items".
+	measure 'Answer key first count' =
+			FORMAT ( CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0, "#,0" )
+			    & " of " & FORMAT ( COUNTROWS ( dim_library_item ) + 0, "#,0" ) & " library items"
 
 	/// Training attendees with a run of the item shown in their session in the session week or the week after, over all training attendees.
 	measure 'First use within two weeks of training' =

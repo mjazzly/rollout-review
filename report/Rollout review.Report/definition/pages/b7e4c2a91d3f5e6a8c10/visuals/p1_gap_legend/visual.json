@@ -3,11 +3,11 @@
   "name": "p1_gap_legend",
   "position": {
     "x": 28,
-    "y": 442,
+    "y": 434,
     "z": 3000,
     "height": 20,
-    "width": 276,
-    "tabOrder": 1500
+    "width": 328,
+    "tabOrder": 1400
   },
   "visual": {
     "visualType": "textbox",

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_largest_table",
   "position": {
-    "x": 660,
-    "y": 434,
+    "x": 686,
+    "y": 408,
     "z": 3000,
-    "height": 278,
-    "width": 592,
-    "tabOrder": 2700
+    "height": 304,
+    "width": 566,
+    "tabOrder": 2500
   },
   "visual": {
     "visualType": "tableEx",
@@ -38,27 +38,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Largest group"
+                  "Property": "Largest group with people"
                 }
               },
-              "queryRef": "_Measures.Largest group",
-              "nativeQueryRef": "Largest group",
-              "displayName": "Largest group"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Largest group people"
-                }
-              },
-              "queryRef": "_Measures.Largest group people",
-              "nativeQueryRef": "People",
-              "displayName": "People"
+              "queryRef": "_Measures.Largest group with people",
+              "nativeQueryRef": "Largest group, people",
+              "displayName": "Largest group, people"
             },
             {
               "field": {
@@ -117,7 +102,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "84D"
+                  "Value": "72D"
                 }
               }
             }
@@ -131,13 +116,13 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "120D"
+                  "Value": "136D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Largest group"
+            "metadata": "_Measures.Largest group with people"
           }
         },
         {
@@ -145,21 +130,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "60D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Largest group people"
-          }
-        },
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Literal": {
-                  "Value": "304D"
+                  "Value": "310D"
                 }
               }
             }

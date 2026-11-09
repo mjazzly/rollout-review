@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_toggle",
   "position": {
-    "x": 868,
+    "x": 944,
     "y": 36,
     "z": 3000,
     "height": 56,
-    "width": 248,
+    "width": 188,
     "tabOrder": 300
   },
   "visual": {

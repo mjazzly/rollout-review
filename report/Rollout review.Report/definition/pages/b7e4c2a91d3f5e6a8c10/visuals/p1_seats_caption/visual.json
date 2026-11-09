@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_seats_caption",
   "position": {
-    "x": 344,
-    "y": 668,
+    "x": 500,
+    "y": 434,
     "z": 3000,
-    "height": 18,
-    "width": 276,
-    "tabOrder": 2200
+    "height": 23,
+    "width": 84,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Seats arrived, all teams, counted apart",
+                    "value": "Seats arrived:",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

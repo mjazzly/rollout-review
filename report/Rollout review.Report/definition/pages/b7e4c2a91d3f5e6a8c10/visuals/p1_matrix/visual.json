@@ -3,11 +3,11 @@
   "name": "p1_matrix",
   "position": {
     "x": 28,
-    "y": 170,
+    "y": 152,
     "z": 3000,
-    "height": 210,
+    "height": 220,
     "width": 1224,
-    "tabOrder": 1100
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "pivotTable",
