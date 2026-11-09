@@ -13058,6 +13058,16 @@ cultureInfo en-SG
 			            },
 			            "Weight": 0.476
 			          }
+			        },
+			        {
+			          "Repeat use within 30 days": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -13180,6 +13190,16 @@ cultureInfo en-SG
 			            },
 			            "Weight": 0.476
 			          }
+			        },
+			        {
+			          "Tested prompts that pass on the smaller model": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -13301,6 +13321,16 @@ cultureInfo en-SG
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "Share of people in the air against the baseline, in points": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14980,6 +15010,16 @@ cultureInfo en-SG
 			            },
 			            "Weight": 0.475
 			          }
+			        },
+			        {
+			          "Higher": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15066,6 +15106,16 @@ cultureInfo en-SG
 			            },
 			            "Weight": 0.727
 			          }
+			        },
+			        {
+			          "Level": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15081,6 +15131,16 @@ cultureInfo en-SG
 			        {
 			          "gap lower": {
 			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Lower": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15883,6 +15943,16 @@ cultureInfo en-SG
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "Lever": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -17475,6 +17545,27 @@ cultureInfo en-SG
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.476
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.largest_group_with_people": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Largest group with people"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Largest group, people": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]

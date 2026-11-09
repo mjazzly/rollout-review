@@ -97,8 +97,7 @@
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "objects": {
@@ -203,6 +202,19 @@
             }
           }
         }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -247,5 +259,65 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5e1f0ea0e727503c4dea",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_team"
+              }
+            },
+            "Property": "team"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "14d6fa124e8b311420a4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Gap higher"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f6fbee5682a46687c97a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Gap level"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b8611cfe65e0b13ab257",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Gap lower"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
