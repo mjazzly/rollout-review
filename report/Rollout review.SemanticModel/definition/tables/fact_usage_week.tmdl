@@ -1,0 +1,74 @@
+table fact_usage_week
+	lineageTag: f8cbf239-2cf3-40a0-a604-a9f28eff9617
+
+	column person_id
+		dataType: string
+		lineageTag: 4dd856dc-d990-49ce-9832-4882319c457a
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4b06bfd0-205b-4fab-8420-b387fb98f605
+		summarizeBy: none
+		sourceColumn: week_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column days_active
+		dataType: int64
+		formatString: 0
+		lineageTag: 41f5491d-a61d-4141-813a-ccde6e5f9f22
+		summarizeBy: sum
+		sourceColumn: days_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column sessions
+		dataType: int64
+		formatString: 0
+		lineageTag: dd4b27cb-05cd-4684-8286-d701ba9bfa1e
+		summarizeBy: sum
+		sourceColumn: sessions
+
+		annotation SummarizationSetBy = Automatic
+
+	column runs_total
+		dataType: int64
+		formatString: 0
+		lineageTag: 34dd0c8f-b0c1-4615-84ca-f9cd713479c8
+		summarizeBy: sum
+		sourceColumn: runs_total
+
+		annotation SummarizationSetBy = Automatic
+
+	column runs_via_library
+		dataType: int64
+		formatString: 0
+		lineageTag: 65648438-46c2-4bc6-ba38-e16325977777
+		summarizeBy: sum
+		sourceColumn: runs_via_library
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_usage_week = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("fact_usage_week"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"person_id", type text}, {"week_start", type date}, {"days_active", Int64.Type},
+				        {"sessions", Int64.Type}, {"runs_total", Int64.Type}, {"runs_via_library", Int64.Type}
+				    }, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

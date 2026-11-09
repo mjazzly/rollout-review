@@ -1,0 +1,24 @@
+expression DataFolder = "C:\repos\rollout-review\data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 2a2c51c8-6a89-4fc3-9635-721bfa9d5bbc
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression LoadCsv =
+		(name as text) as table =>
+		let
+		    Source = Csv.Document(
+		        File.Contents(DataFolder & "\" & name & ".csv"),
+		        [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]
+		    ),
+		    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+		    Nulls = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted))
+		in
+		    Nulls
+	lineageTag: 8a4ad9d7-a67f-4fe4-95f6-877e960d5159
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+

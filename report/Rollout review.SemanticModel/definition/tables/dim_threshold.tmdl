@@ -1,0 +1,34 @@
+table dim_threshold
+	lineageTag: 16cc155b-898e-4303-8690-27e2a108ba27
+
+	column stage
+		dataType: string
+		lineageTag: d820f089-789d-4653-8b14-cae528f3b37b
+		summarizeBy: none
+		sourceColumn: stage
+
+		annotation SummarizationSetBy = Automatic
+
+	column threshold
+		dataType: double
+		lineageTag: f412cec7-d7a9-4682-b001-a78169044aaf
+		summarizeBy: sum
+		sourceColumn: threshold
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dim_threshold = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("dim_threshold"),
+				    Typed = Table.TransformColumnTypes(Source, {{"stage", type text}, {"threshold", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

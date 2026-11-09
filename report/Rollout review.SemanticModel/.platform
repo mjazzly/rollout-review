@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Rollout review"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d737e12c-fbd6-4102-bd27-a35daa9df90b"
+  }
+}

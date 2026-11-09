@@ -1,0 +1,100 @@
+table fact_test_run
+	lineageTag: 56748ccb-5e60-4550-9ed2-875292dd3df3
+
+	column run_id
+		dataType: string
+		lineageTag: 2d166ec4-ceb2-487e-91c6-162ec4bc302f
+		summarizeBy: none
+		sourceColumn: run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_id
+		dataType: string
+		lineageTag: 4b26938f-4d02-47a7-be98-f85b5d0aa814
+		summarizeBy: none
+		sourceColumn: item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column version
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b565269-bef0-468e-9c0b-839fe08d72db
+		summarizeBy: sum
+		sourceColumn: version
+
+		annotation SummarizationSetBy = Automatic
+
+	column run_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a3676a57-db1d-4e60-8f4f-b70a99ba796a
+		summarizeBy: none
+		sourceColumn: run_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column model_tier
+		dataType: string
+		lineageTag: 2534bdb8-b9eb-490d-a4fe-573caae86b04
+		summarizeBy: none
+		sourceColumn: model_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column cases_total
+		dataType: int64
+		formatString: 0
+		lineageTag: ed8f299b-228e-4292-a070-b510449ef29a
+		summarizeBy: sum
+		sourceColumn: cases_total
+
+		annotation SummarizationSetBy = Automatic
+
+	column cases_matched
+		dataType: int64
+		formatString: 0
+		lineageTag: ddb513cf-8880-4120-bec5-fc0533983537
+		summarizeBy: sum
+		sourceColumn: cases_matched
+
+		annotation SummarizationSetBy = Automatic
+
+	column tokens_in
+		dataType: int64
+		formatString: 0
+		lineageTag: 10ab1b3c-e646-43fc-b9dd-3a8e3bdaea17
+		summarizeBy: sum
+		sourceColumn: tokens_in
+
+		annotation SummarizationSetBy = Automatic
+
+	column tokens_out
+		dataType: int64
+		formatString: 0
+		lineageTag: a253dde3-83b6-42b6-9070-453f6d3bcf6c
+		summarizeBy: sum
+		sourceColumn: tokens_out
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_test_run = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("fact_test_run"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"run_id", type text}, {"item_id", type text}, {"version", Int64.Type}, {"run_date", type date},
+				        {"model_tier", type text}, {"cases_total", Int64.Type}, {"cases_matched", Int64.Type},
+				        {"tokens_in", Int64.Type}, {"tokens_out", Int64.Type}
+				    }, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

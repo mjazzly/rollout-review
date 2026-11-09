@@ -1,0 +1,19 @@
+table placement_toggle
+	lineageTag: 53e2cf8d-9df0-4f3e-903e-471a0fd72a4d
+
+	column placement
+		lineageTag: d3207c6e-be9e-410f-a985-ab62ce2472af
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [placement]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition placement_toggle = calculated
+		mode: import
+		source =
+				
+				DATATABLE ( "placement", STRING, { { "Check-in" }, { "Source" } } )
+
+	annotation PBI_Id = 900401332e1e4eea874128580043d9a8
+

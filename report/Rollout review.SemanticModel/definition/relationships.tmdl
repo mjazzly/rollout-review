@@ -1,0 +1,110 @@
+relationship 0ef447b6-7251-32e8-af22-f27b70f3d194
+	fromColumn: fact_usage_week.person_id
+	toColumn: dim_person.person_id
+
+relationship d9c46e01-a2f7-6bfa-bd8d-af97ca7a856f
+	fromColumn: fact_checkin.person_id
+	toColumn: dim_person.person_id
+
+relationship bdf6b046-06e1-9373-b6d9-3c8ef1f010cb
+	fromColumn: fact_question.person_id
+	toColumn: dim_person.person_id
+
+relationship 23d35982-7aa5-3358-3c32-f6949e561932
+	fromColumn: fact_library_run_person.person_id
+	toColumn: dim_person.person_id
+
+relationship 189fa83a-7ed0-d1c4-d4dc-bbc0fc1120cb
+	fromColumn: fact_training.person_id
+	toColumn: dim_person.person_id
+
+relationship f6f6ad59-03f0-9439-10fb-5b6bbb2b4f72
+	fromColumn: fact_placement.person_id
+	toColumn: dim_person.person_id
+
+relationship 625f5e76-e872-adc2-eda5-78ab13eb4f5a
+	fromColumn: dim_person.team
+	toColumn: dim_team.team
+
+relationship 170fad05-6de0-e100-c4c8-0518f7e3422f
+	fromColumn: fact_library_run.team
+	toColumn: dim_team.team
+
+relationship 6ea367ff-1e09-d797-a5d4-4e61a1690b20
+	isActive: false
+	fromColumn: fact_question.team
+	toColumn: dim_team.team
+
+relationship fab26863-dd73-ed64-be6f-9c65e6eb4d09
+	fromColumn: fact_usage_week.week_start
+	toColumn: dim_week.week_start
+
+relationship d398954a-fbc6-ed30-5a60-5646fc2bd10f
+	fromColumn: fact_library_run.week_start
+	toColumn: dim_week.week_start
+
+relationship a3954cd9-891b-8337-38f8-40a46204667b
+	fromColumn: fact_library_run_person.week_start
+	toColumn: dim_week.week_start
+
+relationship 183035fe-6a11-5642-a236-27847069db59
+	fromColumn: fact_training.session_week
+	toColumn: dim_week.week_start
+
+relationship 98c07dc1-0d23-f3f0-4513-849e8d861ca1
+	fromColumn: fact_question.question_week
+	toColumn: dim_week.week_start
+
+relationship 6074a3b4-43c8-e0c9-0909-4d3d9bca6631
+	fromColumn: fact_checkin.checkpoint_id
+	toColumn: dim_checkpoint.checkpoint_id
+
+relationship 13cfc834-2620-839b-115d-5f5ba3da7100
+	fromColumn: fact_placement.checkin_checkpoint_id
+	toColumn: dim_checkpoint.checkpoint_id
+
+relationship e9f3ca33-23c5-c5e5-185f-897595806060
+	fromColumn: fact_placement.source_checkpoint_id
+	toColumn: dim_checkpoint_source.checkpoint_id
+
+relationship b1878e81-e817-2528-f067-41ef5e3beeb7
+	fromColumn: fact_library_run.item_id
+	toColumn: dim_library_item.item_id
+
+relationship 51b0a211-bd69-6814-f75e-04d0c704ccf5
+	fromColumn: fact_library_run_person.item_id
+	toColumn: dim_library_item.item_id
+
+relationship 405950a1-89f7-0f8a-54f0-dad2ec473235
+	fromColumn: fact_test_run.item_id
+	toColumn: dim_library_item.item_id
+
+relationship 3c596c61-021e-cc4a-036f-858ebcbf74a6
+	isActive: false
+	fromColumn: fact_question.linked_item_id
+	toColumn: dim_library_item.item_id
+
+relationship fa248bac-1978-4657-2d89-da8a64166c4f
+	fromColumn: fact_training.item_id_shown
+	toColumn: dim_library_item.item_id
+
+relationship d5936cee-7762-7ab9-724c-895fe9c38eb4
+	fromColumn: fact_question.category
+	toColumn: dim_category.category
+
+relationship 0bc7e6ad-9b04-ba8e-9e33-721f47181d7c
+	fromColumn: dim_library_item.category
+	toColumn: dim_category.category
+
+relationship f18394b8-f4a6-c9f3-127c-710de65c3929
+	fromColumn: dim_week.checkin_month
+	toColumn: dim_month.checkin_month
+
+relationship dc168dd3-7691-9656-534a-06aa7584b860
+	fromColumn: fact_checkin.checkin_month
+	toColumn: dim_month.checkin_month
+
+relationship 6e75e0c4-5b61-744b-0002-631fbcc80562
+	fromColumn: fact_placement.checkin_month
+	toColumn: dim_month.checkin_month
+

@@ -1,0 +1,37 @@
+model Model
+	culture: en-SG
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-MY
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["DataFolder","LoadCsv","dim_person","dim_team","dim_week","dim_month","dim_checkpoint","dim_checkpoint_source","dim_library_item","dim_category","dim_threshold","fact_question","fact_usage_week","fact_library_run","fact_library_run_person","fact_test_run","fact_checkin","fact_training","fact_placement","_Measures"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_person
+ref table dim_team
+ref table dim_week
+ref table dim_month
+ref table dim_checkpoint
+ref table dim_checkpoint_source
+ref table dim_library_item
+ref table dim_category
+ref table dim_threshold
+ref table fact_question
+ref table fact_usage_week
+ref table fact_library_run
+ref table fact_library_run_person
+ref table fact_test_run
+ref table fact_checkin
+ref table fact_training
+ref table fact_placement
+ref table _Measures
+ref table placement_toggle
+
+ref cultureInfo en-SG
+

@@ -1,0 +1,61 @@
+table dim_month
+	lineageTag: ece40695-b938-44d9-982a-7d4c5b6c9e4a
+
+	column checkin_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 921a9f44-9819-4795-bf0f-3296b34ed716
+		summarizeBy: none
+		sourceColumn: checkin_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkin_week
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b4257972-1bda-415e-9d67-205b034a9cd2
+		summarizeBy: none
+		sourceColumn: checkin_week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column checkin_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d92752fc-6245-4812-b0c9-432e0ddec29e
+		summarizeBy: none
+		sourceColumn: checkin_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column month_label
+		dataType: string
+		lineageTag: 6b6e3306-b726-492e-b6cc-88e0eb5d142a
+		summarizeBy: none
+		sourceColumn: month_label
+		sortByColumn: checkin_month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_month = m
+		mode: import
+		source =
+				let
+				    Source = dim_week,
+				    Grouped = Table.Group(Source, {"checkin_month"}, {{"checkin_week", each List.Max([week_start]), type date}}),
+				    CheckinDate = Table.AddColumn(Grouped, "checkin_date", each Date.AddDays([checkin_week], 6), type date),
+				    MonthLabel = Table.AddColumn(CheckinDate, "month_label", each "Month " & Text.From([checkin_month]), type text),
+				    Sorted = Table.Sort(MonthLabel, {{"checkin_month", Order.Ascending}})
+				in
+				    Sorted
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

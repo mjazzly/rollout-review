@@ -1,0 +1,78 @@
+table dim_week
+	lineageTag: ac74523b-7c66-4862-8187-4a3fab4ff56f
+
+	column week_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 46ed1994-747c-4289-92ba-9102ff38344c
+		summarizeBy: none
+		sourceColumn: week_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column month
+		dataType: string
+		lineageTag: 23388fd1-f09f-473a-b801-1482c1f8cda1
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkin_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ab9b8cd-6238-41f6-9de4-b778bc702b7f
+		summarizeBy: none
+		sourceColumn: checkin_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column reminder_week
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0188dfae-7109-4457-8c04-e00a2b504298
+		summarizeBy: none
+		sourceColumn: reminder_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_no
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f2035fb-d44e-465c-976e-0a5d84f6a902
+		summarizeBy: sum
+		sourceColumn: week_no
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_label
+		dataType: string
+		lineageTag: 680dd867-061d-4120-9470-a719ed00f6b7
+		summarizeBy: none
+		sourceColumn: week_label
+		sortByColumn: week_no
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_week = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("dim_week"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"week_start", type date}, {"month", type text}, {"checkin_month", Int64.Type}, {"reminder_week", type logical}
+				    }, "en-US"),
+				    Sorted = Table.Sort(Typed, {{"week_start", Order.Ascending}}),
+				    WeekNo = Table.AddIndexColumn(Sorted, "week_no", 1, 1, Int64.Type),
+				    WeekLabel = Table.AddColumn(WeekNo, "week_label", each "Week " & Text.From([week_no]), type text)
+				in
+				    WeekLabel
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,77 @@
+table dim_checkpoint
+	lineageTag: b123b0ee-b1bb-4b07-9783-7fe0053d5041
+
+	column checkpoint_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b0cf7561-0e34-4903-88e8-bbeea5b3469b
+		summarizeBy: none
+		sourceColumn: checkpoint_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkpoint
+		dataType: string
+		lineageTag: 48d5434b-a64f-452a-be07-06b3f3ae6097
+		summarizeBy: none
+		sourceColumn: checkpoint
+		sortByColumn: checkpoint_id
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage
+		dataType: string
+		lineageTag: 993c1fc1-9538-499e-bd6d-1e685cc479a1
+		summarizeBy: none
+		sourceColumn: stage
+		sortByColumn: stage_order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column how_you_tell
+		dataType: string
+		lineageTag: 828f7e2f-9670-41d2-aa90-17ba779b6926
+		summarizeBy: none
+		sourceColumn: how_you_tell
+
+		annotation SummarizationSetBy = Automatic
+
+	column lever
+		dataType: string
+		lineageTag: 9f7bcf5d-a202-452b-b0ac-405a81ed2f20
+		summarizeBy: none
+		sourceColumn: lever
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage_order
+		dataType: int64
+		formatString: 0
+		lineageTag: 76b33033-3c1c-4a44-85de-e3fc7d0880ad
+		summarizeBy: sum
+		sourceColumn: stage_order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_checkpoint = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("dim_checkpoint"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"checkpoint_id", Int64.Type}, {"checkpoint", type text}, {"stage", type text},
+				        {"how_you_tell", type text}, {"lever", type text}
+				    }, "en-US"),
+				    StageOrder = Table.AddColumn(Typed, "stage_order",
+				        each if [checkpoint_id] <= 3 then 1 else if [checkpoint_id] <= 6 then 2 else 3, Int64.Type)
+				in
+				    StageOrder
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

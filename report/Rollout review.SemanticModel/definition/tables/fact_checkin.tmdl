@@ -1,0 +1,86 @@
+table fact_checkin
+	lineageTag: 3a6b4317-aa6b-43a1-9ef3-716769eb6946
+
+	column person_id
+		dataType: string
+		lineageTag: 3656b4ec-5007-4b39-abf3-55e161d1e22f
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkin_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 52827c23-4b7e-4ea6-814e-640872d8392f
+		summarizeBy: none
+		sourceColumn: checkin_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column q1_access
+		dataType: string
+		lineageTag: 8fd3492c-0242-4872-bd0b-97259fd2b90c
+		summarizeBy: none
+		sourceColumn: q1_access
+
+		annotation SummarizationSetBy = Automatic
+
+	column q2_last_use
+		dataType: string
+		lineageTag: b73cf255-b6bb-439e-b388-8cdf4192a65f
+		summarizeBy: none
+		sourceColumn: q2_last_use
+
+		annotation SummarizationSetBy = Automatic
+
+	column q3_trigger
+		dataType: string
+		lineageTag: fc5eb354-e123-43aa-8f3e-2daf7470a04a
+		summarizeBy: none
+		sourceColumn: q3_trigger
+
+		annotation SummarizationSetBy = Automatic
+
+	column q4_used_on
+		dataType: string
+		lineageTag: c1c0d7b2-a4a4-4e74-b53d-07378b053914
+		summarizeBy: none
+		sourceColumn: q4_used_on
+
+		annotation SummarizationSetBy = Automatic
+
+	column q5_if_gone
+		dataType: string
+		lineageTag: 2fbbbe7f-02f6-4f64-9cef-4a6d5a27dd5c
+		summarizeBy: none
+		sourceColumn: q5_if_gone
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkpoint_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a9cc5c8-5693-440b-b131-a2f5d119d890
+		summarizeBy: none
+		sourceColumn: checkpoint_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_checkin = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("fact_checkin"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"person_id", type text}, {"checkin_month", Int64.Type}, {"q1_access", type text},
+				        {"q2_last_use", type text}, {"q3_trigger", type text}, {"q4_used_on", type text},
+				        {"q5_if_gone", type text}, {"checkpoint_id", Int64.Type}
+				    }, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,73 @@
+table dim_person
+	lineageTag: 08487232-0726-4ce7-80b4-042f873ecfeb
+
+	column person_id
+		dataType: string
+		lineageTag: eb0b71ba-b31f-48e7-87e2-336d1dcc294f
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team
+		dataType: string
+		lineageTag: 7833c7d6-22e8-4f05-b550-e04380945e09
+		summarizeBy: none
+		sourceColumn: team
+
+		annotation SummarizationSetBy = Automatic
+
+	column level
+		dataType: string
+		lineageTag: db8a3400-ec61-4c88-a45f-a4cbe1d4c78e
+		summarizeBy: none
+		sourceColumn: level
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 428f6023-13b1-4235-b94d-6f032258538a
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fb066fb1-a19b-45d5-bad9-146f31524be1
+		summarizeBy: none
+		sourceColumn: start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column seat_assigned_week
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 03a82fd4-15e0-4492-9cce-f2c84ebe8814
+		summarizeBy: none
+		sourceColumn: seat_assigned_week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dim_person = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("dim_person"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"person_id", type text}, {"team", type text}, {"level", type text}, {"region", type text},
+				        {"start_date", type date}, {"seat_assigned_week", type date}
+				    }, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,54 @@
+table fact_library_run_person
+	lineageTag: 262953fa-18dd-42a5-a7ec-6342bd19194a
+
+	column item_id
+		dataType: string
+		lineageTag: 11d94e94-33b8-46f6-aaf5-2adccd58c5a7
+		summarizeBy: none
+		sourceColumn: item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column person_id
+		dataType: string
+		lineageTag: 35cbc798-3a01-4f58-868a-dd345d72234d
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 124c0f0c-44ef-4ea6-9eea-a7ff43e3efe8
+		summarizeBy: none
+		sourceColumn: week_start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column runs
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a43c300-6ba3-445d-b56b-91fce8dee8c6
+		summarizeBy: sum
+		sourceColumn: runs
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_library_run_person = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("fact_library_run_person"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"item_id", type text}, {"person_id", type text}, {"week_start", type date}, {"runs", Int64.Type}
+				    }, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

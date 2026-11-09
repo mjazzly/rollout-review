@@ -1,0 +1,33 @@
+table dim_team
+	lineageTag: 304791f7-bbed-4e46-8aea-4875e2c9491a
+
+	column team
+		dataType: string
+		lineageTag: d1a48a42-2351-4df2-920f-3987762a0a8d
+		summarizeBy: none
+		sourceColumn: team
+
+		annotation SummarizationSetBy = Automatic
+
+	column headcount
+		dataType: int64
+		formatString: 0
+		lineageTag: caf28b59-3c4c-42fa-93dd-ae70c1e57a83
+		summarizeBy: sum
+		sourceColumn: headcount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_team = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("dim_team"),
+				    Typed = Table.TransformColumnTypes(Source, {{"team", type text}, {"headcount", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

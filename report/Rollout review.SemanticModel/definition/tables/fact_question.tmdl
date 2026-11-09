@@ -1,0 +1,118 @@
+table fact_question
+	lineageTag: 3e692c80-3a38-4a71-81ce-e450731c930a
+
+	column question_id
+		dataType: string
+		lineageTag: 2f08f715-6488-43c3-a648-ec5ed0d608bd
+		summarizeBy: none
+		sourceColumn: question_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column question_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 09d70ac3-090a-4d5d-84f4-8b00f8698600
+		summarizeBy: none
+		sourceColumn: question_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column person_id
+		dataType: string
+		lineageTag: fbefe535-0f80-4a9a-961d-bb03f1dd7a7e
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team
+		dataType: string
+		lineageTag: aee04bcb-37b4-42f4-8472-1b271cf2cb1f
+		summarizeBy: none
+		sourceColumn: team
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 44752c99-5768-484b-8394-7e258cefbdc8
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column difficulty
+		dataType: int64
+		formatString: 0
+		lineageTag: 44f3c293-bd57-464d-841e-f2c28336a27a
+		summarizeBy: sum
+		sourceColumn: difficulty
+
+		annotation SummarizationSetBy = Automatic
+
+	column action_taken
+		dataType: string
+		lineageTag: d5860a15-d898-4df8-bc51-2d9d62d7f286
+		summarizeBy: none
+		sourceColumn: action_taken
+
+		annotation SummarizationSetBy = Automatic
+
+	column linked_item_id
+		dataType: string
+		lineageTag: 13852097-faca-4d76-a6ff-5b6e50f879e5
+		summarizeBy: none
+		sourceColumn: linked_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column answered_by_person_id
+		dataType: string
+		lineageTag: 40d4ab82-0469-490c-b5fb-ba925680fc2e
+		summarizeBy: none
+		sourceColumn: answered_by_person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column repeat_flag
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4d2aa3e0-8e67-48f9-9610-c84e7a7b3543
+		summarizeBy: none
+		sourceColumn: repeat_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column question_week
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 408b1c62-0d25-4b90-bd8f-db8fb7ace38b
+		summarizeBy: none
+		sourceColumn: question_week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition fact_question = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("fact_question"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"question_id", type text}, {"question_date", type date}, {"person_id", type text},
+				        {"team", type text}, {"category", type text}, {"difficulty", Int64.Type},
+				        {"action_taken", type text}, {"linked_item_id", type text},
+				        {"answered_by_person_id", type text}, {"repeat_flag", type logical}
+				    }, "en-US"),
+				    QuestionWeek = Table.AddColumn(Typed, "question_week", each Date.StartOfWeek([question_date], Day.Monday), type date)
+				in
+				    QuestionWeek
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

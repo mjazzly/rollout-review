@@ -1,0 +1,71 @@
+table dim_checkpoint_source
+	lineageTag: 177b44e2-0705-4911-afe8-e86377d4f1aa
+
+	column checkpoint_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1aa8abe7-ca75-4158-bb82-68c45686f1c9
+		summarizeBy: none
+		sourceColumn: checkpoint_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkpoint
+		dataType: string
+		lineageTag: be054e7b-5749-40ca-abd7-58f3a8a6792c
+		summarizeBy: none
+		sourceColumn: checkpoint
+		sortByColumn: checkpoint_id
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage
+		dataType: string
+		lineageTag: 2493c41d-6f93-4fd8-836f-0513c90b91c5
+		summarizeBy: none
+		sourceColumn: stage
+		sortByColumn: stage_order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column how_you_tell
+		dataType: string
+		lineageTag: 5122ee54-1424-4875-b3cd-fedde9c48ae3
+		summarizeBy: none
+		sourceColumn: how_you_tell
+
+		annotation SummarizationSetBy = Automatic
+
+	column lever
+		dataType: string
+		lineageTag: cc642103-6ba8-4b5c-8630-125d3245e1ba
+		summarizeBy: none
+		sourceColumn: lever
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage_order
+		dataType: int64
+		formatString: 0
+		lineageTag: 7afa04c4-9038-4cc1-9a00-6f1fec4704dc
+		summarizeBy: none
+		sourceColumn: stage_order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_checkpoint_source = m
+		mode: import
+		source =
+				let
+				    Source = dim_checkpoint
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

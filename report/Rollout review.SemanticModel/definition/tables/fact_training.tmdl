@@ -1,0 +1,62 @@
+table fact_training
+	lineageTag: 4514399a-d4dc-4ed6-adfc-4d1725d3b313
+
+	column session_id
+		dataType: string
+		lineageTag: 58b9bef9-5ab6-464e-b39f-416023ab767e
+		summarizeBy: none
+		sourceColumn: session_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column person_id
+		dataType: string
+		lineageTag: d17f1ce7-fbf1-4fa3-8719-5258e0d34ccc
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column team
+		dataType: string
+		lineageTag: 98e2c5f2-f26b-44da-838a-2a8f77aec5b5
+		summarizeBy: none
+		sourceColumn: team
+
+		annotation SummarizationSetBy = Automatic
+
+	column session_week
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3b240ca4-3b5a-4432-a1d6-df9c4796683d
+		summarizeBy: none
+		sourceColumn: session_week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column item_id_shown
+		dataType: string
+		lineageTag: f97184f3-b766-4a72-977a-c39c6aec34eb
+		summarizeBy: none
+		sourceColumn: item_id_shown
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_training = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("fact_training"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"session_id", type text}, {"person_id", type text}, {"team", type text},
+				        {"session_week", type date}, {"item_id_shown", type text}
+				    }, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

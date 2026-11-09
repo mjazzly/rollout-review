@@ -1,0 +1,125 @@
+table dim_library_item
+	lineageTag: 95649705-89af-4dcd-adac-aa124808cbc5
+
+	column item_id
+		dataType: string
+		lineageTag: e369d700-b6fd-40a6-a7a9-54d308a32253
+		summarizeBy: none
+		sourceColumn: item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_name
+		dataType: string
+		lineageTag: c9e0933e-488b-4bf5-80cb-bfb9ada8d2cd
+		summarizeBy: none
+		sourceColumn: item_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: b170ac6e-f12a-476b-9606-96f0ec8ec4ca
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_person_id
+		dataType: string
+		lineageTag: b6dde325-05fb-4692-854f-1c3cd5ed6f48
+		summarizeBy: none
+		sourceColumn: owner_person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner_team
+		dataType: string
+		lineageTag: 59c9c06b-3162-412a-9f2f-557992ddcd0d
+		summarizeBy: none
+		sourceColumn: owner_team
+
+		annotation SummarizationSetBy = Automatic
+
+	column version
+		dataType: int64
+		formatString: 0
+		lineageTag: bda28e6f-2fbc-4622-88aa-23e33b99f706
+		summarizeBy: sum
+		sourceColumn: version
+
+		annotation SummarizationSetBy = Automatic
+
+	column limits
+		dataType: string
+		lineageTag: cf19927c-3bb8-4955-afc0-c34bb71bed51
+		summarizeBy: none
+		sourceColumn: limits
+
+		annotation SummarizationSetBy = Automatic
+
+	column answer_key_first
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 74220a74-797d-48d0-9362-e1b5f7b3571d
+		summarizeBy: none
+		sourceColumn: answer_key_first
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 1c0cc553-dd05-4fae-bb90-5006cfb4cfa7
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column merged_into_item_id
+		dataType: string
+		lineageTag: 827e1829-595e-47f3-9d60-3374df1d33d8
+		summarizeBy: none
+		sourceColumn: merged_into_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column published_week
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 18a59650-abc2-49bb-9b45-e9ef63a396fa
+		summarizeBy: none
+		sourceColumn: published_week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status_week
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 866d708f-efca-4595-9b04-f282ea36c1a2
+		summarizeBy: none
+		sourceColumn: status_week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dim_library_item = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("dim_library_item"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"item_id", type text}, {"item_name", type text}, {"category", type text},
+				        {"owner_person_id", type text}, {"owner_team", type text}, {"version", Int64.Type},
+				        {"limits", type text}, {"answer_key_first", type logical}, {"status", type text},
+				        {"merged_into_item_id", type text}, {"published_week", type date}, {"status_week", type date}
+				    }, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

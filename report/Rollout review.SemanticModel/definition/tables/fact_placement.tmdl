@@ -1,0 +1,63 @@
+table fact_placement
+	lineageTag: 3a64b5a4-7536-4c94-a4d2-a29beee782ed
+
+	column person_id
+		dataType: string
+		lineageTag: c606bf83-aeb1-4eb9-aa33-705dd9d77843
+		summarizeBy: none
+		sourceColumn: person_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkin_month
+		dataType: int64
+		formatString: 0
+		lineageTag: df6c61df-85fb-4590-ade5-d7842b2c595a
+		summarizeBy: none
+		sourceColumn: checkin_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column checkin_checkpoint_id
+		dataType: int64
+		formatString: 0
+		lineageTag: df13bd73-4714-42d6-8adb-3d3efeb5d758
+		summarizeBy: none
+		sourceColumn: checkin_checkpoint_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_checkpoint_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7396fc61-c7ca-436f-9763-5d8aad4b0922
+		summarizeBy: none
+		sourceColumn: source_checkpoint_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column gap
+		dataType: int64
+		formatString: 0
+		lineageTag: b2d7db58-5566-439b-a2f6-318770477d47
+		summarizeBy: sum
+		sourceColumn: gap
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_placement = m
+		mode: import
+		source =
+				let
+				    Source = LoadCsv("fact_placement"),
+				    Typed = Table.TransformColumnTypes(Source, {
+				        {"person_id", type text}, {"checkin_month", Int64.Type}, {"checkin_checkpoint_id", Int64.Type},
+				        {"source_checkpoint_id", Int64.Type}, {"gap", Int64.Type}
+				    }, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
