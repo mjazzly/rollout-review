@@ -26,9 +26,11 @@ Each measure has one definition, written once here and carried word for word int
 | Repeat flag | A question from the same person in the same category within 30 days of an earlier question by that person. |
 | Passing | A test run where cases_matched equals cases_total. |
 | Cost index | Median tokens per run on the standard tier over median tokens per run on the smaller tier, per item. |
-| Baseline month | The first check-in month. |
+| Baseline month | For each team, the first check-in month whose trailing eight weeks start on or after the week the team's seats arrive. |
 | Moved up | People who held a seat at both the latest count and the previous count, and whose source checkpoint_id at the latest count is higher than at the previous count. |
 | Seats arrived | People with no seat at the previous count and a seat at the latest count. Always shown beside Moved up and never added into it. |
+
+With seats as generated, the baseline month is month 2 for Legal; month 3 for Consulting, Finance, Operations and Technology; and month 4 for People. Month 1 is never a baseline, because no team has had its seats for eight weeks by then.
 
 A person **holds a seat at a count** when their seat_assigned_week is on or before that check-in week.
 
@@ -62,14 +64,14 @@ Notes on how the rules read against FRAME-01's page wording:
 | Headcount | People in dim_person. |
 | Seats assigned | Assigned seats in the selected week. |
 | Seats active this week | People with an assigned seat and days_active of 2 or more in the selected week. |
-| Stage split | Share of people in each stage (On the ground, At the gate, In the air) by source placement, for the latest check-in month and the baseline month. |
+| Stage split | Share of people in each stage (On the ground, At the gate, In the air) by source placement, for the latest check-in month and for the baseline, with each team taken at its own baseline month. |
 | Moved up since last count | Moved up, counted between the latest check-in month and the one before it, shown with Seats arrived for the same two counts beside it. |
 
 ### Stage tiles
 
 Each tile shows one headline figure for the latest check-in month, a 24-week sparkline, and its verdict rule printed underneath.
 
-**Verdict rule (all four tiles).** The verdict is Working when the figure for the check-in month meets the tile's threshold and is higher than the figure for two check-in months earlier. Otherwise it is Not yet working.
+**Verdict rule (all four tiles).** The verdict is Working when the figure for the check-in month meets the tile's threshold and is higher than the figure for two check-in months earlier. Otherwise it is Not yet working. When there is no figure for two check-in months earlier, the verdict is No comparison yet.
 
 **The thresholds are illustrative programme targets.** A real programme sets its own; these are here so the tiles can carry a verdict on the synthetic data.
 
@@ -78,7 +80,7 @@ Each tile shows one headline figure for the latest check-in month, a 24-week spa
 | Foundation | Requests matched to a tested prompt that already exists | Questions asked in the check-in month with action_taken of pointed to library, over all questions asked in the check-in month. | 40% |
 | Execution | Repeat use within 30 days | People with another active week starting within 30 days after their first active week, over people whose first active week starts at least 30 days before the check-in date. | 60% |
 | Refinement | Tested prompts that pass on the smaller model | Items live in the check-in week whose latest smaller-tier run on or before the check-in date is passing, over all items live in the check-in week. | 50% |
-| Scale | Share of people in the air against the baseline | Share of people with a source checkpoint_id of 7, 8 or 9 in the check-in month, minus the same share in the baseline month, in percentage points. | 10 points above baseline |
+| Scale | Share of people in the air against the baseline | Share of people with a source checkpoint_id of 7, 8 or 9 in the check-in month, minus the same people's share at their team's baseline month, in percentage points. Only teams whose baseline month is on or before the check-in month count. Before any team reaches its baseline month, the tile has no figure. | 10 points above baseline |
 
 ## Page 1: Where people sit (FRAME-01)
 
@@ -128,4 +130,4 @@ Each tile shows one headline figure for the latest check-in month, a 24-week spa
 | Impact in people's own words | Check-in responses per team for each answer to q5_if_gone, for the check-in month. |
 | Uses taken up beyond the first team | Library items with runs in fact_library_run from 2 or more teams. |
 | Week the second team started | Per library item, the earliest week_start in fact_library_run with runs from a team other than the owner_team. |
-| Share of people in the air | People with a source checkpoint_id of 7, 8 or 9, over all people in the team, per team, for the latest check-in month and the baseline month. |
+| Share of people in the air | People with a source checkpoint_id of 7, 8 or 9, over all people in the team, per team, for the latest check-in month and the team's baseline month. |

@@ -111,8 +111,8 @@ Six pages, at most four visuals each. Every page states the frame question it an
   - Foundation: requests matched to a tested prompt that already exists (share of questions with action_taken = pointed to library); threshold 40%
   - Execution: repeat use within 30 days (share of first-time users active again within 30 days); threshold 60%
   - Refinement: tested prompts that pass on the smaller model (share of active items whose latest smaller-tier run passed); threshold 50%
-  - Scale: share of people In the air by source placement, latest month against the baseline month; threshold 10 points above baseline
-- **Stage split**: On the ground, At the gate, In the air as one stacked bar, source placement, latest month against the baseline month
+  - Scale: share of people In the air by source placement, latest month against each team's baseline month; threshold 10 points above baseline
+- **Stage split**: On the ground, At the gate, In the air as one stacked bar, source placement, latest month against the baseline (each team at its own baseline month)
 - **Moved up since last count**: one number, the rollout measure in FRAME-01's words, with seat arrivals shown as a separate number beside it, never folded in
 
 ### Page 1: Where people sit (FRAME-01)
@@ -145,7 +145,7 @@ Read from the run log and the library's records.
 Read from the question log and the usage dashboards, with the check-in supplying people's own words.
 - Impact in people's own words, by team (check-in q5_if_gone, answer options counted per team)
 - Uses taken up beyond the first team (library items with runs from 2 or more teams, and the week the second team started)
-- Share of people in the air against the baseline (source placement In the air, latest month against the baseline month, per team)
+- Share of people in the air against the baseline (source placement In the air, latest month against the team's baseline month, per team)
 
 One wording note for you: FRAME-04's Scale source line names the question log and the usage dashboards. "People's own words" in this build come from the check-in's fifth question, which is the plainest place to collect them. Either the Scale source line on Frames gains "the check-in", or the question log gains an impact column. I recommend the first; your call, and it does not block the build.
 
@@ -173,7 +173,7 @@ Every measure has one definition, written once in `measures.md` and mirrored wor
 | Repeat flag | A question from the same person in the same category within 30 days of an earlier question by that person |
 | Passing | A test run where cases_matched equals cases_total |
 | Cost index | Median tokens per run on the standard tier over median tokens per run on the smaller tier, per item |
-| Baseline month | The first check-in month |
+| Baseline month | For each team, the first check-in month whose trailing eight weeks start on or after the week the team's seats arrive (month 1 cannot be a baseline: no team has had seats for eight weeks, and Takeoff needs four consecutive active weeks) |
 | Moved up | People who held a seat at both counts and whose source checkpoint_id at the latest count is higher than at the previous count |
 | Seats arrived | People with no seat at the previous count and a seat at the latest count; shown beside Moved up, never folded in |
 

@@ -12,7 +12,7 @@ Conventions across all tables:
 
 | Table | Kind | Grain | Rows | Live source |
 |---|---|---|---:|---|
-| fact_question | fact | question | 912 | Office hours or help channel log |
+| fact_question | fact | question | 778 | Office hours or help channel log |
 | fact_usage_week | fact | person, week | 24,419 | Platform admin export |
 | fact_library_run | fact | item, team, week | 408 | Library run log |
 | fact_library_run_person | fact | item, person, week | 7,319 | Library run log |

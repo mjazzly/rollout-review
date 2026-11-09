@@ -100,814 +100,680 @@ Q00098,2026-06-15,P1085,Finance,Research,3,answered,,,False
 Q00099,2026-06-16,P0003,Operations,Rules and allowed use,2,pointed to library,LIB-20,,False
 Q00100,2026-06-16,P0082,Consulting,Drafting,1,pointed to library,LIB-01,P0306,False
 Q00101,2026-06-16,P0249,Technology,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00102,2026-06-16,P0314,Technology,Rules and allowed use,2,pointed to library,LIB-20,P0253,False
-Q00103,2026-06-16,P0526,Operations,Formatting,2,escalated,,,False
-Q00104,2026-06-16,P0572,Technology,Rules and allowed use,1,escalated,,,False
-Q00105,2026-06-16,P0688,Consulting,Formatting,3,escalated,,,False
-Q00106,2026-06-16,P0835,Consulting,Research,2,answered,,P0384,False
-Q00107,2026-06-16,P0960,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00108,2026-06-16,P1069,Finance,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00109,2026-06-16,P1180,Operations,Summarising,2,answered,,,False
-Q00110,2026-06-17,P0137,Consulting,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00111,2026-06-17,P0271,Operations,Summarising,2,escalated,,,False
-Q00112,2026-06-17,P0636,Finance,Rules and allowed use,2,answered,,,True
-Q00113,2026-06-17,P0792,Technology,Coding,1,escalated,,,False
-Q00114,2026-06-17,P0803,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00115,2026-06-17,P0959,Consulting,Drafting,2,answered,,P0384,False
-Q00116,2026-06-17,P1180,Operations,Summarising,2,answered,,,True
-Q00117,2026-06-17,P1199,Operations,Summarising,2,answered,,,False
-Q00118,2026-06-18,P0068,Operations,Rules and allowed use,2,answered,,,False
-Q00119,2026-06-18,P0229,Operations,Summarising,2,pointed to library,LIB-02,,True
-Q00120,2026-06-18,P0725,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00121,2026-06-18,P0755,Technology,Coding,2,pointed to library,LIB-10,,False
-Q00122,2026-06-18,P1078,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0253,False
-Q00123,2026-06-18,P1144,Consulting,Rules and allowed use,2,escalated,,,True
-Q00124,2026-06-19,P0127,Technology,Drafting,2,pointed to library,LIB-01,,False
-Q00125,2026-06-19,P0797,Operations,Analysis,3,answered,,,False
-Q00126,2026-06-19,P0944,Consulting,Analysis,2,answered,,,False
-Q00127,2026-06-19,P0990,Consulting,Rules and allowed use,3,answered,,P0384,True
-Q00128,2026-06-19,P1063,Consulting,Research,3,pointed to library,LIB-03,P0306,False
-Q00129,2026-06-19,P1096,Finance,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00130,2026-06-19,P1199,Operations,Summarising,2,pointed to library,LIB-02,,True
-Q00131,2026-06-19,P1199,Operations,Summarising,1,pointed to library,LIB-02,,True
-Q00132,2026-06-22,P0238,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0306,False
-Q00133,2026-06-22,P0529,Finance,Rules and allowed use,3,escalated,,,True
-Q00134,2026-06-22,P0596,Operations,Research,3,answered,,,False
-Q00135,2026-06-22,P0713,Technology,Summarising,1,pointed to library,LIB-02,,False
-Q00136,2026-06-22,P0960,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00137,2026-06-22,P0968,Finance,Drafting,2,pointed to library,LIB-01,,False
-Q00138,2026-06-22,P1069,Finance,Rules and allowed use,2,answered,,,True
-Q00139,2026-06-22,P1130,Technology,Formatting,1,answered,,,False
-Q00140,2026-06-22,P1179,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00141,2026-06-22,P1197,Finance,Research,1,pointed to library,LIB-03,,False
-Q00142,2026-06-23,P0092,Consulting,Drafting,1,answered,,P0384,True
-Q00143,2026-06-23,P0520,Consulting,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00144,2026-06-23,P0662,Operations,Rules and allowed use,1,answered,,,False
-Q00145,2026-06-23,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00146,2026-06-23,P0722,Technology,Analysis,1,pointed to library,LIB-18,P0253,False
-Q00147,2026-06-23,P0747,Technology,Research,1,pointed to library,LIB-03,P0253,False
-Q00148,2026-06-23,P1180,Operations,Summarising,2,answered,,,True
-Q00149,2026-06-23,P1190,Consulting,Drafting,1,pointed to library,LIB-01,,True
-Q00150,2026-06-24,P0022,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00151,2026-06-24,P0027,Consulting,Analysis,1,answered,,P1153,False
-Q00152,2026-06-24,P0042,Technology,Coding,2,pointed to library,LIB-11,,False
-Q00153,2026-06-24,P0076,Consulting,Research,2,new prompt written,,,False
-Q00154,2026-06-24,P0269,Operations,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00155,2026-06-24,P0605,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00156,2026-06-24,P0833,Technology,Rules and allowed use,1,pointed to library,LIB-07,P0253,False
-Q00157,2026-06-24,P0878,Technology,Analysis,2,pointed to library,LIB-18,P0280,False
-Q00158,2026-06-24,P0917,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0384,True
-Q00159,2026-06-24,P1031,Operations,Summarising,2,escalated,,,False
-Q00160,2026-06-25,P0031,Consulting,Research,3,escalated,,,False
-Q00161,2026-06-25,P0198,Finance,Rules and allowed use,3,escalated,,,True
-Q00162,2026-06-25,P0358,Consulting,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00163,2026-06-25,P0546,Technology,Coding,2,new prompt written,LIB-11,,False
-Q00164,2026-06-25,P0565,Consulting,Analysis,1,pointed to library,LIB-18,,False
-Q00165,2026-06-25,P0680,Legal,Rules and allowed use,1,answered,,,True
-Q00166,2026-06-25,P0729,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00167,2026-06-25,P0836,Consulting,Research,1,escalated,,,False
-Q00168,2026-06-25,P1081,Operations,Summarising,2,pointed to library,LIB-02,,False
-Q00169,2026-06-26,P0052,Consulting,Research,2,pointed to library,LIB-03,P0384,False
-Q00170,2026-06-26,P0211,Consulting,Summarising,3,escalated,,,False
-Q00171,2026-06-26,P0343,Operations,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00172,2026-06-26,P0397,Operations,Drafting,2,pointed to library,LIB-01,,False
-Q00173,2026-06-26,P0495,Technology,Summarising,1,pointed to library,LIB-02,,False
-Q00174,2026-06-26,P0692,Finance,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00175,2026-06-26,P1085,Finance,Analysis,2,pointed to library,LIB-18,,False
-Q00176,2026-06-26,P1105,Technology,Coding,1,pointed to library,LIB-11,,False
-Q00177,2026-06-29,P0022,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00178,2026-06-29,P0123,Operations,Analysis,2,pointed to library,LIB-18,,False
-Q00179,2026-06-29,P0198,Finance,Rules and allowed use,3,pointed to library,LIB-20,,True
-Q00180,2026-06-29,P0267,Consulting,Research,2,pointed to library,LIB-03,,False
-Q00181,2026-06-29,P0359,Consulting,Summarising,2,pointed to library,LIB-02,,False
-Q00182,2026-06-29,P0618,Technology,Summarising,1,pointed to library,LIB-02,P0253,False
-Q00183,2026-06-29,P0629,Consulting,Research,1,pointed to library,LIB-03,P0384,False
-Q00184,2026-06-29,P0816,Consulting,Drafting,3,escalated,,,False
-Q00185,2026-06-29,P1045,Consulting,Drafting,2,answered,,,False
-Q00186,2026-06-30,P0003,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00187,2026-06-30,P0212,Legal,Rules and allowed use,3,new prompt written,,,True
-Q00188,2026-06-30,P0526,Operations,Formatting,1,pointed to library,LIB-04,,True
-Q00189,2026-06-30,P0549,Legal,Drafting,1,pointed to library,LIB-01,,False
-Q00190,2026-06-30,P0566,Finance,Rules and allowed use,1,answered,,,True
-Q00191,2026-06-30,P0693,Operations,Rules and allowed use,3,pointed to library,LIB-07,,False
-Q00192,2026-06-30,P0958,Consulting,Rules and allowed use,1,new prompt written,,,False
-Q00193,2026-06-30,P0997,Technology,Analysis,1,pointed to library,LIB-18,P0253,False
-Q00194,2026-06-30,P1079,Legal,Summarising,1,pointed to library,LIB-02,,False
-Q00195,2026-06-30,P1139,Finance,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00196,2026-07-01,P0104,Operations,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00197,2026-07-01,P0668,Finance,Analysis,3,pointed to library,LIB-18,,False
-Q00198,2026-07-01,P0769,Operations,Formatting,1,pointed to library,LIB-04,,False
-Q00199,2026-07-01,P0801,Consulting,Analysis,1,escalated,,,False
-Q00200,2026-07-02,P0101,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0306,True
-Q00201,2026-07-02,P0321,Technology,Coding,2,pointed to library,LIB-11,P0253,False
-Q00202,2026-07-02,P0552,Consulting,Formatting,3,answered,,,False
-Q00203,2026-07-02,P0637,Finance,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00204,2026-07-02,P0697,Finance,Coding,2,answered,,,False
-Q00205,2026-07-02,P0803,Legal,Rules and allowed use,3,escalated,,,True
-Q00206,2026-07-02,P0898,Technology,Analysis,2,pointed to library,LIB-18,P0253,False
-Q00207,2026-07-02,P0917,Consulting,Rules and allowed use,2,new prompt written,,,True
-Q00208,2026-07-02,P1056,Finance,Rules and allowed use,2,escalated,,,False
-Q00209,2026-07-03,P0038,Operations,Analysis,3,answered,,,False
-Q00210,2026-07-03,P0130,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00211,2026-07-03,P0358,Consulting,Rules and allowed use,3,answered,,P0306,True
-Q00212,2026-07-03,P0497,Operations,Analysis,2,pointed to library,LIB-18,,False
-Q00213,2026-07-03,P0582,Technology,Coding,2,escalated,,,False
-Q00214,2026-07-03,P0583,Consulting,Drafting,2,escalated,,,False
-Q00215,2026-07-03,P1031,Operations,Summarising,1,answered,,,True
-Q00216,2026-07-06,P0032,Operations,Rules and allowed use,3,answered,,,False
-Q00217,2026-07-06,P0062,Operations,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00218,2026-07-06,P0605,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00219,2026-07-06,P0908,Technology,Coding,3,escalated,,,False
-Q00220,2026-07-06,P1092,Legal,Summarising,1,pointed to library,LIB-02,,False
-Q00221,2026-07-06,P1135,Operations,Summarising,1,pointed to library,LIB-02,,False
-Q00222,2026-07-06,P1199,Operations,Summarising,1,new prompt written,LIB-14,,True
-Q00223,2026-07-07,P0136,Operations,Summarising,1,escalated,,,False
-Q00224,2026-07-07,P0212,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00225,2026-07-07,P0451,Legal,Rules and allowed use,3,answered,,,False
-Q00226,2026-07-07,P0771,Consulting,Rules and allowed use,2,answered,,P0306,True
-Q00227,2026-07-07,P0826,Technology,Analysis,1,pointed to library,LIB-18,P0280,False
-Q00228,2026-07-07,P0885,Consulting,Drafting,1,new prompt written,LIB-12,,False
-Q00229,2026-07-07,P0976,Consulting,Research,1,pointed to library,LIB-03,P0384,False
-Q00230,2026-07-07,P1104,Consulting,Analysis,2,pointed to library,LIB-18,,False
-Q00231,2026-07-08,P0130,Finance,Rules and allowed use,1,escalated,,,True
-Q00232,2026-07-08,P0407,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00233,2026-07-08,P0422,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00234,2026-07-08,P0692,Finance,Rules and allowed use,3,answered,,,True
-Q00235,2026-07-08,P1144,Consulting,Rules and allowed use,2,new prompt written,,,True
-Q00236,2026-07-09,P0045,Consulting,Analysis,1,answered,,P0306,False
-Q00237,2026-07-09,P0137,Consulting,Rules and allowed use,3,pointed to library,LIB-07,P1153,True
-Q00238,2026-07-09,P0271,Operations,Summarising,1,answered,,,True
-Q00239,2026-07-09,P0314,Technology,Rules and allowed use,2,answered,,P0280,True
-Q00240,2026-07-09,P0339,Operations,Drafting,2,escalated,,,False
-Q00241,2026-07-09,P0447,Operations,Drafting,1,escalated,,,False
-Q00242,2026-07-09,P0660,Consulting,Research,2,pointed to library,LIB-03,P1153,False
-Q00243,2026-07-09,P0795,Operations,Summarising,1,pointed to library,LIB-02,,False
-Q00244,2026-07-09,P0985,Legal,Formatting,3,answered,,,False
-Q00245,2026-07-10,P0198,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00246,2026-07-10,P0229,Operations,Rules and allowed use,1,answered,,,False
-Q00247,2026-07-10,P0464,Consulting,Summarising,3,new prompt written,LIB-14,,False
-Q00248,2026-07-10,P0565,Consulting,Analysis,3,escalated,,,True
-Q00249,2026-07-10,P0624,Consulting,Research,3,answered,,P0384,False
-Q00250,2026-07-10,P0803,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00251,2026-07-10,P0990,Consulting,Rules and allowed use,3,answered,,,True
-Q00252,2026-07-10,P1111,Operations,Formatting,2,pointed to library,LIB-04,,False
-Q00253,2026-07-10,P1161,Consulting,Summarising,1,answered,,P0384,False
-Q00254,2026-07-13,P0229,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00255,2026-07-13,P0395,Technology,Coding,3,answered,,P0280,False
-Q00256,2026-07-13,P0463,Operations,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00257,2026-07-13,P1135,Operations,Summarising,2,pointed to library,LIB-02,,True
-Q00258,2026-07-13,P1143,Operations,Analysis,2,pointed to library,LIB-05,,False
-Q00259,2026-07-14,P0101,Consulting,Rules and allowed use,1,pointed to library,LIB-07,P1153,True
-Q00260,2026-07-14,P0212,Legal,Rules and allowed use,3,answered,,,True
-Q00261,2026-07-14,P0287,People,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00262,2026-07-14,P0462,Consulting,Analysis,1,answered,,P0306,False
-Q00263,2026-07-14,P0605,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00264,2026-07-14,P0624,Consulting,Analysis,1,pointed to library,LIB-05,P0384,False
-Q00265,2026-07-14,P0637,Finance,Rules and allowed use,3,answered,,,True
-Q00266,2026-07-14,P0680,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00267,2026-07-14,P0692,Finance,Rules and allowed use,2,answered,,,True
-Q00268,2026-07-14,P0746,Consulting,Drafting,1,answered,,P0384,False
-Q00269,2026-07-14,P0755,Technology,Coding,2,pointed to library,LIB-10,P0253,True
-Q00270,2026-07-14,P0801,Consulting,Drafting,2,pointed to library,LIB-01,P0306,False
-Q00271,2026-07-14,P0855,Technology,Coding,1,pointed to library,LIB-10,P0280,False
-Q00272,2026-07-14,P0972,Consulting,Research,1,pointed to library,LIB-03,,False
-Q00273,2026-07-14,P1091,Technology,Analysis,2,pointed to library,LIB-13,,False
-Q00274,2026-07-15,P0145,Finance,Analysis,1,answered,,,False
-Q00275,2026-07-15,P0267,Consulting,Research,2,escalated,,,True
-Q00276,2026-07-15,P0358,Consulting,Rules and allowed use,2,escalated,,,True
-Q00277,2026-07-15,P1022,Technology,Coding,3,escalated,,,False
-Q00278,2026-07-15,P1089,Finance,Analysis,2,pointed to library,LIB-18,,False
-Q00279,2026-07-16,P0040,Operations,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00280,2026-07-16,P0112,Operations,Analysis,1,answered,,,False
-Q00281,2026-07-16,P0229,Operations,Summarising,2,pointed to library,LIB-02,,True
-Q00282,2026-07-16,P0230,Operations,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00283,2026-07-16,P0249,Technology,Rules and allowed use,2,pointed to library,LIB-20,P0280,True
-Q00284,2026-07-16,P0314,Technology,Rules and allowed use,2,new prompt written,,,True
-Q00285,2026-07-16,P0340,Legal,Rules and allowed use,3,pointed to library,LIB-20,,False
-Q00286,2026-07-16,P0470,Consulting,Drafting,2,answered,,P0305,False
-Q00287,2026-07-16,P0659,Technology,Rules and allowed use,1,escalated,,,False
-Q00288,2026-07-16,P0822,Consulting,Drafting,2,answered,,P1153,False
-Q00289,2026-07-16,P0904,Operations,Rules and allowed use,2,escalated,,,False
-Q00290,2026-07-16,P1031,Operations,Summarising,2,pointed to library,LIB-02,,True
-Q00291,2026-07-16,P1031,Operations,Summarising,1,pointed to library,LIB-02,,True
-Q00292,2026-07-16,P1096,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00293,2026-07-17,P0280,Technology,Coding,1,escalated,,,False
-Q00294,2026-07-17,P0407,Finance,Rules and allowed use,2,escalated,,,True
-Q00295,2026-07-17,P0591,Technology,Coding,1,pointed to library,LIB-09,P0253,False
-Q00296,2026-07-17,P0655,Technology,Coding,2,escalated,,,False
-Q00297,2026-07-17,P0666,Technology,Coding,1,pointed to library,LIB-09,P0253,False
-Q00298,2026-07-17,P0671,Technology,Coding,2,pointed to library,LIB-09,,False
-Q00299,2026-07-17,P0973,People,Drafting,1,pointed to library,LIB-12,,False
-Q00300,2026-07-17,P1155,Operations,Research,1,pointed to library,LIB-03,,False
-Q00301,2026-07-20,P0040,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00302,2026-07-20,P0274,Consulting,Research,2,escalated,,,False
-Q00303,2026-07-20,P0479,Operations,Formatting,1,pointed to library,LIB-04,,False
-Q00304,2026-07-20,P0566,Finance,Rules and allowed use,1,answered,,,True
-Q00305,2026-07-20,P0654,Operations,Formatting,2,answered,,,False
-Q00306,2026-07-20,P0693,Operations,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00307,2026-07-21,P0080,People,Rules and allowed use,1,answered,,,False
-Q00308,2026-07-21,P0130,Finance,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00309,2026-07-21,P0229,Operations,Summarising,2,answered,,,True
-Q00310,2026-07-21,P0407,Finance,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00311,2026-07-21,P0649,Technology,Analysis,1,escalated,,,False
-Q00312,2026-07-21,P0695,Legal,Rules and allowed use,2,answered,,,False
-Q00313,2026-07-21,P0746,Consulting,Analysis,1,pointed to library,LIB-05,P0305,False
-Q00314,2026-07-21,P0755,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0280,False
-Q00315,2026-07-21,P0892,Consulting,Coding,3,new prompt written,,,False
-Q00316,2026-07-21,P1127,Consulting,Research,1,escalated,,,False
-Q00317,2026-07-21,P1146,People,Rules and allowed use,1,answered,,,False
-Q00318,2026-07-22,P0143,Finance,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00319,2026-07-22,P0314,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0253,True
-Q00320,2026-07-22,P0470,Consulting,Research,2,escalated,,,False
-Q00321,2026-07-22,P0836,Consulting,Research,2,pointed to library,LIB-03,,True
-Q00322,2026-07-22,P0842,Consulting,Drafting,3,new prompt written,LIB-08,,False
-Q00323,2026-07-22,P0927,Technology,Analysis,1,answered,,,False
-Q00324,2026-07-22,P1078,Technology,Rules and allowed use,2,pointed to library,LIB-07,P0253,False
-Q00325,2026-07-23,P0173,Finance,Drafting,1,answered,,,False
-Q00326,2026-07-23,P0213,Finance,Analysis,2,pointed to library,LIB-18,,False
-Q00327,2026-07-23,P0358,Consulting,Rules and allowed use,1,pointed to library,LIB-07,P0305,True
-Q00328,2026-07-23,P0463,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00329,2026-07-23,P0490,Operations,Analysis,2,answered,,,False
-Q00330,2026-07-23,P0637,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00331,2026-07-23,P0692,Finance,Rules and allowed use,2,new prompt written,,,True
-Q00332,2026-07-23,P0696,People,Research,2,escalated,,,False
-Q00333,2026-07-23,P0771,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0384,True
-Q00334,2026-07-23,P0780,People,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00335,2026-07-23,P0855,Technology,Rules and allowed use,2,pointed to library,LIB-20,P0280,False
-Q00336,2026-07-23,P0871,People,Rules and allowed use,1,answered,,,False
-Q00337,2026-07-23,P0906,Consulting,Drafting,2,pointed to library,LIB-01,P0306,False
-Q00338,2026-07-23,P0931,Operations,Summarising,1,pointed to library,LIB-02,,False
-Q00339,2026-07-24,P0022,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00340,2026-07-24,P0263,Finance,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00341,2026-07-24,P0271,Operations,Summarising,3,escalated,,,True
-Q00342,2026-07-24,P0335,Consulting,Research,2,pointed to library,LIB-03,,False
-Q00343,2026-07-24,P0344,Legal,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00344,2026-07-24,P0679,Operations,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00345,2026-07-24,P0885,Consulting,Analysis,1,answered,,P0305,False
-Q00346,2026-07-24,P0953,People,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00347,2026-07-24,P0955,Operations,Drafting,2,answered,,,False
-Q00348,2026-07-24,P0960,Legal,Rules and allowed use,2,answered,,,False
-Q00349,2026-07-24,P0964,Operations,Formatting,2,answered,,,False
-Q00350,2026-07-24,P1186,Consulting,Analysis,1,pointed to library,LIB-05,,False
-Q00351,2026-07-27,P0079,People,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00352,2026-07-27,P0080,People,Rules and allowed use,1,new prompt written,,,True
-Q00353,2026-07-27,P0314,Technology,Rules and allowed use,2,answered,,P0280,True
-Q00354,2026-07-27,P0380,Consulting,Summarising,2,pointed to library,LIB-02,,False
-Q00355,2026-07-27,P0552,Consulting,Summarising,1,answered,,,False
-Q00356,2026-07-27,P0595,Technology,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00357,2026-07-27,P0742,Technology,Research,2,pointed to library,LIB-03,P0280,False
-Q00358,2026-07-27,P0960,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00359,2026-07-28,P0357,People,Rules and allowed use,1,answered,,,False
-Q00360,2026-07-28,P0464,Consulting,Drafting,1,pointed to library,LIB-01,P0384,False
-Q00361,2026-07-28,P0871,People,Rules and allowed use,1,escalated,,,True
-Q00362,2026-07-28,P0943,Legal,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00363,2026-07-28,P1005,Consulting,Drafting,1,answered,,P0306,False
-Q00364,2026-07-28,P1081,Operations,Summarising,1,answered,,,False
-Q00365,2026-07-28,P1081,Operations,Summarising,1,escalated,,,True
-Q00366,2026-07-28,P1104,Consulting,Drafting,3,pointed to library,LIB-01,P0306,False
-Q00367,2026-07-29,P0004,Operations,Analysis,3,answered,,,False
-Q00368,2026-07-29,P0071,Operations,Research,1,pointed to library,LIB-03,,False
-Q00369,2026-07-29,P0104,Operations,Rules and allowed use,2,answered,,,True
-Q00370,2026-07-29,P0229,Operations,Summarising,1,answered,,,True
-Q00371,2026-07-29,P0452,Finance,Formatting,1,pointed to library,LIB-04,,False
-Q00372,2026-07-29,P0466,Operations,Drafting,2,pointed to library,LIB-15,,False
-Q00373,2026-07-29,P0536,People,Drafting,1,escalated,,,False
-Q00374,2026-07-29,P0556,Finance,Summarising,3,pointed to library,LIB-14,,False
-Q00375,2026-07-29,P0668,Finance,Research,1,pointed to library,LIB-03,,False
-Q00376,2026-07-29,P0682,Technology,Drafting,2,answered,,,False
-Q00377,2026-07-29,P0735,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00378,2026-07-29,P0896,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00379,2026-07-29,P0989,Operations,Formatting,1,pointed to library,LIB-06,,False
-Q00380,2026-07-29,P1094,Finance,Rules and allowed use,2,escalated,,,False
-Q00381,2026-07-29,P1129,Finance,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00382,2026-07-29,P1137,Operations,Drafting,2,escalated,,,False
-Q00383,2026-07-30,P0605,Legal,Rules and allowed use,1,new prompt written,,,True
-Q00384,2026-07-30,P0856,Operations,Drafting,1,pointed to library,LIB-15,,False
-Q00385,2026-07-30,P1078,Technology,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00386,2026-07-30,P1176,Technology,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00387,2026-07-31,P0022,Legal,Rules and allowed use,1,answered,,,True
-Q00388,2026-07-31,P0062,Operations,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00389,2026-07-31,P0133,Finance,Analysis,1,answered,,,False
-Q00390,2026-07-31,P0198,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00391,2026-07-31,P0343,Operations,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00392,2026-07-31,P0724,Finance,Analysis,2,pointed to library,LIB-18,,False
-Q00393,2026-07-31,P0891,Consulting,Drafting,1,pointed to library,LIB-01,,False
-Q00394,2026-07-31,P1178,Finance,Research,3,answered,,,False
-Q00395,2026-08-03,P0379,Finance,Analysis,1,answered,,,False
-Q00396,2026-08-03,P0401,Operations,Formatting,1,pointed to library,LIB-06,P0177,False
-Q00397,2026-08-03,P0659,Technology,Rules and allowed use,2,pointed to library,LIB-20,P0253,True
-Q00398,2026-08-03,P0992,Operations,Coding,1,pointed to library,LIB-10,P0177,False
-Q00399,2026-08-03,P1000,Consulting,Research,2,pointed to library,LIB-03,P0306,False
-Q00400,2026-08-03,P1010,Consulting,Drafting,1,escalated,,,False
-Q00401,2026-08-03,P1111,Operations,Formatting,1,pointed to library,LIB-04,P0177,True
-Q00402,2026-08-03,P1146,People,Rules and allowed use,2,answered,,,True
-Q00403,2026-08-03,P1182,Consulting,Drafting,1,escalated,,,False
-Q00404,2026-08-04,P0002,People,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00405,2026-08-04,P0016,Operations,Research,1,pointed to library,LIB-03,P0177,False
-Q00406,2026-08-04,P0203,Technology,Coding,1,pointed to library,LIB-10,P0253,False
-Q00407,2026-08-04,P0269,Operations,Rules and allowed use,2,pointed to library,LIB-20,P0177,False
-Q00408,2026-08-04,P0317,Technology,Drafting,1,pointed to library,LIB-12,P0280,False
-Q00409,2026-08-04,P0529,Finance,Rules and allowed use,1,answered,,,False
-Q00410,2026-08-04,P0607,Technology,Research,1,pointed to library,LIB-03,P0253,False
-Q00411,2026-08-04,P0886,Operations,Summarising,3,escalated,,,False
-Q00412,2026-08-04,P0960,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00413,2026-08-05,P0062,Operations,Rules and allowed use,1,answered,,P0177,True
-Q00414,2026-08-05,P0101,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0384,True
-Q00415,2026-08-05,P0188,Legal,Drafting,1,pointed to library,LIB-01,,False
-Q00416,2026-08-05,P0358,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0384,True
-Q00417,2026-08-05,P0449,Technology,Coding,2,escalated,,,False
-Q00418,2026-08-05,P0605,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00419,2026-08-05,P0711,People,Summarising,2,answered,,,False
-Q00420,2026-08-06,P0264,Operations,Formatting,1,pointed to library,LIB-04,P0177,False
-Q00421,2026-08-06,P0453,Consulting,Research,2,pointed to library,LIB-03,P0305,False
-Q00422,2026-08-06,P0526,Operations,Summarising,2,pointed to library,LIB-16,P0177,False
-Q00423,2026-08-06,P1026,People,Drafting,3,answered,,,False
-Q00424,2026-08-06,P1042,Technology,Coding,2,answered,,P0280,False
-Q00425,2026-08-06,P1123,People,Coding,2,pointed to library,LIB-09,,False
-Q00426,2026-08-06,P1176,Technology,Coding,3,answered,,P0280,False
-Q00427,2026-08-07,P0068,Operations,Rules and allowed use,1,new prompt written,,,False
-Q00428,2026-08-07,P0574,Consulting,Analysis,1,answered,,P0306,False
-Q00429,2026-08-07,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00430,2026-08-07,P0809,Technology,Coding,3,answered,,P0253,False
-Q00431,2026-08-07,P0845,Consulting,Summarising,1,pointed to library,LIB-02,P1153,False
-Q00432,2026-08-10,P0022,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00433,2026-08-10,P0541,Technology,Coding,2,answered,,,False
-Q00434,2026-08-10,P0635,Finance,Summarising,1,pointed to library,LIB-14,,False
-Q00435,2026-08-10,P0801,Consulting,Summarising,2,answered,,P1153,False
-Q00436,2026-08-10,P0952,Consulting,Analysis,2,pointed to library,LIB-05,P0384,False
-Q00437,2026-08-10,P1058,Operations,Drafting,1,answered,,P0177,False
-Q00438,2026-08-11,P0064,Consulting,Analysis,2,pointed to library,LIB-05,P0384,False
-Q00439,2026-08-11,P0357,People,Rules and allowed use,1,new prompt written,,,True
-Q00440,2026-08-11,P0559,People,Drafting,3,pointed to library,LIB-22,,False
-Q00441,2026-08-11,P0687,Finance,Formatting,2,pointed to library,LIB-06,,False
-Q00442,2026-08-11,P0771,Consulting,Rules and allowed use,1,answered,,P0384,True
-Q00443,2026-08-11,P0813,Operations,Coding,2,pointed to library,LIB-10,P0177,False
-Q00444,2026-08-11,P0987,Operations,Drafting,2,pointed to library,LIB-15,P0177,False
-Q00445,2026-08-11,P1027,Technology,Research,1,pointed to library,LIB-03,P0280,False
-Q00446,2026-08-11,P1045,Consulting,Formatting,1,pointed to library,LIB-06,P0306,False
-Q00447,2026-08-11,P1078,Technology,Rules and allowed use,3,escalated,,,True
-Q00448,2026-08-12,P0130,Finance,Rules and allowed use,1,answered,,,True
-Q00449,2026-08-12,P0256,Consulting,Analysis,1,pointed to library,LIB-05,P0305,False
-Q00450,2026-08-12,P0410,Finance,Formatting,2,escalated,,,False
-Q00451,2026-08-12,P0719,People,Research,2,pointed to library,LIB-03,,False
-Q00452,2026-08-12,P0803,Legal,Rules and allowed use,3,answered,,,False
-Q00453,2026-08-13,P0055,Operations,Drafting,3,answered,,,False
-Q00454,2026-08-13,P0137,Consulting,Research,2,pointed to library,LIB-03,P0306,False
-Q00455,2026-08-13,P0198,Finance,Rules and allowed use,1,new prompt written,,,True
-Q00456,2026-08-13,P0199,Operations,Analysis,1,new prompt written,LIB-21,,False
-Q00457,2026-08-13,P0235,Operations,Formatting,2,pointed to library,LIB-06,P0177,False
-Q00458,2026-08-13,P0388,Technology,Coding,2,pointed to library,LIB-11,,False
-Q00459,2026-08-13,P0794,People,Research,2,answered,,,False
-Q00460,2026-08-13,P1067,Finance,Coding,1,new prompt written,,,False
-Q00461,2026-08-14,P0075,People,Drafting,2,pointed to library,LIB-22,,False
-Q00462,2026-08-14,P0080,People,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00463,2026-08-14,P0606,Consulting,Rules and allowed use,2,answered,,P0306,False
-Q00464,2026-08-14,P0783,Finance,Formatting,2,new prompt written,LIB-19,,False
-Q00465,2026-08-17,P0193,Consulting,Summarising,3,answered,,,False
-Q00466,2026-08-17,P0803,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00467,2026-08-17,P0820,Consulting,Drafting,1,answered,,P0306,False
-Q00468,2026-08-17,P0911,Technology,Coding,2,pointed to library,LIB-11,P0280,False
-Q00469,2026-08-17,P0971,Technology,Summarising,3,pointed to library,LIB-14,P0280,False
-Q00470,2026-08-18,P0215,Consulting,Coding,1,pointed to library,LIB-09,P0306,False
-Q00471,2026-08-18,P0529,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00472,2026-08-18,P0573,Consulting,Research,1,escalated,,,False
-Q00473,2026-08-18,P0712,Finance,Summarising,2,pointed to library,LIB-16,,False
-Q00474,2026-08-18,P0771,Consulting,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00475,2026-08-18,P0936,Operations,Formatting,2,answered,,P0177,False
-Q00476,2026-08-18,P0972,Consulting,Drafting,2,pointed to library,LIB-08,,False
-Q00477,2026-08-18,P1096,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00478,2026-08-19,P0055,Operations,Analysis,1,escalated,,,False
-Q00479,2026-08-19,P0211,Consulting,Research,1,answered,,P0306,False
-Q00480,2026-08-19,P0374,Operations,Research,2,escalated,,,False
-Q00481,2026-08-19,P0445,Consulting,Summarising,1,new prompt written,LIB-23,,False
-Q00482,2026-08-19,P0453,Consulting,Summarising,1,pointed to library,LIB-02,,False
-Q00483,2026-08-19,P0472,Consulting,Drafting,2,escalated,,,False
-Q00484,2026-08-19,P0522,Technology,Coding,2,pointed to library,LIB-10,P0280,False
-Q00485,2026-08-19,P0593,Finance,Summarising,1,pointed to library,LIB-16,,False
-Q00486,2026-08-19,P0605,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00487,2026-08-19,P0780,People,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00488,2026-08-19,P1008,Operations,Analysis,1,pointed to library,LIB-18,P0177,False
-Q00489,2026-08-19,P1069,Finance,Rules and allowed use,1,escalated,,,False
-Q00490,2026-08-20,P0079,People,Rules and allowed use,1,escalated,,,True
-Q00491,2026-08-20,P0086,People,Summarising,1,pointed to library,LIB-16,,False
-Q00492,2026-08-20,P0210,Technology,Analysis,1,pointed to library,LIB-13,P0253,False
-Q00493,2026-08-20,P0287,People,Formatting,2,answered,,,False
-Q00494,2026-08-20,P0401,Operations,Formatting,2,answered,,P0177,True
-Q00495,2026-08-20,P0443,Operations,Formatting,1,pointed to library,LIB-06,P0177,False
-Q00496,2026-08-20,P0454,Legal,Rules and allowed use,1,answered,,,False
-Q00497,2026-08-20,P0466,Operations,Analysis,3,pointed to library,LIB-13,,False
-Q00498,2026-08-20,P0505,Operations,Rules and allowed use,1,pointed to library,LIB-20,P0177,False
-Q00499,2026-08-20,P0572,Technology,Rules and allowed use,2,pointed to library,LIB-20,P0253,False
-Q00500,2026-08-20,P0831,Consulting,Research,1,answered,,,False
-Q00501,2026-08-20,P0837,People,Summarising,3,answered,,,False
-Q00502,2026-08-20,P0932,Finance,Analysis,1,pointed to library,LIB-18,,False
-Q00503,2026-08-20,P0960,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00504,2026-08-20,P1055,Consulting,Summarising,2,pointed to library,LIB-02,,False
-Q00505,2026-08-20,P1092,Legal,Analysis,2,answered,,,False
-Q00506,2026-08-21,P0077,People,Formatting,1,pointed to library,LIB-04,,False
-Q00507,2026-08-21,P0134,Technology,Coding,1,answered,,P0253,False
-Q00508,2026-08-21,P0377,Operations,Rules and allowed use,1,pointed to library,LIB-07,P0177,False
-Q00509,2026-08-21,P0462,Consulting,Analysis,2,pointed to library,LIB-05,,False
-Q00510,2026-08-21,P0692,Finance,Rules and allowed use,1,answered,,,True
-Q00511,2026-08-21,P0789,Operations,Drafting,2,pointed to library,LIB-15,,False
-Q00512,2026-08-21,P1135,Operations,Drafting,1,pointed to library,LIB-15,P0177,False
-Q00513,2026-08-24,P0002,People,Rules and allowed use,3,pointed to library,LIB-20,,True
-Q00514,2026-08-24,P0005,Operations,Formatting,1,pointed to library,LIB-06,P0177,False
-Q00515,2026-08-24,P0292,Technology,Coding,2,escalated,,,False
-Q00516,2026-08-24,P0434,Consulting,Analysis,1,pointed to library,LIB-05,P0384,False
-Q00517,2026-08-24,P0780,People,Rules and allowed use,2,answered,,,True
-Q00518,2026-08-24,P0892,Consulting,Drafting,2,answered,,P0384,False
-Q00519,2026-08-24,P0953,People,Formatting,2,pointed to library,LIB-06,,False
-Q00520,2026-08-24,P1001,Technology,Analysis,1,escalated,,,False
-Q00521,2026-08-25,P0112,Operations,Analysis,2,answered,,,False
-Q00522,2026-08-25,P0453,Consulting,Analysis,1,pointed to library,LIB-05,,False
-Q00523,2026-08-25,P0904,Operations,Rules and allowed use,2,answered,,,False
-Q00524,2026-08-25,P1078,Technology,Rules and allowed use,1,pointed to library,LIB-07,P0280,True
-Q00525,2026-08-25,P1166,Finance,Summarising,3,answered,,,False
-Q00526,2026-08-26,P0022,Legal,Rules and allowed use,1,answered,,,True
-Q00527,2026-08-26,P0217,Operations,Drafting,2,pointed to library,LIB-15,,False
-Q00528,2026-08-26,P0340,Legal,Rules and allowed use,3,pointed to library,LIB-20,,False
-Q00529,2026-08-26,P0343,Operations,Drafting,2,pointed to library,LIB-15,,False
-Q00530,2026-08-26,P0826,Technology,Summarising,2,pointed to library,LIB-14,,False
-Q00531,2026-08-26,P0938,Technology,Rules and allowed use,3,pointed to library,LIB-20,,False
-Q00532,2026-08-26,P0954,People,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00533,2026-08-27,P0080,People,Rules and allowed use,1,escalated,,,True
-Q00534,2026-08-27,P0339,Operations,Coding,3,answered,,P0177,False
-Q00535,2026-08-27,P0399,Consulting,Drafting,1,escalated,,,False
-Q00536,2026-08-27,P0454,Legal,Rules and allowed use,1,answered,,,True
-Q00537,2026-08-27,P0479,Operations,Formatting,2,answered,,P0177,False
-Q00538,2026-08-27,P0605,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00539,2026-08-27,P0679,Operations,Rules and allowed use,1,answered,,P0177,True
-Q00540,2026-08-27,P0688,Consulting,Analysis,2,escalated,,,False
-Q00541,2026-08-27,P0693,Operations,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00542,2026-08-27,P0767,Operations,Research,3,escalated,,,False
-Q00543,2026-08-27,P0785,Operations,Drafting,1,answered,,P0177,False
-Q00544,2026-08-27,P0802,Technology,Coding,2,pointed to library,LIB-11,P0253,False
-Q00545,2026-08-27,P1030,Technology,Coding,1,pointed to library,LIB-10,,False
-Q00546,2026-08-28,P0003,Operations,Rules and allowed use,2,escalated,,,False
-Q00547,2026-08-28,P0062,Operations,Rules and allowed use,1,pointed to library,LIB-07,P0177,True
-Q00548,2026-08-28,P0209,Legal,Summarising,1,answered,,,False
-Q00549,2026-08-28,P0212,Legal,Rules and allowed use,2,escalated,,,False
-Q00550,2026-08-28,P0398,Consulting,Drafting,2,pointed to library,LIB-08,P0384,False
-Q00551,2026-08-28,P0422,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00552,2026-08-28,P1103,Consulting,Rules and allowed use,1,escalated,,,False
-Q00553,2026-08-28,P1135,Operations,Drafting,1,pointed to library,LIB-15,,True
-Q00554,2026-08-31,P0008,Operations,Formatting,1,pointed to library,LIB-06,P0177,False
-Q00555,2026-08-31,P0200,Operations,Research,1,pointed to library,LIB-03,,False
-Q00556,2026-08-31,P0340,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00557,2026-08-31,P0454,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00558,2026-08-31,P0469,Consulting,Research,1,escalated,,,False
-Q00559,2026-08-31,P0735,Legal,Rules and allowed use,1,answered,,,False
-Q00560,2026-08-31,P0753,Finance,Coding,2,answered,,,False
-Q00561,2026-08-31,P0979,Legal,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00562,2026-09-01,P0130,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00563,2026-09-01,P0269,Operations,Rules and allowed use,1,escalated,,,True
-Q00564,2026-09-01,P0350,Consulting,Analysis,3,answered,,,False
-Q00565,2026-09-01,P0490,Operations,Drafting,2,pointed to library,LIB-17,,False
-Q00566,2026-09-01,P0640,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0306,False
-Q00567,2026-09-01,P0794,People,Drafting,2,pointed to library,LIB-22,,False
-Q00568,2026-09-01,P0823,Operations,Formatting,2,pointed to library,LIB-04,P0177,False
-Q00569,2026-09-01,P0941,People,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00570,2026-09-01,P1185,Finance,Formatting,1,pointed to library,LIB-19,,False
-Q00571,2026-09-02,P0040,Operations,Rules and allowed use,1,answered,,P0177,False
-Q00572,2026-09-02,P0133,Finance,Analysis,1,answered,,,False
-Q00573,2026-09-02,P0212,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00574,2026-09-02,P0290,People,Drafting,3,escalated,,,False
-Q00575,2026-09-02,P0398,Consulting,Drafting,1,pointed to library,LIB-01,P0384,True
-Q00576,2026-09-02,P0572,Technology,Rules and allowed use,2,pointed to library,LIB-07,P0280,True
-Q00577,2026-09-02,P0614,Finance,Drafting,2,new prompt written,,,False
-Q00578,2026-09-02,P0771,Consulting,Rules and allowed use,1,pointed to library,LIB-07,P1153,True
-Q00579,2026-09-02,P0867,People,Analysis,2,pointed to library,LIB-18,,False
-Q00580,2026-09-02,P0936,Operations,Rules and allowed use,2,escalated,,,False
-Q00581,2026-09-02,P1096,Finance,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00582,2026-09-03,P0198,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00583,2026-09-03,P0247,Consulting,Analysis,2,answered,,P0384,False
-Q00584,2026-09-03,P0316,Consulting,Drafting,1,pointed to library,LIB-01,P1153,False
-Q00585,2026-09-03,P0422,Finance,Rules and allowed use,1,escalated,,,True
-Q00586,2026-09-03,P0499,Operations,Drafting,1,pointed to library,LIB-15,,False
-Q00587,2026-09-03,P0637,Finance,Rules and allowed use,1,answered,,,False
-Q00588,2026-09-03,P0917,Consulting,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00589,2026-09-03,P0918,Technology,Coding,2,answered,,P0253,False
-Q00590,2026-09-03,P1105,Technology,Coding,2,pointed to library,LIB-10,P0253,False
-Q00591,2026-09-04,P0264,Operations,Rules and allowed use,3,pointed to library,LIB-20,,False
-Q00592,2026-09-04,P0270,Consulting,Summarising,3,answered,,,False
-Q00593,2026-09-04,P0531,Technology,Coding,2,pointed to library,LIB-10,P0253,False
-Q00594,2026-09-04,P0577,Finance,Drafting,2,pointed to library,LIB-17,,False
-Q00595,2026-09-04,P0659,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0280,False
-Q00596,2026-09-04,P0960,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00597,2026-09-04,P1115,Consulting,Summarising,1,answered,,P0305,False
-Q00598,2026-09-07,P0046,People,Rules and allowed use,2,answered,,,False
-Q00599,2026-09-07,P0063,Consulting,Summarising,2,pointed to library,LIB-02,P0306,False
-Q00600,2026-09-07,P0358,Consulting,Rules and allowed use,3,answered,,,False
-Q00601,2026-09-07,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-07,P0177,True
-Q00602,2026-09-07,P0850,Legal,Drafting,1,answered,,,False
-Q00603,2026-09-07,P0892,Consulting,Summarising,2,answered,,,False
-Q00604,2026-09-07,P1035,Operations,Coding,1,pointed to library,LIB-10,P0177,False
-Q00605,2026-09-07,P1049,Legal,Drafting,1,pointed to library,LIB-22,,False
-Q00606,2026-09-08,P0005,Operations,Research,3,escalated,,,False
-Q00607,2026-09-08,P0300,Finance,Research,1,answered,,,False
-Q00608,2026-09-08,P0320,Finance,Summarising,1,escalated,,,False
-Q00609,2026-09-08,P0326,Technology,Formatting,3,escalated,,,False
-Q00610,2026-09-08,P0381,Operations,Drafting,2,pointed to library,LIB-17,,False
-Q00611,2026-09-08,P0492,Consulting,Research,3,answered,,P0384,False
-Q00612,2026-09-08,P0637,Finance,Rules and allowed use,2,escalated,,,True
-Q00613,2026-09-08,P0820,Consulting,Drafting,2,escalated,,,True
-Q00614,2026-09-08,P0928,Technology,Coding,2,pointed to library,LIB-11,P0253,False
-Q00615,2026-09-08,P1057,Consulting,Summarising,1,pointed to library,LIB-02,P1153,False
-Q00616,2026-09-09,P0064,Consulting,Drafting,2,pointed to library,LIB-08,P0305,False
-Q00617,2026-09-09,P0110,Consulting,Analysis,3,pointed to library,LIB-05,P0305,False
-Q00618,2026-09-09,P0122,People,Rules and allowed use,3,new prompt written,,,False
-Q00619,2026-09-09,P0171,Consulting,Analysis,2,pointed to library,LIB-05,P0384,False
-Q00620,2026-09-09,P0196,Technology,Coding,1,answered,,P0280,False
-Q00621,2026-09-09,P0616,Consulting,Summarising,1,pointed to library,LIB-02,P0305,False
-Q00622,2026-09-09,P0711,People,Analysis,2,pointed to library,LIB-13,,False
-Q00623,2026-09-09,P0792,Technology,Formatting,2,pointed to library,LIB-19,,False
-Q00624,2026-09-09,P0915,Consulting,Analysis,3,pointed to library,LIB-05,,False
-Q00625,2026-09-09,P0938,Technology,Analysis,1,pointed to library,LIB-13,,False
-Q00626,2026-09-09,P0941,People,Rules and allowed use,2,answered,,,True
-Q00627,2026-09-09,P1179,Legal,Rules and allowed use,2,escalated,,,False
-Q00628,2026-09-09,P1187,Consulting,Drafting,3,escalated,,,False
-Q00629,2026-09-10,P0463,Operations,Rules and allowed use,3,pointed to library,LIB-07,,False
-Q00630,2026-09-10,P0540,Technology,Analysis,2,pointed to library,LIB-13,,False
-Q00631,2026-09-10,P0621,Technology,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00632,2026-09-10,P0940,Consulting,Formatting,2,pointed to library,LIB-04,P0306,False
-Q00633,2026-09-10,P1078,Technology,Rules and allowed use,2,pointed to library,LIB-07,P0253,True
-Q00634,2026-09-10,P1093,Technology,Formatting,2,escalated,,,False
-Q00635,2026-09-10,P1159,Legal,Drafting,1,pointed to library,LIB-22,,False
-Q00636,2026-09-11,P0072,Consulting,Rules and allowed use,1,answered,,P0384,False
-Q00637,2026-09-11,P0109,Operations,Research,2,pointed to library,LIB-03,P0177,False
-Q00638,2026-09-11,P0198,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00639,2026-09-11,P0454,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00640,2026-09-11,P0459,People,Summarising,1,pointed to library,LIB-23,,False
-Q00641,2026-09-11,P0511,Legal,Rules and allowed use,1,escalated,,,False
-Q00642,2026-09-11,P0552,Consulting,Analysis,1,answered,,P1153,False
-Q00643,2026-09-11,P0555,Technology,Summarising,2,pointed to library,LIB-14,P0280,False
-Q00644,2026-09-11,P0636,Finance,Rules and allowed use,1,escalated,,,False
-Q00645,2026-09-11,P0822,Consulting,Summarising,2,answered,,P1153,False
-Q00646,2026-09-11,P1107,Technology,Analysis,1,answered,,P0253,False
-Q00647,2026-09-14,P0018,Operations,Drafting,2,pointed to library,LIB-17,P0177,False
-Q00648,2026-09-14,P0041,Operations,Drafting,1,answered,,P0177,False
-Q00649,2026-09-14,P0572,Technology,Rules and allowed use,1,pointed to library,LIB-07,P0253,True
-Q00650,2026-09-14,P0679,Operations,Rules and allowed use,2,answered,,P0177,True
-Q00651,2026-09-14,P0971,Technology,Summarising,2,answered,,P0280,True
-Q00652,2026-09-14,P0995,Technology,Summarising,2,pointed to library,LIB-14,P0280,False
-Q00653,2026-09-14,P1096,Finance,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00654,2026-09-14,P1105,Technology,Analysis,3,pointed to library,LIB-13,,False
-Q00655,2026-09-14,P1135,Operations,Drafting,1,pointed to library,LIB-15,P0177,True
-Q00656,2026-09-15,P0481,Technology,Coding,3,new prompt written,,,False
-Q00657,2026-09-15,P0483,Technology,Coding,1,pointed to library,LIB-10,,False
-Q00658,2026-09-15,P0529,Finance,Rules and allowed use,3,answered,,,True
-Q00659,2026-09-15,P0719,People,Drafting,2,answered,,,False
-Q00660,2026-09-15,P0812,Consulting,Research,3,pointed to library,LIB-03,P1153,False
-Q00661,2026-09-15,P0904,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00662,2026-09-15,P1084,Operations,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00663,2026-09-16,P0159,Technology,Coding,2,answered,,,False
-Q00664,2026-09-16,P0314,Technology,Coding,1,answered,,P0253,False
-Q00665,2026-09-16,P0435,Finance,Analysis,1,pointed to library,LIB-18,,False
-Q00666,2026-09-16,P0440,Finance,Formatting,1,pointed to library,LIB-19,,False
-Q00667,2026-09-16,P0472,Consulting,Research,1,pointed to library,LIB-03,P1153,False
-Q00668,2026-09-16,P0581,Finance,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00669,2026-09-16,P1085,Finance,Summarising,1,escalated,,,False
-Q00670,2026-09-16,P1185,Finance,Research,1,pointed to library,LIB-03,,False
-Q00671,2026-09-17,P0069,Legal,Summarising,1,pointed to library,LIB-02,,False
-Q00672,2026-09-17,P0275,Operations,Formatting,2,pointed to library,LIB-06,P0177,False
-Q00673,2026-09-17,P0316,Consulting,Analysis,3,escalated,,,False
-Q00674,2026-09-17,P0394,Technology,Summarising,2,answered,,,False
-Q00675,2026-09-17,P0693,Operations,Rules and allowed use,1,escalated,,,True
-Q00676,2026-09-17,P0820,Consulting,Coding,1,escalated,,,False
-Q00677,2026-09-17,P0917,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0306,True
-Q00678,2026-09-18,P0219,Technology,Analysis,1,new prompt written,,,False
-Q00679,2026-09-18,P0342,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00680,2026-09-18,P0618,Technology,Drafting,3,answered,,P0280,False
-Q00681,2026-09-18,P0692,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00682,2026-09-18,P0780,People,Rules and allowed use,3,pointed to library,LIB-20,,True
-Q00683,2026-09-18,P0878,Technology,Research,2,new prompt written,,,False
-Q00684,2026-09-18,P1182,Consulting,Summarising,2,pointed to library,LIB-02,P0305,False
-Q00685,2026-09-21,P0258,Operations,Drafting,1,pointed to library,LIB-15,P0177,False
-Q00686,2026-09-21,P0330,People,Research,1,new prompt written,,,False
-Q00687,2026-09-21,P0467,Finance,Rules and allowed use,2,escalated,,,False
-Q00688,2026-09-21,P0628,People,Drafting,2,pointed to library,LIB-22,,False
-Q00689,2026-09-21,P0659,Technology,Rules and allowed use,2,escalated,,,True
-Q00690,2026-09-21,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00691,2026-09-21,P0729,Finance,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00692,2026-09-21,P0974,Operations,Analysis,1,pointed to library,LIB-05,P0177,False
-Q00693,2026-09-21,P1047,Technology,Coding,2,escalated,,,False
-Q00694,2026-09-21,P1068,Technology,Formatting,1,pointed to library,LIB-19,P0253,False
-Q00695,2026-09-21,P1078,Technology,Rules and allowed use,1,answered,,P0280,True
-Q00696,2026-09-22,P0111,Finance,Analysis,1,escalated,,,False
-Q00697,2026-09-22,P0129,Finance,Analysis,2,escalated,,,False
-Q00698,2026-09-22,P0139,Consulting,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00699,2026-09-22,P0168,Finance,Analysis,2,escalated,,,False
-Q00700,2026-09-22,P0521,Consulting,Drafting,1,pointed to library,LIB-08,,False
-Q00701,2026-09-22,P1101,Operations,Formatting,3,escalated,,,False
-Q00702,2026-09-23,P0142,People,Analysis,2,pointed to library,LIB-18,,False
-Q00703,2026-09-23,P0342,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00704,2026-09-23,P0361,Consulting,Analysis,2,escalated,,,False
-Q00705,2026-09-23,P0440,Finance,Drafting,2,pointed to library,LIB-08,,False
-Q00706,2026-09-23,P0904,Operations,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00707,2026-09-23,P0941,People,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00708,2026-09-23,P0954,People,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00709,2026-09-24,P0154,Consulting,Research,1,pointed to library,LIB-03,P0384,False
-Q00710,2026-09-24,P0297,Consulting,Analysis,1,answered,,P0305,False
-Q00711,2026-09-24,P0771,Consulting,Rules and allowed use,1,answered,,,True
-Q00712,2026-09-24,P0780,People,Rules and allowed use,2,escalated,,,True
-Q00713,2026-09-24,P0960,Legal,Rules and allowed use,1,answered,,,True
-Q00714,2026-09-24,P1069,Finance,Rules and allowed use,1,answered,,,False
-Q00715,2026-09-25,P0051,People,Drafting,2,pointed to library,LIB-22,,False
-Q00716,2026-09-25,P0098,People,Summarising,1,pointed to library,LIB-23,,False
-Q00717,2026-09-25,P0198,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00718,2026-09-25,P0243,Operations,Analysis,1,pointed to library,LIB-21,,False
-Q00719,2026-09-25,P0323,Finance,Formatting,1,pointed to library,LIB-19,,False
-Q00720,2026-09-25,P0338,Finance,Analysis,1,pointed to library,LIB-18,,False
-Q00721,2026-09-25,P0545,People,Analysis,1,answered,,,False
-Q00722,2026-09-25,P0605,Legal,Rules and allowed use,3,escalated,,,True
-Q00723,2026-09-25,P0795,Operations,Research,1,pointed to library,LIB-03,,False
-Q00724,2026-09-25,P1146,People,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00725,2026-09-28,P0126,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0253,False
-Q00726,2026-09-28,P0422,Finance,Rules and allowed use,2,escalated,,,True
-Q00727,2026-09-28,P0767,Operations,Drafting,1,answered,,P0177,False
-Q00728,2026-09-28,P1003,Finance,Formatting,2,pointed to library,LIB-19,,False
-Q00729,2026-09-29,P0102,Operations,Formatting,1,new prompt written,,,False
-Q00730,2026-09-29,P0212,Legal,Rules and allowed use,2,new prompt written,,,True
-Q00731,2026-09-29,P0448,Finance,Formatting,2,pointed to library,LIB-19,,False
-Q00732,2026-09-29,P0596,Operations,Analysis,2,pointed to library,LIB-21,P0177,False
-Q00733,2026-09-29,P0677,People,Drafting,3,escalated,,,False
-Q00734,2026-09-29,P0792,Technology,Coding,2,pointed to library,LIB-09,,False
-Q00735,2026-09-29,P0816,Consulting,Drafting,3,answered,,,False
-Q00736,2026-09-29,P0923,Consulting,Drafting,2,answered,,,False
-Q00737,2026-09-30,P0186,Technology,Research,2,pointed to library,LIB-03,P0253,False
-Q00738,2026-09-30,P0196,Technology,Drafting,2,pointed to library,LIB-15,,False
-Q00739,2026-09-30,P0198,Finance,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00740,2026-09-30,P0269,Operations,Rules and allowed use,2,pointed to library,LIB-20,P0177,True
-Q00741,2026-09-30,P0293,Consulting,Drafting,2,answered,,P1153,False
-Q00742,2026-09-30,P0393,Technology,Research,2,new prompt written,,,False
-Q00743,2026-09-30,P0442,People,Summarising,2,escalated,,,False
-Q00744,2026-09-30,P0735,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00745,2026-09-30,P1050,Finance,Analysis,3,answered,,,False
-Q00746,2026-09-30,P1078,Technology,Rules and allowed use,3,answered,,P0280,True
-Q00747,2026-09-30,P1128,People,Formatting,3,escalated,,,False
-Q00748,2026-10-01,P0342,Finance,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00749,2026-10-01,P0359,Consulting,Formatting,1,pointed to library,LIB-04,P0306,False
-Q00750,2026-10-01,P0501,Operations,Research,1,pointed to library,LIB-03,,False
-Q00751,2026-10-01,P0892,Consulting,Analysis,1,escalated,,,False
-Q00752,2026-10-01,P0941,People,Rules and allowed use,1,pointed to library,LIB-07,,True
-Q00753,2026-10-01,P0960,Legal,Rules and allowed use,2,new prompt written,,,True
-Q00754,2026-10-02,P0156,Legal,Analysis,3,escalated,,,False
-Q00755,2026-10-02,P0193,Consulting,Drafting,1,new prompt written,,,False
-Q00756,2026-10-02,P0249,Technology,Research,1,answered,,,False
-Q00757,2026-10-02,P0454,Legal,Rules and allowed use,1,escalated,,,True
-Q00758,2026-10-02,P0679,Operations,Rules and allowed use,2,answered,,,True
-Q00759,2026-10-02,P0734,People,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00760,2026-10-02,P0753,Finance,Drafting,3,escalated,,,False
-Q00761,2026-10-02,P0871,People,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00762,2026-10-02,P0887,People,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00763,2026-10-02,P1069,Finance,Rules and allowed use,2,answered,,,True
-Q00764,2026-10-05,P0022,Legal,Rules and allowed use,1,answered,,,False
-Q00765,2026-10-05,P0588,Operations,Analysis,1,answered,,P0177,False
-Q00766,2026-10-05,P0693,Operations,Rules and allowed use,1,answered,,P0177,True
-Q00767,2026-10-05,P0724,Finance,Rules and allowed use,2,answered,,,False
-Q00768,2026-10-05,P0742,Technology,Coding,2,pointed to library,LIB-11,P0280,False
-Q00769,2026-10-05,P0917,Consulting,Rules and allowed use,3,escalated,,,True
-Q00770,2026-10-06,P0212,Legal,Rules and allowed use,3,answered,,,True
-Q00771,2026-10-06,P0553,Technology,Analysis,1,answered,,P0280,False
-Q00772,2026-10-06,P0575,Operations,Formatting,2,pointed to library,LIB-19,P0177,False
-Q00773,2026-10-06,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00774,2026-10-06,P1083,Finance,Formatting,3,answered,,,False
-Q00775,2026-10-07,P0002,People,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00776,2026-10-07,P0071,Operations,Analysis,2,escalated,,,False
-Q00777,2026-10-07,P0088,Legal,Formatting,3,pointed to library,LIB-19,,False
-Q00778,2026-10-07,P0172,Operations,Coding,2,pointed to library,LIB-11,,False
-Q00779,2026-10-07,P0323,Finance,Formatting,2,pointed to library,LIB-19,,True
-Q00780,2026-10-07,P0735,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00781,2026-10-07,P0777,Operations,Drafting,2,pointed to library,LIB-17,P0177,False
-Q00782,2026-10-07,P0780,People,Rules and allowed use,2,answered,,,True
-Q00783,2026-10-07,P1011,People,Research,1,pointed to library,LIB-03,,False
-Q00784,2026-10-07,P1146,People,Rules and allowed use,3,pointed to library,LIB-20,,True
-Q00785,2026-10-07,P1173,Technology,Analysis,2,pointed to library,LIB-13,P0280,False
-Q00786,2026-10-08,P0073,Consulting,Summarising,3,pointed to library,LIB-02,P1153,False
-Q00787,2026-10-08,P0218,Technology,Coding,2,escalated,,,False
-Q00788,2026-10-08,P0418,Finance,Formatting,2,pointed to library,LIB-19,,False
-Q00789,2026-10-08,P0803,Legal,Rules and allowed use,3,escalated,,,False
-Q00790,2026-10-08,P0991,Operations,Coding,2,pointed to library,LIB-09,,False
-Q00791,2026-10-08,P1113,Technology,Summarising,1,pointed to library,LIB-23,P0253,False
-Q00792,2026-10-08,P1122,Operations,Rules and allowed use,1,pointed to library,LIB-20,P0177,False
-Q00793,2026-10-09,P0080,People,Summarising,1,pointed to library,LIB-23,,False
-Q00794,2026-10-09,P0141,Consulting,Research,1,answered,,P0384,False
-Q00795,2026-10-09,P0314,Technology,Summarising,2,pointed to library,LIB-02,P0253,False
-Q00796,2026-10-09,P0535,People,Drafting,1,answered,,,False
-Q00797,2026-10-09,P1145,Operations,Drafting,1,answered,,P0177,False
-Q00798,2026-10-12,P0422,Finance,Rules and allowed use,3,pointed to library,LIB-20,,True
-Q00799,2026-10-12,P0659,Technology,Rules and allowed use,3,pointed to library,LIB-20,P0280,True
-Q00800,2026-10-12,P0667,Consulting,Summarising,1,answered,,P0306,False
-Q00801,2026-10-12,P0719,People,Drafting,2,pointed to library,LIB-22,,True
-Q00802,2026-10-12,P0917,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P1153,True
-Q00803,2026-10-13,P0499,Operations,Formatting,1,new prompt written,,,False
-Q00804,2026-10-13,P0545,People,Formatting,2,answered,,,False
-Q00805,2026-10-13,P0696,People,Summarising,2,pointed to library,LIB-23,,False
-Q00806,2026-10-13,P0786,Consulting,Analysis,2,pointed to library,LIB-05,P0306,False
-Q00807,2026-10-13,P0831,Consulting,Drafting,1,escalated,,,False
-Q00808,2026-10-13,P1031,Operations,Analysis,2,answered,,P0177,False
-Q00809,2026-10-14,P0040,Operations,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00810,2026-10-14,P0049,Operations,Research,1,pointed to library,LIB-03,P0177,False
-Q00811,2026-10-14,P0065,People,Summarising,1,pointed to library,LIB-23,,False
-Q00812,2026-10-14,P0212,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00813,2026-10-14,P0305,Consulting,Research,1,escalated,,,False
-Q00814,2026-10-14,P0340,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00815,2026-10-14,P0633,Consulting,Summarising,3,answered,,P0306,False
-Q00816,2026-10-14,P0693,Operations,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00817,2026-10-14,P0953,People,Summarising,2,pointed to library,LIB-23,,False
-Q00818,2026-10-14,P1024,People,Drafting,1,pointed to library,LIB-22,,False
-Q00819,2026-10-15,P0005,Operations,Coding,3,escalated,,,False
-Q00820,2026-10-15,P0062,Operations,Rules and allowed use,3,pointed to library,LIB-07,P0177,False
-Q00821,2026-10-15,P0157,Consulting,Formatting,2,answered,,P0305,False
-Q00822,2026-10-15,P0203,Technology,Drafting,3,new prompt written,,,False
-Q00823,2026-10-15,P0232,Finance,Analysis,1,answered,,,False
-Q00824,2026-10-15,P0292,Technology,Coding,2,new prompt written,,,False
-Q00825,2026-10-15,P0463,Operations,Rules and allowed use,2,new prompt written,,,False
-Q00826,2026-10-15,P0556,Finance,Analysis,1,answered,,,False
-Q00827,2026-10-15,P0615,Legal,Rules and allowed use,3,answered,,,False
-Q00828,2026-10-15,P0617,Finance,Analysis,1,pointed to library,LIB-18,,False
-Q00829,2026-10-15,P0637,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
-Q00830,2026-10-15,P0781,Finance,Summarising,1,answered,,,False
-Q00831,2026-10-15,P0950,Technology,Analysis,1,escalated,,,False
-Q00832,2026-10-16,P0001,Consulting,Rules and allowed use,3,pointed to library,LIB-07,P0305,False
-Q00833,2026-10-16,P0010,Operations,Research,1,answered,,,False
-Q00834,2026-10-16,P0041,Operations,Formatting,1,answered,,P0177,False
-Q00835,2026-10-16,P0279,Consulting,Analysis,1,pointed to library,LIB-05,,False
-Q00836,2026-10-16,P0329,Consulting,Drafting,2,escalated,,,False
-Q00837,2026-10-16,P0649,Technology,Coding,2,answered,,,False
-Q00838,2026-10-16,P0729,Finance,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00839,2026-10-16,P0939,Consulting,Formatting,2,answered,,P0384,False
-Q00840,2026-10-16,P0961,Consulting,Drafting,2,answered,,P0306,False
-Q00841,2026-10-16,P1078,Technology,Rules and allowed use,2,pointed to library,LIB-07,P0280,True
-Q00842,2026-10-19,P0084,Consulting,Analysis,3,pointed to library,LIB-05,,False
-Q00843,2026-10-19,P0606,Consulting,Drafting,3,answered,,,False
-Q00844,2026-10-19,P0637,Finance,Rules and allowed use,2,answered,,,True
-Q00845,2026-10-19,P0680,Legal,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00846,2026-10-19,P0692,Finance,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00847,2026-10-19,P0953,People,Formatting,2,answered,,,False
-Q00848,2026-10-20,P0333,Technology,Formatting,1,pointed to library,LIB-06,P0253,False
-Q00849,2026-10-20,P0445,Consulting,Rules and allowed use,1,pointed to library,LIB-07,P0384,False
-Q00850,2026-10-20,P0529,Finance,Rules and allowed use,1,pointed to library,LIB-20,,False
-Q00851,2026-10-20,P0605,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00852,2026-10-20,P0636,Finance,Rules and allowed use,3,pointed to library,LIB-07,,False
-Q00853,2026-10-20,P0679,Operations,Rules and allowed use,2,escalated,,,True
-Q00854,2026-10-20,P0898,Technology,Coding,3,pointed to library,LIB-10,P0253,False
-Q00855,2026-10-21,P0140,Operations,Rules and allowed use,1,escalated,,,False
-Q00856,2026-10-21,P0245,Technology,Rules and allowed use,2,pointed to library,LIB-07,P0253,False
-Q00857,2026-10-21,P0842,Consulting,Drafting,1,pointed to library,LIB-08,P0306,False
-Q00858,2026-10-22,P0553,Technology,Coding,1,pointed to library,LIB-11,P0280,False
-Q00859,2026-10-22,P0659,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0253,True
-Q00860,2026-10-22,P1133,Technology,Coding,1,escalated,,,False
-Q00861,2026-10-22,P1170,Finance,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00862,2026-10-23,P0020,People,Research,2,answered,,,False
-Q00863,2026-10-23,P0389,Consulting,Research,3,answered,,,False
-Q00864,2026-10-23,P0545,People,Drafting,1,answered,,,False
-Q00865,2026-10-23,P0611,People,Rules and allowed use,2,pointed to library,LIB-20,,False
-Q00866,2026-10-23,P0788,Technology,Coding,1,new prompt written,,,False
-Q00867,2026-10-23,P0871,People,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00868,2026-10-23,P1051,Consulting,Rules and allowed use,1,answered,,P0305,False
-Q00869,2026-10-23,P1078,Technology,Rules and allowed use,1,answered,,P0280,True
-Q00870,2026-10-23,P1083,Finance,Analysis,3,answered,,,False
-Q00871,2026-10-23,P1100,People,Formatting,2,pointed to library,LIB-04,,False
-Q00872,2026-10-26,P0022,Legal,Rules and allowed use,2,answered,,,True
-Q00873,2026-10-26,P0287,People,Analysis,1,pointed to library,LIB-13,,False
-Q00874,2026-10-26,P0334,Consulting,Research,2,pointed to library,LIB-03,P1153,False
-Q00875,2026-10-26,P0342,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
-Q00876,2026-10-26,P0415,Consulting,Formatting,1,escalated,,,False
-Q00877,2026-10-26,P0497,Operations,Analysis,2,new prompt written,,,False
-Q00878,2026-10-26,P0679,Operations,Rules and allowed use,3,answered,,,True
-Q00879,2026-10-26,P0800,Consulting,Analysis,1,answered,,P1153,False
-Q00880,2026-10-26,P0882,Finance,Analysis,2,answered,,,False
-Q00881,2026-10-26,P1005,Consulting,Coding,3,escalated,,,False
-Q00882,2026-10-26,P1198,Consulting,Summarising,3,answered,,P0305,False
-Q00883,2026-10-27,P0412,Technology,Coding,2,pointed to library,LIB-11,P0280,False
-Q00884,2026-10-27,P0529,Finance,Rules and allowed use,3,escalated,,,True
-Q00885,2026-10-27,P0665,Finance,Analysis,1,pointed to library,LIB-18,,False
-Q00886,2026-10-27,P0693,Operations,Rules and allowed use,1,pointed to library,LIB-20,P0177,True
-Q00887,2026-10-27,P0780,People,Rules and allowed use,3,escalated,,,True
-Q00888,2026-10-27,P0915,Consulting,Summarising,3,pointed to library,LIB-02,P0306,False
-Q00889,2026-10-27,P0920,Technology,Coding,2,escalated,,,False
-Q00890,2026-10-28,P0062,Operations,Rules and allowed use,3,answered,,P0177,True
-Q00891,2026-10-28,P0146,Technology,Coding,1,pointed to library,LIB-09,P0253,False
-Q00892,2026-10-28,P0176,Consulting,Coding,2,pointed to library,LIB-09,P0306,False
-Q00893,2026-10-28,P0335,Consulting,Analysis,2,pointed to library,LIB-05,P0306,False
-Q00894,2026-10-28,P0381,Operations,Research,1,escalated,,,False
-Q00895,2026-10-28,P0390,Finance,Summarising,1,answered,,,False
-Q00896,2026-10-28,P0711,People,Coding,1,answered,,,False
-Q00897,2026-10-28,P0917,Consulting,Rules and allowed use,1,answered,,P0306,True
-Q00898,2026-10-28,P1021,Operations,Analysis,2,answered,,,False
-Q00899,2026-10-29,P0002,People,Rules and allowed use,1,pointed to library,LIB-20,,True
-Q00900,2026-10-29,P0057,Finance,Analysis,1,escalated,,,False
-Q00901,2026-10-29,P0130,Finance,Rules and allowed use,3,answered,,,False
-Q00902,2026-10-29,P0144,Finance,Formatting,2,pointed to library,LIB-19,,False
-Q00903,2026-10-29,P0671,Technology,Analysis,2,pointed to library,LIB-13,,False
-Q00904,2026-10-29,P0954,People,Rules and allowed use,1,pointed to library,LIB-07,,False
-Q00905,2026-10-29,P0967,Consulting,Drafting,3,escalated,,,False
-Q00906,2026-10-29,P1091,Technology,Coding,2,pointed to library,LIB-09,,False
-Q00907,2026-10-29,P1175,Finance,Analysis,1,pointed to library,LIB-18,,False
-Q00908,2026-10-30,P0286,People,Summarising,2,pointed to library,LIB-23,,False
-Q00909,2026-10-30,P0569,Operations,Formatting,1,pointed to library,LIB-04,P0177,False
-Q00910,2026-10-30,P0661,Operations,Formatting,1,pointed to library,LIB-06,,False
-Q00911,2026-10-30,P0960,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
-Q00912,2026-10-30,P0992,Operations,Formatting,2,answered,,P0177,False
+Q00102,2026-06-16,P0526,Operations,Formatting,2,escalated,,,False
+Q00103,2026-06-16,P0572,Technology,Rules and allowed use,1,escalated,,,False
+Q00104,2026-06-16,P0688,Consulting,Formatting,3,escalated,,,False
+Q00105,2026-06-16,P0835,Consulting,Research,2,answered,,P0384,False
+Q00106,2026-06-16,P0960,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00107,2026-06-16,P1069,Finance,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00108,2026-06-16,P1180,Operations,Summarising,2,answered,,,False
+Q00109,2026-06-17,P0137,Consulting,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00110,2026-06-17,P0271,Operations,Summarising,2,escalated,,,False
+Q00111,2026-06-17,P0792,Technology,Coding,1,escalated,,,False
+Q00112,2026-06-17,P0959,Consulting,Drafting,2,answered,,P0384,False
+Q00113,2026-06-17,P1180,Operations,Summarising,2,answered,,,True
+Q00114,2026-06-17,P1199,Operations,Summarising,2,answered,,,False
+Q00115,2026-06-18,P0229,Operations,Summarising,2,pointed to library,LIB-02,,True
+Q00116,2026-06-18,P0725,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00117,2026-06-18,P0755,Technology,Coding,2,pointed to library,LIB-10,,False
+Q00118,2026-06-18,P1078,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0253,False
+Q00119,2026-06-18,P1144,Consulting,Rules and allowed use,2,escalated,,,True
+Q00120,2026-06-19,P0127,Technology,Drafting,2,pointed to library,LIB-01,,False
+Q00121,2026-06-19,P0797,Operations,Analysis,3,answered,,,False
+Q00122,2026-06-19,P0944,Consulting,Analysis,2,answered,,,False
+Q00123,2026-06-19,P0990,Consulting,Rules and allowed use,3,answered,,P0384,True
+Q00124,2026-06-19,P1063,Consulting,Research,3,pointed to library,LIB-03,P0306,False
+Q00125,2026-06-19,P1096,Finance,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00126,2026-06-19,P1199,Operations,Summarising,2,pointed to library,LIB-02,,True
+Q00127,2026-06-19,P1199,Operations,Summarising,1,pointed to library,LIB-02,,True
+Q00128,2026-06-22,P0529,Finance,Rules and allowed use,3,escalated,,,True
+Q00129,2026-06-22,P0596,Operations,Research,3,answered,,,False
+Q00130,2026-06-22,P0713,Technology,Summarising,1,pointed to library,LIB-02,,False
+Q00131,2026-06-22,P0960,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00132,2026-06-22,P0968,Finance,Drafting,2,pointed to library,LIB-01,,False
+Q00133,2026-06-22,P1130,Technology,Formatting,1,answered,,,False
+Q00134,2026-06-22,P1197,Finance,Research,1,pointed to library,LIB-03,,False
+Q00135,2026-06-23,P0092,Consulting,Drafting,1,answered,,P0384,True
+Q00136,2026-06-23,P0520,Consulting,Rules and allowed use,2,pointed to library,LIB-07,,True
+Q00137,2026-06-23,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00138,2026-06-23,P0722,Technology,Analysis,1,pointed to library,LIB-18,P0253,False
+Q00139,2026-06-23,P0747,Technology,Research,1,pointed to library,LIB-03,P0253,False
+Q00140,2026-06-23,P1180,Operations,Summarising,2,answered,,,True
+Q00141,2026-06-23,P1190,Consulting,Drafting,1,pointed to library,LIB-01,,True
+Q00142,2026-06-24,P0022,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00143,2026-06-24,P0027,Consulting,Analysis,1,answered,,P1153,False
+Q00144,2026-06-24,P0042,Technology,Coding,2,pointed to library,LIB-11,,False
+Q00145,2026-06-24,P0076,Consulting,Research,2,new prompt written,,,False
+Q00146,2026-06-24,P0833,Technology,Rules and allowed use,1,pointed to library,LIB-07,P0253,False
+Q00147,2026-06-24,P0878,Technology,Analysis,2,pointed to library,LIB-18,P0280,False
+Q00148,2026-06-24,P0917,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0384,True
+Q00149,2026-06-24,P1031,Operations,Summarising,2,escalated,,,False
+Q00150,2026-06-25,P0031,Consulting,Research,3,escalated,,,False
+Q00151,2026-06-25,P0198,Finance,Rules and allowed use,3,escalated,,,True
+Q00152,2026-06-25,P0358,Consulting,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00153,2026-06-25,P0546,Technology,Coding,2,new prompt written,LIB-11,,False
+Q00154,2026-06-25,P0565,Consulting,Analysis,1,pointed to library,LIB-18,,False
+Q00155,2026-06-25,P0680,Legal,Rules and allowed use,1,answered,,,True
+Q00156,2026-06-25,P0729,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00157,2026-06-25,P0836,Consulting,Research,1,escalated,,,False
+Q00158,2026-06-25,P1081,Operations,Summarising,2,pointed to library,LIB-02,,False
+Q00159,2026-06-26,P0052,Consulting,Research,2,pointed to library,LIB-03,P0384,False
+Q00160,2026-06-26,P0211,Consulting,Summarising,3,escalated,,,False
+Q00161,2026-06-26,P0343,Operations,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00162,2026-06-26,P0397,Operations,Drafting,2,pointed to library,LIB-01,,False
+Q00163,2026-06-26,P0495,Technology,Summarising,1,pointed to library,LIB-02,,False
+Q00164,2026-06-26,P0692,Finance,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00165,2026-06-26,P1085,Finance,Analysis,2,pointed to library,LIB-18,,False
+Q00166,2026-06-26,P1105,Technology,Coding,1,pointed to library,LIB-11,,False
+Q00167,2026-06-29,P0022,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00168,2026-06-29,P0123,Operations,Analysis,2,pointed to library,LIB-18,,False
+Q00169,2026-06-29,P0267,Consulting,Research,2,pointed to library,LIB-03,,False
+Q00170,2026-06-29,P0359,Consulting,Summarising,2,pointed to library,LIB-02,,False
+Q00171,2026-06-29,P0618,Technology,Summarising,1,pointed to library,LIB-02,P0253,False
+Q00172,2026-06-29,P0629,Consulting,Research,1,pointed to library,LIB-03,P0384,False
+Q00173,2026-06-29,P0816,Consulting,Drafting,3,escalated,,,False
+Q00174,2026-06-29,P1045,Consulting,Drafting,2,answered,,,False
+Q00175,2026-06-30,P0003,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00176,2026-06-30,P0212,Legal,Rules and allowed use,3,new prompt written,,,True
+Q00177,2026-06-30,P0526,Operations,Formatting,1,pointed to library,LIB-04,,True
+Q00178,2026-06-30,P0549,Legal,Drafting,1,pointed to library,LIB-01,,False
+Q00179,2026-06-30,P0566,Finance,Rules and allowed use,1,answered,,,True
+Q00180,2026-06-30,P0693,Operations,Rules and allowed use,3,pointed to library,LIB-07,,False
+Q00181,2026-06-30,P0958,Consulting,Rules and allowed use,1,new prompt written,,,False
+Q00182,2026-06-30,P0997,Technology,Analysis,1,pointed to library,LIB-18,P0253,False
+Q00183,2026-06-30,P1079,Legal,Summarising,1,pointed to library,LIB-02,,False
+Q00184,2026-06-30,P1139,Finance,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00185,2026-07-01,P0104,Operations,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00186,2026-07-01,P0668,Finance,Analysis,3,pointed to library,LIB-18,,False
+Q00187,2026-07-01,P0769,Operations,Formatting,1,pointed to library,LIB-04,,False
+Q00188,2026-07-01,P0801,Consulting,Analysis,1,escalated,,,False
+Q00189,2026-07-02,P0101,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0306,True
+Q00190,2026-07-02,P0321,Technology,Coding,2,pointed to library,LIB-11,P0253,False
+Q00191,2026-07-02,P0552,Consulting,Formatting,3,answered,,,False
+Q00192,2026-07-02,P0637,Finance,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00193,2026-07-02,P0697,Finance,Coding,2,answered,,,False
+Q00194,2026-07-02,P0803,Legal,Rules and allowed use,3,escalated,,,True
+Q00195,2026-07-02,P0898,Technology,Analysis,2,pointed to library,LIB-18,P0253,False
+Q00196,2026-07-02,P0917,Consulting,Rules and allowed use,2,new prompt written,,,True
+Q00197,2026-07-02,P1056,Finance,Rules and allowed use,2,escalated,,,False
+Q00198,2026-07-03,P0038,Operations,Analysis,3,answered,,,False
+Q00199,2026-07-03,P0130,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
+Q00200,2026-07-03,P0358,Consulting,Rules and allowed use,3,answered,,P0306,True
+Q00201,2026-07-03,P0497,Operations,Analysis,2,pointed to library,LIB-18,,False
+Q00202,2026-07-03,P0582,Technology,Coding,2,escalated,,,False
+Q00203,2026-07-03,P0583,Consulting,Drafting,2,escalated,,,False
+Q00204,2026-07-03,P1031,Operations,Summarising,1,answered,,,True
+Q00205,2026-07-06,P0032,Operations,Rules and allowed use,3,answered,,,False
+Q00206,2026-07-06,P0062,Operations,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00207,2026-07-06,P0605,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00208,2026-07-06,P0908,Technology,Coding,3,escalated,,,False
+Q00209,2026-07-06,P1092,Legal,Summarising,1,pointed to library,LIB-02,,False
+Q00210,2026-07-06,P1135,Operations,Summarising,1,pointed to library,LIB-02,,False
+Q00211,2026-07-06,P1199,Operations,Summarising,1,new prompt written,LIB-14,,True
+Q00212,2026-07-07,P0136,Operations,Summarising,1,escalated,,,False
+Q00213,2026-07-07,P0212,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00214,2026-07-07,P0451,Legal,Rules and allowed use,3,answered,,,False
+Q00215,2026-07-07,P0771,Consulting,Rules and allowed use,2,answered,,P0306,True
+Q00216,2026-07-07,P0826,Technology,Analysis,1,pointed to library,LIB-18,P0280,False
+Q00217,2026-07-07,P0885,Consulting,Drafting,1,new prompt written,LIB-12,,False
+Q00218,2026-07-07,P0976,Consulting,Research,1,pointed to library,LIB-03,P0384,False
+Q00219,2026-07-07,P1104,Consulting,Analysis,2,pointed to library,LIB-18,,False
+Q00220,2026-07-08,P0130,Finance,Rules and allowed use,1,escalated,,,True
+Q00221,2026-07-08,P0407,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00222,2026-07-08,P0422,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
+Q00223,2026-07-08,P0692,Finance,Rules and allowed use,3,answered,,,True
+Q00224,2026-07-08,P1144,Consulting,Rules and allowed use,2,new prompt written,,,True
+Q00225,2026-07-09,P0045,Consulting,Analysis,1,answered,,P0306,False
+Q00226,2026-07-09,P0137,Consulting,Rules and allowed use,3,pointed to library,LIB-07,P1153,True
+Q00227,2026-07-09,P0271,Operations,Summarising,1,answered,,,True
+Q00228,2026-07-09,P0314,Technology,Rules and allowed use,2,answered,,P0280,False
+Q00229,2026-07-09,P0339,Operations,Drafting,2,escalated,,,False
+Q00230,2026-07-09,P0447,Operations,Drafting,1,escalated,,,False
+Q00231,2026-07-09,P0660,Consulting,Research,2,pointed to library,LIB-03,P1153,False
+Q00232,2026-07-09,P0795,Operations,Summarising,1,pointed to library,LIB-02,,False
+Q00233,2026-07-09,P0985,Legal,Formatting,3,answered,,,False
+Q00234,2026-07-10,P0198,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00235,2026-07-10,P0229,Operations,Rules and allowed use,1,answered,,,False
+Q00236,2026-07-10,P0464,Consulting,Summarising,3,new prompt written,LIB-14,,False
+Q00237,2026-07-10,P0565,Consulting,Analysis,3,escalated,,,True
+Q00238,2026-07-10,P0624,Consulting,Research,3,answered,,P0384,False
+Q00239,2026-07-10,P0803,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00240,2026-07-10,P0990,Consulting,Rules and allowed use,3,answered,,,True
+Q00241,2026-07-10,P1111,Operations,Formatting,2,pointed to library,LIB-04,,False
+Q00242,2026-07-10,P1161,Consulting,Summarising,1,answered,,P0384,False
+Q00243,2026-07-13,P0229,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00244,2026-07-13,P0395,Technology,Coding,3,answered,,P0280,False
+Q00245,2026-07-13,P1135,Operations,Summarising,2,pointed to library,LIB-02,,True
+Q00246,2026-07-13,P1143,Operations,Analysis,2,pointed to library,LIB-05,,False
+Q00247,2026-07-14,P0212,Legal,Rules and allowed use,3,answered,,,True
+Q00248,2026-07-14,P0287,People,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00249,2026-07-14,P0462,Consulting,Analysis,1,answered,,P0306,False
+Q00250,2026-07-14,P0605,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00251,2026-07-14,P0624,Consulting,Analysis,1,pointed to library,LIB-05,P0384,False
+Q00252,2026-07-14,P0637,Finance,Rules and allowed use,3,answered,,,True
+Q00253,2026-07-14,P0692,Finance,Rules and allowed use,2,answered,,,True
+Q00254,2026-07-14,P0746,Consulting,Drafting,1,answered,,P0384,False
+Q00255,2026-07-14,P0755,Technology,Coding,2,pointed to library,LIB-10,P0253,True
+Q00256,2026-07-14,P0801,Consulting,Drafting,2,pointed to library,LIB-01,P0306,False
+Q00257,2026-07-14,P0855,Technology,Coding,1,pointed to library,LIB-10,P0280,False
+Q00258,2026-07-14,P0972,Consulting,Research,1,pointed to library,LIB-03,,False
+Q00259,2026-07-14,P1091,Technology,Analysis,2,pointed to library,LIB-13,,False
+Q00260,2026-07-15,P0145,Finance,Analysis,1,answered,,,False
+Q00261,2026-07-15,P0267,Consulting,Research,2,escalated,,,True
+Q00262,2026-07-15,P1022,Technology,Coding,3,escalated,,,False
+Q00263,2026-07-15,P1089,Finance,Analysis,2,pointed to library,LIB-18,,False
+Q00264,2026-07-16,P0040,Operations,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00265,2026-07-16,P0112,Operations,Analysis,1,answered,,,False
+Q00266,2026-07-16,P0229,Operations,Summarising,2,pointed to library,LIB-02,,True
+Q00267,2026-07-16,P0314,Technology,Rules and allowed use,2,new prompt written,,,True
+Q00268,2026-07-16,P0340,Legal,Rules and allowed use,3,pointed to library,LIB-20,,False
+Q00269,2026-07-16,P0470,Consulting,Drafting,2,answered,,P0305,False
+Q00270,2026-07-16,P0822,Consulting,Drafting,2,answered,,P1153,False
+Q00271,2026-07-16,P0904,Operations,Rules and allowed use,2,escalated,,,False
+Q00272,2026-07-16,P1031,Operations,Summarising,2,pointed to library,LIB-02,,True
+Q00273,2026-07-16,P1031,Operations,Summarising,1,pointed to library,LIB-02,,True
+Q00274,2026-07-17,P0280,Technology,Coding,1,escalated,,,False
+Q00275,2026-07-17,P0591,Technology,Coding,1,pointed to library,LIB-09,P0253,False
+Q00276,2026-07-17,P0655,Technology,Coding,2,escalated,,,False
+Q00277,2026-07-17,P0666,Technology,Coding,1,pointed to library,LIB-09,P0253,False
+Q00278,2026-07-17,P0671,Technology,Coding,2,pointed to library,LIB-09,,False
+Q00279,2026-07-17,P0973,People,Drafting,1,pointed to library,LIB-12,,False
+Q00280,2026-07-17,P1155,Operations,Research,1,pointed to library,LIB-03,,False
+Q00281,2026-07-20,P0040,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00282,2026-07-20,P0274,Consulting,Research,2,escalated,,,False
+Q00283,2026-07-20,P0479,Operations,Formatting,1,pointed to library,LIB-04,,False
+Q00284,2026-07-20,P0654,Operations,Formatting,2,answered,,,False
+Q00285,2026-07-20,P0693,Operations,Rules and allowed use,2,pointed to library,LIB-07,,True
+Q00286,2026-07-21,P0080,People,Rules and allowed use,1,answered,,,False
+Q00287,2026-07-21,P0130,Finance,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00288,2026-07-21,P0229,Operations,Summarising,2,answered,,,True
+Q00289,2026-07-21,P0407,Finance,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00290,2026-07-21,P0649,Technology,Analysis,1,escalated,,,False
+Q00291,2026-07-21,P0695,Legal,Rules and allowed use,2,answered,,,False
+Q00292,2026-07-21,P0746,Consulting,Analysis,1,pointed to library,LIB-05,P0305,False
+Q00293,2026-07-21,P0755,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0280,False
+Q00294,2026-07-21,P0892,Consulting,Coding,3,new prompt written,,,False
+Q00295,2026-07-21,P1127,Consulting,Research,1,escalated,,,False
+Q00296,2026-07-21,P1146,People,Rules and allowed use,1,answered,,,False
+Q00297,2026-07-22,P0143,Finance,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00298,2026-07-22,P0470,Consulting,Research,2,escalated,,,False
+Q00299,2026-07-22,P0836,Consulting,Research,2,pointed to library,LIB-03,,True
+Q00300,2026-07-22,P0842,Consulting,Drafting,3,new prompt written,LIB-08,,False
+Q00301,2026-07-22,P0927,Technology,Analysis,1,answered,,,False
+Q00302,2026-07-22,P1078,Technology,Rules and allowed use,2,pointed to library,LIB-07,P0253,False
+Q00303,2026-07-23,P0173,Finance,Drafting,1,answered,,,False
+Q00304,2026-07-23,P0213,Finance,Analysis,2,pointed to library,LIB-18,,False
+Q00305,2026-07-23,P0358,Consulting,Rules and allowed use,1,pointed to library,LIB-07,P0305,True
+Q00306,2026-07-23,P0490,Operations,Analysis,2,answered,,,False
+Q00307,2026-07-23,P0637,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00308,2026-07-23,P0696,People,Research,2,escalated,,,False
+Q00309,2026-07-23,P0780,People,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00310,2026-07-23,P0855,Technology,Rules and allowed use,2,pointed to library,LIB-20,P0280,False
+Q00311,2026-07-23,P0871,People,Rules and allowed use,1,answered,,,False
+Q00312,2026-07-23,P0906,Consulting,Drafting,2,pointed to library,LIB-01,P0306,False
+Q00313,2026-07-23,P0931,Operations,Summarising,1,pointed to library,LIB-02,,False
+Q00314,2026-07-24,P0022,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00315,2026-07-24,P0263,Finance,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00316,2026-07-24,P0271,Operations,Summarising,3,escalated,,,True
+Q00317,2026-07-24,P0335,Consulting,Research,2,pointed to library,LIB-03,,False
+Q00318,2026-07-24,P0344,Legal,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00319,2026-07-24,P0679,Operations,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00320,2026-07-24,P0885,Consulting,Analysis,1,answered,,P0305,False
+Q00321,2026-07-24,P0953,People,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00322,2026-07-24,P0955,Operations,Drafting,2,answered,,,False
+Q00323,2026-07-24,P0960,Legal,Rules and allowed use,2,answered,,,False
+Q00324,2026-07-24,P0964,Operations,Formatting,2,answered,,,False
+Q00325,2026-07-24,P1186,Consulting,Analysis,1,pointed to library,LIB-05,,False
+Q00326,2026-07-27,P0079,People,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00327,2026-07-27,P0080,People,Rules and allowed use,1,new prompt written,,,True
+Q00328,2026-07-27,P0314,Technology,Rules and allowed use,2,answered,,P0280,True
+Q00329,2026-07-27,P0380,Consulting,Summarising,2,pointed to library,LIB-02,,False
+Q00330,2026-07-27,P0552,Consulting,Summarising,1,answered,,,False
+Q00331,2026-07-27,P0595,Technology,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00332,2026-07-27,P0742,Technology,Research,2,pointed to library,LIB-03,P0280,False
+Q00333,2026-07-27,P0960,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00334,2026-07-28,P0357,People,Rules and allowed use,1,answered,,,False
+Q00335,2026-07-28,P0464,Consulting,Drafting,1,pointed to library,LIB-01,P0384,False
+Q00336,2026-07-28,P0871,People,Rules and allowed use,1,escalated,,,True
+Q00337,2026-07-28,P0943,Legal,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00338,2026-07-28,P1005,Consulting,Drafting,1,answered,,P0306,False
+Q00339,2026-07-28,P1081,Operations,Summarising,1,answered,,,False
+Q00340,2026-07-28,P1081,Operations,Summarising,1,escalated,,,True
+Q00341,2026-07-28,P1104,Consulting,Drafting,3,pointed to library,LIB-01,P0306,False
+Q00342,2026-07-29,P0004,Operations,Analysis,3,answered,,,False
+Q00343,2026-07-29,P0071,Operations,Research,1,pointed to library,LIB-03,,False
+Q00344,2026-07-29,P0104,Operations,Rules and allowed use,2,answered,,,True
+Q00345,2026-07-29,P0229,Operations,Summarising,1,answered,,,True
+Q00346,2026-07-29,P0452,Finance,Formatting,1,pointed to library,LIB-04,,False
+Q00347,2026-07-29,P0466,Operations,Drafting,2,pointed to library,LIB-15,,False
+Q00348,2026-07-29,P0536,People,Drafting,1,escalated,,,False
+Q00349,2026-07-29,P0556,Finance,Summarising,3,pointed to library,LIB-14,,False
+Q00350,2026-07-29,P0668,Finance,Research,1,pointed to library,LIB-03,,False
+Q00351,2026-07-29,P0682,Technology,Drafting,2,answered,,,False
+Q00352,2026-07-29,P0735,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00353,2026-07-29,P0989,Operations,Formatting,1,pointed to library,LIB-06,,False
+Q00354,2026-07-29,P1094,Finance,Rules and allowed use,2,escalated,,,False
+Q00355,2026-07-29,P1137,Operations,Drafting,2,escalated,,,False
+Q00356,2026-07-30,P0856,Operations,Drafting,1,pointed to library,LIB-15,,False
+Q00357,2026-07-30,P1078,Technology,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00358,2026-07-30,P1176,Technology,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00359,2026-07-31,P0022,Legal,Rules and allowed use,1,answered,,,True
+Q00360,2026-07-31,P0133,Finance,Analysis,1,answered,,,False
+Q00361,2026-07-31,P0343,Operations,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00362,2026-07-31,P0724,Finance,Analysis,2,pointed to library,LIB-18,,False
+Q00363,2026-07-31,P0891,Consulting,Drafting,1,pointed to library,LIB-01,,False
+Q00364,2026-07-31,P1178,Finance,Research,3,answered,,,False
+Q00365,2026-08-03,P0379,Finance,Analysis,1,answered,,,False
+Q00366,2026-08-03,P0401,Operations,Formatting,1,pointed to library,LIB-06,P0177,False
+Q00367,2026-08-03,P0992,Operations,Coding,1,pointed to library,LIB-10,P0177,False
+Q00368,2026-08-03,P1000,Consulting,Research,2,pointed to library,LIB-03,P0306,False
+Q00369,2026-08-03,P1010,Consulting,Drafting,1,escalated,,,False
+Q00370,2026-08-03,P1111,Operations,Formatting,1,pointed to library,LIB-04,P0177,True
+Q00371,2026-08-03,P1146,People,Rules and allowed use,2,answered,,,True
+Q00372,2026-08-03,P1182,Consulting,Drafting,1,escalated,,,False
+Q00373,2026-08-04,P0002,People,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00374,2026-08-04,P0016,Operations,Research,1,pointed to library,LIB-03,P0177,False
+Q00375,2026-08-04,P0203,Technology,Coding,1,pointed to library,LIB-10,P0253,False
+Q00376,2026-08-04,P0269,Operations,Rules and allowed use,2,pointed to library,LIB-20,P0177,False
+Q00377,2026-08-04,P0317,Technology,Drafting,1,pointed to library,LIB-12,P0280,False
+Q00378,2026-08-04,P0529,Finance,Rules and allowed use,1,answered,,,False
+Q00379,2026-08-04,P0607,Technology,Research,1,pointed to library,LIB-03,P0253,False
+Q00380,2026-08-04,P0886,Operations,Summarising,3,escalated,,,False
+Q00381,2026-08-04,P0960,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00382,2026-08-05,P0062,Operations,Rules and allowed use,1,answered,,P0177,True
+Q00383,2026-08-05,P0101,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0384,False
+Q00384,2026-08-05,P0188,Legal,Drafting,1,pointed to library,LIB-01,,False
+Q00385,2026-08-05,P0358,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0384,True
+Q00386,2026-08-05,P0449,Technology,Coding,2,escalated,,,False
+Q00387,2026-08-05,P0711,People,Summarising,2,answered,,,False
+Q00388,2026-08-06,P0264,Operations,Formatting,1,pointed to library,LIB-04,P0177,False
+Q00389,2026-08-06,P0453,Consulting,Research,2,pointed to library,LIB-03,P0305,False
+Q00390,2026-08-06,P0526,Operations,Summarising,2,pointed to library,LIB-16,P0177,False
+Q00391,2026-08-06,P1026,People,Drafting,3,answered,,,False
+Q00392,2026-08-06,P1042,Technology,Coding,2,answered,,P0280,False
+Q00393,2026-08-06,P1123,People,Coding,2,pointed to library,LIB-09,,False
+Q00394,2026-08-06,P1176,Technology,Coding,3,answered,,P0280,False
+Q00395,2026-08-07,P0068,Operations,Rules and allowed use,1,new prompt written,,,False
+Q00396,2026-08-07,P0574,Consulting,Analysis,1,answered,,P0306,False
+Q00397,2026-08-07,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00398,2026-08-07,P0809,Technology,Coding,3,answered,,P0253,False
+Q00399,2026-08-07,P0845,Consulting,Summarising,1,pointed to library,LIB-02,P1153,False
+Q00400,2026-08-10,P0022,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00401,2026-08-10,P0541,Technology,Coding,2,answered,,,False
+Q00402,2026-08-10,P0635,Finance,Summarising,1,pointed to library,LIB-14,,False
+Q00403,2026-08-10,P0801,Consulting,Summarising,2,answered,,P1153,False
+Q00404,2026-08-10,P0952,Consulting,Analysis,2,pointed to library,LIB-05,P0384,False
+Q00405,2026-08-10,P1058,Operations,Drafting,1,answered,,P0177,False
+Q00406,2026-08-11,P0064,Consulting,Analysis,2,pointed to library,LIB-05,P0384,False
+Q00407,2026-08-11,P0357,People,Rules and allowed use,1,new prompt written,,,True
+Q00408,2026-08-11,P0559,People,Drafting,3,pointed to library,LIB-22,,False
+Q00409,2026-08-11,P0687,Finance,Formatting,2,pointed to library,LIB-06,,False
+Q00410,2026-08-11,P0813,Operations,Coding,2,pointed to library,LIB-10,P0177,False
+Q00411,2026-08-11,P0987,Operations,Drafting,2,pointed to library,LIB-15,P0177,False
+Q00412,2026-08-11,P1027,Technology,Research,1,pointed to library,LIB-03,P0280,False
+Q00413,2026-08-11,P1045,Consulting,Formatting,1,pointed to library,LIB-06,P0306,False
+Q00414,2026-08-11,P1078,Technology,Rules and allowed use,3,escalated,,,True
+Q00415,2026-08-12,P0130,Finance,Rules and allowed use,1,answered,,,True
+Q00416,2026-08-12,P0256,Consulting,Analysis,1,pointed to library,LIB-05,P0305,False
+Q00417,2026-08-12,P0410,Finance,Formatting,2,escalated,,,False
+Q00418,2026-08-12,P0719,People,Research,2,pointed to library,LIB-03,,False
+Q00419,2026-08-12,P0803,Legal,Rules and allowed use,3,answered,,,False
+Q00420,2026-08-13,P0055,Operations,Drafting,3,answered,,,False
+Q00421,2026-08-13,P0137,Consulting,Research,2,pointed to library,LIB-03,P0306,False
+Q00422,2026-08-13,P0198,Finance,Rules and allowed use,1,new prompt written,,,False
+Q00423,2026-08-13,P0199,Operations,Analysis,1,new prompt written,LIB-21,,False
+Q00424,2026-08-13,P0235,Operations,Formatting,2,pointed to library,LIB-06,P0177,False
+Q00425,2026-08-13,P0388,Technology,Coding,2,pointed to library,LIB-11,,False
+Q00426,2026-08-13,P0794,People,Research,2,answered,,,False
+Q00427,2026-08-13,P1067,Finance,Coding,1,new prompt written,,,False
+Q00428,2026-08-14,P0075,People,Drafting,2,pointed to library,LIB-22,,False
+Q00429,2026-08-14,P0080,People,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00430,2026-08-14,P0606,Consulting,Rules and allowed use,2,answered,,P0306,False
+Q00431,2026-08-14,P0783,Finance,Formatting,2,new prompt written,LIB-19,,False
+Q00432,2026-08-17,P0193,Consulting,Summarising,3,answered,,,False
+Q00433,2026-08-17,P0803,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00434,2026-08-17,P0820,Consulting,Drafting,1,answered,,P0306,False
+Q00435,2026-08-17,P0911,Technology,Coding,2,pointed to library,LIB-11,P0280,False
+Q00436,2026-08-17,P0971,Technology,Summarising,3,pointed to library,LIB-14,P0280,False
+Q00437,2026-08-18,P0215,Consulting,Coding,1,pointed to library,LIB-09,P0306,False
+Q00438,2026-08-18,P0573,Consulting,Research,1,escalated,,,False
+Q00439,2026-08-18,P0712,Finance,Summarising,2,pointed to library,LIB-16,,False
+Q00440,2026-08-18,P0771,Consulting,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00441,2026-08-18,P0936,Operations,Formatting,2,answered,,P0177,False
+Q00442,2026-08-18,P0972,Consulting,Drafting,2,pointed to library,LIB-08,,False
+Q00443,2026-08-18,P1096,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00444,2026-08-19,P0055,Operations,Analysis,1,escalated,,,False
+Q00445,2026-08-19,P0211,Consulting,Research,1,answered,,P0306,False
+Q00446,2026-08-19,P0374,Operations,Research,2,escalated,,,False
+Q00447,2026-08-19,P0445,Consulting,Summarising,1,new prompt written,LIB-23,,False
+Q00448,2026-08-19,P0453,Consulting,Summarising,1,pointed to library,LIB-02,,False
+Q00449,2026-08-19,P0472,Consulting,Drafting,2,escalated,,,False
+Q00450,2026-08-19,P0522,Technology,Coding,2,pointed to library,LIB-10,P0280,False
+Q00451,2026-08-19,P0593,Finance,Summarising,1,pointed to library,LIB-16,,False
+Q00452,2026-08-19,P0780,People,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00453,2026-08-19,P1008,Operations,Analysis,1,pointed to library,LIB-18,P0177,False
+Q00454,2026-08-20,P0086,People,Summarising,1,pointed to library,LIB-16,,False
+Q00455,2026-08-20,P0210,Technology,Analysis,1,pointed to library,LIB-13,P0253,False
+Q00456,2026-08-20,P0287,People,Formatting,2,answered,,,False
+Q00457,2026-08-20,P0401,Operations,Formatting,2,answered,,P0177,True
+Q00458,2026-08-20,P0443,Operations,Formatting,1,pointed to library,LIB-06,P0177,False
+Q00459,2026-08-20,P0466,Operations,Analysis,3,pointed to library,LIB-13,,False
+Q00460,2026-08-20,P0572,Technology,Rules and allowed use,2,pointed to library,LIB-20,P0253,False
+Q00461,2026-08-20,P0831,Consulting,Research,1,answered,,,False
+Q00462,2026-08-20,P0837,People,Summarising,3,answered,,,False
+Q00463,2026-08-20,P0932,Finance,Analysis,1,pointed to library,LIB-18,,False
+Q00464,2026-08-20,P1055,Consulting,Summarising,2,pointed to library,LIB-02,,False
+Q00465,2026-08-20,P1092,Legal,Analysis,2,answered,,,False
+Q00466,2026-08-21,P0077,People,Formatting,1,pointed to library,LIB-04,,False
+Q00467,2026-08-21,P0134,Technology,Coding,1,answered,,P0253,False
+Q00468,2026-08-21,P0462,Consulting,Analysis,2,pointed to library,LIB-05,,False
+Q00469,2026-08-21,P0692,Finance,Rules and allowed use,1,answered,,,False
+Q00470,2026-08-21,P0789,Operations,Drafting,2,pointed to library,LIB-15,,False
+Q00471,2026-08-21,P1135,Operations,Drafting,1,pointed to library,LIB-15,P0177,False
+Q00472,2026-08-24,P0002,People,Rules and allowed use,3,pointed to library,LIB-20,,True
+Q00473,2026-08-24,P0005,Operations,Formatting,1,pointed to library,LIB-06,P0177,False
+Q00474,2026-08-24,P0292,Technology,Coding,2,escalated,,,False
+Q00475,2026-08-24,P0434,Consulting,Analysis,1,pointed to library,LIB-05,P0384,False
+Q00476,2026-08-24,P0780,People,Rules and allowed use,2,answered,,,True
+Q00477,2026-08-24,P0892,Consulting,Drafting,2,answered,,P0384,False
+Q00478,2026-08-24,P0953,People,Formatting,2,pointed to library,LIB-06,,False
+Q00479,2026-08-24,P1001,Technology,Analysis,1,escalated,,,False
+Q00480,2026-08-25,P0112,Operations,Analysis,2,answered,,,False
+Q00481,2026-08-25,P0453,Consulting,Analysis,1,pointed to library,LIB-05,,False
+Q00482,2026-08-25,P0904,Operations,Rules and allowed use,2,answered,,,False
+Q00483,2026-08-25,P1078,Technology,Rules and allowed use,1,pointed to library,LIB-07,P0280,True
+Q00484,2026-08-25,P1166,Finance,Summarising,3,answered,,,False
+Q00485,2026-08-26,P0217,Operations,Drafting,2,pointed to library,LIB-15,,False
+Q00486,2026-08-26,P0340,Legal,Rules and allowed use,3,pointed to library,LIB-20,,False
+Q00487,2026-08-26,P0343,Operations,Drafting,2,pointed to library,LIB-15,,False
+Q00488,2026-08-26,P0826,Technology,Summarising,2,pointed to library,LIB-14,,False
+Q00489,2026-08-26,P0938,Technology,Rules and allowed use,3,pointed to library,LIB-20,,False
+Q00490,2026-08-27,P0080,People,Rules and allowed use,1,escalated,,,True
+Q00491,2026-08-27,P0339,Operations,Coding,3,answered,,P0177,False
+Q00492,2026-08-27,P0399,Consulting,Drafting,1,escalated,,,False
+Q00493,2026-08-27,P0479,Operations,Formatting,2,answered,,P0177,False
+Q00494,2026-08-27,P0679,Operations,Rules and allowed use,1,answered,,P0177,True
+Q00495,2026-08-27,P0688,Consulting,Analysis,2,escalated,,,False
+Q00496,2026-08-27,P0767,Operations,Research,3,escalated,,,False
+Q00497,2026-08-27,P0785,Operations,Drafting,1,answered,,P0177,False
+Q00498,2026-08-27,P0802,Technology,Coding,2,pointed to library,LIB-11,P0253,False
+Q00499,2026-08-27,P1030,Technology,Coding,1,pointed to library,LIB-10,,False
+Q00500,2026-08-28,P0209,Legal,Summarising,1,answered,,,False
+Q00501,2026-08-28,P0398,Consulting,Drafting,2,pointed to library,LIB-08,P0384,False
+Q00502,2026-08-28,P0422,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00503,2026-08-28,P1135,Operations,Drafting,1,pointed to library,LIB-15,,True
+Q00504,2026-08-31,P0008,Operations,Formatting,1,pointed to library,LIB-06,P0177,False
+Q00505,2026-08-31,P0200,Operations,Research,1,pointed to library,LIB-03,,False
+Q00506,2026-08-31,P0340,Legal,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00507,2026-08-31,P0469,Consulting,Research,1,escalated,,,False
+Q00508,2026-08-31,P0735,Legal,Rules and allowed use,1,answered,,,False
+Q00509,2026-08-31,P0753,Finance,Coding,2,answered,,,False
+Q00510,2026-09-01,P0130,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00511,2026-09-01,P0350,Consulting,Analysis,3,answered,,,False
+Q00512,2026-09-01,P0490,Operations,Drafting,2,pointed to library,LIB-17,,False
+Q00513,2026-09-01,P0640,Consulting,Rules and allowed use,2,pointed to library,LIB-07,P0306,False
+Q00514,2026-09-01,P0794,People,Drafting,2,pointed to library,LIB-22,,False
+Q00515,2026-09-01,P0823,Operations,Formatting,2,pointed to library,LIB-04,P0177,False
+Q00516,2026-09-01,P0941,People,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00517,2026-09-01,P1185,Finance,Formatting,1,pointed to library,LIB-19,,False
+Q00518,2026-09-02,P0133,Finance,Analysis,1,answered,,,False
+Q00519,2026-09-02,P0290,People,Drafting,3,escalated,,,False
+Q00520,2026-09-02,P0398,Consulting,Drafting,1,pointed to library,LIB-01,P0384,True
+Q00521,2026-09-02,P0614,Finance,Drafting,2,new prompt written,,,False
+Q00522,2026-09-02,P0771,Consulting,Rules and allowed use,1,pointed to library,LIB-07,P1153,True
+Q00523,2026-09-02,P0867,People,Analysis,2,pointed to library,LIB-18,,False
+Q00524,2026-09-03,P0198,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
+Q00525,2026-09-03,P0247,Consulting,Analysis,2,answered,,P0384,False
+Q00526,2026-09-03,P0316,Consulting,Drafting,1,pointed to library,LIB-01,P1153,False
+Q00527,2026-09-03,P0422,Finance,Rules and allowed use,1,escalated,,,True
+Q00528,2026-09-03,P0499,Operations,Drafting,1,pointed to library,LIB-15,,False
+Q00529,2026-09-03,P0918,Technology,Coding,2,answered,,P0253,False
+Q00530,2026-09-03,P1105,Technology,Coding,2,pointed to library,LIB-10,P0253,False
+Q00531,2026-09-04,P0264,Operations,Rules and allowed use,3,pointed to library,LIB-20,,False
+Q00532,2026-09-04,P0270,Consulting,Summarising,3,answered,,,False
+Q00533,2026-09-04,P0531,Technology,Coding,2,pointed to library,LIB-10,P0253,False
+Q00534,2026-09-04,P0577,Finance,Drafting,2,pointed to library,LIB-17,,False
+Q00535,2026-09-04,P0659,Technology,Rules and allowed use,1,pointed to library,LIB-20,P0280,False
+Q00536,2026-09-04,P0960,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00537,2026-09-04,P1115,Consulting,Summarising,1,answered,,P0305,False
+Q00538,2026-09-07,P0063,Consulting,Summarising,2,pointed to library,LIB-02,P0306,False
+Q00539,2026-09-07,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-07,P0177,True
+Q00540,2026-09-07,P0850,Legal,Drafting,1,answered,,,False
+Q00541,2026-09-07,P0892,Consulting,Summarising,2,answered,,,False
+Q00542,2026-09-07,P1035,Operations,Coding,1,pointed to library,LIB-10,P0177,False
+Q00543,2026-09-07,P1049,Legal,Drafting,1,pointed to library,LIB-22,,False
+Q00544,2026-09-08,P0005,Operations,Research,3,escalated,,,False
+Q00545,2026-09-08,P0300,Finance,Research,1,answered,,,False
+Q00546,2026-09-08,P0320,Finance,Summarising,1,escalated,,,False
+Q00547,2026-09-08,P0326,Technology,Formatting,3,escalated,,,False
+Q00548,2026-09-08,P0381,Operations,Drafting,2,pointed to library,LIB-17,,False
+Q00549,2026-09-08,P0492,Consulting,Research,3,answered,,P0384,False
+Q00550,2026-09-08,P0637,Finance,Rules and allowed use,2,escalated,,,False
+Q00551,2026-09-08,P0820,Consulting,Drafting,2,escalated,,,True
+Q00552,2026-09-08,P0928,Technology,Coding,2,pointed to library,LIB-11,P0253,False
+Q00553,2026-09-08,P1057,Consulting,Summarising,1,pointed to library,LIB-02,P1153,False
+Q00554,2026-09-09,P0064,Consulting,Drafting,2,pointed to library,LIB-08,P0305,False
+Q00555,2026-09-09,P0110,Consulting,Analysis,3,pointed to library,LIB-05,P0305,False
+Q00556,2026-09-09,P0171,Consulting,Analysis,2,pointed to library,LIB-05,P0384,False
+Q00557,2026-09-09,P0196,Technology,Coding,1,answered,,P0280,False
+Q00558,2026-09-09,P0616,Consulting,Summarising,1,pointed to library,LIB-02,P0305,False
+Q00559,2026-09-09,P0711,People,Analysis,2,pointed to library,LIB-13,,False
+Q00560,2026-09-09,P0792,Technology,Formatting,2,pointed to library,LIB-19,,False
+Q00561,2026-09-09,P0915,Consulting,Analysis,3,pointed to library,LIB-05,,False
+Q00562,2026-09-09,P0938,Technology,Analysis,1,pointed to library,LIB-13,,False
+Q00563,2026-09-09,P0941,People,Rules and allowed use,2,answered,,,True
+Q00564,2026-09-09,P1179,Legal,Rules and allowed use,2,escalated,,,False
+Q00565,2026-09-09,P1187,Consulting,Drafting,3,escalated,,,False
+Q00566,2026-09-10,P0540,Technology,Analysis,2,pointed to library,LIB-13,,False
+Q00567,2026-09-10,P0621,Technology,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00568,2026-09-10,P0940,Consulting,Formatting,2,pointed to library,LIB-04,P0306,False
+Q00569,2026-09-10,P1093,Technology,Formatting,2,escalated,,,False
+Q00570,2026-09-10,P1159,Legal,Drafting,1,pointed to library,LIB-22,,False
+Q00571,2026-09-11,P0072,Consulting,Rules and allowed use,1,answered,,P0384,False
+Q00572,2026-09-11,P0109,Operations,Research,2,pointed to library,LIB-03,P0177,False
+Q00573,2026-09-11,P0454,Legal,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00574,2026-09-11,P0459,People,Summarising,1,pointed to library,LIB-23,,False
+Q00575,2026-09-11,P0552,Consulting,Analysis,1,answered,,P1153,False
+Q00576,2026-09-11,P0555,Technology,Summarising,2,pointed to library,LIB-14,P0280,False
+Q00577,2026-09-11,P0636,Finance,Rules and allowed use,1,escalated,,,False
+Q00578,2026-09-11,P0822,Consulting,Summarising,2,answered,,P1153,False
+Q00579,2026-09-11,P1107,Technology,Analysis,1,answered,,P0253,False
+Q00580,2026-09-14,P0018,Operations,Drafting,2,pointed to library,LIB-17,P0177,False
+Q00581,2026-09-14,P0041,Operations,Drafting,1,answered,,P0177,False
+Q00582,2026-09-14,P0572,Technology,Rules and allowed use,1,pointed to library,LIB-07,P0253,True
+Q00583,2026-09-14,P0971,Technology,Summarising,2,answered,,P0280,True
+Q00584,2026-09-14,P0995,Technology,Summarising,2,pointed to library,LIB-14,P0280,False
+Q00585,2026-09-14,P1105,Technology,Analysis,3,pointed to library,LIB-13,,False
+Q00586,2026-09-14,P1135,Operations,Drafting,1,pointed to library,LIB-15,P0177,True
+Q00587,2026-09-15,P0481,Technology,Coding,3,new prompt written,,,False
+Q00588,2026-09-15,P0483,Technology,Coding,1,pointed to library,LIB-10,,False
+Q00589,2026-09-15,P0529,Finance,Rules and allowed use,3,answered,,,False
+Q00590,2026-09-15,P0719,People,Drafting,2,answered,,,False
+Q00591,2026-09-15,P0812,Consulting,Research,3,pointed to library,LIB-03,P1153,False
+Q00592,2026-09-15,P0904,Operations,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00593,2026-09-16,P0159,Technology,Coding,2,answered,,,False
+Q00594,2026-09-16,P0314,Technology,Coding,1,answered,,P0253,False
+Q00595,2026-09-16,P0435,Finance,Analysis,1,pointed to library,LIB-18,,False
+Q00596,2026-09-16,P0440,Finance,Formatting,1,pointed to library,LIB-19,,False
+Q00597,2026-09-16,P0472,Consulting,Research,1,pointed to library,LIB-03,P1153,False
+Q00598,2026-09-16,P0581,Finance,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00599,2026-09-16,P1085,Finance,Summarising,1,escalated,,,False
+Q00600,2026-09-16,P1185,Finance,Research,1,pointed to library,LIB-03,,False
+Q00601,2026-09-17,P0069,Legal,Summarising,1,pointed to library,LIB-02,,False
+Q00602,2026-09-17,P0275,Operations,Formatting,2,pointed to library,LIB-06,P0177,False
+Q00603,2026-09-17,P0316,Consulting,Analysis,3,escalated,,,False
+Q00604,2026-09-17,P0394,Technology,Summarising,2,answered,,,False
+Q00605,2026-09-17,P0820,Consulting,Coding,1,escalated,,,False
+Q00606,2026-09-18,P0219,Technology,Analysis,1,new prompt written,,,False
+Q00607,2026-09-18,P0618,Technology,Drafting,3,answered,,P0280,False
+Q00608,2026-09-18,P0692,Finance,Rules and allowed use,2,pointed to library,LIB-07,,True
+Q00609,2026-09-18,P0878,Technology,Research,2,new prompt written,,,False
+Q00610,2026-09-18,P1182,Consulting,Summarising,2,pointed to library,LIB-02,P0305,False
+Q00611,2026-09-21,P0258,Operations,Drafting,1,pointed to library,LIB-15,P0177,False
+Q00612,2026-09-21,P0330,People,Research,1,new prompt written,,,False
+Q00613,2026-09-21,P0628,People,Drafting,2,pointed to library,LIB-22,,False
+Q00614,2026-09-21,P0974,Operations,Analysis,1,pointed to library,LIB-05,P0177,False
+Q00615,2026-09-21,P1047,Technology,Coding,2,escalated,,,False
+Q00616,2026-09-21,P1068,Technology,Formatting,1,pointed to library,LIB-19,P0253,False
+Q00617,2026-09-21,P1078,Technology,Rules and allowed use,1,answered,,P0280,True
+Q00618,2026-09-22,P0111,Finance,Analysis,1,escalated,,,False
+Q00619,2026-09-22,P0129,Finance,Analysis,2,escalated,,,False
+Q00620,2026-09-22,P0168,Finance,Analysis,2,escalated,,,False
+Q00621,2026-09-22,P0521,Consulting,Drafting,1,pointed to library,LIB-08,,False
+Q00622,2026-09-22,P1101,Operations,Formatting,3,escalated,,,False
+Q00623,2026-09-23,P0142,People,Analysis,2,pointed to library,LIB-18,,False
+Q00624,2026-09-23,P0342,Finance,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00625,2026-09-23,P0361,Consulting,Analysis,2,escalated,,,False
+Q00626,2026-09-23,P0440,Finance,Drafting,2,pointed to library,LIB-08,,False
+Q00627,2026-09-23,P0904,Operations,Rules and allowed use,2,pointed to library,LIB-07,,True
+Q00628,2026-09-24,P0154,Consulting,Research,1,pointed to library,LIB-03,P0384,False
+Q00629,2026-09-24,P0297,Consulting,Analysis,1,answered,,P0305,False
+Q00630,2026-09-24,P0771,Consulting,Rules and allowed use,1,answered,,,True
+Q00631,2026-09-25,P0051,People,Drafting,2,pointed to library,LIB-22,,False
+Q00632,2026-09-25,P0098,People,Summarising,1,pointed to library,LIB-23,,False
+Q00633,2026-09-25,P0198,Finance,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00634,2026-09-25,P0243,Operations,Analysis,1,pointed to library,LIB-21,,False
+Q00635,2026-09-25,P0323,Finance,Formatting,1,pointed to library,LIB-19,,False
+Q00636,2026-09-25,P0338,Finance,Analysis,1,pointed to library,LIB-18,,False
+Q00637,2026-09-25,P0545,People,Analysis,1,answered,,,False
+Q00638,2026-09-25,P0795,Operations,Research,1,pointed to library,LIB-03,,False
+Q00639,2026-09-28,P0767,Operations,Drafting,1,answered,,P0177,False
+Q00640,2026-09-28,P1003,Finance,Formatting,2,pointed to library,LIB-19,,False
+Q00641,2026-09-29,P0102,Operations,Formatting,1,new prompt written,,,False
+Q00642,2026-09-29,P0448,Finance,Formatting,2,pointed to library,LIB-19,,False
+Q00643,2026-09-29,P0596,Operations,Analysis,2,pointed to library,LIB-21,P0177,False
+Q00644,2026-09-29,P0677,People,Drafting,3,escalated,,,False
+Q00645,2026-09-29,P0792,Technology,Coding,2,pointed to library,LIB-09,,False
+Q00646,2026-09-29,P0816,Consulting,Drafting,3,answered,,,False
+Q00647,2026-09-29,P0923,Consulting,Drafting,2,answered,,,False
+Q00648,2026-09-30,P0186,Technology,Research,2,pointed to library,LIB-03,P0253,False
+Q00649,2026-09-30,P0196,Technology,Drafting,2,pointed to library,LIB-15,,False
+Q00650,2026-09-30,P0198,Finance,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00651,2026-09-30,P0293,Consulting,Drafting,2,answered,,P1153,False
+Q00652,2026-09-30,P0393,Technology,Research,2,new prompt written,,,False
+Q00653,2026-09-30,P0442,People,Summarising,2,escalated,,,False
+Q00654,2026-09-30,P1050,Finance,Analysis,3,answered,,,False
+Q00655,2026-09-30,P1078,Technology,Rules and allowed use,3,answered,,P0280,True
+Q00656,2026-09-30,P1128,People,Formatting,3,escalated,,,False
+Q00657,2026-10-01,P0359,Consulting,Formatting,1,pointed to library,LIB-04,P0306,False
+Q00658,2026-10-01,P0501,Operations,Research,1,pointed to library,LIB-03,,False
+Q00659,2026-10-01,P0892,Consulting,Analysis,1,escalated,,,False
+Q00660,2026-10-01,P0941,People,Rules and allowed use,1,pointed to library,LIB-07,,True
+Q00661,2026-10-02,P0156,Legal,Analysis,3,escalated,,,False
+Q00662,2026-10-02,P0193,Consulting,Drafting,1,new prompt written,,,False
+Q00663,2026-10-02,P0249,Technology,Research,1,answered,,,False
+Q00664,2026-10-02,P0734,People,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00665,2026-10-02,P0753,Finance,Drafting,3,escalated,,,False
+Q00666,2026-10-02,P0871,People,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00667,2026-10-02,P1069,Finance,Rules and allowed use,2,answered,,,False
+Q00668,2026-10-05,P0588,Operations,Analysis,1,answered,,P0177,False
+Q00669,2026-10-05,P0693,Operations,Rules and allowed use,1,answered,,P0177,False
+Q00670,2026-10-05,P0724,Finance,Rules and allowed use,2,answered,,,False
+Q00671,2026-10-05,P0742,Technology,Coding,2,pointed to library,LIB-11,P0280,False
+Q00672,2026-10-06,P0212,Legal,Rules and allowed use,3,answered,,,False
+Q00673,2026-10-06,P0553,Technology,Analysis,1,answered,,P0280,False
+Q00674,2026-10-06,P0575,Operations,Formatting,2,pointed to library,LIB-19,P0177,False
+Q00675,2026-10-06,P0679,Operations,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00676,2026-10-06,P1083,Finance,Formatting,3,answered,,,False
+Q00677,2026-10-07,P0002,People,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00678,2026-10-07,P0071,Operations,Analysis,2,escalated,,,False
+Q00679,2026-10-07,P0088,Legal,Formatting,3,pointed to library,LIB-19,,False
+Q00680,2026-10-07,P0172,Operations,Coding,2,pointed to library,LIB-11,,False
+Q00681,2026-10-07,P0323,Finance,Formatting,2,pointed to library,LIB-19,,True
+Q00682,2026-10-07,P0777,Operations,Drafting,2,pointed to library,LIB-17,P0177,False
+Q00683,2026-10-07,P1011,People,Research,1,pointed to library,LIB-03,,False
+Q00684,2026-10-07,P1173,Technology,Analysis,2,pointed to library,LIB-13,P0280,False
+Q00685,2026-10-08,P0073,Consulting,Summarising,3,pointed to library,LIB-02,P1153,False
+Q00686,2026-10-08,P0218,Technology,Coding,2,escalated,,,False
+Q00687,2026-10-08,P0418,Finance,Formatting,2,pointed to library,LIB-19,,False
+Q00688,2026-10-08,P0991,Operations,Coding,2,pointed to library,LIB-09,,False
+Q00689,2026-10-08,P1113,Technology,Summarising,1,pointed to library,LIB-23,P0253,False
+Q00690,2026-10-09,P0080,People,Summarising,1,pointed to library,LIB-23,,False
+Q00691,2026-10-09,P0141,Consulting,Research,1,answered,,P0384,False
+Q00692,2026-10-09,P0314,Technology,Summarising,2,pointed to library,LIB-02,P0253,False
+Q00693,2026-10-09,P0535,People,Drafting,1,answered,,,False
+Q00694,2026-10-09,P1145,Operations,Drafting,1,answered,,P0177,False
+Q00695,2026-10-12,P0667,Consulting,Summarising,1,answered,,P0306,False
+Q00696,2026-10-12,P0719,People,Drafting,2,pointed to library,LIB-22,,True
+Q00697,2026-10-13,P0499,Operations,Formatting,1,new prompt written,,,False
+Q00698,2026-10-13,P0545,People,Formatting,2,answered,,,False
+Q00699,2026-10-13,P0696,People,Summarising,2,pointed to library,LIB-23,,False
+Q00700,2026-10-13,P0786,Consulting,Analysis,2,pointed to library,LIB-05,P0306,False
+Q00701,2026-10-13,P0831,Consulting,Drafting,1,escalated,,,False
+Q00702,2026-10-13,P1031,Operations,Analysis,2,answered,,P0177,False
+Q00703,2026-10-14,P0049,Operations,Research,1,pointed to library,LIB-03,P0177,False
+Q00704,2026-10-14,P0065,People,Summarising,1,pointed to library,LIB-23,,False
+Q00705,2026-10-14,P0212,Legal,Rules and allowed use,2,pointed to library,LIB-20,,True
+Q00706,2026-10-14,P0305,Consulting,Research,1,escalated,,,False
+Q00707,2026-10-14,P0340,Legal,Rules and allowed use,1,pointed to library,LIB-20,,False
+Q00708,2026-10-14,P0633,Consulting,Summarising,3,answered,,P0306,False
+Q00709,2026-10-14,P0953,People,Summarising,2,pointed to library,LIB-23,,False
+Q00710,2026-10-14,P1024,People,Drafting,1,pointed to library,LIB-22,,False
+Q00711,2026-10-15,P0005,Operations,Coding,3,escalated,,,False
+Q00712,2026-10-15,P0157,Consulting,Formatting,2,answered,,P0305,False
+Q00713,2026-10-15,P0203,Technology,Drafting,3,new prompt written,,,False
+Q00714,2026-10-15,P0232,Finance,Analysis,1,answered,,,False
+Q00715,2026-10-15,P0292,Technology,Coding,2,new prompt written,,,False
+Q00716,2026-10-15,P0556,Finance,Analysis,1,answered,,,False
+Q00717,2026-10-15,P0617,Finance,Analysis,1,pointed to library,LIB-18,,False
+Q00718,2026-10-15,P0781,Finance,Summarising,1,answered,,,False
+Q00719,2026-10-15,P0950,Technology,Analysis,1,escalated,,,False
+Q00720,2026-10-16,P0001,Consulting,Rules and allowed use,3,pointed to library,LIB-07,P0305,False
+Q00721,2026-10-16,P0010,Operations,Research,1,answered,,,False
+Q00722,2026-10-16,P0041,Operations,Formatting,1,answered,,P0177,False
+Q00723,2026-10-16,P0279,Consulting,Analysis,1,pointed to library,LIB-05,,False
+Q00724,2026-10-16,P0329,Consulting,Drafting,2,escalated,,,False
+Q00725,2026-10-16,P0649,Technology,Coding,2,answered,,,False
+Q00726,2026-10-16,P0939,Consulting,Formatting,2,answered,,P0384,False
+Q00727,2026-10-16,P0961,Consulting,Drafting,2,answered,,P0306,False
+Q00728,2026-10-19,P0084,Consulting,Analysis,3,pointed to library,LIB-05,,False
+Q00729,2026-10-19,P0606,Consulting,Drafting,3,answered,,,False
+Q00730,2026-10-19,P0692,Finance,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00731,2026-10-19,P0953,People,Formatting,2,answered,,,False
+Q00732,2026-10-20,P0333,Technology,Formatting,1,pointed to library,LIB-06,P0253,False
+Q00733,2026-10-20,P0636,Finance,Rules and allowed use,3,pointed to library,LIB-07,,False
+Q00734,2026-10-20,P0679,Operations,Rules and allowed use,2,escalated,,,True
+Q00735,2026-10-20,P0898,Technology,Coding,3,pointed to library,LIB-10,P0253,False
+Q00736,2026-10-21,P0842,Consulting,Drafting,1,pointed to library,LIB-08,P0306,False
+Q00737,2026-10-22,P0553,Technology,Coding,1,pointed to library,LIB-11,P0280,False
+Q00738,2026-10-22,P1133,Technology,Coding,1,escalated,,,False
+Q00739,2026-10-23,P0020,People,Research,2,answered,,,False
+Q00740,2026-10-23,P0389,Consulting,Research,3,answered,,,False
+Q00741,2026-10-23,P0545,People,Drafting,1,answered,,,False
+Q00742,2026-10-23,P0611,People,Rules and allowed use,2,pointed to library,LIB-20,,False
+Q00743,2026-10-23,P0788,Technology,Coding,1,new prompt written,,,False
+Q00744,2026-10-23,P1083,Finance,Analysis,3,answered,,,False
+Q00745,2026-10-23,P1100,People,Formatting,2,pointed to library,LIB-04,,False
+Q00746,2026-10-26,P0287,People,Analysis,1,pointed to library,LIB-13,,False
+Q00747,2026-10-26,P0334,Consulting,Research,2,pointed to library,LIB-03,P1153,False
+Q00748,2026-10-26,P0342,Finance,Rules and allowed use,2,pointed to library,LIB-07,,False
+Q00749,2026-10-26,P0415,Consulting,Formatting,1,escalated,,,False
+Q00750,2026-10-26,P0497,Operations,Analysis,2,new prompt written,,,False
+Q00751,2026-10-26,P0679,Operations,Rules and allowed use,3,answered,,,True
+Q00752,2026-10-26,P0800,Consulting,Analysis,1,answered,,P1153,False
+Q00753,2026-10-26,P0882,Finance,Analysis,2,answered,,,False
+Q00754,2026-10-26,P1005,Consulting,Coding,3,escalated,,,False
+Q00755,2026-10-26,P1198,Consulting,Summarising,3,answered,,P0305,False
+Q00756,2026-10-27,P0412,Technology,Coding,2,pointed to library,LIB-11,P0280,False
+Q00757,2026-10-27,P0665,Finance,Analysis,1,pointed to library,LIB-18,,False
+Q00758,2026-10-27,P0915,Consulting,Summarising,3,pointed to library,LIB-02,P0306,False
+Q00759,2026-10-27,P0920,Technology,Coding,2,escalated,,,False
+Q00760,2026-10-28,P0146,Technology,Coding,1,pointed to library,LIB-09,P0253,False
+Q00761,2026-10-28,P0176,Consulting,Coding,2,pointed to library,LIB-09,P0306,False
+Q00762,2026-10-28,P0335,Consulting,Analysis,2,pointed to library,LIB-05,P0306,False
+Q00763,2026-10-28,P0381,Operations,Research,1,escalated,,,False
+Q00764,2026-10-28,P0390,Finance,Summarising,1,answered,,,False
+Q00765,2026-10-28,P0711,People,Coding,1,answered,,,False
+Q00766,2026-10-28,P1021,Operations,Analysis,2,answered,,,False
+Q00767,2026-10-29,P0002,People,Rules and allowed use,1,pointed to library,LIB-20,,True
+Q00768,2026-10-29,P0057,Finance,Analysis,1,escalated,,,False
+Q00769,2026-10-29,P0144,Finance,Formatting,2,pointed to library,LIB-19,,False
+Q00770,2026-10-29,P0671,Technology,Analysis,2,pointed to library,LIB-13,,False
+Q00771,2026-10-29,P0954,People,Rules and allowed use,1,pointed to library,LIB-07,,False
+Q00772,2026-10-29,P0967,Consulting,Drafting,3,escalated,,,False
+Q00773,2026-10-29,P1091,Technology,Coding,2,pointed to library,LIB-09,,False
+Q00774,2026-10-29,P1175,Finance,Analysis,1,pointed to library,LIB-18,,False
+Q00775,2026-10-30,P0286,People,Summarising,2,pointed to library,LIB-23,,False
+Q00776,2026-10-30,P0569,Operations,Formatting,1,pointed to library,LIB-04,P0177,False
+Q00777,2026-10-30,P0661,Operations,Formatting,1,pointed to library,LIB-06,,False
+Q00778,2026-10-30,P0992,Operations,Formatting,2,answered,,P0177,False

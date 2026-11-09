@@ -121,6 +121,8 @@ TEAMS = {
 OPS_ITEM_WEEK = 12
 OPS_CATEGORY = "Summarising"
 OPS_REGULARS = 10  # Operations people who keep asking the Summarising question until LIB-16 exists
+# Share of Rules and allowed use questions kept, by check-in month: high early, low by month 6
+RULES_KEEP_BY_MONTH = {1: 1.0, 2: 0.9, 3: 0.65, 4: 0.5, 5: 0.35, 6: 0.3}
 
 # Library items: (item_id, item_name, category, owner_team, published_week, answer_key_first, spread)
 # spread: list of (team, first_week) where a second team starts running it.
@@ -495,6 +497,13 @@ def build(rng: np.random.Generator) -> dict[str, pd.DataFrame]:
     qdf["difficulty"], qdf["action_taken"] = difficulty, actions
     qdf["linked_item_id"], qdf["answered_by_person_id"] = linked, answered_by
     qdf["team"] = qdf["person_id"].map(team_of)
+    # Rules and allowed use questions fall month on month as people learn what is allowed.
+    # A separate stream (also seeded from 42) thins them, so no other table moves.
+    keep = RULES_KEEP_BY_MONTH
+    thin = np.random.default_rng([SEED, 1]).random(len(qdf))
+    month = qdf["week"].map(month_of)
+    drop = (qdf["category"] == "Rules and allowed use") & (thin >= month.map(keep))
+    qdf = qdf[~drop].reset_index(drop=True)
     qdf["question_id"] = [f"Q{i + 1:05d}" for i in range(len(qdf))]
     # Repeat flag (section 8): same person, same category, within 30 days of their earlier question
     qdf["_d"] = pd.to_datetime(qdf["question_date"])
