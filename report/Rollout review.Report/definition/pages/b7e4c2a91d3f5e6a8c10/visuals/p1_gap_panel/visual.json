@@ -3,9 +3,9 @@
   "name": "p1_gap_panel",
   "position": {
     "x": 16,
-    "y": 400,
+    "y": 392,
     "z": 2000,
-    "height": 282,
+    "height": 290,
     "width": 422,
     "tabOrder": 1100
   },

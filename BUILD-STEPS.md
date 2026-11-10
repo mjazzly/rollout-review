@@ -869,6 +869,49 @@ Unconfirmed this round: `labels.color` on a bar chart series (gap Level, impact 
 | 13 | Two marine columns at 100.0% | The same two columns, labelled "11 of 11" and "12 of 12" |
 | 16 | The table, five columns | The same rows, plus "Runs by other teams" |
 
+## N. Round 9 (10 Nov 2026): tab bar, buttons, labels, figure bands, Notes
+
+Confirmed by the round 8 screenshots: `labels.color` on a bar chart series (the gap's Level and the impact's A little read dark), and the blank-label format strings (page 0 labels In the air only).
+
+| Ask | What changed |
+|---|---|
+| 1. Tab bar | 40 px tall. The names' vertical position: `text.verticalAlignment` middle (unconfirmed). The question now sits beside the title on the title row, so the taller bar costs the body nothing |
+| 2, 3. Month and Team buttons | One row of six: `layout.rowCount` 1 and `layout.columnCount` 6 on the button slicer (unconfirmed). Desktop drew six buttons as two rows of three, 20 px each, too short for text. Month buttons 72 px wide, Team 90 |
+| 2. Opens on Month 6 | The saved filter is Month 6 (`p1_month/visual.json`). The round 8 screenshot shows Month 5 exactly (Consulting Takeoff 165, Finance Waiting to board 121, Legal Ticket held 85, People Ticket held 31, Technology Takeoff 97) with the fifth button lit: a click on a blank button. get.cmd puts the saved state back |
+| 4. Legal, In the air | Too thin: 6.7% and 7.5% are 22 and 25 px of bar; a label needs about 30 ("9.2%" showed in 30 px, "7.5%" did not in 25). Megat to choose: leave it, or show each team's share in its axis name ("Legal · 7.5%") |
+| 5. Page 4 labels | Stacked column charts with a series drew no labels (rounds 7 and 8). The main chart is now a clustered column chart of one series, labelled "11 of 12", coloured by a measure (`Smaller model colour`, the matrix's pattern; unconfirmed on a chart) |
+| 6. Cost labels | Tokens per run are columns now, labelled above in full ("3,744"; display units None, unconfirmed value). As bars Desktop drew them 8 px thick |
+| 7. Figure bands | The title sits 16 px right of the figure's text (17.8 px a character at 24pt, measured); over a table or grid the figure moves in 23 px to line up with the table's text (page 3 recurring and passing, page 5) |
+| 8. Notes | "Read from, by page" dropped. Definitions with the page names in their own column, line for line; thresholds and controls side by side. Heights use 18 px a line: Desktop spaced the one-line paragraphs 17 px apart, not the 15.6 estimated, which is why every box scrolled |
+| Checks | A button row holds its label (36 px a row) and its longest label; every chart's labels are written on unless the page says why; a stacked column chart with a series may not carry labels; a stacked segment holds its label (its width plus 7 px, the plot being the chart less 105 px); the band rule above |
+
+Unconfirmed this round: `pageNavigator text.verticalAlignment`, `advancedSlicerVisual layout.rowCount` and `layout.columnCount`, the tokens chart's display units value 1, and a column fill from a measure. If a screenshot shows one did not take:
+
+- **Tab bar text still low**: on Rollout review, select the tab bar, **Format**, **Visual**, **Style**, **Text**: set the vertical alignment to **Middle** (or the top and bottom padding equal). Save, close, **send.cmd**.
+- **Buttons still in two rows**: on Where people sit, select the Month buttons, **Format**, **Visual**, **Layout**: one row of six. Save, close, **send.cmd**.
+
+### Step 56, round 9
+
+1. Double-click **get.cmd**: it ends with DONE and opens the report on Month 6.
+2. Before clicking anything, send the seven tabs. Then Where people sit with **Check-in** and **Month 4**, and Execution with **Operations**: nine screenshots.
+
+### What each page should read (round 9)
+
+- **Rollout review**: the tiles as before (figures now 24pt). Stage bars: In the air labelled for every team but Legal.
+- **Where people sit** (Source, Month 6): Consulting Takeoff 174, Finance Waiting to board 112, Legal Ticket held 84; gap Finance 111 / 76 / 13; movement Consulting 33 up, 18 down; "0 seats arrived". With Check-in and Month 4: Operations 87 up (CHECK question 6).
+- **Foundation**: as round 8.
+- **Execution** (all teams): as round 8. With Operations: the grid's Summarising row reads 8, 8, then 0 (CHECK question 12).
+- **Refinement**: every column labelled: LIB-09 11 of 11, LIB-13 12 of 12 (marine), LIB-07 11 of 12 ... LIB-21 4 of 7. Tokens: LIB-09 1,854 and 3,744; LIB-13 1,502 and 3,105. Cost index 2.02 and 2.07.
+- **Scale**: as round 8; the 4 lines up with the table's IDs.
+- **Notes**: no scrollbars; every line visible.
+
+### CHECK.md answers that moved on the page
+
+| Q | Was | Now |
+|---|---|---|
+| 13 | Two marine columns, no labels | The same two, labelled "11 of 11" and "12 of 12" |
+| 14 | Cost index 2.02 and 2.07 | Unchanged; the tokens beside it now read in full |
+
 ## Next
 
 - All six pages are written. Next: the CHECK.md match from the screenshots (brief section 8), then Publish to web

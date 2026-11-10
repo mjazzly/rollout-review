@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_repeat_sub",
   "position": {
-    "x": 150,
+    "x": 133,
     "y": 479,
     "z": 3000,
     "height": 18,
-    "width": 488,
+    "width": 505,
     "tabOrder": 1800
   },
   "visual": {

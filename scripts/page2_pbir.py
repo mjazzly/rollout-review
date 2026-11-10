@@ -19,12 +19,12 @@ from __future__ import annotations
 from pbir import (
     AMBER, GREY, INK, INK_SOFT, MARINE, OFF, NO_FRAME, Page, body_top, colour, column, figure_band, filter_in,
     header, lit, panel, proj_column, proj_measure, pt, textbox, value_is,
-    BODY_END, GAP, HEADER_SECOND_H, HEADER_SECOND_Y,
+    BODY_END, GAP, HEADER_TITLE_H, HEADER_TITLE_Y,
 )
 
 PAGE = "c3f8d1e5a7b9c2d4e6f8"
 
-ROW1_Y = HEADER_SECOND_Y + HEADER_SECOND_H + GAP
+ROW1_Y = HEADER_TITLE_Y + HEADER_TITLE_H + GAP
 ROW1_H = 48 + 7 * 27 + 40 + 4      # the title row, the month names and legend, seven bars
 RANK_PANEL = (16, ROW1_Y, 820, ROW1_H)
 MONTH_PANEL = (852, ROW1_Y, 412, ROW1_H)

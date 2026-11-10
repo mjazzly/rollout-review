@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p6_controls_title",
   "position": {
-    "x": 870,
-    "y": 549,
+    "x": 660,
+    "y": 530,
     "z": 3000,
     "height": 20,
-    "width": 382,
-    "tabOrder": 1300
+    "width": 592,
+    "tabOrder": 1100
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Controls, shading and cost",
+                    "value": "Controls, shading, sources and cost",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

@@ -18,14 +18,14 @@ from __future__ import annotations
 from pbir import (
     GREY, INK, INK_SOFT, MARINE, OFF, PALE, NO_FRAME, Page, body_top, colour, column, figure_band, header, lit,
     panel, proj_column, proj_measure, pt, table_height, table_width, textbox,
-    BODY_END, GAP, HEADER_SECOND_H, HEADER_SECOND_Y,
+    BODY_END, GAP, HEADER_TITLE_H, HEADER_TITLE_Y,
 )
 
 PAGE = "f6b2c4d8e1a3f5b7c9d1"
 
 ROW2_H = 6 + 48 + 2 + table_height([1] * 4) + 4   # the figure band, then four prompts
 ROW2_Y = BODY_END - ROW2_H
-ROW1_Y = HEADER_SECOND_Y + HEADER_SECOND_H + GAP
+ROW1_Y = HEADER_TITLE_Y + HEADER_TITLE_H + GAP
 ROW1_H = ROW2_Y - GAP - ROW1_Y
 IMPACT_PANEL = (16, ROW1_Y, 616, ROW1_H)
 AIR_PANEL = (648, ROW1_Y, 616, ROW1_H)
@@ -120,7 +120,7 @@ def build() -> Page:
     pan = "p5_taken_panel"
     p.add(pan, TAKEN_PANEL, panel(), z=2000)
     band = figure_band(p, "p5_taken", pan, x, y, w, "Uses taken up beyond the first team",
-                       "Uses taken up beyond the first team", count="Uses taken up count", longest="4")
+                       "Uses taken up beyond the first team", count="Uses taken up count", longest="4", over_table=True)
     cols = [(proj_column("dim_library_item", "item_id", display="ID"), TAKEN_COLS[0]),
             (proj_column("dim_library_item", "item_name", display="Prompt"), TAKEN_COLS[1]),
             (proj_column("dim_library_item", "owner_team", display="Made by"), TAKEN_COLS[2]),

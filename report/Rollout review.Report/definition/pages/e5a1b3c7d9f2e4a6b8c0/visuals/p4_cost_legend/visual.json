@@ -22,11 +22,11 @@
                     "value": "■",
                     "textStyle": {
                       "fontSize": "9pt",
-                      "color": "#7E8E92"
+                      "color": "#2C5F7C"
                     }
                   },
                   {
-                    "value": " Standard model  ",
+                    "value": " Smaller model  ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -36,11 +36,11 @@
                     "value": "■",
                     "textStyle": {
                       "fontSize": "9pt",
-                      "color": "#2C5F7C"
+                      "color": "#7E8E92"
                     }
                   },
                   {
-                    "value": " Smaller model",
+                    "value": " Standard model",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p2_matched_count",
   "position": {
-    "x": 150,
-    "y": 473,
+    "x": 133,
+    "y": 462,
     "z": 3000,
     "height": 24,
-    "width": 266,
+    "width": 283,
     "tabOrder": 1800
   },
   "visual": {

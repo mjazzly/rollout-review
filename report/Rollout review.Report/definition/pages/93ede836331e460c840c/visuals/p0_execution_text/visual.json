@@ -3,9 +3,9 @@
   "name": "p0_execution_text",
   "position": {
     "x": 344,
-    "y": 116,
+    "y": 128,
     "z": 3000,
-    "height": 61,
+    "height": 60,
     "width": 276,
     "tabOrder": 1300
   },
@@ -21,7 +21,7 @@
                   {
                     "value": "Execution",
                     "textStyle": {
-                      "fontSize": "14pt",
+                      "fontSize": "13pt",
                       "fontWeight": "bold",
                       "color": "#172529"
                     }

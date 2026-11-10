@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p6_definitions_text",
+  "name": "p6_definitions_text1",
   "position": {
-    "x": 28,
-    "y": 146,
+    "x": 148,
+    "y": 158,
     "z": 3000,
-    "height": 377,
-    "width": 1224,
-    "tabOrder": 500
+    "height": 346,
+    "width": 1104,
+    "tabOrder": 600
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Rollout review. ",
+                    "value": "Stage figures. ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "fontWeight": "bold",
@@ -27,22 +27,10 @@
                     }
                   },
                   {
-                    "value": "The four stage figures are defined under their pages; moved up is under Where people sit.",
+                    "value": "Each is defined under its page below; moved up is under Where people sit.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Where people sit",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#2C5F7C"
                     }
                   }
                 ]
@@ -96,7 +84,7 @@
                     }
                   },
                   {
-                    "value": "People seated at both counts whose source checkpoint rose, held or fell since the previous count; seats arrived in the month are counted apart.",
+                    "value": "People seated at both counts whose source checkpoint rose, held or fell since the previous count; seats arrived are counted apart.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -119,18 +107,6 @@
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Foundation",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#2C5F7C"
                     }
                   }
                 ]
@@ -165,7 +141,7 @@
                     }
                   },
                   {
-                    "value": "Questions answered by pointing the asker to a prompt in the library, over all questions logged.",
+                    "value": "Questions answered by pointing the asker to a library prompt, over all questions.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -184,7 +160,7 @@
                     }
                   },
                   {
-                    "value": "Prompts whose answer key was written before they were tested, over all prompts in the library.",
+                    "value": "Prompts whose answer key was written before they were tested, over all prompts.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -214,18 +190,6 @@
               {
                 "textRuns": [
                   {
-                    "value": "Execution",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#2C5F7C"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
                     "value": "First use within two weeks of training. ",
                     "textStyle": {
                       "fontSize": "9pt",
@@ -234,7 +198,7 @@
                     }
                   },
                   {
-                    "value": "Attendees who ran the prompt shown in their session that week or the next, over all attendees. Legal's 0.0% is real: one session, 19 attendees.",
+                    "value": "Attendees who ran the prompt shown that week or the next, over all attendees. Legal's 0.0% is real: one session, 19 attendees.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -253,7 +217,7 @@
                     }
                   },
                   {
-                    "value": "People active again within 30 days of their first active week, over people whose first active week began 30 days or more before the check-in.",
+                    "value": "People active again within 30 days of their first active week, over people who began 30 days or more before the check-in.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -302,18 +266,6 @@
               {
                 "textRuns": [
                   {
-                    "value": "Refinement",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#2C5F7C"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
                     "value": "Tested prompts that pass on a smaller model. ",
                     "textStyle": {
                       "fontSize": "9pt",
@@ -341,7 +293,7 @@
                     }
                   },
                   {
-                    "value": "Median tokens per test run on each model; the cost index is the standard model's median over the smaller model's.",
+                    "value": "Median tokens per test run on each model; the index is the standard model's median over the smaller model's.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -371,18 +323,6 @@
               {
                 "textRuns": [
                   {
-                    "value": "Scale",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#2C5F7C"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
                     "value": "Share of people in the air against the baseline. ",
                     "textStyle": {
                       "fontSize": "9pt",
@@ -391,7 +331,7 @@
                     }
                   },
                   {
-                    "value": "People the sources place at Takeoff or above, as a share of the team, at Month 6 against the team's baseline month; the change in points.",
+                    "value": "People the sources place at Takeoff or above, as a share of the team, Month 6 against its baseline month; the change in points.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

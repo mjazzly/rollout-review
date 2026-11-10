@@ -16,14 +16,14 @@ on Smaller model cases share); the retired chart is wide enough for its month na
 from __future__ import annotations
 
 from pbir import (
-    GREY, INK, INK_SOFT, MARINE, OFF, NO_FRAME, Page, colour, column, filter_in, header, lit, panel,
+    GREY, INK, INK_SOFT, MARINE, OFF, NO_FRAME, Page, colour, column, filter_in, header, lit, measure_colour, panel,
     proj_column, proj_measure, pt, table_height, table_width, textbox, value_is, wrapped_lines,
-    BODY_END, GAP, HEADER_SECOND_H, HEADER_SECOND_Y, TEXT_INSET, body_top,
+    BODY_END, GAP, HEADER_TITLE_H, HEADER_TITLE_Y, TEXT_INSET, body_top,
 )
 
 PAGE = "e5a1b3c7d9f2e4a6b8c0"
 
-ROW1_Y = HEADER_SECOND_Y + HEADER_SECOND_H + GAP
+ROW1_Y = HEADER_TITLE_Y + HEADER_TITLE_H + GAP
 ROW2_H = 46 + 150 + 4               # a subtitle row, then charts at Desktop's smallest bar chart (150)
 ROW2_Y = BODY_END - ROW2_H
 ROW1_H = ROW2_Y - GAP - ROW1_Y
@@ -38,7 +38,7 @@ INDEX_END = 2.5                     # the highest cost index is 2.07 (LIB-13)
 RETIRED_CHART_W = 380              # 60 px a month: "Month 6" stays level (48 px slanted, round 7)
 RETIRED_COLS = (56, 170)            # prompt ID, what happened
 PASSES = (("Passes", MARINE), ("Does not pass", GREY))
-TIERS = (("standard", "Standard model", GREY), ("smaller", "Smaller model", MARINE))
+TIERS = (("smaller", "Smaller model", MARINE), ("standard", "Standard model", GREY))   # Desktop's order: a to z
 
 
 def heading(s: str) -> dict:
@@ -61,18 +61,21 @@ def axis(end: float) -> dict:
 
 
 def ranked_live() -> dict:
+    """Round 9: a clustered column chart, one series, coloured by a measure (marine passes, grey not):
+    the stacked column chart with a series drew no labels in rounds 7 and 8; clustered column
+    charts drew theirs on pages 2 and 3."""
     m = "Smaller model cases share"
     return {
-        "visualType": "columnChart",
+        "visualType": "clusteredColumnChart",
         "query": {"queryState": {
             "Category": {"projections": [proj_column("dim_library_item", "item_id", active=True)]},
-            "Series": {"projections": [proj_column("dim_library_item", "smaller_model_result")]},
             "Y": {"projections": [proj_measure(m)]}},
             "sortDefinition": {"sort": [{"field": proj_measure(m)["field"], "direction": "Descending"}],
                                "isDefaultSort": False}},
         "objects": {
-            "dataPoint": [{"properties": {"fill": colour(c)},
-                           "selector": value_is("dim_library_item", "smaller_model_result", v)} for v, c in PASSES],
+            "dataPoint": [{"properties": {"fill": measure_colour("Smaller model colour")},
+                           "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}],
+                                        "metadata": f"_Measures.{m}"}}],
             "labels": [{"properties": {"show": lit("true")}}],
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
@@ -88,8 +91,10 @@ def passing_only(name: str) -> dict:
 
 
 def tokens_chart() -> dict:
+    """Round 9: columns, labelled above in full ("1,854"): as bars, two prompts drew 8 px bars whose
+    labels touched the bar below."""
     return {
-        "visualType": "clusteredBarChart",
+        "visualType": "clusteredColumnChart",
         "query": {"queryState": {
             "Category": {"projections": [proj_column("dim_library_item", "item_id", active=True)]},
             "Series": {"projections": [proj_column("fact_test_run", "model_tier")]},
@@ -99,7 +104,7 @@ def tokens_chart() -> dict:
         "objects": {
             "dataPoint": [{"properties": {"fill": colour(c)}, "selector": value_is("fact_test_run", "model_tier", v)}
                           for v, _, c in TIERS],
-            "labels": [{"properties": {"show": lit("true")}}],
+            "labels": [{"properties": {"show": lit("true"), "labelDisplayUnits": lit("1D")}}],
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
             "valueAxis": [{"properties": axis(TOKENS_END)}],
@@ -193,7 +198,8 @@ def build() -> Page:
     p.add("p4_index_sub", (ix, y + 26, x + w - 12 - ix, 18), subtitle("Cost index, standard over smaller"),
           on=pan, group="t", kind="subtitle")
     p.add("p4_tokens_chart", (x + 12, y + 46, TOKENS_W, h - 50), tokens_chart(), on=pan, group="c",
-          categories=2, series=2, max_value=3744, extra=passing_only("passesTokens"))
+          categories=2, series=2, max_value=3744, longest_category="LIB-09", longest_label="3,744",
+          extra=passing_only("passesTokens"))
     p.add("p4_index_chart", (ix, y + 46, x + w - 12 - ix, h - 50), index_chart(), on=pan, group="c",
           categories=2, max_value=2.07, extra=passing_only("passesIndex"))
 

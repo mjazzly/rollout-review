@@ -3,7 +3,7 @@
   "name": "p3_team",
   "position": {
     "x": 724,
-    "y": 60,
+    "y": 72,
     "z": 3000,
     "height": 40,
     "width": 540,
@@ -67,6 +67,26 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "layout": [
+        {
+          "properties": {
+            "rowCount": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            },
+            "columnCount": {
+              "expr": {
+                "Literal": {
+                  "Value": "6L"
                 }
               }
             }

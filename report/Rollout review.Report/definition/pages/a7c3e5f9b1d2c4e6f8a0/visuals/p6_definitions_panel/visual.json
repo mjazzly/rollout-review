@@ -3,9 +3,9 @@
   "name": "p6_definitions_panel",
   "position": {
     "x": 16,
-    "y": 110,
+    "y": 122,
     "z": 2000,
-    "height": 417,
+    "height": 386,
     "width": 1248,
     "tabOrder": 300
   },

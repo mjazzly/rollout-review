@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p5_question",
   "position": {
-    "x": 16,
-    "y": 94,
+    "x": 98,
+    "y": 80,
     "z": 3000,
     "height": 23,
     "width": 257,

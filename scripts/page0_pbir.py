@@ -24,21 +24,22 @@ HEADER_LINE_W = int(text_width([(HEADER_TEXT, {"fontSize": "11pt"})])) + 2 * TEX
 HEADER_LINE = (PAGE_W - MARGIN - HEADER_LINE_W, HEADER_TITLE_Y, HEADER_LINE_W, HEADER_TITLE_H)
 
 # ---------------------------------------------------------------- tiles
-TILE_Y, TILE_W, TILE_H = HEADER_TITLE_Y + HEADER_TITLE_H + GAP, 300, 315
+TILE_Y, TILE_W, TILE_H = HEADER_TITLE_Y + HEADER_TITLE_H + GAP, 300, 308
 TILE_XS = (16, 332, 648, 964)
 # Inside a tile, four groups 10 apart (2 above the sparkline, which pads itself):
 #   a  stage name and question
 #   b  the figure's caption, sitting on the figure
-#   c  verdict and trend on one line, the threshold under them (round 8: 315 px tiles)
+#   c  verdict and trend on one line, the threshold under them (round 8: 315 px tiles; round 9: 308,
+#      for the 40 px tab bar, with the figure at 24pt as on the other pages and the name at 13pt)
 #   d  sparkline, Month 2 to Month 6
 # (offset from the tile top, height); x is tile x + 12, width 276
-A_TEXT = (6, 61)
-B_CAPTION = (77, 34)        # 9, grey, two lines; a one-line caption sits on the bottom
-B_FIGURE = (111, 54)        # 28
-C_LINE = (175, 20)          # verdict (10, amber when Not yet working), then the trend beside it
+A_TEXT = (6, 60)
+B_CAPTION = (76, 34)        # 9, grey, two lines; a one-line caption sits on the bottom
+B_FIGURE = (110, 48)        # 24
+C_LINE = (168, 20)          # verdict (10, amber when Not yet working), then the trend beside it
 VERDICT_W = 120
-C_THRESHOLD = (195, 18)     # 9, grey
-D_LINE = (215, 100)
+C_THRESHOLD = (188, 18)     # 9, grey
+D_LINE = (208, 100)
 
 # The rule line ("How to read a tile") moved to the Notes page in round 7.
 
@@ -49,8 +50,9 @@ SPLIT_BASE = (16, BOTTOM_Y, 456, BOTTOM_H)
 SPLIT_LATEST = (488, BOTTOM_Y, 456, BOTTOM_H)
 MOVED = (960, BOTTOM_Y, 304, BOTTOM_H)
 
-# The narrowest labelled segment: Legal in the air at its baseline month, 6.7% (page5_figures.py)
-AIR_MIN_SHARE = 0.067
+# The narrowest labelled segment that can hold its label: Operations in the air at its baseline
+# month, 9.2% (page5_figures.py). Legal's 6.7% and 7.5% are 22 and 25 px wide; a label needs about 30.
+AIR_MIN_SHARE = 0.092
 
 TILES = (
     ("Foundation", "Which uses matter most, and where do people get stuck?",
@@ -150,10 +152,10 @@ def build() -> Page:
             p.add(f"p0_{key}_{name}", box, visual, on=pan, group=group, same=same, **kw)
 
         p.add(pan, (x, TILE_Y, TILE_W, TILE_H), panel(), z=2000, same="tile")
-        piece("text", A_TEXT, textbox([[(stage, pt(14, bold=True, color=INK))],
+        piece("text", A_TEXT, textbox([[(stage, pt(13, bold=True, color=INK))],
                                        [(question, pt(10, color=INK_SOFT))]]), "a", "tile text")
         piece("caption", B_CAPTION, caption(label, 9, TILE_W - 24, 2), "b", "tile caption")
-        piece("figure", B_FIGURE, value_card(f"{stage} tile", 28, display=label), "b", "tile figure")
+        piece("figure", B_FIGURE, value_card(f"{stage} tile", 24, display=label), "b", "tile figure")
         p.add(f"p0_{key}_verdict", (x + 12, TILE_Y + C_LINE[0], VERDICT_W, C_LINE[1]),
               value_card(f"{stage} verdict", 10, measure_colour(f"{stage} verdict colour")),
               on=pan, group="c", same="tile verdict", longest_value="Not yet working")
@@ -174,13 +176,18 @@ def build() -> Page:
         p.add(pan, box, panel(), z=2000, row="bottom")
         p.add(f"{pan}_title", (x + 12, y + 6, title_w, 22), panel_title(title), on=pan, group="t")
         p.add(f"{pan}_chart", (x + 12, y + 30, w - 24, h - 34), stage_split(m), on=pan, group="c",
-              same="stage chart", categories=6, label_min_share=AIR_MIN_SHARE)
+              same="stage chart", categories=6, label_min_share=AIR_MIN_SHARE, longest_label="9.2%")
     legend = []
     for n, (stage, hex_) in enumerate(STAGES):
         legend += [("■", pt(9, color=hex_)),
                    (f" {stage}" + ("  " if n < 2 else ""), pt(9, color=INK_SOFT))]
     p.add("p0_split_legend", (SPLIT_LATEST[0] + 12 + 160, SPLIT_LATEST[1] + 6, 272, 22),
           textbox([legend]), on="p0_split_latest_panel", group="t", legend=True)
+
+    p.too_thin["p0_split_*_chart"] = ("Legal, In the air: 6.7% at its baseline and 7.5% at Month 6 are 22 and 25 px "
+                                      "of bar; a label needs about 30 (Desktop drops it)")
+    for stage, _, _ in TILES:
+        p.unlabelled[f"p0_{stage.lower()}_sparkline"] = "a sparkline: the figure above it is the label"
 
     # moved up: title; the count with its caption; seats arrived with its caption, apart
     x, y, w, h = MOVED

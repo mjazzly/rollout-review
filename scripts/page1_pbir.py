@@ -36,7 +36,9 @@ TOGGLE = (MONTH[0] - GAP - 180, CONTROL_Y, 180, CONTROL_H)
 # ---------------------------------------------------------------- body
 BODY_Y = CONTROL_Y + CONTROL_H + GAP
 TEAM_COL, CP_COL = 120, 116            # matrix column widths: team, then each checkpoint
-MATRIX_H = 48 + 216 + 4                # title and stage names, then the matrix's header and six rows
+# Round 9: the stage names on the title's row, each over its three checkpoints from the second
+# (so the title, "People at each checkpoint", ends before the first); the matrix right under them.
+MATRIX_H = 28 + 216 + 4
 MATRIX_PANEL = (16, BODY_Y, 1248, MATRIX_H)
 BOTTOM_Y = MATRIX_PANEL[1] + MATRIX_PANEL[3] + GAP
 BOTTOM_H = BODY_END - BOTTOM_Y
@@ -178,19 +180,21 @@ def build() -> Page:
     header(p, "p1", "Where people sit", None,
            "Read from the check-in, the usage dashboards, the library's records and the question log",
            "Week 1 to Week 24, six check-ins")
-    p.add("p1_toggle", TOGGLE, button_slicer("placement_toggle", "placement", "Placement", "Source"))
-    p.add("p1_month", MONTH, button_slicer("dim_month", "month_label", "Month", "Month 6"))
+    p.add("p1_toggle", TOGGLE, button_slicer("placement_toggle", "placement", "Placement", "Source"),
+          buttons=2, longest_button="Check-in")
+    p.add("p1_month", MONTH, button_slicer("dim_month", "month_label", "Month", "Month 6", buttons=6),
+          buttons=6, longest_button="Month 6")
 
     # ---- the matrix: teams by checkpoints, stage names over their three checkpoints
     x, y, w, h = MATRIX_PANEL
     pan = "p1_matrix_panel"
     p.add(pan, MATRIX_PANEL, panel(), z=2000)
-    p.add("p1_matrix_title", (x + 12, y + 6, w - 24, 20), heading("People at each checkpoint, by team"),
+    p.add("p1_matrix_title", (x + 12, y + 6, TEAM_COL + CP_COL, 20), heading("People at each checkpoint"),
           on=pan, group="t")
     for k, stage in enumerate(STAGE_NAMES):
-        p.add(f"p1_stage_{k + 1}", (x + 12 + TEAM_COL + k * 3 * CP_COL, y + 26, 3 * CP_COL, 20),
+        p.add(f"p1_stage_{k + 1}", (x + 12 + TEAM_COL + k * 3 * CP_COL + CP_COL, y + 6, 2 * CP_COL, 20),
               heading(stage), on=pan, group="t", same="stage name")
-    p.add("p1_matrix", (x + 12, y + 48, w - 24, h - 52), matrix(), on=pan, group="m",
+    p.add("p1_matrix", (x + 12, y + 28, w - 24, h - 32), matrix(), on=pan, group="m",
           need_w=table_width([TEAM_COL] + [CP_COL] * 9, MATRIX_COLUMN_PAD),
           need_h=table_height([1] * 6))
 
@@ -205,7 +209,7 @@ def build() -> Page:
     p.add("p1_gap_legend", (x + 12 + inner - 170, y + 26, 170, 18),
           legend((("Higher", AMBER), ("Level", PALE), ("Lower", GREY))), on=pan, group="t", legend=True)
     p.add("p1_gap_chart", (x + 12, y + 46, inner, h - 50), gap_chart(), on=pan, group="c", categories=6,
-          label_min_share=GAP_MIN_SHARE)
+          label_min_share=GAP_MIN_SHARE, longest_label="13")
 
     # ---- movement: title; subtitle, legend top right; the chart; under it seats arrived, apart
     x, y, w, h = MOVE_PANEL

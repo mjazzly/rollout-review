@@ -3,9 +3,9 @@
   "name": "p0_foundation_text",
   "position": {
     "x": 28,
-    "y": 116,
+    "y": 128,
     "z": 3000,
-    "height": 61,
+    "height": 60,
     "width": 276,
     "tabOrder": 500
   },
@@ -21,7 +21,7 @@
                   {
                     "value": "Foundation",
                     "textStyle": {
-                      "fontSize": "14pt",
+                      "fontSize": "13pt",
                       "fontWeight": "bold",
                       "color": "#172529"
                     }

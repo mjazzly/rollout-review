@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_recurring_figure",
   "position": {
-    "x": 678,
-    "y": 139,
+    "x": 701,
+    "y": 134,
     "z": 3000,
     "height": 48,
-    "width": 110,
+    "width": 105,
     "tabOrder": 1100
   },
   "visual": {

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p6_controls_panel",
   "position": {
-    "x": 858,
-    "y": 543,
+    "x": 648,
+    "y": 524,
     "z": 2000,
-    "height": 139,
-    "width": 406,
-    "tabOrder": 1200
+    "height": 158,
+    "width": 616,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "textbox",

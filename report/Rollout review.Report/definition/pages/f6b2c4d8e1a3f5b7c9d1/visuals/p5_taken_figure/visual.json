@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p5_taken_figure",
   "position": {
-    "x": 28,
+    "x": 51,
     "y": 462,
     "z": 3000,
     "height": 48,
-    "width": 110,
+    "width": 34,
     "tabOrder": 1500
   },
   "visual": {

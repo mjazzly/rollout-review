@@ -1628,3 +1628,10 @@ RETURN
 // description: Helper, not in measures.md. Seats arrived over the month picked, all teams, as "0 seats arrived".
 Seats arrived line =
 FORMAT ( CALCULATE ( [Seats arrived], REMOVEFILTERS ( dim_team ) ), "#,0" ) & " seats arrived"
+
+// Smaller model colour
+// Create as: measure in _Measures. Page 4 main chart: the column colour.
+// format: text
+// description: Helper, not in measures.md. Marine for a library item whose latest smaller-tier run passes, grey for the others.
+Smaller model colour =
+IF ( SELECTEDVALUE ( dim_library_item[smaller_model_result] ) = "Passes", "#2C5F7C", "#7E8E92" )

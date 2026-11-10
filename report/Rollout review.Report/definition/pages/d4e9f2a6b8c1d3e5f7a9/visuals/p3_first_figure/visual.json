@@ -3,10 +3,10 @@
   "name": "p3_first_figure",
   "position": {
     "x": 28,
-    "y": 139,
+    "y": 134,
     "z": 3000,
     "height": 48,
-    "width": 110,
+    "width": 105,
     "tabOrder": 600
   },
   "visual": {

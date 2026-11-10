@@ -5,7 +5,7 @@
     "x": 16,
     "y": 16,
     "z": 0,
-    "height": 28,
+    "height": 40,
     "width": 1248,
     "tabOrder": 0
   },
@@ -19,6 +19,13 @@
               "expr": {
                 "Literal": {
                   "Value": "10D"
+                }
+              }
+            },
+            "verticalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'middle'"
                 }
               }
             }

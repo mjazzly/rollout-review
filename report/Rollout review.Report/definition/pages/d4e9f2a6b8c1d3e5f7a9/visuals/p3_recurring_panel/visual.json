@@ -3,9 +3,9 @@
   "name": "p3_recurring_panel",
   "position": {
     "x": 666,
-    "y": 133,
+    "y": 128,
     "z": 2000,
-    "height": 304,
+    "height": 309,
     "width": 598,
     "tabOrder": 1000
   },

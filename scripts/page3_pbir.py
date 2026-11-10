@@ -23,14 +23,14 @@ from pbir import (
     INK, INK_SOFT, MARINE, MATRIX_COLUMN_PAD, OFF, NO_FRAME, Page, body_top, button_slicer, colour, column,
     figure_band, filter_in, header, lit, measure_colour, panel, proj_column, proj_measure, pt,
     table_height, table_width, textbox, wrapped_lines,
-    BODY_END, CONTROL_H, CONTROL_Y, GAP, HEADER_SECOND_H, HEADER_SECOND_Y, MARGIN, PAGE_W, TEXT_INSET,
+    BODY_END, CONTROL_H, CONTROL_Y, GAP, MARGIN, PAGE_W, TEXT_INSET,
 )
 
 PAGE = "d4e9f2a6b8c1d3e5f7a9"
 
 TEAM_BUTTON_W = 90
 TEAM = (PAGE_W - MARGIN - 6 * TEAM_BUTTON_W, CONTROL_Y, 6 * TEAM_BUTTON_W, CONTROL_H)
-BODY_Y = HEADER_SECOND_Y + HEADER_SECOND_H + GAP
+BODY_Y = CONTROL_Y + CONTROL_H + GAP
 USE_COL, MONTH_COL = 150, 64        # grid column widths
 LEFT_W = 1248 - GAP - (table_width([USE_COL] + [MONTH_COL] * 6, MATRIX_COLUMN_PAD) + 24)
 RIGHT_X = 16 + LEFT_W + GAP
@@ -140,11 +140,12 @@ def not_passing_table() -> dict:
 
 
 def figure_panel(p: Page, key: str, box, figure: str, count: str | None = None, sub: str | None = None,
-                 longest: str = "", row: str | None = None):
+                 longest: str = "", row: str | None = None, over_table: bool = False):
     x, y, w, h = box
     pan = f"p3_{key}_panel"
     p.add(pan, box, panel(), z=2000, row=row)
-    band = figure_band(p, f"p3_{key}", pan, x, y, w, figure, figure, count=count, sub=sub, longest=longest)
+    band = figure_band(p, f"p3_{key}", pan, x, y, w, figure, figure, count=count, sub=sub, longest=longest,
+                       over_table=over_table)
     return pan, x, y, w, h, band
 
 
@@ -152,7 +153,8 @@ def build() -> Page:
     p = Page(PAGE, "Execution", number=3)
     header(p, "p3", "Execution", "Does it hold up in everyday use?",
            "Read from the usage dashboards, the question log and the run log", "Week 1 to Week 24")
-    p.add("p3_team", TEAM, button_slicer("dim_team", "team", "Team", None, strict=False))
+    p.add("p3_team", TEAM, button_slicer("dim_team", "team", "Team", None, strict=False, buttons=6),
+          buttons=6, longest_button="Technology")
     assert body_top(p) == BODY_Y
 
     # ---- first use: the figure and its count, a column per team under them
@@ -164,7 +166,8 @@ def build() -> Page:
 
     # ---- recurring questions covered: the figure and its count, the grid under them
     pan, x, y, w, h, band = figure_panel(p, "recurring", RECURRING_PANEL, "Recurring questions covered by a tested prompt",
-                                         count="Recurring covered count", longest="89.4%", row="a")
+                                         count="Recurring covered count", longest="89.4%", row="a",
+                                         over_table=True)
     p.add("p3_recurring_grid", (x + 12, band + 2, w - 24, y + h - 4 - band - 2), recurring_grid(), on=pan, group="c",
           need_w=table_width([USE_COL] + [MONTH_COL] * 6, MATRIX_COLUMN_PAD), need_h=table_height([1] * 7))
 
@@ -176,7 +179,8 @@ def build() -> Page:
 
     # ---- tested prompts passing: the figure and its count, the ones not passing under them
     pan, x, y, w, h, band = figure_panel(p, "passing", PASSING_PANEL, "Tested prompts passing their cases",
-                                         count="Passing count", longest="81.0%", row="b")
+                                         count="Passing count", longest="81.0%", row="b",
+                                         over_table=True)
     lines = [max(wrapped_lines([(n, pt(10))], ITEM_COL + 2 * TEXT_INSET),
                  wrapped_lines([("11 of 12 cases", pt(10))], CASES_COL + 2 * TEXT_INSET)) for n in NOT_PASSING]
     p.add("p3_not_passing", (x + 12, band + 2, w - 24, y + h - 4 - band - 2), not_passing_table(), on=pan, group="c",

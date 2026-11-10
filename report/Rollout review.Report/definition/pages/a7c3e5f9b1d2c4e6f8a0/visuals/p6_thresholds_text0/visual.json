@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p6_sources_text",
+  "name": "p6_thresholds_text0",
   "position": {
     "x": 28,
-    "y": 579,
+    "y": 560,
     "z": 3000,
-    "height": 97,
-    "width": 381,
-    "tabOrder": 800
+    "height": 112,
+    "width": 592,
+    "tabOrder": 900
   },
   "visual": {
     "visualType": "textbox",
@@ -19,44 +19,6 @@
               {
                 "textRuns": [
                   {
-                    "value": "Rollout review. ",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#172529"
-                    }
-                  },
-                  {
-                    "value": "All the sources below",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#4F6166"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Where people sit. ",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#172529"
-                    }
-                  },
-                  {
-                    "value": "Check-in, usage, library, question log",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#4F6166"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
                     "value": "Foundation. ",
                     "textStyle": {
                       "fontSize": "9pt",
@@ -65,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "Question log, usage, library",
+                    "value": "Working at 40% or more",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -84,7 +46,7 @@
                     }
                   },
                   {
-                    "value": "Usage, question log, run log",
+                    "value": "Working at 60% or more",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -103,7 +65,7 @@
                     }
                   },
                   {
-                    "value": "Run log, library",
+                    "value": "Working at 50% or more",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -122,7 +84,45 @@
                     }
                   },
                   {
-                    "value": "Question log, usage, check-in",
+                    "value": "Working at 10 points or more above each team's baseline",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Trend. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "The month against two check-ins earlier: up, down, or flat within 1 point",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Illustrative. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "A programme sets its own thresholds; front-page lines run Month 2 to Month 6",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

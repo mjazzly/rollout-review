@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p6_thresholds_panel",
   "position": {
-    "x": 437,
-    "y": 543,
+    "x": 16,
+    "y": 524,
     "z": 2000,
-    "height": 139,
-    "width": 405,
-    "tabOrder": 900
+    "height": 158,
+    "width": 616,
+    "tabOrder": 700
   },
   "visual": {
     "visualType": "textbox",

@@ -3,7 +3,7 @@
   "name": "p1_month",
   "position": {
     "x": 832,
-    "y": 60,
+    "y": 72,
     "z": 3000,
     "height": 40,
     "width": 432,
@@ -115,6 +115,26 @@
                     }
                   }
                 ]
+              }
+            }
+          }
+        }
+      ],
+      "layout": [
+        {
+          "properties": {
+            "rowCount": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            },
+            "columnCount": {
+              "expr": {
+                "Literal": {
+                  "Value": "6L"
+                }
               }
             }
           }

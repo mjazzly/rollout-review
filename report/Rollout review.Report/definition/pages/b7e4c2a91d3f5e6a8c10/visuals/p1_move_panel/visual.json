@@ -3,9 +3,9 @@
   "name": "p1_move_panel",
   "position": {
     "x": 454,
-    "y": 400,
+    "y": 392,
     "z": 2000,
-    "height": 282,
+    "height": 290,
     "width": 210,
     "tabOrder": 1600
   },

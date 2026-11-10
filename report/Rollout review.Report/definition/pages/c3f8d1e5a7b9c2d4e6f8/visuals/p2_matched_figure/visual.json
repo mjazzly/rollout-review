@@ -3,10 +3,10 @@
   "name": "p2_matched_figure",
   "position": {
     "x": 28,
-    "y": 436,
+    "y": 425,
     "z": 3000,
     "height": 48,
-    "width": 110,
+    "width": 105,
     "tabOrder": 1600
   },
   "visual": {
