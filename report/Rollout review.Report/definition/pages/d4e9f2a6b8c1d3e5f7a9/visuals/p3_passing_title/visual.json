@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_passing_title",
   "position": {
-    "x": 806,
+    "x": 824,
     "y": 459,
-    "z": 3000,
+    "z": 3100,
     "height": 20,
-    "width": 446,
+    "width": 428,
     "tabOrder": 2200
   },
   "visual": {

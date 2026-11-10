@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p4_retired_chart",
   "position": {
-    "x": 594,
-    "y": 528,
+    "x": 578,
+    "y": 545,
     "z": 3000,
-    "height": 150,
+    "height": 133,
     "width": 380,
-    "tabOrder": 1900
+    "tabOrder": 1600
   },
   "visual": {
     "visualType": "clusteredColumnChart",

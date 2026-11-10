@@ -1629,9 +1629,23 @@ RETURN
 Seats arrived line =
 FORMAT ( CALCULATE ( [Seats arrived], REMOVEFILTERS ( dim_team ) ), "#,0" ) & " seats arrived"
 
-// Smaller model colour
-// Create as: measure in _Measures. Page 4 main chart: the column colour.
+// Standard model tokens
+// Create as: measure in _Measures. Page 4 cost table.
 // format: text
-// description: Helper, not in measures.md. Marine for a library item whose latest smaller-tier run passes, grey for the others.
-Smaller model colour =
-IF ( SELECTEDVALUE ( dim_library_item[smaller_model_result] ) = "Passes", "#2C5F7C", "#7E8E92" )
+// description: Helper, not in measures.md. Cost per use on the standard tier, as "3,744".
+Standard model tokens =
+FORMAT ( CALCULATE ( [Cost per use], fact_test_run[model_tier] = "standard" ), "#,0" )
+
+// Smaller model tokens
+// Create as: measure in _Measures. Page 4 cost table.
+// format: text
+// description: Helper, not in measures.md. Cost per use on the smaller tier, as "1,854".
+Smaller model tokens =
+FORMAT ( CALCULATE ( [Cost per use], fact_test_run[model_tier] = "smaller" ), "#,0" )
+
+// Cost index text
+// Create as: measure in _Measures. Page 4 cost table.
+// format: text
+// description: Helper, not in measures.md. Cost index with two decimals, as "2.02".
+Cost index text =
+FORMAT ( [Cost index], "0.00" )

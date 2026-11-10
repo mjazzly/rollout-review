@@ -28,7 +28,7 @@ from pbir import (
 
 PAGE = "d4e9f2a6b8c1d3e5f7a9"
 
-TEAM_BUTTON_W = 90
+TEAM_BUTTON_W = 130                  # round 10: 90 cut "Consulting"; the row runs into the free header space
 TEAM = (PAGE_W - MARGIN - 6 * TEAM_BUTTON_W, CONTROL_Y, 6 * TEAM_BUTTON_W, CONTROL_H)
 BODY_Y = CONTROL_Y + CONTROL_H + GAP
 USE_COL, MONTH_COL = 150, 64        # grid column widths

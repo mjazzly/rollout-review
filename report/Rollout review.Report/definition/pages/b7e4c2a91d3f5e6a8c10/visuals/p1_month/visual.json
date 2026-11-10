@@ -2,15 +2,15 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_month",
   "position": {
-    "x": 832,
+    "x": 1144,
     "y": 72,
     "z": 3000,
     "height": 40,
-    "width": 432,
+    "width": 120,
     "tabOrder": 400
   },
   "visual": {
-    "visualType": "advancedSlicerVisual",
+    "visualType": "slicer",
     "query": {
       "queryState": {
         "Values": {
@@ -27,8 +27,8 @@
                 }
               },
               "queryRef": "dim_month.month_label",
-              "nativeQueryRef": "Month",
-              "displayName": "Month"
+              "nativeQueryRef": "month_label",
+              "active": true
             }
           ]
         }
@@ -37,16 +37,11 @@
     "objects": {
       "data": [
         {
-          "properties": {}
-        }
-      ],
-      "header": [
-        {
           "properties": {
-            "show": {
+            "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'Dropdown'"
                 }
               }
             }
@@ -73,6 +68,39 @@
           }
         }
       ],
+      "header": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "items": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "outline": {
+              "expr": {
+                "Literal": {
+                  "Value": "'None'"
+                }
+              }
+            }
+          }
+        }
+      ],
       "general": [
         {
           "properties": {
@@ -81,7 +109,7 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "b",
+                    "Name": "d",
                     "Entity": "dim_month",
                     "Type": 0
                   }
@@ -95,7 +123,7 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "b"
+                                  "Source": "d"
                                 }
                               },
                               "Property": "month_label"
@@ -119,36 +147,40 @@
             }
           }
         }
-      ],
-      "layout": [
-        {
-          "properties": {
-            "rowCount": {
-              "expr": {
-                "Literal": {
-                  "Value": "1L"
-                }
-              }
-            },
-            "columnCount": {
-              "expr": {
-                "Literal": {
-                  "Value": "6L"
-                }
-              }
-            }
-          }
-        }
       ]
     },
     "visualContainerObjects": {
-      "background": [
+      "title": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             }
@@ -161,20 +193,25 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
-            }
-          }
-        }
-      ],
-      "title": [
-        {
-          "properties": {
-            "show": {
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#C9D1D4'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "4D"
                 }
               }
             }

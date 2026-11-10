@@ -120,7 +120,8 @@ def build() -> Page:
     pan = "p5_taken_panel"
     p.add(pan, TAKEN_PANEL, panel(), z=2000)
     band = figure_band(p, "p5_taken", pan, x, y, w, "Uses taken up beyond the first team",
-                       "Uses taken up beyond the first team", count="Uses taken up count", longest="4", over_table=True)
+                       "Uses taken up beyond the first team", count="Uses taken up count", longest="4", over_table=True,
+                       widest="23")   # a count of library items: at most 23
     cols = [(proj_column("dim_library_item", "item_id", display="ID"), TAKEN_COLS[0]),
             (proj_column("dim_library_item", "item_name", display="Prompt"), TAKEN_COLS[1]),
             (proj_column("dim_library_item", "owner_team", display="Made by"), TAKEN_COLS[2]),

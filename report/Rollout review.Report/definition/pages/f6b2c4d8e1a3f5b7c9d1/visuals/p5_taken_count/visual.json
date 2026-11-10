@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p5_taken_count",
   "position": {
-    "x": 85,
+    "x": 103,
     "y": 482,
-    "z": 3000,
+    "z": 3100,
     "height": 24,
-    "width": 1167,
+    "width": 1149,
     "tabOrder": 1700
   },
   "visual": {

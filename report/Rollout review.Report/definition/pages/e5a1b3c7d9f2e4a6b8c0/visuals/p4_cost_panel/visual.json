@@ -3,10 +3,10 @@
   "name": "p4_cost_panel",
   "position": {
     "x": 16,
-    "y": 482,
+    "y": 499,
     "z": 2000,
-    "height": 200,
-    "width": 550,
+    "height": 183,
+    "width": 534,
     "tabOrder": 900
   },
   "visual": {

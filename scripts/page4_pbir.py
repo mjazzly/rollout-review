@@ -24,19 +24,22 @@ from pbir import (
 PAGE = "e5a1b3c7d9f2e4a6b8c0"
 
 ROW1_Y = HEADER_TITLE_Y + HEADER_TITLE_H + GAP
-ROW2_H = 46 + 150 + 4               # a subtitle row, then charts at Desktop's smallest bar chart (150)
+ROW2_H = 46 + 133 + 4               # a subtitle row, then the retired table: two rows, one of two lines
 ROW2_Y = BODY_END - ROW2_H
 ROW1_H = ROW2_Y - GAP - ROW1_Y
-COST_W = 550
+COST_W = 24 + 90 + 130 + 130 + 100 + 4 * 12 + 12   # the cost table's columns
 MAIN_PANEL = (16, ROW1_Y, 1248, ROW1_H)
 COST_PANEL = (16, ROW2_Y, COST_W, ROW2_H)
 RETIRED_PANEL = (16 + COST_W + GAP, ROW2_Y, 1248 - COST_W - GAP, ROW2_H)
 LIVE = 21                           # live prompts at Week 24 (scripts/page4_figures.py)
+LIVE_ITEMS = [f"LIB-{n:02d}" for n in range(1, 24) if n not in (12, 14)]   # retired or merged: LIB-12, LIB-14
+PASSING = ("LIB-09", "LIB-13")      # passing on the smaller model (page4_figures.py)
+COST_COLS = (90, 130, 130, 100)     # prompt, standard model, smaller model, cost index
 TOKENS_W = 290
 TOKENS_END = 4500                   # the most tokens on a passing prompt: 3,744 (LIB-09, standard)
 INDEX_END = 2.5                     # the highest cost index is 2.07 (LIB-13)
 RETIRED_CHART_W = 380              # 60 px a month: "Month 6" stays level (48 px slanted, round 7)
-RETIRED_COLS = (56, 170)            # prompt ID, what happened
+RETIRED_COLS = (60, 182)            # prompt ID, what happened
 PASSES = (("Passes", MARINE), ("Does not pass", GREY))
 TIERS = (("smaller", "Smaller model", MARINE), ("standard", "Standard model", GREY))   # Desktop's order: a to z
 
@@ -73,9 +76,10 @@ def ranked_live() -> dict:
             "sortDefinition": {"sort": [{"field": proj_measure(m)["field"], "direction": "Descending"}],
                                "isDefaultSort": False}},
         "objects": {
-            "dataPoint": [{"properties": {"fill": measure_colour("Smaller model colour")},
-                           "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}],
-                                        "metadata": f"_Measures.{m}"}}],
+            # round 10: the colour from a measure did not take; one dataPoint per prompt, picked by its
+            # ID, the selector the stage colours used (S3)
+            "dataPoint": [{"properties": {"fill": colour(MARINE if i in PASSING else GREY)},
+                           "selector": value_is("dim_library_item", "item_id", i)} for i in LIVE_ITEMS],
             "labels": [{"properties": {"show": lit("true")}}],
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
@@ -185,23 +189,19 @@ def build() -> Page:
     p.add("p4_main_chart", (x + 12, y + 46, inner, h - 50), ranked_live(), on=pan, group="c",
           categories=LIVE, max_value=1.0, longest_category="LIB-23", longest_label="11 of 12")
 
-    # ---- the cost of the passing prompts: tokens on each model, and the cost index
+    # ---- the cost of the passing prompts: one table (round 10)
     x, y, w, h = COST_PANEL
     pan, inner = "p4_cost_panel", w - 24
     p.add(pan, COST_PANEL, panel(), z=2000, row="bottom")
-    p.add("p4_cost_title", (x + 12, y + 6, inner - 220, 20), heading("Cost of the passing prompts"), on=pan, group="t")
-    p.add("p4_cost_legend", (x + 12 + inner - 220, y + 6, 220, 20),
-          legend(tuple((d, c) for _, d, c in TIERS)), on=pan, group="t", legend=True)
-    p.add("p4_tokens_sub", (x + 12, y + 26, TOKENS_W, 18), subtitle("Median tokens per run"),
-          on=pan, group="t", kind="subtitle")
-    ix = x + 12 + TOKENS_W + 16
-    p.add("p4_index_sub", (ix, y + 26, x + w - 12 - ix, 18), subtitle("Cost index, standard over smaller"),
-          on=pan, group="t", kind="subtitle")
-    p.add("p4_tokens_chart", (x + 12, y + 46, TOKENS_W, h - 50), tokens_chart(), on=pan, group="c",
-          categories=2, series=2, max_value=3744, longest_category="LIB-09", longest_label="3,744",
-          extra=passing_only("passesTokens"))
-    p.add("p4_index_chart", (ix, y + 46, x + w - 12 - ix, h - 50), index_chart(), on=pan, group="c",
-          categories=2, max_value=2.07, extra=passing_only("passesIndex"))
+    p.add("p4_cost_title", (x + 12, y + 6, inner, 20), heading("Cost of the passing prompts"), on=pan, group="t")
+    p.add("p4_cost_sub", (x + 12, y + 26, inner, 18), subtitle("Median tokens per run"), on=pan, group="t",
+          kind="subtitle")
+    cols = [(proj_column("dim_library_item", "item_id", display="Prompt"), COST_COLS[0]),
+            (proj_measure("Standard model tokens", "Standard model"), COST_COLS[1]),
+            (proj_measure("Smaller model tokens", "Smaller model"), COST_COLS[2]),
+            (proj_measure("Cost index text", "Cost index"), COST_COLS[3])]
+    p.add("p4_cost_table", (x + 12, y + 46, inner, h - 50), table(cols), on=pan, group="b",
+          need_w=table_width(list(COST_COLS)), need_h=table_height([1, 1]), extra=passing_only("passesCost"))
 
     # ---- retired or merged
     x, y, w, h = RETIRED_PANEL
@@ -222,7 +222,7 @@ def build() -> Page:
 
     p.answers = {
         13: [("p4_main_chart", "item_id"), ("p4_main_chart", "Smaller model cases share")],
-        14: [("p4_index_chart", "Cost index")],
+        14: [("p4_cost_table", "Cost index text")],
         15: [("p4_retired_table", "item_id"), ("p4_retired_table", "Retired or merged change")],
     }
     return p

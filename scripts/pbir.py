@@ -48,7 +48,10 @@ below passes:
    7 and 8); a stacked segment holds its label (AXIS_CHROME, LABEL_ROOM_PX); in a figure band
    the title sits FIGURE_TITLE_GAP right of the figure's text, and the figure lines up with the
    text of a table under it;
-13. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
+13. round 10: no button label, dropdown text or figure is cut: a button is its label plus
+   BUTTON_TEXT_PAD wide, a dropdown its text plus DROPDOWN_PAD, and a figure box holds the
+   widest value its measure can show ("100.0%" for a share) plus FIGURE_BOX_PAD;
+14. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
    screenshot confirmed it) or in UNCONFIRMED (from the published schema, or a pattern
    Megat gave). Each push lists the unconfirmed names it used.
 """
@@ -117,6 +120,8 @@ CHAR_W, BOLD_W, LINE_H, TEXT_PAD, TEXT_INSET = 0.62, 1.08, 1.73, 2, 6
 #   TH  theme.json, Megat's theme file: visualStyles border show, color, radius; background color
 #   R7  confirmed on the round 7 screenshots (10 Nov 2026): the slicer and button slicer headers
 #       turned off with header.show
+#   R9  confirmed on the round 9 screenshots (10 Nov 2026): the button slicer's one-row layout
+#       (layout.rowCount, layout.columnCount) and the tab bar's text.verticalAlignment
 #   R8  confirmed on the round 8 screenshots (10 Nov 2026): labels.color on one bar chart series
 #       (the gap's Level and the impact's A little read dark)
 SEEN: dict[tuple[str, str], set[str]] = {
@@ -130,7 +135,7 @@ SEEN: dict[tuple[str, str], set[str]] = {
     ("shape", "rotation"): {"shapeAngle"},                           # RR
     ("shape", "outline"): {"show"},                                  # RR
     ("shape", "fill"): {"fillColor"},                                # RR
-    ("pageNavigator", "text"): {"fontSize"},                         # RR
+    ("pageNavigator", "text"): {"fontSize", "verticalAlignment"},    # RR; verticalAlignment R9
     ("pageNavigator", "shape"): {"tileShape", "rectangleRoundedCurve"},  # RR
     ("pageNavigator", "pages"): {"showHiddenPages"},                 # RR
     ("pageNavigator", "outline"): {"show"},                          # RR
@@ -164,6 +169,7 @@ SEEN: dict[tuple[str, str], set[str]] = {
     ("advancedSlicerVisual", "selection"): {"singleSelect", "strictSingleSelect"},  # H2
     ("advancedSlicerVisual", "general"): {"filter"},                 # H2
     ("advancedSlicerVisual", "header"): {"show"},                    # R7
+    ("advancedSlicerVisual", "layout"): {"rowCount", "columnCount"}, # R9
     ("tableEx", "total"): {"totals"},                                # BR
     ("tableEx", "columnWidth"): {"value"},                           # BR
     ("tableEx", "values"): {"backColor", "fontColor"},               # BR
@@ -176,16 +182,13 @@ TEXT_STYLE_SEEN = {"fontWeight", "fontSize", "color"}                # RR, BR; c
 
 # Not yet in Megat's files or confirmed on screen. Listed with every push.
 UNCONFIRMED: dict[tuple[str, str], set[str]] = {
-    # Round 9. None is in Megat's files or the published schema (which does not list a visual's own
-    # objects); each is the format pane's own wording, as labels.color was (it took, round 8).
-    # Button slicer, Layout: one row of buttons (Desktop drew six in two rows of three).
-    ("advancedSlicerVisual", "layout"): {"rowCount", "columnCount"},
-    # Tab bar, Text: the page names in the middle of their tabs (they sat low).
-    ("pageNavigator", "text"): {"verticalAlignment"},
+    # Round 10, the Month dropdown's values: text at body size, and no frame of its own (the box is
+    # the container's border, rounded as the buttons are). Neither is in Megat's files or the
+    # published schema; each is the format pane's own wording (Values: text size, border).
+    ("slicer", "items"): {"textSize", "outline"},
 }
 UNCONFIRMED_VALUES: list[str] = [
-    "labels.labelDisplayUnits 1 (none) on the tokens chart: BR wrote 1000 (thousands); 1 is the format pane's None",
-    "dataPoint.fill from a measure on the page 4 column chart, with the matrix's wildcard selector (P1)",
+    "items.outline 'None' on the Month dropdown",
 ]
 CORNER = 4   # one corner radius: panels, the tab bar, and every visual box (theme.json border radius)
 
@@ -412,6 +415,9 @@ HEADER_TITLE_Y, HEADER_TITLE_H = 72, 34       # GAP below the tab bar
 QUESTION_DY, QUESTION_H = 8, 23               # the question, 12pt, its baseline on the title's
 CONTROL_Y, CONTROL_H = 72, 40                 # controls: the title row, at its right (round 7 clipped at 30)
 BUTTON_MIN_H = 36                             # a button row: 30 px clipped (round 7), 20 px drew blank (round 8)
+BUTTON_TEXT_PAD = 36                          # round 9: "Consulting" (62 px est.) cut in a 90 px button, "Check-in" (50) whole
+DROPDOWN_PAD = 48                             # a dropdown: its text, the arrow and margins
+LINE_GREY = "#C9D1D4"                         # the buttons' own outline, unpicked
 BUTTON_DEFAULT_COLUMNS = 3                    # round 8: six buttons in a 432 by 40 box drew as two rows of three
 FOOTER_H = 18
 FOOTER_Y = PAGE_H - MARGIN - FOOTER_H         # 686: the sources and period, one grey line
@@ -473,6 +479,33 @@ def button_slicer(table: str, col: str, display: str, start: str | None = None, 
     }
 
 
+def dropdown(table: str, col: str, start: str) -> dict:
+    """Round 10: the Month control as a dropdown showing the picked month in full. Its box is the
+    container's: white, a light grey border, the 4 px corner the buttons have; the values at body
+    size (10pt) with no frame of their own; no header."""
+    return {
+        "visualType": "slicer",
+        "query": {"queryState": {"Values": {"projections": [proj_column(table, col, active=True)]}}},
+        "objects": {
+            "data": [{"properties": {"mode": text("Dropdown")}}],
+            "selection": [{"properties": {"singleSelect": lit("true"), "strictSingleSelect": lit("true")}}],
+            "header": [{"properties": OFF}],
+            "items": [{"properties": {"textSize": lit("10D"), "outline": text("None")}}],
+            "general": [{"properties": {"filter": {"filter": {
+                "Version": 2, "From": [{"Name": "d", "Entity": table, "Type": 0}],
+                "Where": [{"Condition": {"In": {
+                    "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "d"}}, "Property": col}}],
+                    "Values": [[{"Literal": {"Value": "'" + start.replace("'", "''") + "'"}}]]}}}]}}}}],
+        },
+        "visualContainerObjects": {
+            "title": [{"properties": OFF}],
+            "background": [{"properties": {"show": lit("true"), "color": colour(WHITE)}}],
+            "border": [{"properties": {"show": lit("true"), "color": colour(LINE_GREY), "radius": lit(f"{CORNER}D")}}],
+        },
+        "drillFilterOtherVisuals": True,
+    }
+
+
 def figure_width(longest: str) -> int:
     """A 24pt figure's width: 17.8 px a character, measured on the round 8 screenshots ("44.5%" 88 px,
     "89.4%" 87, "4" 18)."""
@@ -481,34 +514,38 @@ def figure_width(longest: str) -> int:
 
 def figure_band(p: "Page", key: str, pan: str, x: int, y: int, w: int, figure: str, title: str,
                 count: str | None = None, sub: str | None = None, longest: str = "", group: str = "t",
-                over_table: bool = False) -> int:
+                over_table: bool = False, widest: str = "100.0%") -> int:
     """Every panel led by a figure: the figure at the top left; the panel's title FIGURE_TITLE_GAP right
     of the figure's text, whatever its width, with the count (or a grey line) under the title.
     Over a table, the figure moves in by TABLE_TEXT_INSET so it lines up with the table's text
     (round 9). Returns the band's bottom edge."""
     fx = x + PANEL_PAD_X + (TABLE_TEXT_INSET if over_table else 0)
-    fw = figure_width(longest) + FIGURE_TITLE_GAP
-    tx = fx + fw
+    # round 10: the box holds the widest value the figure can show ("100.0%" for a share) with
+    # FIGURE_BOX_PAD to spare ("44.5%" was cut with 17 px); the title sits FIGURE_TITLE_GAP right of
+    # that widest value, over the box's empty end
+    fw = figure_width(widest) + FIGURE_BOX_PAD
+    tx = fx + figure_width(widest) + FIGURE_TITLE_GAP
     tw = x + w - PANEL_PAD_X - tx
     t_vis = textbox([[(title, pt(10, bold=True, color=INK))]])
     th = math.ceil(text_height(t_vis, tw))
     p.add(f"{key}_figure", (fx, y + PANEL_PAD_TOP, fw, FIGURE_H), value_card(figure, FIGURE_PT),
-          on=pan, group=group, longest_value=longest, kind="band figure")
-    p.add(f"{key}_title", (tx, y + PANEL_PAD_TOP, tw, th), t_vis, on=pan, group=group)
+          on=pan, group=group, longest_value=widest, kind="band figure")
+    p.add(f"{key}_title", (tx, y + PANEL_PAD_TOP, tw, th), t_vis, on=pan, group=group, z=3100)
     if count:
         p.add(f"{key}_count", (tx, y + PANEL_PAD_TOP + th, tw, 24), value_card(count, 10, colour(INK_SOFT)),
-              on=pan, group=group, longest_value="")
+              on=pan, group=group, longest_value="", z=3100)
         below = th + 24
     else:
         s_vis = textbox([[(sub or "", pt(9, color=INK_SOFT))]])
         sh = math.ceil(text_height(s_vis, tw))
-        p.add(f"{key}_sub", (tx, y + PANEL_PAD_TOP + th, tw, sh), s_vis, on=pan, group=group, kind="subtitle")
+        p.add(f"{key}_sub", (tx, y + PANEL_PAD_TOP + th, tw, sh), s_vis, on=pan, group=group, kind="subtitle", z=3100)
         below = th + sh
     return y + PANEL_PAD_TOP + max(FIGURE_H, below)
 
 
 FIGURE_CHAR_PX = 17.8          # a 24pt figure, a character (round 8 screenshots)
-FIGURE_TITLE_GAP = 16          # the title sits this far right of the figure's text (Megat, round 9)
+FIGURE_TITLE_GAP = 16          # the title sits this far right of the figure's widest text (Megat, round 9)
+FIGURE_BOX_PAD = 28            # a figure box holds its widest text with this to spare (round 9: 17 px cut it)
 TABLE_TEXT_INSET = 23          # a table's or matrix's text starts this far in from its box (round 8)
 FIGURE_H, FIGURE_PT = 48, 24   # the figure in a band: 24pt (28pt drew in 54 px on page 0)
 
@@ -676,6 +713,9 @@ class Page:
             for b in vs[i + 1:]:
                 if a.on == b.name or b.on == a.name:
                     continue
+                band = {f"{v.name[:-7]}_{k}" for v in (a, b) if v.kind == "band figure" for k in ("title", "count", "sub")}
+                if a.name in band or b.name in band:
+                    continue   # a figure band: the figure box's empty end runs under its title and count   # a figure band: the figure box's empty end runs under its title
                 if _overlap_x(a, b) and a.top < b.bottom and b.top < a.bottom:
                     problems.append(f"{a.name} overlaps {b.name}")
         # 3 repeated sizes
@@ -1068,8 +1108,16 @@ class Page:
             cols = math.ceil(v.buttons / rows)
             if v.box[3] / rows < BUTTON_MIN_H:
                 out.append(f"{v.name}: {rows} rows of buttons, {v.box[3] / rows:.0f} px each; a label needs {BUTTON_MIN_H}")
-            if v.box[2] / cols < text_width([(v.longest_button, pt(10))]) + 24:
-                out.append(f"{v.name}: '{v.longest_button}' does not fit a {v.box[2] / cols:.0f} px button")
+            if v.box[2] / cols < text_width([(v.longest_button, pt(10))]) + BUTTON_TEXT_PAD:
+                out.append(f"{v.name}: '{v.longest_button}' is cut in a {v.box[2] / cols:.0f} px button")
+        for v in self.visuals:
+            if v.vt == "slicer" and v.on is None:
+                if not v.longest_button:
+                    out.append(f"{v.name}: a dropdown needs its longest value for the check")
+                elif v.box[2] < text_width([(v.longest_button, pt(10))]) + DROPDOWN_PAD:
+                    out.append(f"{v.name}: '{v.longest_button}' is cut in a {v.box[2]} px dropdown")
+                if v.box[3] < BUTTON_MIN_H:
+                    out.append(f"{v.name}: {v.box[3]} px is lower than a button row")
         return out
 
     def _labels_present(self) -> list[str]:
@@ -1099,7 +1147,11 @@ class Page:
             t = self.get(v.name[: -len("_figure")] + "_title")
             gap = t.left - (v.left + figure_width(v.longest_value))
             if gap != FIGURE_TITLE_GAP:
-                out.append(f"{t.name}: {gap} px right of the figure's text, not {FIGURE_TITLE_GAP}")
+                out.append(f"{t.name}: {gap} px right of the figure's widest text, not {FIGURE_TITLE_GAP}")
+            if v.box[2] < figure_width(v.longest_value) + FIGURE_BOX_PAD:
+                out.append(f"{v.name}: '{v.longest_value}' would be cut in {v.box[2]} px")
+            if "%" in v.longest_value and v.longest_value != "100.0%":
+                out.append(f"{v.name}: a share's box must hold '100.0%', not only '{v.longest_value}'")
         return out
 
     def _text_fit(self) -> list[str]:
@@ -1159,9 +1211,7 @@ class Page:
             print(f"  Waiting for a hand reference: {name}: {note}")
         for name, note in self.too_thin.items():
             print(f"  Too thin for a label: {name}: {note}")
-        if any(v.vt == "advancedSlicerVisual" and "layout" in v.visual["objects"] for v in self.visuals) \
-                or any(v.vt in ("clusteredColumnChart",) and any("labelDisplayUnits" in it.get("properties", {})
-                       for it in v.visual["objects"].get("labels", [])) for v in self.visuals):
+        if any(v.vt == "slicer" and "items" in v.visual["objects"] for v in self.visuals):
             print("  Unconfirmed values: " + "; ".join(UNCONFIRMED_VALUES))
 
 

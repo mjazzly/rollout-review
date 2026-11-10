@@ -912,6 +912,46 @@ Unconfirmed this round: `pageNavigator text.verticalAlignment`, `advancedSlicerV
 | 13 | Two marine columns, no labels | The same two, labelled "11 of 11" and "12 of 12" |
 | 14 | Cost index 2.02 and 2.07 | Unchanged; the tokens beside it now read in full |
 
+## O. Round 10 (10 Nov 2026): month dropdown, team names, figures, Refinement colours and cost table
+
+Confirmed by the round 9 screenshots: the button slicer's one-row layout (`layout.rowCount`, `layout.columnCount`), the tab bar's `text.verticalAlignment`, the "11 of 12" labels on a clustered column chart, and the tokens in full. Not taken: a column's colour from a measure (all 21 columns marine).
+
+| Ask | What changed |
+|---|---|
+| 1. Month dropdown | A dropdown showing the picked month in full, 120 by 40, at the right of the title row. Its box is the container's: white, a light grey border, the 4 px corner. The values at 10pt with no frame of their own: `items.textSize` and `items.outline` (unconfirmed) |
+| 2. No month picked | See "The latest month" below. Nothing changed in measures.dax this round |
+| 3. Team names | Buttons 130 px each (780 for six), into the free header space; "Consulting" was cut at 90 |
+| 4. Figures cut | Every figure box holds "100.0%" (a share; Scale's count holds "23") with 28 px to spare; "44.5%" was cut with 17. The title sits 16 px right of that widest value, over the box's empty end |
+| 5. Refinement colours | One dataPoint per prompt picked by its ID, the selector the stage colours used: LIB-09 and LIB-13 marine, the other 19 grey. The colour measure is gone from measures.dax and the model |
+| 6. Cost table | One table: Prompt, Standard model, Smaller model, Cost index, the two passing prompts, under "Median tokens per run" (helpers `Standard model tokens`, `Smaller model tokens`, `Cost index text`). The bottom row is 183 px, the retired table's height, so the main chart gains 17 |
+| Checks | A button is its label plus 36 px ("Check-in" whole at 90, "Consulting" cut); a dropdown its value plus 48; a figure box its widest value plus 28, and a share's widest value is "100.0%" |
+
+### The latest month (Megat's question 2)
+
+- **Computed.** Every measure reads the month from `Check-in month = MAX ( dim_month[checkin_month] )`. With no month picked that is the last month in `dim_month`, today 6; a seventh check-in added to `dim_month` becomes the latest with no change to a measure.
+- **Typed in:** (1) the Month dropdown's opening pick, `'Month 6'`, in `scripts/page1_pbir.py`: a seventh month would still open on Month 6; (2) `baseline_month` in measures.dax keeps a baseline only if it is Month 6 or earlier (`firstMonth <= 6`); (3) words on the pages: "Stage by team, Month 6", "Month 5 to Month 6", "Uses logged and ranked, Month 1 and Month 6" and that chart's Month 6 filter, "Month 6: if AI disappeared tomorrow?", the "Month 6" legend on Scale, "Week 24" in the subtitles and footers, and Notes.
+- **To make all of it computed** (needs measures.dax, so not this round): a calculated column on `dim_month` marking the latest month, so the dropdown and the Month 6 chart filter follow it; the `<= 6` cap read from `dim_month`; and the panel words that name a month or week turned into measures. Megat to say go.
+
+### Step 57, round 10
+
+1. Double-click **get.cmd**.
+2. Before clicking anything, send the seven tabs; then Where people sit with **Check-in** and **Month 4**, and Execution with **Operations**.
+
+If the dropdown shows a second, square frame inside its rounded box: select it, **Format visual**, **Visual**, **Values**, set the border to **None** and the text size to **10**; save, close, **send.cmd**.
+
+### What each page should read (round 10)
+
+- **Where people sit**: the dropdown reads "Month 6"; the page as round 9 (Consulting Takeoff 174).
+- **Execution**: Consulting, Finance, Legal, Operations, People, Technology in full; "44.5%" whole, 16 px of space then the title as for "100.0%".
+- **Refinement**: LIB-09 and LIB-13 marine, the other 19 grey, every column labelled. Cost table: LIB-09 3,744, 1,854, 2.02; LIB-13 3,105, 1,502, 2.07.
+- The other pages as round 9; the figures on Foundation, Execution and Scale sit a little further from their titles (the room for "100.0%", or "23").
+
+### CHECK.md answers that moved on the page
+
+| Q | Was | Now |
+|---|---|---|
+| 14 | The cost index bar chart | The cost table's Cost index column: LIB-09 2.02, LIB-13 2.07 |
+
 ## Next
 
 - All six pages are written. Next: the CHECK.md match from the screenshots (brief section 8), then Publish to web

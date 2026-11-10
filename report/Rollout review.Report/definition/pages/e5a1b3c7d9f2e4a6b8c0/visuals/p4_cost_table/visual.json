@@ -1,19 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p4_index_chart",
+  "name": "p4_cost_table",
   "position": {
-    "x": 334,
-    "y": 528,
+    "x": 28,
+    "y": 545,
     "z": 3000,
-    "height": 150,
-    "width": 220,
-    "tabOrder": 1500
+    "height": 133,
+    "width": 510,
+    "tabOrder": 1200
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "tableEx",
     "query": {
       "queryState": {
-        "Category": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -27,13 +27,9 @@
                 }
               },
               "queryRef": "dim_library_item.item_id",
-              "nativeQueryRef": "item_id",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
+              "nativeQueryRef": "Prompt",
+              "displayName": "Prompt"
+            },
             {
               "field": {
                 "Measure": {
@@ -42,125 +38,116 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Cost index"
+                  "Property": "Standard model tokens"
                 }
               },
-              "queryRef": "_Measures.Cost index",
-              "nativeQueryRef": "Cost index"
+              "queryRef": "_Measures.Standard model tokens",
+              "nativeQueryRef": "Standard model",
+              "displayName": "Standard model"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Smaller model tokens"
+                }
+              },
+              "queryRef": "_Measures.Smaller model tokens",
+              "nativeQueryRef": "Smaller model",
+              "displayName": "Smaller model"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Cost index text"
+                }
+              },
+              "queryRef": "_Measures.Cost index text",
+              "nativeQueryRef": "Cost index",
+              "displayName": "Cost index"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "dim_library_item"
-                  }
-                },
-                "Property": "item_id"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": false
       }
     },
     "objects": {
-      "dataPoint": [
+      "total": [
         {
           "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#2C5F7C'"
-                    }
-                  }
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "90D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.Cost index"
+            "metadata": "dim_library_item.item_id"
           }
-        }
-      ],
-      "labels": [
+        },
         {
           "properties": {
-            "show": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "130D"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "_Measures.Standard model tokens"
           }
-        }
-      ],
-      "legend": [
+        },
         {
           "properties": {
-            "show": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "130D"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "_Measures.Smaller model tokens"
           }
-        }
-      ],
-      "categoryAxis": [
+        },
         {
           "properties": {
-            "show": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "100D"
                 }
               }
             }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "start": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "end": {
-              "expr": {
-                "Literal": {
-                  "Value": "2.5D"
-                }
-              }
-            },
-            "gridlineShow": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
+          },
+          "selector": {
+            "metadata": "_Measures.Cost index text"
           }
         }
       ]
@@ -198,7 +185,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "passesIndex",
+        "name": "passesCost",
         "field": {
           "Column": {
             "Expression": {

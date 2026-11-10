@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p4_retired_table",
   "position": {
-    "x": 990,
-    "y": 528,
+    "x": 974,
+    "y": 545,
     "z": 3000,
-    "height": 150,
-    "width": 262,
-    "tabOrder": 2000
+    "height": 133,
+    "width": 278,
+    "tabOrder": 1700
   },
   "visual": {
     "visualType": "tableEx",
@@ -69,7 +69,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "56D"
+                  "Value": "60D"
                 }
               }
             }
@@ -83,7 +83,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "170D"
+                  "Value": "182D"
                 }
               }
             }

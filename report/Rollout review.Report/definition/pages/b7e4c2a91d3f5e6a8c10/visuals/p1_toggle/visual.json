@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_toggle",
   "position": {
-    "x": 636,
+    "x": 948,
     "y": 72,
     "z": 3000,
     "height": 40,

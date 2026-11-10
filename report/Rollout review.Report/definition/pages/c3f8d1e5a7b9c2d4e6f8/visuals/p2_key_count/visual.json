@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p2_key_count",
   "position": {
-    "x": 561,
+    "x": 579,
     "y": 462,
-    "z": 3000,
+    "z": 3100,
     "height": 24,
-    "width": 283,
+    "width": 265,
     "tabOrder": 2300
   },
   "visual": {

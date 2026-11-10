@@ -1190,9 +1190,17 @@ table _Measures
 	measure 'Seats arrived line' =
 			FORMAT ( CALCULATE ( [Seats arrived], REMOVEFILTERS ( dim_team ) ), "#,0" ) & " seats arrived"
 
-	/// Helper, not in measures.md. Marine for a library item whose latest smaller-tier run passes, grey for the others.
-	measure 'Smaller model colour' =
-			IF ( SELECTEDVALUE ( dim_library_item[smaller_model_result] ) = "Passes", "#2C5F7C", "#7E8E92" )
+	/// Helper, not in measures.md. Cost per use on the standard tier, as "3,744".
+	measure 'Standard model tokens' =
+			FORMAT ( CALCULATE ( [Cost per use], fact_test_run[model_tier] = "standard" ), "#,0" )
+
+	/// Helper, not in measures.md. Cost per use on the smaller tier, as "1,854".
+	measure 'Smaller model tokens' =
+			FORMAT ( CALCULATE ( [Cost per use], fact_test_run[model_tier] = "smaller" ), "#,0" )
+
+	/// Helper, not in measures.md. Cost index with two decimals, as "2.02".
+	measure 'Cost index text' =
+			FORMAT ( [Cost index], "0.00" )
 
 	partition _Measures = m
 		mode: import

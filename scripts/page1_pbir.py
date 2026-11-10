@@ -8,14 +8,14 @@ Round 3 (Megat, 10 Nov 2026), nothing on the page scrolls:
   shaded by the team's share at each checkpoint; follows the placement toggle and month;
 - bottom row, one top edge and height: the gap (higher, level, lower per team), movement
   (up and down per team, seats arrived apart), and the largest group with its lever.
-A row of month buttons (Month 6 to start) lets CHECK.md question 6 (Month 3 to Month 4) be read
+A month dropdown (Month 6 to start) lets CHECK.md question 6 (Month 3 to Month 4) be read
 on the page. Every visual on the page is replaced; the checks in scripts/pbir.py run first.
 """
 from __future__ import annotations
 
 from pbir import (
     AMBER, GREY, INK, INK_SOFT, MARINE, MATRIX_COLUMN_PAD, OFF, PALE, NO_FRAME, Page, caption,
-    colour, column, header, lit, measure_colour, panel, proj_column, proj_measure, pt, button_slicer,
+    colour, column, header, lit, measure_colour, panel, proj_column, proj_measure, pt, button_slicer, dropdown,
     BODY_END, CONTROL_H, CONTROL_Y, GAP, MARGIN, PAGE_W,
     set_page_order, table_height, table_width, text, textbox, value_card, wrapped_lines, TEXT_INSET,
 )
@@ -27,10 +27,9 @@ TEAMS = ("Consulting", "Finance", "Legal", "Operations", "People", "Technology")
 STAGE_NAMES = ("On the ground", "At the gate", "In the air")
 
 # ---------------------------------------------------------------- header strip
-# Round 8: both controls are rows of buttons, 40 px tall (30 clipped the toggle); the month's
-# six buttons at the right, the placement toggle GAP to their left.
-MONTH_BUTTON_W = 72
-MONTH = (PAGE_W - MARGIN - 6 * MONTH_BUTTON_W, CONTROL_Y, 6 * MONTH_BUTTON_W, CONTROL_H)
+# Round 10: the month a dropdown at the right (buttons cut "Month 6" and do not scale as months are
+# added), the placement toggle GAP to its left; both 40 px tall.
+MONTH = (PAGE_W - MARGIN - 120, CONTROL_Y, 120, CONTROL_H)
 TOGGLE = (MONTH[0] - GAP - 180, CONTROL_Y, 180, CONTROL_H)
 
 # ---------------------------------------------------------------- body
@@ -182,8 +181,7 @@ def build() -> Page:
            "Week 1 to Week 24, six check-ins")
     p.add("p1_toggle", TOGGLE, button_slicer("placement_toggle", "placement", "Placement", "Source"),
           buttons=2, longest_button="Check-in")
-    p.add("p1_month", MONTH, button_slicer("dim_month", "month_label", "Month", "Month 6", buttons=6),
-          buttons=6, longest_button="Month 6")
+    p.add("p1_month", MONTH, dropdown("dim_month", "month_label", "Month 6"), longest_button="Month 6")
 
     # ---- the matrix: teams by checkpoints, stage names over their three checkpoints
     x, y, w, h = MATRIX_PANEL
