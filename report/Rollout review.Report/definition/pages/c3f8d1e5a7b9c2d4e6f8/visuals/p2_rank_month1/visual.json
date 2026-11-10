@@ -6,7 +6,7 @@
     "y": 170,
     "z": 3000,
     "height": 229,
-    "width": 390,
+    "width": 349,
     "tabOrder": 800
   },
   "visual": {
@@ -184,6 +184,19 @@
               }
             },
             "labelOverflow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "totals": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"

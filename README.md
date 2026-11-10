@@ -47,6 +47,16 @@ Answer the 18 check questions from the CSVs:
 python3 check.py
 ```
 
+## Adopting this on live data
+
+Every measure finds the latest check-in for itself: `Check-in month` is `MAX ( dim_month[checkin_month] )`, so with live exports a seventh month becomes the latest with no change to a measure. Three places name the period by hand and would change:
+
+| Typed in | Where | What it would change to |
+|---|---|---|
+| The Month dropdown opens on `'Month 6'` | `scripts/page1_pbir.py` (the dropdown's saved filter) | The latest month: a calculated column on `dim_month` marking it (for example "Latest"), with the dropdown opening on that |
+| `baseline_month` keeps a baseline only if it is Month 6 or earlier (`firstMonth <= 6`) | `measures.dax`, calculated column on `dim_team` | The cap read from the data: `firstMonth <= MAX ( dim_month[checkin_month] )` |
+| Panel wording names Month 6 and Week 24: "Stage by team, Month 6", "Month 5 to Month 6", "Month 1 and Month 6" and that chart's Month 6 filter, "Month 6: if AI disappeared tomorrow?", the "Month 6" legend on Scale, "Week 1 to Week 24" in the footers, and Notes | The page scripts in `scripts/` | Measures that write the words from the latest month and week, and the Month 6 filter moved onto the latest-month column |
+
 ## What is here
 
 | File | What it holds |

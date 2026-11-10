@@ -26,8 +26,9 @@ PAGE = "c3f8d1e5a7b9c2d4e6f8"
 
 ROW1_Y = HEADER_TITLE_Y + HEADER_TITLE_H + GAP
 ROW1_H = 48 + 7 * 27 + 40 + 4      # the title row, the month names and legend, seven bars
-RANK_PANEL = (16, ROW1_Y, 820, ROW1_H)
-MONTH_PANEL = (852, ROW1_Y, 412, ROW1_H)
+RANK_W = 738                       # round 11: the month panel widened so its labels sit clear of the next column
+RANK_PANEL = (16, ROW1_Y, RANK_W, ROW1_H)
+MONTH_PANEL = (16 + RANK_W + GAP, ROW1_Y, 1248 - RANK_W - GAP, ROW1_H)
 ROW2_Y = ROW1_Y + ROW1_H + GAP
 ROW2_H = BODY_END - ROW2_Y
 MATCHED_PANEL = (16, ROW2_Y, 412, ROW2_H)     # wide enough for the measure's name on one line
@@ -70,6 +71,7 @@ def ranked(month: str) -> dict:
             "dataPoint": [{"properties": {"fill": colour(c)}, "selector": value_is("fact_question", "match_label", v)}
                           for v, c in MATCH],
             "labels": [{"properties": {"show": lit("true"), "labelOverflow": lit("true")}}],
+            "totals": [{"properties": {"show": lit("true")}}],   # round 11: each bar's total at its end
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
             "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit(f"{RANK_END}D"),
@@ -184,6 +186,7 @@ def build() -> Page:
         key = m.replace(" ", "").lower()
         p.add(f"p2_rank_{key}_name", (cx, y + 26, 70, 20), heading(m), on=pan, group="t", same="rank name")
         p.add(f"p2_rank_{key}", (cx, y + 48, chart_w, h - 52), ranked(m), on=pan, group="c", same="rank chart",
+              max_value=52,
               categories=7, extra={"filterConfig": {"filters": [
                   filter_in("dim_month", "month_label", [m], f"only{key}")]}})
 

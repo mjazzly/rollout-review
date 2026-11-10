@@ -952,6 +952,24 @@ If the dropdown shows a second, square frame inside its rounded box: select it, 
 |---|---|---|
 | 14 | The cost index bar chart | The cost table's Cost index column: LIB-09 2.02, LIB-13 2.07 |
 
+## P. Round 11 (10 Nov 2026): Foundation totals and label space; the check begins
+
+Round 10 passed on every page but Foundation. Confirmed by the round 10 screenshots: the Month dropdown's `items.textSize` and `items.outline`, and a column's colour by a per-prompt selector.
+
+| Ask | What changed |
+|---|---|
+| 1. Bar totals | Each ranked bar shows its total at its end: `totals.show` on the stacked bar chart (unconfirmed; the format pane's Total labels). The axis still ends at 60, room past the longest bar (52) |
+| 2. Label space | Questions by month is 494 px wide (was 412), Uses logged and ranked 738: each column is 30 px, so its label sits over its own column. Check: on a clustered column chart a label fits its own column, not the slot |
+| Live data | README, "Adopting this on live data": the three typed places and what each would change to. measures.dax unchanged |
+| The check | CHECK.md's matched column filled from the round 10 screenshots for every question but 8 |
+
+If the totals do not show: select a ranked chart on Foundation, **Format visual**, **Visual**, **Total labels** On; save, close, **send.cmd**.
+
+### Step 58, round 11
+
+1. Double-click **get.cmd**.
+2. Send Foundation. Question 8 is read from it: Month 1, Rules and allowed use, 52; Month 6, Analysis, 23.
+
 ## Next
 
 - All six pages are written. Next: the CHECK.md match from the screenshots (brief section 8), then Publish to web

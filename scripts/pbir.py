@@ -186,6 +186,8 @@ UNCONFIRMED: dict[tuple[str, str], set[str]] = {
     # the container's border, rounded as the buttons are). Neither is in Megat's files or the
     # published schema; each is the format pane's own wording (Values: text size, border).
     ("slicer", "items"): {"textSize", "outline"},
+    # Round 11: a stacked bar's total at the end of each bar (the format pane's "Total labels").
+    ("barChart", "totals"): {"show"},
 }
 UNCONFIRMED_VALUES: list[str] = [
     "items.outline 'None' on the Month dropdown",
@@ -800,10 +802,12 @@ class Page:
                     out.append(f"{v.name}: '{v.longest_category}' needs {CATEGORY_ROOM} px more than its "
                                f"{per_cat:.0f} px slot to stay level")
                 if labels_on and v.longest_label:
-                    # a label above a column may be wider than the column, not wider than its slot
-                    slot = per_cat / v.series
+                    # one series: a label above a column may be wider than the column, not its slot;
+                    # clustered: each label within its own column (round 10: the amber labels touched
+                    # the marine columns in 24 px columns)
+                    slot = per_cat / v.series if v.series == 1 else per_cat * (1 - DEFAULT_INNER_PADDING / 100) / v.series
                     if text_width([(v.longest_label, pt(9))]) + 8 > slot:
-                        out.append(f"{v.name}: label '{v.longest_label}' is wider than its slot ({slot:.0f} px)")
+                        out.append(f"{v.name}: label '{v.longest_label}' is wider than its room ({slot:.0f} px)")
             for it in objs.get("valueAxis", []):
                 end = it.get("properties", {}).get("end")
                 if end and v.max_value:

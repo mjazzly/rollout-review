@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p2_rank_month6",
   "position": {
-    "x": 434,
+    "x": 393,
     "y": 170,
     "z": 3000,
     "height": 229,
-    "width": 390,
+    "width": 349,
     "tabOrder": 1000
   },
   "visual": {
@@ -184,6 +184,19 @@
               }
             },
             "labelOverflow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "totals": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
