@@ -930,7 +930,7 @@ Confirmed by the round 9 screenshots: the button slicer's one-row layout (`layou
 
 - **Computed.** Every measure reads the month from `Check-in month = MAX ( dim_month[checkin_month] )`. With no month picked that is the last month in `dim_month`, today 6; a seventh check-in added to `dim_month` becomes the latest with no change to a measure.
 - **Typed in:** (1) the Month dropdown's opening pick, `'Month 6'`, in `scripts/page1_pbir.py`: a seventh month would still open on Month 6; (2) `baseline_month` in measures.dax keeps a baseline only if it is Month 6 or earlier (`firstMonth <= 6`); (3) words on the pages: "Stage by team, Month 6", "Month 5 to Month 6", "Uses logged and ranked, Month 1 and Month 6" and that chart's Month 6 filter, "Month 6: if AI disappeared tomorrow?", the "Month 6" legend on Scale, "Week 24" in the subtitles and footers, and Notes.
-- **To make all of it computed** (needs measures.dax, so not this round): a calculated column on `dim_month` marking the latest month, so the dropdown and the Month 6 chart filter follow it; the `<= 6` cap read from `dim_month`; and the panel words that name a month or week turned into measures. Megat to say go.
+- **To make all of it computed** (needs measures.dax, so not this round): a calculated column on `dim_month` marking the latest month, so the dropdown and the Month 6 chart filter follow it; the `<= 6` cap read from `dim_month`; and the panel words that name a month or week turned into measures. Megat, 10 Nov 2026: not now; the page opens on Month 6 as typed.
 
 ### Step 57, round 10
 
