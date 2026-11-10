@@ -10,26 +10,28 @@ Brief section 6, page 5, "Where has it changed the work?":
   by the team) and at Month 6, the Month 6 bar labelled with its change in points (round 7:
   one chart, the change is the label);
 - uses taken up beyond the first team: the count, and the prompts by name with the team that
-  took each up and the week it started (text, so a table).
+  took each up, the week it started and the runs by other teams (text, so a table; round 8:
+  the columns spread across the panel, under the figure band).
 """
 from __future__ import annotations
 
 from pbir import (
-    GREY, INK, INK_SOFT, MARINE, OFF, PALE, NO_FRAME, Page, colour, column, header, lit, panel,
-    proj_column, proj_measure, pt, table_height, table_width, textbox, value_card,
-    BODY_END, HEADER_BODY_Y,
+    GREY, INK, INK_SOFT, MARINE, OFF, PALE, NO_FRAME, Page, body_top, colour, column, figure_band, header, lit,
+    panel, proj_column, proj_measure, pt, table_height, table_width, textbox,
+    BODY_END, GAP, HEADER_SECOND_H, HEADER_SECOND_Y,
 )
 
 PAGE = "f6b2c4d8e1a3f5b7c9d1"
 
-ROW2_H = 220
+ROW2_H = 6 + 48 + 2 + table_height([1] * 4) + 4   # the figure band, then four prompts
 ROW2_Y = BODY_END - ROW2_H
-ROW1_Y, ROW1_H = HEADER_BODY_Y, ROW2_Y - 4 - HEADER_BODY_Y
+ROW1_Y = HEADER_SECOND_Y + HEADER_SECOND_H + GAP
+ROW1_H = ROW2_Y - GAP - ROW1_Y
 IMPACT_PANEL = (16, ROW1_Y, 616, ROW1_H)
 AIR_PANEL = (648, ROW1_Y, 616, ROW1_H)
 TAKEN_PANEL = (16, ROW2_Y, 1248, ROW2_H)
-FIGURE_W = 180
-TAKEN_COLS = (56, 240, 110, 110, 80)   # ID, prompt, made by, taken up by, from
+# ID, prompt, made by, taken up by, from, runs by other teams: spread over the panel's 1224 px
+TAKEN_COLS = (100, 340, 170, 170, 140, 220)
 IMPACT_MIN_SHARE = 17 / 120            # the thinnest segment: Legal, "I would lose time every week"
 AIR_MAX = 0.603                        # Consulting at Month 6 (scripts/page5_figures.py)
 IMPACT = (("Impact lose time share", "I would lose time every week", MARINE),
@@ -66,7 +68,9 @@ def by_team(chart: str, measures, category=("dim_team", "team"), end=1.0, inner_
         "objects": {
             "dataPoint": [{"properties": {"fill": colour(c)}, "selector": {"metadata": f"_Measures.{m}"}}
                           for m, _, c in measures],
-            "labels": [{"properties": {"show": lit("true")}}],
+            "labels": [{"properties": {"show": lit("true")}}] + [
+                {"properties": {"color": colour(INK)}, "selector": {"metadata": f"_Measures.{m}"}}
+                for m, _, c in measures if c == PALE],   # round 8: dark labels on the pale fill
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": axis}],
             "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit(f"{end}D"),
@@ -94,6 +98,7 @@ def build() -> Page:
     p = Page(PAGE, "Scale", number=5)
     header(p, "p5", "Scale", "Where has it changed the work?",
            "Read from the question log, the usage dashboards and the check-in", "Week 1 to Week 24")
+    assert body_top(p) == ROW1_Y
 
     # ---- impact in people's own words
     pan, x, y, w, h, inner = panel_top(p, "impact", IMPACT_PANEL, "Impact in people's own words",
@@ -101,7 +106,6 @@ def build() -> Page:
                                        tuple((d, c) for _, d, c in IMPACT), 330, "top")
     p.add("p5_impact_chart", (x + 12, y + 46, inner, h - 50), by_team("barChart", IMPACT),
           on=pan, group="c", categories=6, label_min_share=IMPACT_MIN_SHARE)
-    p.awaiting["p5_impact_chart:label colour"] = "A little labels in ink on the pale segment, as the gap's (step 54)"
 
     # ---- share in the air: baseline against Month 6, the change in points on the Month 6 label
     pan, x, y, w, h, inner = panel_top(p, "air", AIR_PANEL, "Share of people in the air against the baseline",
@@ -112,19 +116,18 @@ def build() -> Page:
           on=pan, group="c", categories=6, series=2, max_value=AIR_MAX)
 
     # ---- uses taken up beyond the first team
-    pan, x, y, w, h, inner = panel_top(p, "taken", TAKEN_PANEL, "Uses taken up beyond the first team",
-                                       "Prompts run by two or more teams")
-    p.add("p5_taken_figure", (x + 12, y + 54, FIGURE_W, 62), value_card("Uses taken up beyond the first team", 36),
-          on=pan, group="b", same="figure")
-    p.add("p5_taken_count", (x + 12, y + 116, FIGURE_W, 24), value_card("Uses taken up count", 10, colour(INK_SOFT)),
-          on=pan, group="b", same="count", longest_value="4 of 23 library items")
-    tx = x + 12 + FIGURE_W + 16
+    x, y, w, h = TAKEN_PANEL
+    pan = "p5_taken_panel"
+    p.add(pan, TAKEN_PANEL, panel(), z=2000)
+    band = figure_band(p, "p5_taken", pan, x, y, w, "Uses taken up beyond the first team",
+                       "Uses taken up beyond the first team", count="Uses taken up count", longest="4")
     cols = [(proj_column("dim_library_item", "item_id", display="ID"), TAKEN_COLS[0]),
             (proj_column("dim_library_item", "item_name", display="Prompt"), TAKEN_COLS[1]),
             (proj_column("dim_library_item", "owner_team", display="Made by"), TAKEN_COLS[2]),
             (proj_measure("Second team", "Taken up by"), TAKEN_COLS[3]),
-            (proj_measure("Second team from", "From"), TAKEN_COLS[4])]
-    p.add("p5_taken_table", (tx, y + 46, table_width(list(TAKEN_COLS)), h - 50), {
+            (proj_measure("Second team from", "From"), TAKEN_COLS[4]),
+            (proj_measure("Runs by other teams", "Runs by other teams"), TAKEN_COLS[5])]
+    p.add("p5_taken_table", (x + 12, band + 2, w - 24, y + h - 4 - band - 2), {
         "visualType": "tableEx",
         "query": {"queryState": {"Values": {"projections": [c for c, _ in cols]}}},
         "objects": {
@@ -134,10 +137,11 @@ def build() -> Page:
         },
         "visualContainerObjects": NO_FRAME,
         "drillFilterOtherVisuals": True,
-    }, on=pan, group="b", need_w=table_width(list(TAKEN_COLS)), need_h=table_height([1] * 4))
+    }, on=pan, group="c", need_w=table_width(list(TAKEN_COLS)), need_h=table_height([1] * 4))
 
     p.answers = {
-        16: [("p5_taken_table", "item_id"), ("p5_taken_table", "Second team"), ("p5_taken_table", "Second team from")],
+        16: [("p5_taken_table", "item_id"), ("p5_taken_table", "Second team"), ("p5_taken_table", "Second team from"),
+             ("p5_taken_table", "Runs by other teams")],
         17: [("p5_air_chart", "Share in the air latest with change"), ("p5_air_chart", "Share of people in the air baseline")],
         18: [("p5_impact_chart", "Impact lose time share")],
     }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_recurring_panel",
   "position": {
-    "x": 16,
-    "y": 358,
+    "x": 666,
+    "y": 133,
     "z": 2000,
-    "height": 336,
-    "width": 806,
-    "tabOrder": 1600
+    "height": 304,
+    "width": 598,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "textbox",

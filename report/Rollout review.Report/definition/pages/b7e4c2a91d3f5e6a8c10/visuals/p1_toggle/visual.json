@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_toggle",
   "position": {
-    "x": 948,
-    "y": 40,
+    "x": 636,
+    "y": 60,
     "z": 3000,
-    "height": 30,
+    "height": 40,
     "width": 180,
     "tabOrder": 300
   },
@@ -81,7 +81,7 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "p",
+                    "Name": "b",
                     "Entity": "placement_toggle",
                     "Type": 0
                   }
@@ -95,7 +95,7 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "p"
+                                  "Source": "b"
                                 }
                               },
                               "Property": "placement"

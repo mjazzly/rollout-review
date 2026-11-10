@@ -3,9 +3,9 @@
   "name": "p6_navigator",
   "position": {
     "x": 16,
-    "y": 4,
+    "y": 16,
     "z": 0,
-    "height": 32,
+    "height": 28,
     "width": 1248,
     "tabOrder": 0
   },

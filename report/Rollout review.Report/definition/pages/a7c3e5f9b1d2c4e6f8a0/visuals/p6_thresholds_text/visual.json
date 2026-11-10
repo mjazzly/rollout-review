@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p6_thresholds_text",
   "position": {
-    "x": 804,
-    "y": 282,
+    "x": 449,
+    "y": 579,
     "z": 3000,
-    "height": 128,
-    "width": 448,
+    "height": 97,
+    "width": 381,
     "tabOrder": 1100
   },
   "visual": {
@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "Working at 40% or more.",
+                    "value": "Working at 40% or more",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -46,7 +46,7 @@
                     }
                   },
                   {
-                    "value": "Working at 60% or more.",
+                    "value": "Working at 60% or more",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -65,7 +65,7 @@
                     }
                   },
                   {
-                    "value": "Working at 50% or more.",
+                    "value": "Working at 50% or more",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -84,7 +84,7 @@
                     }
                   },
                   {
-                    "value": "Working at 10 points or more above each team's baseline.",
+                    "value": "Working at 10 points or more above baseline",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -95,7 +95,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "How a stage reads. ",
+                    "value": "Trend. ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "fontWeight": "bold",
@@ -103,7 +103,26 @@
                     }
                   },
                   {
-                    "value": "Working when the month's figure meets its threshold. The trend compares the month with two check-ins earlier: up, down, or flat within 1 point; no comparison before then. The front page lines run from Month 2 to Month 6. The thresholds are illustrative; a programme sets its own.",
+                    "value": "Against two check-ins earlier; flat within 1 point",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Illustrative. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "A programme sets its own thresholds",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

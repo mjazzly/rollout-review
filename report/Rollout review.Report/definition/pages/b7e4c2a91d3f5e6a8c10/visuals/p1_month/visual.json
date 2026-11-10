@@ -2,15 +2,15 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_month",
   "position": {
-    "x": 1144,
-    "y": 40,
+    "x": 832,
+    "y": 60,
     "z": 3000,
-    "height": 30,
-    "width": 120,
+    "height": 40,
+    "width": 432,
     "tabOrder": 400
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "advancedSlicerVisual",
     "query": {
       "queryState": {
         "Values": {
@@ -27,8 +27,8 @@
                 }
               },
               "queryRef": "dim_month.month_label",
-              "nativeQueryRef": "month_label",
-              "active": true
+              "nativeQueryRef": "Month",
+              "displayName": "Month"
             }
           ]
         }
@@ -37,11 +37,16 @@
     "objects": {
       "data": [
         {
+          "properties": {}
+        }
+      ],
+      "header": [
+        {
           "properties": {
-            "mode": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dropdown'"
+                  "Value": "false"
                 }
               }
             }
@@ -68,19 +73,6 @@
           }
         }
       ],
-      "header": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "general": [
         {
           "properties": {
@@ -89,7 +81,7 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "f",
+                    "Name": "b",
                     "Entity": "dim_month",
                     "Type": 0
                   }
@@ -103,7 +95,7 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "f"
+                                  "Source": "b"
                                 }
                               },
                               "Property": "month_label"

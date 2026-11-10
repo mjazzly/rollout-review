@@ -3,9 +3,9 @@
   "name": "p1_gap_chart",
   "position": {
     "x": 28,
-    "y": 404,
+    "y": 446,
     "z": 3000,
-    "height": 286,
+    "height": 232,
     "width": 398,
     "tabOrder": 1500
   },
@@ -175,6 +175,24 @@
                 }
               }
             }
+          }
+        },
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#172529'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Gap level share"
           }
         }
       ],

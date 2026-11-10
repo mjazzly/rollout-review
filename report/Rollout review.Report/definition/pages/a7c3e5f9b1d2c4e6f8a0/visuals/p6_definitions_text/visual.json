@@ -3,10 +3,10 @@
   "name": "p6_definitions_text",
   "position": {
     "x": 28,
-    "y": 110,
+    "y": 146,
     "z": 3000,
-    "height": 517,
-    "width": 736,
+    "height": 377,
+    "width": 1224,
     "tabOrder": 500
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Requests matched to a tested prompt that already exists. ",
+                    "value": "Rollout review. ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "fontWeight": "bold",
@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "Questions answered by pointing the asker to a prompt in the library, over all questions logged.",
+                    "value": "The four stage figures are defined under their pages; moved up is under Where people sit.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -38,56 +38,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "Repeat use within 30 days. ",
+                    "value": "Where people sit",
                     "textStyle": {
                       "fontSize": "9pt",
                       "fontWeight": "bold",
-                      "color": "#172529"
-                    }
-                  },
-                  {
-                    "value": "People active again within 30 days of their first active week, over people whose first active week began at least 30 days before the check-in.",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#4F6166"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Tested prompts that pass on a smaller model. ",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#172529"
-                    }
-                  },
-                  {
-                    "value": "Prompts whose latest run on the smaller model matched every test case. The front page shows them as a share of the prompts live at the check-in.",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#4F6166"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Share of people in the air against the baseline. ",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "fontWeight": "bold",
-                      "color": "#172529"
-                    }
-                  },
-                  {
-                    "value": "People the sources place at Takeoff, Above the clouds or Frequent flyer, as a share of the team, at Month 6 against the team's baseline month: the first check-in after its seats arrived. The change is in points.",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#4F6166"
+                      "color": "#2C5F7C"
                     }
                   }
                 ]
@@ -141,7 +96,7 @@
                     }
                   },
                   {
-                    "value": "People seated at both counts whose source checkpoint rose, held or fell between the previous count and this one. Seats arrived over the same month are counted apart, never added in.",
+                    "value": "People seated at both counts whose source checkpoint rose, held or fell since the previous count; seats arrived in the month are counted apart.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -160,10 +115,22 @@
                     }
                   },
                   {
-                    "value": "The checkpoint holding the most people in each team, with the lever written for it. A tie goes to the earlier checkpoint.",
+                    "value": "The checkpoint holding the most people in each team, with the lever written for it; a tie goes to the earlier checkpoint.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Foundation",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#2C5F7C"
                     }
                   }
                 ]
@@ -179,7 +146,26 @@
                     }
                   },
                   {
-                    "value": "Questions in the question log, by use. Matched means the asker was pointed to a tested prompt.",
+                    "value": "Questions in the question log, by use; matched means the asker was pointed to a tested prompt.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Requests matched to a tested prompt that already exists. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "Questions answered by pointing the asker to a prompt in the library, over all questions logged.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -228,6 +214,18 @@
               {
                 "textRuns": [
                   {
+                    "value": "Execution",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#2C5F7C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
                     "value": "First use within two weeks of training. ",
                     "textStyle": {
                       "fontSize": "9pt",
@@ -236,7 +234,26 @@
                     }
                   },
                   {
-                    "value": "Attendees who ran the prompt shown in their session that week or the next, over all attendees.",
+                    "value": "Attendees who ran the prompt shown in their session that week or the next, over all attendees. Legal's 0.0% is real: one session, 19 attendees.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Repeat use within 30 days. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "People active again within 30 days of their first active week, over people whose first active week began 30 days or more before the check-in.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -255,7 +272,7 @@
                     }
                   },
                   {
-                    "value": "Questions marked as recurring whose use had a live prompt in the library the week they were asked, over all recurring questions.",
+                    "value": "Recurring questions whose use had a live prompt the week they were asked, over all recurring questions.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -274,7 +291,38 @@
                     }
                   },
                   {
-                    "value": "Prompts live at the check-in whose latest run on the standard model matched every test case, over all live prompts.",
+                    "value": "Live prompts whose latest standard-model run matched every test case, over all live prompts.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Refinement",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#2C5F7C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Tested prompts that pass on a smaller model. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "Live prompts whose latest smaller-model run matched every test case; each column shows its cases matched.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -293,7 +341,7 @@
                     }
                   },
                   {
-                    "value": "Median tokens per test run on each model. The cost index is the standard model's median over the smaller model's.",
+                    "value": "Median tokens per test run on each model; the cost index is the standard model's median over the smaller model's.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -323,6 +371,37 @@
               {
                 "textRuns": [
                   {
+                    "value": "Scale",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#2C5F7C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Share of people in the air against the baseline. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "People the sources place at Takeoff or above, as a share of the team, at Month 6 against the team's baseline month; the change in points.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
                     "value": "Impact in people's own words. ",
                     "textStyle": {
                       "fontSize": "9pt",
@@ -331,7 +410,7 @@
                     }
                   },
                   {
-                    "value": "Answers at the Month 6 check-in to \"If AI disappeared from your work tomorrow, what would change?\", by team.",
+                    "value": "Month 6 answers to \"If AI disappeared from your work tomorrow, what would change?\", by team.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -350,7 +429,7 @@
                     }
                   },
                   {
-                    "value": "Prompts run by two or more teams, and the week a team other than the one that made it first ran each.",
+                    "value": "Prompts run by two or more teams; the week another team first ran each, and the runs by other teams.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

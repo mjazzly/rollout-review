@@ -3,10 +3,10 @@
   "name": "p1_move_chart",
   "position": {
     "x": 466,
-    "y": 404,
+    "y": 448,
     "z": 3000,
-    "height": 263,
-    "width": 206,
+    "height": 230,
+    "width": 186,
     "tabOrder": 2000
   },
   "visual": {

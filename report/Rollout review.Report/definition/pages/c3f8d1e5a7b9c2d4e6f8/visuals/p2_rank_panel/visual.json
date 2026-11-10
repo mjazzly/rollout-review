@@ -3,9 +3,9 @@
   "name": "p2_rank_panel",
   "position": {
     "x": 16,
-    "y": 102,
+    "y": 133,
     "z": 2000,
-    "height": 310,
+    "height": 281,
     "width": 820,
     "tabOrder": 400
   },

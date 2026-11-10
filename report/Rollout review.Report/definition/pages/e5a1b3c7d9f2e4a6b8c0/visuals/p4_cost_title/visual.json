@@ -3,10 +3,10 @@
   "name": "p4_cost_title",
   "position": {
     "x": 28,
-    "y": 412,
+    "y": 488,
     "z": 3000,
     "height": 20,
-    "width": 372,
+    "width": 306,
     "tabOrder": 1000
   },
   "visual": {

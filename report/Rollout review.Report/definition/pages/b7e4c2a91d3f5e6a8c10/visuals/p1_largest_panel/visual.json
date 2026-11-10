@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_largest_panel",
   "position": {
-    "x": 700,
-    "y": 358,
+    "x": 680,
+    "y": 400,
     "z": 2000,
-    "height": 336,
-    "width": 564,
-    "tabOrder": 2300
+    "height": 282,
+    "width": 584,
+    "tabOrder": 2100
   },
   "visual": {
     "visualType": "textbox",

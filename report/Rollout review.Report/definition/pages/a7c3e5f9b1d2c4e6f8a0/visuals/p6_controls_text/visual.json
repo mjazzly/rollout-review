@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p6_controls_text",
   "position": {
-    "x": 804,
-    "y": 454,
+    "x": 870,
+    "y": 579,
     "z": 3000,
-    "height": 144,
-    "width": 448,
+    "height": 97,
+    "width": 382,
     "tabOrder": 1400
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Where people sit. ",
+                    "value": "Placement. ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "fontWeight": "bold",
@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "Placement switches People at each checkpoint and Largest group between source and check-in placement. Month sets every panel on the page.",
+                    "value": "Source or check-in: grid and largest group",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -38,7 +38,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Execution. ",
+                    "value": "Month. ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "fontWeight": "bold",
@@ -46,7 +46,45 @@
                     }
                   },
                   {
-                    "value": "Team sets every panel except Tested prompts passing their cases.",
+                    "value": "Sets every panel on Where people sit",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Team. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "Sets Execution; none picked shows every team",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Passing. ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "fontWeight": "bold",
+                      "color": "#172529"
+                    }
+                  },
+                  {
+                    "value": "Tested prompts passing ignores the team",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -65,7 +103,7 @@
                     }
                   },
                   {
-                    "value": "On Where people sit, a cell is the team's share at that checkpoint, white at none to marine at 60% or more. On Execution, a cell is recurring questions, white at none to marine at 20 or more.",
+                    "value": "Darker is more; marine at 60%, or 20 questions",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -84,7 +122,7 @@
                     }
                   },
                   {
-                    "value": "Cost is shown in tokens. A programme would apply its own price per model.",
+                    "value": "In tokens; a programme applies its own price per model",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

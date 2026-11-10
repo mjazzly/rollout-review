@@ -372,6 +372,52 @@ VAR everyone =
 RETURN
     DIVIDE ( inStage + 0, everyone )
 
+// Stage ground share baseline
+// Create as: measure in _Measures. Page 0, the stage chart at the baseline month: one series per stage.
+// format: 0.0%
+// format expression: """ """
+// description: Helper, not in measures.md. Stage split baseline for On the ground; its label is blank (a space), so only the In the air share is labelled on the page.
+Stage ground share baseline =
+CALCULATE ( [Stage split baseline], dim_checkpoint_source[stage] = "On the ground" )
+
+// Stage gate share baseline
+// Create as: measure in _Measures. Page 0, the stage chart at the baseline month: one series per stage.
+// format: 0.0%
+// format expression: """ """
+// description: Helper, not in measures.md. Stage split baseline for At the gate; its label is blank (a space), so only the In the air share is labelled on the page.
+Stage gate share baseline =
+CALCULATE ( [Stage split baseline], dim_checkpoint_source[stage] = "At the gate" )
+
+// Stage air share baseline
+// Create as: measure in _Measures. Page 0, the stage chart at the baseline month: one series per stage.
+// format: 0.0%
+// description: Helper, not in measures.md. Stage split baseline for In the air, labelled on the page.
+Stage air share baseline =
+CALCULATE ( [Stage split baseline], dim_checkpoint_source[stage] = "In the air" )
+
+// Stage ground share latest
+// Create as: measure in _Measures. Page 0, the stage chart at the latest month: one series per stage.
+// format: 0.0%
+// format expression: """ """
+// description: Helper, not in measures.md. Stage split latest for On the ground; its label is blank (a space), so only the In the air share is labelled on the page.
+Stage ground share latest =
+CALCULATE ( [Stage split latest], dim_checkpoint_source[stage] = "On the ground" )
+
+// Stage gate share latest
+// Create as: measure in _Measures. Page 0, the stage chart at the latest month: one series per stage.
+// format: 0.0%
+// format expression: """ """
+// description: Helper, not in measures.md. Stage split latest for At the gate; its label is blank (a space), so only the In the air share is labelled on the page.
+Stage gate share latest =
+CALCULATE ( [Stage split latest], dim_checkpoint_source[stage] = "At the gate" )
+
+// Stage air share latest
+// Create as: measure in _Measures. Page 0, the stage chart at the latest month: one series per stage.
+// format: 0.0%
+// description: Helper, not in measures.md. Stage split latest for In the air, labelled on the page.
+Stage air share latest =
+CALCULATE ( [Stage split latest], dim_checkpoint_source[stage] = "In the air" )
+
 // Moved up since last count
 // Create as: measure in _Measures. Place [Seats arrived] beside it as its own number.
 // format: #,0
@@ -959,6 +1005,22 @@ Answer key first count =
 FORMAT ( CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0, "#,0" )
     & " of " & FORMAT ( COUNTROWS ( dim_library_item ) + 0, "#,0" ) & " library items"
 
+// Answer key written first items
+// Create as: measure in _Measures. Page 2, the bar under Prompts tested against an answer key written first.
+// format: #,0
+// format expression: """" & FORMAT ( CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0, "#,0" ) & " written first"""
+// description: Helper, not in measures.md. Library items with answer_key_first true, labelled as "16 written first".
+Answer key written first items =
+CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0
+
+// Answer key not first items
+// Create as: measure in _Measures. Page 2, the bar under Prompts tested against an answer key written first.
+// format: #,0
+// format expression: """" & FORMAT ( CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = FALSE () ) + 0, "#,0" ) & " not first"""
+// description: Helper, not in measures.md. Library items with answer_key_first false, labelled as "7 not first".
+Answer key not first items =
+CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = FALSE () ) + 0
+
 
 // Rules questions
 // Create as: measure in _Measures. Page 2 line chart, by month.
@@ -1114,7 +1176,7 @@ RETURN
 // Recurring covered count
 // Create as: measure in _Measures. Page 3, under Recurring questions covered by a tested prompt.
 // format: text
-// description: Helper, not in measures.md. Recurring questions covered by a tested prompt, and all recurring questions, as "127 of 142 questions".
+// description: Helper, not in measures.md. Recurring questions covered by a tested prompt, and all recurring questions, as "127 of 142 recurring questions".
 Recurring covered count =
 VAR repeatQuestions = FILTER ( fact_question, fact_question[repeat_flag] )
 VAR covered =
@@ -1133,7 +1195,7 @@ VAR covered =
             )
     )
 RETURN
-    FORMAT ( COUNTROWS ( covered ) + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( repeatQuestions ) + 0, "#,0" ) & " questions"
+    FORMAT ( COUNTROWS ( covered ) + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( repeatQuestions ) + 0, "#,0" ) & " recurring questions"
 
 // Recurring shade
 // Create as: measure in _Measures. The cell background of the page 3 grid (use by month).
@@ -1350,7 +1412,8 @@ RETURN
 // Smaller model cases share
 // Create as: measure in _Measures. Page 4 main chart: one column per live prompt.
 // format: 0.0%
-// description: Helper, not in measures.md. For a library item live at the check-in week, cases matched over cases on its latest smaller-tier run; blank for items not live.
+// format expression: VAR itemId = SELECTEDVALUE ( dim_library_item[item_id] ) VAR latestRun = TOPN ( 1, FILTER ( ALL ( fact_test_run ), fact_test_run[item_id] = itemId && fact_test_run[model_tier] = "smaller" ), fact_test_run[run_date], DESC, fact_test_run[run_id], DESC ) RETURN """" & FORMAT ( MAXX ( latestRun, fact_test_run[cases_matched] ), "#,0" ) & " of " & FORMAT ( MAXX ( latestRun, fact_test_run[cases_total] ), "#,0" ) & """"
+// description: Helper, not in measures.md. For a library item live at the check-in week, cases matched over cases on its latest smaller-tier run; blank for items not live. Its label is the cases, as "11 of 12".
 Smaller model cases share =
 VAR checkinWeek = [Check-in week]
 VAR itemId = SELECTEDVALUE ( dim_library_item[item_id] )
@@ -1541,3 +1604,27 @@ VAR otherTeams =
 VAR topRow = TOPN ( 1, otherTeams, [@first], ASC, fact_library_run[team], ASC )
 RETURN
     IF ( NOT ISBLANK ( ownerTeam ), MAXX ( topRow, fact_library_run[team] ) )
+
+// Runs by other teams
+// Create as: measure in _Measures. Page 5 table, beside From.
+// format: text
+// description: Helper, not in measures.md. Per library item, runs in fact_library_run by teams other than the owner_team, as "352"; blank when no other team ran it.
+Runs by other teams =
+VAR ownerTeam = SELECTEDVALUE ( dim_library_item[owner_team] )
+VAR otherRuns =
+    CALCULATE (
+        SUM ( fact_library_run[runs] ),
+        fact_library_run[team] <> ownerTeam,
+        REMOVEFILTERS ( dim_team ),
+        REMOVEFILTERS ( dim_week ),
+        REMOVEFILTERS ( dim_month )
+    )
+RETURN
+    IF ( NOT ISBLANK ( ownerTeam ) && NOT ISBLANK ( otherRuns ), FORMAT ( otherRuns, "#,0" ) )
+
+// Seats arrived line
+// Create as: measure in _Measures. Page 1, the movement panel's second line.
+// format: text
+// description: Helper, not in measures.md. Seats arrived over the month picked, all teams, as "0 seats arrived".
+Seats arrived line =
+FORMAT ( CALCULATE ( [Seats arrived], REMOVEFILTERS ( dim_team ) ), "#,0" ) & " seats arrived"

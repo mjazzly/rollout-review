@@ -8,15 +8,15 @@ Round 3 (Megat, 10 Nov 2026), nothing on the page scrolls:
   shaded by the team's share at each checkpoint; follows the placement toggle and month;
 - bottom row, one top edge and height: the gap (higher, level, lower per team), movement
   (up and down per team, seats arrived apart), and the largest group with its lever.
-A month slicer (Month 6 to start) lets CHECK.md question 6 (Month 3 to Month 4) be read
+A row of month buttons (Month 6 to start) lets CHECK.md question 6 (Month 3 to Month 4) be read
 on the page. Every visual on the page is replaced; the checks in scripts/pbir.py run first.
 """
 from __future__ import annotations
 
 from pbir import (
     AMBER, GREY, INK, INK_SOFT, MARINE, MATRIX_COLUMN_PAD, OFF, PALE, NO_FRAME, Page, caption,
-    colour, column, header, lit, measure_colour, panel, proj_column, proj_measure, pt, slim_slicer,
-    BODY_END, CONTROL_H, CONTROL_Y, HEADER_BODY_Y_NO_QUESTION,
+    colour, column, header, lit, measure_colour, panel, proj_column, proj_measure, pt, button_slicer,
+    BODY_END, CONTROL_H, CONTROL_Y, GAP, MARGIN, PAGE_W,
     set_page_order, table_height, table_width, text, textbox, value_card, wrapped_lines, TEXT_INSET,
 )
 
@@ -27,21 +27,26 @@ TEAMS = ("Consulting", "Finance", "Legal", "Operations", "People", "Technology")
 STAGE_NAMES = ("On the ground", "At the gate", "In the air")
 
 # ---------------------------------------------------------------- header strip
-# Round 7: the title only; the two controls on one slim row at its right, no boxes.
-TOGGLE = (948, CONTROL_Y, 180, CONTROL_H)
-MONTH = (1144, CONTROL_Y, 120, CONTROL_H)
+# Round 8: both controls are rows of buttons, 40 px tall (30 clipped the toggle); the month's
+# six buttons at the right, the placement toggle GAP to their left.
+MONTH_BUTTON_W = 72
+MONTH = (PAGE_W - MARGIN - 6 * MONTH_BUTTON_W, CONTROL_Y, 6 * MONTH_BUTTON_W, CONTROL_H)
+TOGGLE = (MONTH[0] - GAP - 180, CONTROL_Y, 180, CONTROL_H)
 
 # ---------------------------------------------------------------- body
-MATRIX_PANEL = (16, HEADER_BODY_Y_NO_QUESTION, 1248, 280)
+BODY_Y = CONTROL_Y + CONTROL_H + GAP
 TEAM_COL, CP_COL = 120, 116            # matrix column widths: team, then each checkpoint
-BOTTOM_Y = MATRIX_PANEL[1] + MATRIX_PANEL[3] + 4
+MATRIX_H = 48 + 216 + 4                # title and stage names, then the matrix's header and six rows
+MATRIX_PANEL = (16, BODY_Y, 1248, MATRIX_H)
+BOTTOM_Y = MATRIX_PANEL[1] + MATRIX_PANEL[3] + GAP
 BOTTOM_H = BODY_END - BOTTOM_Y
-# Round 7: the gap is 422 wide so Finance's 13 gets 20 px of bar (it overflows its segment);
-# movement narrows to 230, and the lever table keeps a 292 px lever column.
+# Round 7: the gap is 422 wide so Finance's 13 gets 20 px of bar (it overflows its segment).
+# Round 8: movement narrows to 210 and the lever table widens to 140 for the largest group, so
+# only Legal's lever wraps and the table fits the shorter row.
 GAP_PANEL = (16, BOTTOM_Y, 422, BOTTOM_H)
-MOVE_PANEL = (454, BOTTOM_Y, 230, BOTTOM_H)
-LARGEST_PANEL = (700, BOTTOM_Y, 564, BOTTOM_H)
-LARGEST_COLS = (80, 120, 292)          # team; largest group with its people; lever
+MOVE_PANEL = (GAP_PANEL[0] + GAP_PANEL[2] + GAP, BOTTOM_Y, 210, BOTTOM_H)
+LARGEST_PANEL = (MOVE_PANEL[0] + MOVE_PANEL[2] + GAP, BOTTOM_Y, 1264 - (MOVE_PANEL[0] + MOVE_PANEL[2] + GAP), BOTTOM_H)
+LARGEST_COLS = (80, 140, 292)          # team; largest group with its people; lever
 
 # The thinnest gap segment at Month 6: Finance, lower, 13 of 200 (scripts/page1_figures.py)
 GAP_MIN_SHARE = 13 / 200
@@ -110,7 +115,9 @@ def gap_chart() -> dict:
         },
         "objects": {
             "dataPoint": [series_colour(m, c) for m, _, c in series],
-            "labels": [{"properties": {"show": lit("true"), "labelOverflow": lit("true")}}],
+            # round 8: dark labels on the pale Level segment, white (the default) on the others
+            "labels": [{"properties": {"show": lit("true"), "labelOverflow": lit("true")}},
+                       {"properties": {"color": colour(INK)}, "selector": {"metadata": "_Measures.Gap level share"}}],
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
             "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit("1D"),
@@ -146,51 +153,6 @@ def movement_chart() -> dict:
     }
 
 
-def slicer(table: str, col: str, start: str, header: str, buttons: bool) -> dict:
-    objects = {
-        "data": [{"properties": {"mode": text("Basic" if buttons else "Dropdown")}}],
-        "selection": [{"properties": {"singleSelect": lit("true"), "strictSingleSelect": lit("true")}}],
-        "general": [{"properties": {"filter": {"filter": {
-            "Version": 2, "From": [{"Name": "f", "Entity": table, "Type": 0}],
-            "Where": [{"Condition": {"In": {
-                "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "f"}}, "Property": col}}],
-                "Values": [[{"Literal": {"Value": f"'{start}'"}}]]}}}]}}}}],
-        "header": [{"properties": {"text": text(header)}}],
-    }
-    if buttons:
-        objects["general"][0]["properties"]["orientation"] = lit("1D")   # horizontal: two buttons
-    return {
-        "visualType": "slicer",
-        "query": {"queryState": {"Values": {"projections": [proj_column(table, col, active=True)]}}},
-        "objects": objects,
-        "drillFilterOtherVisuals": True,
-    }
-
-
-def button_toggle() -> dict:
-    """The placement toggle as Megat's button slicer (commit 1141219): Source and Check-in as
-    two buttons, the selected one marine with white text (the button slicer's default);
-    the title is the field's display name, "Placement"; it opens on Source."""
-    return {
-        "visualType": "advancedSlicerVisual",
-        "query": {"queryState": {"Values": {"projections": [
-            proj_column("placement_toggle", "placement", display="Placement")]}}},
-        "objects": {
-            "data": [{"properties": {}}],
-            "header": [{"properties": OFF}],
-            "selection": [{"properties": {"singleSelect": lit("true"), "strictSingleSelect": lit("true")}}],
-            "general": [{"properties": {"filter": {"filter": {
-                "Version": 2, "From": [{"Name": "p", "Entity": "placement_toggle", "Type": 0}],
-                "Where": [{"Condition": {"In": {
-                    "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "p"}}, "Property": "placement"}}],
-                    "Values": [[{"Literal": {"Value": "'Source'"}}]]}}}]}}}}],
-        },
-        "visualContainerObjects": {"background": [{"properties": OFF}], "border": [{"properties": OFF}],
-                                   "title": [{"properties": OFF}]},
-        "drillFilterOtherVisuals": True,
-    }
-
-
 def legend(items: tuple[tuple[str, str], ...]) -> dict:
     runs = []
     for n, (name, hex_) in enumerate(items):
@@ -215,9 +177,9 @@ def build() -> Page:
     p = Page(PAGE, "Where people sit", number=1)
     header(p, "p1", "Where people sit", None,
            "Read from the check-in, the usage dashboards, the library's records and the question log",
-           "the month picked at the top right, Month 6 to start")
-    p.add("p1_toggle", TOGGLE, button_toggle(), same="control")
-    p.add("p1_month", MONTH, slim_slicer("dim_month", "month_label", "Month 6"), same="control height")
+           "Week 1 to Week 24, six check-ins")
+    p.add("p1_toggle", TOGGLE, button_slicer("placement_toggle", "placement", "Placement", "Source"))
+    p.add("p1_month", MONTH, button_slicer("dim_month", "month_label", "Month", "Month 6"))
 
     # ---- the matrix: teams by checkpoints, stage names over their three checkpoints
     x, y, w, h = MATRIX_PANEL
@@ -226,9 +188,9 @@ def build() -> Page:
     p.add("p1_matrix_title", (x + 12, y + 6, w - 24, 20), heading("People at each checkpoint, by team"),
           on=pan, group="t")
     for k, stage in enumerate(STAGE_NAMES):
-        p.add(f"p1_stage_{k + 1}", (x + 12 + TEAM_COL + k * 3 * CP_COL, y + 36, 3 * CP_COL, 20),
-              heading(stage), on=pan, group="m", same="stage name")
-    p.add("p1_matrix", (x + 12, y + 56, w - 24, 220), matrix(), on=pan, group="m",
+        p.add(f"p1_stage_{k + 1}", (x + 12 + TEAM_COL + k * 3 * CP_COL, y + 26, 3 * CP_COL, 20),
+              heading(stage), on=pan, group="t", same="stage name")
+    p.add("p1_matrix", (x + 12, y + 48, w - 24, h - 52), matrix(), on=pan, group="m",
           need_w=table_width([TEAM_COL] + [CP_COL] * 9, MATRIX_COLUMN_PAD),
           need_h=table_height([1] * 6))
 
@@ -244,7 +206,6 @@ def build() -> Page:
           legend((("Higher", AMBER), ("Level", PALE), ("Lower", GREY))), on=pan, group="t", legend=True)
     p.add("p1_gap_chart", (x + 12, y + 46, inner, h - 50), gap_chart(), on=pan, group="c", categories=6,
           label_min_share=GAP_MIN_SHARE)
-    p.awaiting["p1_gap_chart:label colour"] = "Level labels in ink on the pale segment: a hand reference (step 54)"
 
     # ---- movement: title; subtitle, legend top right; the chart; under it seats arrived, apart
     x, y, w, h = MOVE_PANEL
@@ -252,18 +213,13 @@ def build() -> Page:
     p.add(pan, MOVE_PANEL, panel(), z=2000, row="bottom")
     p.add("p1_move_title", (x + 12, y + 6, inner, 20), heading("Movement since last count"),
           on=pan, group="t")
-    p.add("p1_move_sub", (x + 12, y + 26, inner - 90, 18), subtitle("Checkpoints moved"),
-          on=pan, group="t", kind="subtitle")
+    # round 8: seats arrived on the subtitle row, so the bars keep room for their labels
+    p.add("p1_seats_line", (x + 12, y + 26, inner - 90, 20), value_card("Seats arrived line", 9, colour(INK_SOFT)),
+          on=pan, group="t", longest_value="0 seats arrived")
     p.add("p1_move_legend", (x + 12 + inner - 90, y + 26, 90, 18), legend((("Up", MARINE), ("Down", GREY))),
           on=pan, group="t", legend=True)
-    chart_h = h - 6 - 38 - 2 - 23 - 4
-    p.add("p1_move_chart", (x + 12, y + 46, inner, chart_h), movement_chart(), on=pan, group="c",
+    p.add("p1_move_chart", (x + 12, y + 48, inner, h - 52), movement_chart(), on=pan, group="c",
           categories=6, series=2)
-    ry = y + 46 + chart_h
-    p.add("p1_seats_caption", (x + 12, ry, 152, 23),
-          textbox([[("Seats arrived, all teams:", pt(9, color=INK_SOFT))]]), on=pan, group="c")
-    p.add("p1_seats_figure", (x + 12 + 152, ry, inner - 152, 23), value_card("Seats arrived", 10),
-          on=pan, group="c")
 
     # ---- largest group and its lever: text, so a table
     x, y, w, h = LARGEST_PANEL
@@ -296,7 +252,7 @@ def build() -> Page:
         4: [("p1_gap_chart", "Gap higher share"), ("p1_gap_chart", "Gap level share"),
             ("p1_gap_chart", "Gap lower share")],
         5: [("p1_largest_table", "Largest group with people"), ("p1_largest_table", "Largest group lever")],
-        6: [("p1_move_chart", "Movement up"), ("p1_seats_figure", "Seats arrived")],
+        6: [("p1_move_chart", "Movement up"), ("p1_seats_line", "Seats arrived line")],
     }
     return p
 

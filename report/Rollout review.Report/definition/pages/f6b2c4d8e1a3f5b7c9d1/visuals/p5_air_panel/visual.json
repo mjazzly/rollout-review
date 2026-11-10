@@ -3,9 +3,9 @@
   "name": "p5_air_panel",
   "position": {
     "x": 648,
-    "y": 102,
+    "y": 133,
     "z": 2000,
-    "height": 368,
+    "height": 307,
     "width": 616,
     "tabOrder": 900
   },

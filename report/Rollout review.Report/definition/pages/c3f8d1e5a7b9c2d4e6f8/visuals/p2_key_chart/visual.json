@@ -1,19 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "p1_seats_figure",
+  "name": "p2_key_chart",
   "position": {
-    "x": 618,
-    "y": 667,
+    "x": 456,
+    "y": 499,
     "z": 3000,
-    "height": 23,
-    "width": 54,
-    "tabOrder": 2200
+    "height": 179,
+    "width": 388,
+    "tabOrder": 2400
   },
   "visual": {
-    "visualType": "cardVisual",
+    "visualType": "barChart",
     "query": {
       "queryState": {
-        "Data": {
+        "Y": {
           "projections": [
             {
               "field": {
@@ -23,105 +23,142 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Seats arrived"
+                  "Property": "Answer key written first items"
                 }
               },
-              "queryRef": "_Measures.Seats arrived",
-              "nativeQueryRef": "Seats arrived"
+              "queryRef": "_Measures.Answer key written first items",
+              "nativeQueryRef": "Written first",
+              "displayName": "Written first"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Answer key not first items"
+                }
+              },
+              "queryRef": "_Measures.Answer key not first items",
+              "nativeQueryRef": "Not first",
+              "displayName": "Not first"
             }
           ]
         }
       }
     },
     "objects": {
-      "value": [
+      "dataPoint": [
         {
           "properties": {
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2C5F7C'"
+                    }
+                  }
                 }
               }
             }
           },
           "selector": {
-            "id": "default"
+            "metadata": "_Measures.Answer key written first items"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7E8E92'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Answer key not first items"
           }
         }
       ],
-      "label": [
+      "labels": [
         {
           "properties": {
             "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Seats arrived"
-          }
-        }
-      ],
-      "divider": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "default"
-          }
-        }
-      ],
-      "padding": [
-        {
-          "properties": {
-            "paddingIndividual": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
-            },
-            "leftMargin": {
-              "expr": {
-                "Literal": {
-                  "Value": "0L"
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "default"
-          }
-        }
-      ],
-      "layout": [
-        {
-          "properties": {
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'middle'"
-                }
-              }
             }
           }
         }
       ],
-      "fillCustom": [
+      "legend": [
         {
           "properties": {
             "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "innerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "40L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Literal": {
+                  "Value": "23D"
+                }
+              }
+            },
+            "gridlineShow": {
               "expr": {
                 "Literal": {
                   "Value": "false"

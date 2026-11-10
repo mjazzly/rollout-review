@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p6_sources_panel",
   "position": {
-    "x": 792,
-    "y": 74,
+    "x": 16,
+    "y": 543,
     "z": 2000,
-    "height": 168,
-    "width": 472,
+    "height": 139,
+    "width": 405,
     "tabOrder": 600
   },
   "visual": {

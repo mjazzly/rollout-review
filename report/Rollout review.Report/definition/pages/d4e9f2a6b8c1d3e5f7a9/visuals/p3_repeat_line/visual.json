@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_repeat_line",
   "position": {
-    "x": 760,
-    "y": 148,
+    "x": 28,
+    "y": 509,
     "z": 3000,
-    "height": 202,
-    "width": 492,
-    "tabOrder": 1500
+    "height": 169,
+    "width": 610,
+    "tabOrder": 1900
   },
   "visual": {
     "visualType": "lineChart",
@@ -80,7 +80,7 @@
             "start": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "0.5D"
                 }
               }
             },

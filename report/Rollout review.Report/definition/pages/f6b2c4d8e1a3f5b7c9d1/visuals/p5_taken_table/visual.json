@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p5_taken_table",
   "position": {
-    "x": 224,
-    "y": 520,
+    "x": 28,
+    "y": 512,
     "z": 3000,
-    "height": 170,
-    "width": 668,
-    "tabOrder": 1900
+    "height": 166,
+    "width": 1224,
+    "tabOrder": 1800
   },
   "visual": {
     "visualType": "tableEx",
@@ -89,6 +89,21 @@
               "queryRef": "_Measures.Second team from",
               "nativeQueryRef": "From",
               "displayName": "From"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Runs by other teams"
+                }
+              },
+              "queryRef": "_Measures.Runs by other teams",
+              "nativeQueryRef": "Runs by other teams",
+              "displayName": "Runs by other teams"
             }
           ]
         }
@@ -114,7 +129,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "56D"
+                  "Value": "100D"
                 }
               }
             }
@@ -128,7 +143,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "240D"
+                  "Value": "340D"
                 }
               }
             }
@@ -142,7 +157,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "110D"
+                  "Value": "170D"
                 }
               }
             }
@@ -156,7 +171,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "110D"
+                  "Value": "170D"
                 }
               }
             }
@@ -170,13 +185,27 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "80D"
+                  "Value": "140D"
                 }
               }
             }
           },
           "selector": {
             "metadata": "_Measures.Second team from"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "220D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Runs by other teams"
           }
         }
       ]

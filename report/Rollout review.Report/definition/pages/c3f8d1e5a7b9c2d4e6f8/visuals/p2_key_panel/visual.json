@@ -3,11 +3,11 @@
   "name": "p2_key_panel",
   "position": {
     "x": 444,
-    "y": 416,
+    "y": 430,
     "z": 2000,
-    "height": 278,
+    "height": 252,
     "width": 412,
-    "tabOrder": 2100
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "textbox",

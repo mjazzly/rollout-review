@@ -3,9 +3,9 @@
   "name": "p5_impact_chart",
   "position": {
     "x": 28,
-    "y": 148,
+    "y": 179,
     "z": 3000,
-    "height": 318,
+    "height": 257,
     "width": 592,
     "tabOrder": 800
   },
@@ -168,6 +168,24 @@
                 }
               }
             }
+          }
+        },
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#172529'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Impact a little share"
           }
         }
       ],

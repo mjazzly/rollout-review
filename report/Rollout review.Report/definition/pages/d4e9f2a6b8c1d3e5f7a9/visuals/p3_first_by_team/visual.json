@@ -2,15 +2,15 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_first_by_team",
   "position": {
-    "x": 224,
-    "y": 148,
+    "x": 28,
+    "y": 189,
     "z": 3000,
-    "height": 202,
-    "width": 300,
-    "tabOrder": 1000
+    "height": 244,
+    "width": 610,
+    "tabOrder": 900
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "clusteredColumnChart",
     "query": {
       "queryState": {
         "Category": {
@@ -150,7 +150,7 @@
             "end": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "0.7D"
                 }
               }
             },

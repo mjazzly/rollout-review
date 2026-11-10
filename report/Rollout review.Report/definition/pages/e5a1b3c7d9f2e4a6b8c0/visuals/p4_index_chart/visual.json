@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p4_index_chart",
   "position": {
-    "x": 404,
-    "y": 452,
+    "x": 334,
+    "y": 528,
     "z": 3000,
-    "height": 238,
-    "width": 216,
+    "height": 150,
+    "width": 220,
     "tabOrder": 1500
   },
   "visual": {

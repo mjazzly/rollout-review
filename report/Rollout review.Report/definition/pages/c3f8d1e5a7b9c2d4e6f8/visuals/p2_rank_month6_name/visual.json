@@ -3,11 +3,11 @@
   "name": "p2_rank_month6_name",
   "position": {
     "x": 434,
-    "y": 156,
+    "y": 159,
     "z": 3000,
     "height": 20,
-    "width": 390,
-    "tabOrder": 1000
+    "width": 70,
+    "tabOrder": 900
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Month 6, the latest",
+                    "value": "Month 6",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

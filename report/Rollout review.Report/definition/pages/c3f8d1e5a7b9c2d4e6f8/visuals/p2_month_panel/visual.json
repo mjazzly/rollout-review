@@ -3,11 +3,11 @@
   "name": "p2_month_panel",
   "position": {
     "x": 852,
-    "y": 102,
+    "y": 133,
     "z": 2000,
-    "height": 310,
+    "height": 281,
     "width": 412,
-    "tabOrder": 1200
+    "tabOrder": 1100
   },
   "visual": {
     "visualType": "textbox",

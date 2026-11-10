@@ -10,28 +10,32 @@ Brief section 6, page 4, "What earns its place, and at what cost?" (round 7):
   index (standard over smaller). Below, not beside: 21 prompts need the full width for their
   names to sit under their columns;
 - prompts retired or merged by month, and what happened to each (a table: text).
+Round 8: each column is labelled with its cases matched, as "11 of 12" (a dynamic format string
+on Smaller model cases share); the retired chart is wide enough for its month names to stay level.
 """
 from __future__ import annotations
 
 from pbir import (
     GREY, INK, INK_SOFT, MARINE, OFF, NO_FRAME, Page, colour, column, filter_in, header, lit, panel,
     proj_column, proj_measure, pt, table_height, table_width, textbox, value_is, wrapped_lines,
-    BODY_END, HEADER_BODY_Y, TEXT_INSET,
+    BODY_END, GAP, HEADER_SECOND_H, HEADER_SECOND_Y, TEXT_INSET, body_top,
 )
 
 PAGE = "e5a1b3c7d9f2e4a6b8c0"
 
-ROW1_Y, ROW1_H = HEADER_BODY_Y, 300
-ROW2_Y = ROW1_Y + ROW1_H + 4
-ROW2_H = BODY_END - ROW2_Y
+ROW1_Y = HEADER_SECOND_Y + HEADER_SECOND_H + GAP
+ROW2_H = 46 + 150 + 4               # a subtitle row, then charts at Desktop's smallest bar chart (150)
+ROW2_Y = BODY_END - ROW2_H
+ROW1_H = ROW2_Y - GAP - ROW1_Y
+COST_W = 550
 MAIN_PANEL = (16, ROW1_Y, 1248, ROW1_H)
-COST_PANEL = (16, ROW2_Y, 616, ROW2_H)
-RETIRED_PANEL = (648, ROW2_Y, 616, ROW2_H)
+COST_PANEL = (16, ROW2_Y, COST_W, ROW2_H)
+RETIRED_PANEL = (16 + COST_W + GAP, ROW2_Y, 1248 - COST_W - GAP, ROW2_H)
 LIVE = 21                           # live prompts at Week 24 (scripts/page4_figures.py)
-TOKENS_W = 360
+TOKENS_W = 290
 TOKENS_END = 4500                   # the most tokens on a passing prompt: 3,744 (LIB-09, standard)
 INDEX_END = 2.5                     # the highest cost index is 2.07 (LIB-13)
-RETIRED_CHART_W = 310
+RETIRED_CHART_W = 380              # 60 px a month: "Month 6" stays level (48 px slanted, round 7)
 RETIRED_COLS = (56, 170)            # prompt ID, what happened
 PASSES = (("Passes", MARINE), ("Does not pass", GREY))
 TIERS = (("standard", "Standard model", GREY), ("smaller", "Smaller model", MARINE))
@@ -162,6 +166,7 @@ def build() -> Page:
     p = Page(PAGE, "Refinement", number=4)
     header(p, "p4", "Refinement", "What earns its place, and at what cost?",
            "Read from the run log and the library's records", "Week 1 to Week 24")
+    assert body_top(p) == ROW1_Y
 
     # ---- the main chart: live prompts ranked by cases matched on the smaller model
     x, y, w, h = MAIN_PANEL
@@ -173,7 +178,7 @@ def build() -> Page:
           on=pan, group="t", kind="subtitle")
     p.add("p4_main_legend", (x + 12 + inner - 170, y + 26, 170, 18), legend(PASSES), on=pan, group="t", legend=True)
     p.add("p4_main_chart", (x + 12, y + 46, inner, h - 50), ranked_live(), on=pan, group="c",
-          categories=LIVE, max_value=1.0, longest_category="LIB-23", longest_label="100.0%")
+          categories=LIVE, max_value=1.0, longest_category="LIB-23", longest_label="11 of 12")
 
     # ---- the cost of the passing prompts: tokens on each model, and the cost index
     x, y, w, h = COST_PANEL

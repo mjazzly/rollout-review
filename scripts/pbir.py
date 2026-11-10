@@ -36,7 +36,12 @@ below passes:
    sources and period are one grey line at the foot of every page; a panel subtitle is at
    most SUBTITLE_WORDS words and never a "follows" note; a legend sits at the top right of its
    panel; no text is cut (a card's longest text fits its width);
-11. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
+11. round 8 (every page): one gap, GAP = 16 px, between all panels, between the header and
+   the first row, and as the outer margin on all four sides (_grid16); a panel's size fits its
+   content: under every piece, and right of it, the empty band is at most FIT_SHARE of the
+   panel (a table counts by the rows and columns it shows) (_fit); a table's column headers sit
+   on one line; a column chart's axis names stay level (a slot needs the name plus 18 px);
+12. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
    screenshot confirmed it) or in UNCONFIRMED (from the published schema, or a pattern
    Megat gave). Each push lists the unconfirmed names it used.
 """
@@ -103,6 +108,8 @@ CHAR_W, BOLD_W, LINE_H, TEXT_PAD, TEXT_INSET = 0.62, 1.08, 1.73, 2, 6
 #       marine selected state with white text is the button slicer's own default
 #   H3  Megat's hand reference on the page 1 gap chart: overflow text (commit 0df130b)
 #   TH  theme.json, Megat's theme file: visualStyles border show, color, radius; background color
+#   R7  confirmed on the round 7 screenshots (10 Nov 2026): the slicer and button slicer headers
+#       turned off with header.show
 SEEN: dict[tuple[str, str], set[str]] = {
     ("container", "title"): {"show", "text"},                        # RR, BR
     ("container", "subTitle"): {"show"},                             # BR
@@ -143,10 +150,11 @@ SEEN: dict[tuple[str, str], set[str]] = {
     ("lineClusteredColumnComboChart", "dataPoint"): {"fill", "fillTransparency"},  # BR
     ("slicer", "data"): {"mode"},                                    # BR
     ("slicer", "selection"): {"singleSelect", "strictSingleSelect", "selectAllCheckboxEnabled"},  # BR
-    ("slicer", "header"): {"text"},                                  # BR
+    ("slicer", "header"): {"text", "show"},                          # BR; show R7
     ("advancedSlicerVisual", "data"): set(),                         # H2: Megat's button slicer, 1141219
     ("advancedSlicerVisual", "selection"): {"singleSelect", "strictSingleSelect"},  # H2
     ("advancedSlicerVisual", "general"): {"filter"},                 # H2
+    ("advancedSlicerVisual", "header"): {"show"},                    # R7
     ("tableEx", "total"): {"totals"},                                # BR
     ("tableEx", "columnWidth"): {"value"},                           # BR
     ("tableEx", "values"): {"backColor", "fontColor"},               # BR
@@ -159,10 +167,10 @@ TEXT_STYLE_SEEN = {"fontWeight", "fontSize", "color"}                # RR, BR; c
 
 # Not yet in Megat's files or confirmed on screen. Listed with every push.
 UNCONFIRMED: dict[tuple[str, str], set[str]] = {
-    # every object in Megat's files turns off with "show" (title, legend, labels, divider,
-    # background, border, label, referenceLabelTitle): the slicer header is taken to do the same
-    ("slicer", "header"): {"show"},
-    ("advancedSlicerVisual", "header"): {"show"},
+    # Round 8: the data label colour of one series, picked by its queryRef as the series fill
+    # is (dataPoint.fill, BR). Not in Megat's files and not in the published schema, which does
+    # not list a visual's own objects; the name is the format pane's "Color" under Data labels.
+    ("barChart", "labels"): {"color"},
 }
 UNCONFIRMED_VALUES: list[str] = []
 CORNER = 4   # one corner radius: panels, the tab bar, and every visual box (theme.json border radius)
@@ -229,6 +237,7 @@ LABEL_H, LABEL_MIN_PX, AXIS_LABEL_W, DEFAULT_INNER_PADDING, LABEL_ROOM = 14, 24,
 # With labelOverflow on (H3), Legal's 10 showed in a 20.6 px segment and Finance's 13 did not
 # in 16 px (page 1 round 6), so an overflowing label needs 20 px.
 LABEL_MIN_PX_OVERFLOW = 20
+CATEGORY_ROOM = 18     # a column chart's axis name stays level when its slot is this much wider
 LEGEND_SAFETY = 1.05   # a legend's text, estimated, fits its box with this much to spare (and TEXT_INSET)
 
 
@@ -376,14 +385,24 @@ def text_width(runs: list[tuple[str, dict]]) -> float:
     return w
 
 
-HEADER_NAV = (16, 4, 1248, 32)
-HEADER_TITLE_Y, HEADER_TITLE_H = 36, 34
-HEADER_SECOND_Y, HEADER_SECOND_H = 74, 24     # the question: its own line, 4 px below the title
-HEADER_BODY_Y = 102                           # the body starts ROW_GAP below the question
-HEADER_BODY_Y_NO_QUESTION = 74                # pages with no question: ROW_GAP below the title row
-CONTROL_Y, CONTROL_H = 40, 30                 # slicers: one slim row at the right of the title row
-FOOTER_Y, FOOTER_H = 698, 18                  # the sources and period, one grey line
-BODY_END = FOOTER_Y - ROW_GAP                 # 694: panels end here
+# Round 8: one gap of GAP px between all panels, between the header and the first row, and as
+# the outer margin on every side.
+GAP = MARGIN = 16
+HEADER_NAV = (MARGIN, MARGIN, PAGE_W - 2 * MARGIN, 28)
+HEADER_TITLE_Y, HEADER_TITLE_H = 60, 34       # GAP below the tab bar
+HEADER_SECOND_Y, HEADER_SECOND_H = 94, 23     # the question: its own line, under the title
+CONTROL_Y, CONTROL_H = 60, 40                 # controls: the title row, at its right (round 7 clipped at 30)
+FOOTER_H = 18
+FOOTER_Y = PAGE_H - MARGIN - FOOTER_H         # 686: the sources and period, one grey line
+BODY_END = FOOTER_Y - ROW_GAP                 # 682: panels end here
+FIT_SHARE = 0.2                               # at most a fifth of a panel left empty under or beside a piece
+
+
+def body_top(p: "Page") -> int:
+    """The first row's top: GAP under the lowest piece of the header (title, question, controls)."""
+    panels = {v.on for v in p.visuals if v.on}
+    return max(v.bottom for v in p.visuals if v.on is None and v.vt != "pageNavigator"
+               and v.name not in panels and not v.name.endswith("_footer")) + GAP
 
 
 def header(p: "Page", prefix: str, title: str, question: str | None, sources: str, period: str) -> None:
@@ -394,39 +413,66 @@ def header(p: "Page", prefix: str, title: str, question: str | None, sources: st
     tw = int(text_width(t_runs) * 1.1) + 12
     p.add(f"{prefix}_title", (16, HEADER_TITLE_Y, tw, HEADER_TITLE_H), textbox([t_runs]))
     if question:
-        p.add(f"{prefix}_question", (16, HEADER_SECOND_Y, 900, HEADER_SECOND_H),
-              textbox([[(question, pt(12, color=INK_SOFT))]]))
+        q_runs = [(question, pt(12, color=INK_SOFT))]
+        p.add(f"{prefix}_question", (16, HEADER_SECOND_Y, int(text_width(q_runs) * 1.1) + 12, HEADER_SECOND_H),
+              textbox([q_runs]))
     p.add(f"{prefix}_footer", (16, FOOTER_Y, 1248, FOOTER_H), textbox([[
         (sources + " · ", pt(9, color=INK_SOFT)), (period, pt(9, color=INK_SOFT))]]))
 
 
-def slim_slicer(table: str, col: str, start: str | None, single: bool = True, strict: bool = True) -> dict:
-    """A dropdown slicer on one slim row: no header, no box (round 7)."""
-    sel = {"singleSelect": lit("true" if single else "false"), "strictSingleSelect": lit("true" if strict else "false")}
-    if not strict:
-        sel["selectAllCheckboxEnabled"] = lit("true")
+def button_slicer(table: str, col: str, display: str, start: str | None = None, strict: bool = True) -> dict:
+    """A row of buttons, as Megat's placement toggle (H2, commit 1141219): no header, no box, the
+    picked button marine with white text. Round 8: every control is one of these (the dropdown
+    drew a box of its own); strict means one button is always picked, else none picked is all."""
     general = {}
     if start:
         general["filter"] = {"filter": {
-            "Version": 2, "From": [{"Name": "f", "Entity": table, "Type": 0}],
+            "Version": 2, "From": [{"Name": "b", "Entity": table, "Type": 0}],
             "Where": [{"Condition": {"In": {
-                "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "f"}}, "Property": col}}],
-                "Values": [[{"Literal": {"Value": f"'{start}'"}}]]}}}]}}
+                "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "b"}}, "Property": col}}],
+                "Values": [[{"Literal": {"Value": "'" + start.replace("'", "''") + "'"}}]]}}}]}}
     objects = {
-        "data": [{"properties": {"mode": text("Dropdown")}}],
-        "selection": [{"properties": sel}],
+        "data": [{"properties": {}}],
         "header": [{"properties": OFF}],
+        "selection": [{"properties": {"singleSelect": lit("true"),
+                                      "strictSingleSelect": lit("true" if strict else "false")}}],
     }
     if general:
         objects["general"] = [{"properties": general}]
     return {
-        "visualType": "slicer",
-        "query": {"queryState": {"Values": {"projections": [proj_column(table, col, active=True)]}}},
+        "visualType": "advancedSlicerVisual",
+        "query": {"queryState": {"Values": {"projections": [proj_column(table, col, display=display)]}}},
         "objects": objects,
         "visualContainerObjects": {"background": [{"properties": OFF}], "border": [{"properties": OFF}],
                                    "title": [{"properties": OFF}]},
         "drillFilterOtherVisuals": True,
     }
+
+
+def figure_band(p: "Page", key: str, pan: str, x: int, y: int, w: int, figure: str, title: str,
+                count: str | None = None, sub: str | None = None, longest: str = "", group: str = "t") -> int:
+    """Round 8, every panel led by a figure: the figure at the top left; the panel's title to its
+    right, with the count (or a grey line) under the title. Returns the band's bottom edge."""
+    tx = x + PANEL_PAD_X + FIGURE_W + PANEL_PAD_X
+    tw = x + w - PANEL_PAD_X - tx
+    t_vis = textbox([[(title, pt(10, bold=True, color=INK))]])
+    th = math.ceil(text_height(t_vis, tw))
+    p.add(f"{key}_figure", (x + PANEL_PAD_X, y + PANEL_PAD_TOP, FIGURE_W, FIGURE_H), value_card(figure, FIGURE_PT),
+          on=pan, group=group, same="band figure", longest_value=longest)
+    p.add(f"{key}_title", (tx, y + PANEL_PAD_TOP, tw, th), t_vis, on=pan, group=group)
+    if count:
+        p.add(f"{key}_count", (tx, y + PANEL_PAD_TOP + th, tw, 24), value_card(count, 10, colour(INK_SOFT)),
+              on=pan, group=group, longest_value="")
+        below = th + 24
+    else:
+        s_vis = textbox([[(sub or "", pt(9, color=INK_SOFT))]])
+        sh = math.ceil(text_height(s_vis, tw))
+        p.add(f"{key}_sub", (tx, y + PANEL_PAD_TOP + th, tw, sh), s_vis, on=pan, group=group, kind="subtitle")
+        below = th + sh
+    return y + PANEL_PAD_TOP + max(FIGURE_H, below)
+
+
+FIGURE_W, FIGURE_H, FIGURE_PT = 110, 48, 24   # the figure in a band: 24pt (28pt drew in 54 px on page 0)
 
 
 def value_card(measure_name: str, size: int, color: dict | None = None,
@@ -614,6 +660,9 @@ class Page:
         problems += self._grids()
         problems += self._round7()
         problems += self._spacing()
+        problems += self._grid16()
+        problems += self._fit()
+        problems += self._headers()
         problems += self._text_fit()
         # 7 setting names
         problems += [f"{v.name}: {p}" for v in vs for p in unseen(v.visual)]
@@ -643,13 +692,17 @@ class Page:
                     if seg < need_px:
                         out.append(f"{v.name}: thinnest segment {seg:.1f} px, a label needs {LABEL_MIN_PX}")
             if v.categories and v.vt in COLUMN_TYPES:
+                # Round 7: "Month 1" slanted in 48 px slots (page 4) and stayed level in 61 px slots
+                # (page 2), so a slot holds its name plus CATEGORY_ROOM.
                 per_cat = (v.box[2] - 20) / v.categories
-                if v.longest_category and text_width([(v.longest_category, pt(9))]) > per_cat - 8:
-                    out.append(f"{v.name}: '{v.longest_category}' does not fit under its column on one line")
+                if v.longest_category and text_width([(v.longest_category, pt(9))]) + CATEGORY_ROOM > per_cat:
+                    out.append(f"{v.name}: '{v.longest_category}' needs {CATEGORY_ROOM} px more than its "
+                               f"{per_cat:.0f} px slot to stay level")
                 if labels_on and v.longest_label:
-                    col = per_cat * (1 - DEFAULT_INNER_PADDING / 100) / v.series
-                    if text_width([(v.longest_label, pt(9))]) + 6 > col:
-                        out.append(f"{v.name}: label '{v.longest_label}' is wider than its column ({col:.0f} px)")
+                    # a label above a column may be wider than the column, not wider than its slot
+                    slot = per_cat / v.series
+                    if text_width([(v.longest_label, pt(9))]) + 8 > slot:
+                        out.append(f"{v.name}: label '{v.longest_label}' is wider than its slot ({slot:.0f} px)")
             for it in objs.get("valueAxis", []):
                 end = it.get("properties", {}).get("end")
                 if end and v.max_value:
@@ -745,10 +798,10 @@ class Page:
                 p = self.get(v.on)
                 if v.right != p.right - PANEL_PAD_X:
                     out.append(f"{v.name}: a legend sits at the top right of its panel")
-                firsts = [c.top for c in self.visuals if c.on == v.on and c.vt != "textbox"]
+                firsts = [c.top for c in self.visuals if c.on == v.on and c.vt not in ("textbox", "cardVisual")]
                 if firsts and v.top >= min(firsts):
                     out.append(f"{v.name}: a legend sits above its chart, in the panel's top rows")
-            if v.longest_value:
+            if v.longest_value and v.vt == "cardVisual":
                 size = float(v.visual["objects"]["value"][0]["properties"]["fontSize"]["expr"]["Literal"]["Value"].rstrip("D"))
                 if text_width([(v.longest_value, pt(int(size)))]) + 2 * TEXT_INSET > v.box[2]:
                     out.append(f"{v.name}: '{v.longest_value}' is cut at {v.box[2]} px")
@@ -860,22 +913,83 @@ class Page:
             for a, b in zip(r, r[1:]):
                 if b.left - a.right != COL_GAP:
                     out.append(f"row '{key}': {a.name} to {b.name} is {b.left - a.right} px, not {COL_GAP}")
-        page_level = [v for v in vs if not v.on]
-        for a in page_level:
-            below = [b for b in page_level if b.top >= a.bottom and _overlap_x(a, b)]
-            if below:
-                gap = min(b.top for b in below) - a.bottom
-                if 0 < gap < ROW_GAP:
-                    out.append(f"{a.name}: {gap} px to the row below, under {ROW_GAP}")
-            panels = self.panels()
-            if a.vt in BOXED or a.name in panels:
-                for b in page_level:
-                    if b is a or not (b.vt in BOXED or b.name in panels):
-                        continue
-                    if _overlap_x(a, b) and b.top >= a.top and b.top - a.bottom < ROW_GAP:
-                        out.append(f"{a.name} and {b.name}: {b.top - a.bottom} px apart, a box needs {ROW_GAP}")
-                    if a.top < b.bottom and b.top < a.bottom and b.left >= a.right and b.left - a.right < COL_GAP:
-                        out.append(f"{a.name} and {b.name}: {b.left - a.right} px apart side by side, a box needs {COL_GAP}")
+        return out
+
+    def _grid16(self) -> list[str]:
+        """Round 8: one gap, GAP px, between panels (down and across), between the header and the
+        first row, between the tab bar and the controls, and the outer margin on all sides."""
+        out = []
+        vs = self.visuals
+        names = self.panels()
+        panels = [v for v in vs if v.name in names]
+        controls = [v for v in vs if v.on is None and v.vt in ("slicer", "advancedSlicerVisual")]
+        nav = [v for v in vs if v.vt == "pageNavigator"]
+        footer = [v for v in vs if v.name.endswith("_footer")]
+        if min(v.left for v in vs) != MARGIN or max(v.right for v in vs) != PAGE_W - MARGIN:
+            out.append(f"the page's left and right margins are not {MARGIN} px")
+        for v in vs:
+            if v.left < MARGIN or v.right > PAGE_W - MARGIN:
+                out.append(f"{v.name} is inside the {MARGIN} px margin")
+        if not nav or nav[0].top != MARGIN:
+            out.append(f"the tab bar is not {MARGIN} px from the top")
+        if not footer or footer[0].bottom != PAGE_H - MARGIN:
+            out.append(f"the sources line is not {MARGIN} px from the bottom")
+        if panels:
+            first = min(p.top for p in panels)
+            if first != body_top(self):
+                out.append(f"the first row is {first - body_top(self) + GAP} px under the header, not {GAP}")
+            if max(p.bottom for p in panels) != BODY_END:
+                out.append(f"the last row ends at {max(p.bottom for p in panels)}, not {BODY_END}: "
+                           "an empty band at the foot of the page")
+        for c in controls:
+            if nav and c.top - nav[0].bottom != GAP:
+                out.append(f"{c.name} is {c.top - nav[0].bottom} px under the tab bar, not {GAP}")
+        boxes = panels + controls
+        for a in boxes:
+            below = [b for b in panels if b is not a and _overlap_x(a, b) and b.top >= a.bottom]
+            if below and a in panels and min(b.top for b in below) - a.bottom != GAP:
+                out.append(f"{a.name}: {min(b.top for b in below) - a.bottom} px to the panel below, not {GAP}")
+            right = [b for b in boxes if b is not a and a.top < b.bottom and b.top < a.bottom and b.left >= a.right]
+            if right and min(b.left for b in right) - a.right != GAP:
+                out.append(f"{a.name}: {min(b.left for b in right) - a.right} px to the box at its right, not {GAP}")
+        return out
+
+    def _fit(self) -> list[str]:
+        """Round 8: a panel's size fits its content. Under every piece (over its width) and right of
+        it (over its height), the empty band is at most FIT_SHARE of the panel. A table or grid
+        counts by the rows and columns it shows (need_h, need_w), not by its box."""
+        out = []
+        for pname in sorted(self.panels()):
+            p = self.get(pname)
+            members = [v for v in self.visuals if v.on == pname]
+
+            def low(u):
+                return u.top + u.need_h if u.need_h else u.bottom
+
+            def far(u):
+                return u.left + u.need_w if u.need_w else u.right
+            worst_v = max(p.bottom - max(low(u) for u in members if _overlap_x(u, v)) for v in members)
+            worst_h = max(p.right - max(far(u) for u in members if u.top < v.bottom and v.top < u.bottom)
+                          for v in members)
+            if worst_v > FIT_SHARE * p.box[3]:
+                out.append(f"{pname}: {worst_v} px empty under its content, more than a fifth of its {p.box[3]} px")
+            if worst_h > FIT_SHARE * p.box[2]:
+                out.append(f"{pname}: {worst_h} px empty beside its content, more than a fifth of its {p.box[2]} px")
+        return out
+
+    def _headers(self) -> list[str]:
+        """Round 8: a table's column headers sit on one line (page 3's "Cases matched" wrapped in 90 px)."""
+        out = []
+        for v in self.visuals:
+            if v.vt != "tableEx":
+                continue
+            widths = {it["selector"]["metadata"]: float(it["properties"]["value"]["expr"]["Literal"]["Value"].rstrip("D"))
+                      for it in v.visual["objects"].get("columnWidth", [])}
+            for pr in v.visual["query"]["queryState"]["Values"]["projections"]:
+                head = pr.get("displayName", pr["nativeQueryRef"])
+                wd = widths.get(pr["queryRef"])
+                if wd and text_width([(head, pt(10))]) + 2 * TEXT_INSET > wd:
+                    out.append(f"{v.name}: header '{head}' does not sit on one line in {wd:.0f} px")
         return out
 
     def _text_fit(self) -> list[str]:

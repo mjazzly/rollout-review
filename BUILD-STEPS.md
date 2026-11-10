@@ -812,6 +812,63 @@ If a panel's corners are still square: select one panel (the white box behind th
 | 14 | The cost index chart of all 23 prompts | The passing prompts' cost index: LIB-09 2.02, LIB-13 2.07 |
 | 17 | 60.3% and 47.0%, +13.3 in a second chart | One chart: 47.0% (grey) and "60.3% (+13.3)" (marine), Consulting · Month 3 |
 
+## M. Round 8 (10 Nov 2026): one grid, panels that fit, and the PC scripts
+
+Two new checks in `scripts/pbir.py` refuse to write a page that breaks them:
+
+- **One gap** (`_grid16`): 16 px between panels down and across, between the header and the first row, between the tab bar and the controls, and as the margin on all four sides (the tab bar at y 16, the sources line ending at y 704, everything between x 16 and x 1264). The last row ends at y 682, 4 px over the sources line.
+- **Fit** (`_fit`): under every piece in a panel (across that piece's width) and beside it (across its height), the empty band is at most a fifth of the panel. A table or grid counts by the rows and columns it shows, not its box. A figure with nothing under it, or a table half the panel's width, fails.
+
+Also checked now: a table's column headers fit on one line; a column chart's slot is its axis name plus 18 px (page 4's "Month 6" slanted in 48 px slots and stayed level in 61); a label above a column fits its slot.
+
+| Ask | What changed |
+|---|---|
+| 1. 16 px gaps and margins | New header geometry: tab bar 16 to 44, title and controls from y 60, question under the title, first row 16 under the header, panels end at 682, sources line 686 to 704. Every page refitted |
+| 2. Panels fit their content | Every panel led by a figure now uses one layout (`pbir.figure_band`): the figure (24pt) at the top left, the title to its right with the count under it, the visual full width below. Pages 2, 3 and 5 use it |
+| 3. Label colours | Gap chart Level and Scale impact "A little": `labels.color` #172529 on that series (unconfirmed name, see below). Page 0's labels are all white, on marine |
+| 4. Page 0: In the air only | The stage charts are stacked bars of three shares per team (as the gap chart is drawn); On the ground and At the gate carry a blank label through their format strings (new measures `Stage ground/gate/air share baseline/latest`). The header line moved to the right of the title row, which gives the tiles room |
+| 5, 6. Page 1 controls | Placement and Month are both rows of buttons, 40 px tall (30 clipped the toggle). The dropdown's border went with the dropdown. Execution's Team is buttons too: none picked shows every team |
+| 7. Page 1 footer | Sources and period only: "... · Week 1 to Week 24, six check-ins" |
+| 8. Page 2 bottom row | Requests matched: its line by month, Month 1 to 6. Answer key: one bar, 16 written first (marine) and 7 not first (grey), each segment labelled with what it is. The rank panel is 281 px, exactly its seven bars, with the month names on the legend's row |
+| 9. Page 3 grid | Two columns on one grid: left 634 px (first use, repeat use), right 598 px (recurring, passing). First use is a column per team. Repeat use's line sits on a 50% to 100% axis, so it is not pressed to the top |
+| 10. Not passing table | 574 px wide: the name column 388, "Cases matched" 150, so headers and "11 of 12 cases" sit on one line; four rows, no scrollbar |
+| 11. Legal's 0.0% | Real: one Legal session (week of 17 Aug 2026), 19 attendees, none ran the prompt shown within two weeks. The bar stays at zero; Notes says so |
+| 12. Page 4 labels and months | Each column reads its cases matched, "11 of 12" (a format expression on `Smaller model cases share`). The retired chart is 380 px: 60 px a month |
+| 13. Page 5 table | New column "Runs by other teams" (helper `Runs by other teams`); the six columns spread over the full 1224 px |
+| 14. Notes | Definitions full width, grouped by page, each entry one line; sources, thresholds and controls side by side under them, six one-line entries each. Every line starts with its term in bold (page names in marine). No scrollbars: each entry is checked to fit one line with 8% to spare |
+| 15. PC scripts | `get.cmd` and `send.cmd` in the repo root (below). Windows line endings kept by `.gitattributes` |
+
+Unconfirmed this round: `labels.color` on a bar chart series (gap Level, impact A little). Neither Megat's files nor the published schema name it; it is the format pane's **Color** under **Data labels**. If the next screenshot shows white labels still on the pale segments, step 56 asks for one hand reference. Confirmed by the round 7 screenshots: `header.show` on the slicer and the button slicer.
+
+### The PC steps from now on
+
+- **get.cmd** (double-click in the repo folder): stops if Power BI Desktop is open or the copy is not on main; throws away local changes under `report\`; stops if anything outside `report\` has changed; pulls; opens `report\Rollout review.pbip`. It prints DONE with the commit it is on, or STOPPED with the reason.
+- **send.cmd** (only when a step asks you to send a save): stops if Desktop is open, or if anything outside `report\` has changed; shows what changed under `report\`; asks for a message; commits; pulls the Mac's latest; pushes. It prints SENT with the commit, NOTHING TO SEND, or FAILED with what to do. If a push failed, run it again: it sends the commit it kept.
+
+### Step 55, round 8
+
+1. Double-click **get.cmd**. It should end with DONE and open the report.
+2. Send a screenshot of each of the seven tabs as they open. Then Where people sit with **Check-in** and **Month 4**, and Execution with **Operations**.
+3. Nothing to save this round: close Desktop without saving.
+
+### What each page should read (round 8)
+
+- **Rollout review**: tiles as before (49.5% Working ↓ Down; 83.6% Working ↓ Down; 9.5% Not yet working → Flat; +10.1 Working ↑ Up). Verdict and trend on one line. Stage bars labelled In the air only: baseline Consulting 47.0%, Finance 9.5%, Legal 6.7%, Operations 9.2%, People 22.3%, Technology 42.5%; Month 6 60.3%, 13.0%, 7.5%, 26.8%, 30.0%, 52.0%. Moved up 98, seats arrived 0.
+- **Where people sit** (Source, Month 6): as section G. Gap labels dark on the pale Level segments. Movement's second line reads "0 seats arrived".
+- **Foundation**: rank charts as round 7. Requests matched 49.5%, "385 of 778 questions", line 13.6%, 53.9%, 55.4%, 57.2%, 53.1%, 49.5% (Month 1 to 6). Answer key 69.6%, "16 of 23 library items", the bar "16 written first" and "7 not first". Baseline as section H.
+- **Execution** (all teams): first use 44.5%, "174 of 391 attendees", columns Consulting 57.3%, Finance 28.9%, Legal 0.0%, Operations 58.5%, People 21.3%, Technology 45.5%. Recurring 89.4%, "127 of 142 recurring questions", grid as section I. Repeat use 83.6%, line 86.1%, 85.7%, 84.7%, 83.8%, 83.6%. Passing 81.0%, "17 of 21 live prompts", four rows: Market scan in five questions 8 of 9 cases; Shift handover summary 9 of 10; What may I use it for: quick check 11 of 12; Workplan from meeting notes 8 of 9.
+- **Refinement**: columns labelled LIB-09 11 of 11, LIB-13 12 of 12 (marine), LIB-07 11 of 12, LIB-04 10 of 11, LIB-20 10 of 11, LIB-11 9 of 10, LIB-08, LIB-18, LIB-19 7 of 8, LIB-15, LIB-17 5 of 6, LIB-16 8 of 10, LIB-05 7 of 9, LIB-10 8 of 11, LIB-23 5 of 7, LIB-06 7 of 10, LIB-01 4 of 6, LIB-03 6 of 9, LIB-22 3 of 5, LIB-02 4 of 7, LIB-21 4 of 7. Cost and retired as round 7, month names level.
+- **Scale**: as round 7, "A little" labels dark. Table: LIB-01 Consulting → Technology, Week 7, 352 runs; LIB-03 Consulting → Finance, Week 15, 42; LIB-10 Technology → Operations, Week 14, 74; LIB-16 Operations → People, Week 18, 40.
+- **Notes**: no scrollbar in any of the four boxes; every line starts bold.
+
+### CHECK.md answers that moved on the page
+
+| Q | Was | Now |
+|---|---|---|
+| 6 | "Seats arrived, all teams: 0" under the movement chart | "0 seats arrived" on the movement panel's second line |
+| 13 | Two marine columns at 100.0% | The same two columns, labelled "11 of 11" and "12 of 12" |
+| 16 | The table, five columns | The same rows, plus "Runs by other teams" |
+
 ## Next
 
 - All six pages are written. Next: the CHECK.md match from the screenshots (brief section 8), then Publish to web

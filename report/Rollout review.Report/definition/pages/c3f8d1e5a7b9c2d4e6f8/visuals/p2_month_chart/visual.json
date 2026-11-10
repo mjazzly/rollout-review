@@ -3,11 +3,11 @@
   "name": "p2_month_chart",
   "position": {
     "x": 864,
-    "y": 148,
+    "y": 179,
     "z": 3000,
-    "height": 260,
+    "height": 231,
     "width": 388,
-    "tabOrder": 1500
+    "tabOrder": 1400
   },
   "visual": {
     "visualType": "clusteredColumnChart",

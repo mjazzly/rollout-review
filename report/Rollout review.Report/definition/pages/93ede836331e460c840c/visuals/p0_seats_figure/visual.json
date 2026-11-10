@@ -3,9 +3,9 @@
   "name": "p0_seats_figure",
   "position": {
     "x": 972,
-    "y": 614,
+    "y": 603,
     "z": 3000,
-    "height": 30,
+    "height": 40,
     "width": 280,
     "tabOrder": 4800
   },
@@ -40,7 +40,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14D"
+                  "Value": "20D"
                 }
               }
             }

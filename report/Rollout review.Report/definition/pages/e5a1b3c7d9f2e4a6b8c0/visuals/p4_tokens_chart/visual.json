@@ -3,10 +3,10 @@
   "name": "p4_tokens_chart",
   "position": {
     "x": 28,
-    "y": 452,
+    "y": 528,
     "z": 3000,
-    "height": 238,
-    "width": 360,
+    "height": 150,
+    "width": 290,
     "tabOrder": 1400
   },
   "visual": {

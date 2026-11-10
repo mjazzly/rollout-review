@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_largest_table",
   "position": {
-    "x": 712,
-    "y": 386,
+    "x": 692,
+    "y": 428,
     "z": 3000,
-    "height": 304,
-    "width": 540,
-    "tabOrder": 2500
+    "height": 250,
+    "width": 560,
+    "tabOrder": 2300
   },
   "visual": {
     "visualType": "tableEx",
@@ -116,7 +116,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "120D"
+                  "Value": "140D"
                 }
               }
             }

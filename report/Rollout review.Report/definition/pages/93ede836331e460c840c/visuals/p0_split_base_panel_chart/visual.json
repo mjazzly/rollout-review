@@ -3,14 +3,14 @@
   "name": "p0_split_base_panel_chart",
   "position": {
     "x": 28,
-    "y": 482,
+    "y": 471,
     "z": 3000,
-    "height": 208,
+    "height": 207,
     "width": 432,
     "tabOrder": 3800
   },
   "visual": {
-    "visualType": "hundredPercentStackedBarChart",
+    "visualType": "barChart",
     "query": {
       "queryState": {
         "Category": {
@@ -32,24 +32,6 @@
             }
           ]
         },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_checkpoint_source"
-                    }
-                  },
-                  "Property": "stage"
-                }
-              },
-              "queryRef": "dim_checkpoint_source.stage",
-              "nativeQueryRef": "stage"
-            }
-          ]
-        },
         "Y": {
           "projections": [
             {
@@ -60,11 +42,42 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Stage split baseline"
+                  "Property": "Stage ground share baseline"
                 }
               },
-              "queryRef": "_Measures.Stage split baseline",
-              "nativeQueryRef": "Stage split baseline"
+              "queryRef": "_Measures.Stage ground share baseline",
+              "nativeQueryRef": "On the ground",
+              "displayName": "On the ground"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Stage gate share baseline"
+                }
+              },
+              "queryRef": "_Measures.Stage gate share baseline",
+              "nativeQueryRef": "At the gate",
+              "displayName": "At the gate"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Stage air share baseline"
+                }
+              },
+              "queryRef": "_Measures.Stage air share baseline",
+              "nativeQueryRef": "In the air",
+              "displayName": "In the air"
             }
           ]
         }
@@ -105,30 +118,7 @@
             }
           },
           "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "dim_checkpoint_source"
-                          }
-                        },
-                        "Property": "stage"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'On the ground'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
+            "metadata": "_Measures.Stage ground share baseline"
           }
         },
         {
@@ -146,30 +136,7 @@
             }
           },
           "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "dim_checkpoint_source"
-                          }
-                        },
-                        "Property": "stage"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'At the gate'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
+            "metadata": "_Measures.Stage gate share baseline"
           }
         },
         {
@@ -187,30 +154,7 @@
             }
           },
           "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "dim_checkpoint_source"
-                          }
-                        },
-                        "Property": "stage"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'In the air'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
+            "metadata": "_Measures.Stage air share baseline"
           }
         }
       ],
@@ -220,7 +164,14 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "labelOverflow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -260,6 +211,20 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "start": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "end": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             },

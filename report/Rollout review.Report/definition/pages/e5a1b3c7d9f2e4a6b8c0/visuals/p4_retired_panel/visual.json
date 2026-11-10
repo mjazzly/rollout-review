@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p4_retired_panel",
   "position": {
-    "x": 648,
-    "y": 406,
+    "x": 582,
+    "y": 482,
     "z": 2000,
-    "height": 288,
-    "width": 616,
+    "height": 200,
+    "width": 682,
     "tabOrder": 1600
   },
   "visual": {

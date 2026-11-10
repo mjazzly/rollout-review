@@ -3,11 +3,11 @@
   "name": "p2_baseline_panel",
   "position": {
     "x": 872,
-    "y": 416,
+    "y": 430,
     "z": 2000,
-    "height": 278,
+    "height": 252,
     "width": 392,
-    "tabOrder": 2600
+    "tabOrder": 2500
   },
   "visual": {
     "visualType": "textbox",

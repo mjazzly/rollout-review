@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p6_sources_text",
   "position": {
-    "x": 804,
-    "y": 110,
+    "x": 28,
+    "y": 579,
     "z": 3000,
-    "height": 128,
-    "width": 448,
+    "height": 97,
+    "width": 381,
     "tabOrder": 800
   },
   "visual": {
@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "the question log, the usage dashboards, the library's records, the run log and the check-in",
+                    "value": "All the sources below",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -46,7 +46,7 @@
                     }
                   },
                   {
-                    "value": "the check-in, the usage dashboards, the library's records and the question log",
+                    "value": "Check-in, usage, library, question log",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -65,7 +65,7 @@
                     }
                   },
                   {
-                    "value": "the question log, the usage dashboards and the library's records",
+                    "value": "Question log, usage, library",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -84,7 +84,7 @@
                     }
                   },
                   {
-                    "value": "the usage dashboards, the question log and the run log",
+                    "value": "Usage, question log, run log",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -103,7 +103,7 @@
                     }
                   },
                   {
-                    "value": "the run log and the library's records",
+                    "value": "Run log, library",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -122,7 +122,7 @@
                     }
                   },
                   {
-                    "value": "the question log, the usage dashboards and the check-in",
+                    "value": "Question log, usage, check-in",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

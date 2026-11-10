@@ -3,9 +3,9 @@
   "name": "p0_scale_panel",
   "position": {
     "x": 964,
-    "y": 98,
+    "y": 110,
     "z": 2000,
-    "height": 350,
+    "height": 315,
     "width": 300,
     "tabOrder": 2800
   },

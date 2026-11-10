@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_recurring_figure",
   "position": {
-    "x": 28,
-    "y": 412,
+    "x": 678,
+    "y": 139,
     "z": 3000,
-    "height": 62,
-    "width": 180,
-    "tabOrder": 1900
+    "height": 48,
+    "width": 110,
+    "tabOrder": 1100
   },
   "visual": {
     "visualType": "cardVisual",
@@ -40,7 +40,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "36D"
+                  "Value": "24D"
                 }
               }
             }

@@ -213,6 +213,36 @@ table _Measures
 			    DIVIDE ( inStage + 0, everyone )
 		formatString: 0.0%
 
+	/// Helper, not in measures.md. Stage split baseline for On the ground; its label is blank (a space), so only the In the air share is labelled on the page.
+	measure 'Stage ground share baseline' =
+			CALCULATE ( [Stage split baseline], dim_checkpoint_source[stage] = "On the ground" )
+		formatStringDefinition = """ """
+
+	/// Helper, not in measures.md. Stage split baseline for At the gate; its label is blank (a space), so only the In the air share is labelled on the page.
+	measure 'Stage gate share baseline' =
+			CALCULATE ( [Stage split baseline], dim_checkpoint_source[stage] = "At the gate" )
+		formatStringDefinition = """ """
+
+	/// Helper, not in measures.md. Stage split baseline for In the air, labelled on the page.
+	measure 'Stage air share baseline' =
+			CALCULATE ( [Stage split baseline], dim_checkpoint_source[stage] = "In the air" )
+		formatString: 0.0%
+
+	/// Helper, not in measures.md. Stage split latest for On the ground; its label is blank (a space), so only the In the air share is labelled on the page.
+	measure 'Stage ground share latest' =
+			CALCULATE ( [Stage split latest], dim_checkpoint_source[stage] = "On the ground" )
+		formatStringDefinition = """ """
+
+	/// Helper, not in measures.md. Stage split latest for At the gate; its label is blank (a space), so only the In the air share is labelled on the page.
+	measure 'Stage gate share latest' =
+			CALCULATE ( [Stage split latest], dim_checkpoint_source[stage] = "At the gate" )
+		formatStringDefinition = """ """
+
+	/// Helper, not in measures.md. Stage split latest for In the air, labelled on the page.
+	measure 'Stage air share latest' =
+			CALCULATE ( [Stage split latest], dim_checkpoint_source[stage] = "In the air" )
+		formatString: 0.0%
+
 	/// Moved up, counted between the latest check-in month and the one before it, shown with Seats arrived for the same two counts beside it.
 	measure 'Moved up since last count' =
 			[Moved up]
@@ -695,6 +725,16 @@ table _Measures
 			FORMAT ( CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0, "#,0" )
 			    & " of " & FORMAT ( COUNTROWS ( dim_library_item ) + 0, "#,0" ) & " library items"
 
+	/// Helper, not in measures.md. Library items with answer_key_first true, labelled as "16 written first".
+	measure 'Answer key written first items' =
+			CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0
+		formatStringDefinition = """" & FORMAT ( CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = TRUE () ) + 0, "#,0" ) & " written first"""
+
+	/// Helper, not in measures.md. Library items with answer_key_first false, labelled as "7 not first".
+	measure 'Answer key not first items' =
+			CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = FALSE () ) + 0
+		formatStringDefinition = """" & FORMAT ( CALCULATE ( COUNTROWS ( dim_library_item ), dim_library_item[answer_key_first] = FALSE () ) + 0, "#,0" ) & " not first"""
+
 	/// Helper, not in measures.md. Questions in Rules and allowed use.
 	measure 'Rules questions' =
 			CALCULATE ( COUNTROWS ( fact_question ), fact_question[category] = "Rules and allowed use" ) + 0
@@ -814,7 +854,7 @@ table _Measures
 			RETURN
 			    FORMAT ( ran + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( fact_training ) + 0, "#,0" ) & " attendees"
 
-	/// Helper, not in measures.md. Recurring questions covered by a tested prompt, and all recurring questions, as "127 of 142 questions".
+	/// Helper, not in measures.md. Recurring questions covered by a tested prompt, and all recurring questions, as "127 of 142 recurring questions".
 	measure 'Recurring covered count' =
 			VAR repeatQuestions = FILTER ( fact_question, fact_question[repeat_flag] )
 			VAR covered =
@@ -833,7 +873,7 @@ table _Measures
 			            )
 			    )
 			RETURN
-			    FORMAT ( COUNTROWS ( covered ) + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( repeatQuestions ) + 0, "#,0" ) & " questions"
+			    FORMAT ( COUNTROWS ( covered ) + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( repeatQuestions ) + 0, "#,0" ) & " recurring questions"
 
 	/// Helper, not in measures.md. The colour of a use-by-month cell: recurring questions, from white at none to marine (#2C5F7C) at 20 or more.
 	measure 'Recurring shade' =
@@ -981,7 +1021,7 @@ table _Measures
 			RETURN
 			    SWITCH ( st, "retired", "Retired in Month " & m, "merged", "Merged into " & intoItem & " in Month " & m )
 
-	/// Helper, not in measures.md. For a library item live at the check-in week, cases matched over cases on its latest smaller-tier run; blank for items not live.
+	/// Helper, not in measures.md. For a library item live at the check-in week, cases matched over cases on its latest smaller-tier run; blank for items not live. Its label is the cases, as "11 of 12".
 	measure 'Smaller model cases share' =
 			VAR checkinWeek = [Check-in week]
 			VAR itemId = SELECTEDVALUE ( dim_library_item[item_id] )
@@ -998,7 +1038,7 @@ table _Measures
 			RETURN
 			    IF ( HASONEVALUE ( dim_library_item[item_id] ) && isLive,
 			        DIVIDE ( MAXX ( latestRun, fact_test_run[cases_matched] ), MAXX ( latestRun, fact_test_run[cases_total] ) ) )
-		formatString: 0.0%
+		formatStringDefinition = VAR itemId = SELECTEDVALUE ( dim_library_item[item_id] ) VAR latestRun = TOPN ( 1, FILTER ( ALL ( fact_test_run ), fact_test_run[item_id] = itemId && fact_test_run[model_tier] = "smaller" ), fact_test_run[run_date], DESC, fact_test_run[run_id], DESC ) RETURN """" & FORMAT ( MAXX ( latestRun, fact_test_run[cases_matched] ), "#,0" ) & " of " & FORMAT ( MAXX ( latestRun, fact_test_run[cases_total] ), "#,0" ) & """"
 
 	/// Check-in responses per team for each answer to q5_if_gone, for the check-in month.
 	measure 'Impact in people''s own words' =
@@ -1131,6 +1171,24 @@ table _Measures
 			VAR topRow = TOPN ( 1, otherTeams, [@first], ASC, fact_library_run[team], ASC )
 			RETURN
 			    IF ( NOT ISBLANK ( ownerTeam ), MAXX ( topRow, fact_library_run[team] ) )
+
+	/// Helper, not in measures.md. Per library item, runs in fact_library_run by teams other than the owner_team, as "352"; blank when no other team ran it.
+	measure 'Runs by other teams' =
+			VAR ownerTeam = SELECTEDVALUE ( dim_library_item[owner_team] )
+			VAR otherRuns =
+			    CALCULATE (
+			        SUM ( fact_library_run[runs] ),
+			        fact_library_run[team] <> ownerTeam,
+			        REMOVEFILTERS ( dim_team ),
+			        REMOVEFILTERS ( dim_week ),
+			        REMOVEFILTERS ( dim_month )
+			    )
+			RETURN
+			    IF ( NOT ISBLANK ( ownerTeam ) && NOT ISBLANK ( otherRuns ), FORMAT ( otherRuns, "#,0" ) )
+
+	/// Helper, not in measures.md. Seats arrived over the month picked, all teams, as "0 seats arrived".
+	measure 'Seats arrived line' =
+			FORMAT ( CALCULATE ( [Seats arrived], REMOVEFILTERS ( dim_team ) ), "#,0" ) & " seats arrived"
 
 	partition _Measures = m
 		mode: import

@@ -3,7 +3,7 @@
   "name": "p1_footer",
   "position": {
     "x": 16,
-    "y": 698,
+    "y": 686,
     "z": 3000,
     "height": 18,
     "width": 1248,
@@ -26,7 +26,7 @@
                     }
                   },
                   {
-                    "value": "the month picked at the top right, Month 6 to start",
+                    "value": "Week 1 to Week 24, six check-ins",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

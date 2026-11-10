@@ -41,3 +41,9 @@ for item, name, owner, team2, wk in c.execute("""
     SELECT o.item_id, o.item_name, o.owner_team, o.t2, k.week_no FROM o JOIN wk k ON k.week_start = o.w2
     ORDER BY 1""").fetchall():
     print(f"  {item} {name} (made by {owner}): taken up by {team2} from Week {wk}")
+
+print("\nRuns by other teams, per prompt taken up (round 8 column)")
+for item, runs in c.execute("""
+    SELECT r.item_id, sum(r.runs) FILTER (WHERE r.team <> i.owner_team) FROM fact_library_run r
+    JOIN dim_library_item i USING (item_id) GROUP BY 1 HAVING count(DISTINCT r.team) >= 2 ORDER BY 1""").fetchall():
+    print(f"  {item}: {runs:,}")

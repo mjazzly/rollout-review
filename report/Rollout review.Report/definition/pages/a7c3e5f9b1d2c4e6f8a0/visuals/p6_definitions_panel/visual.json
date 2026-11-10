@@ -3,10 +3,10 @@
   "name": "p6_definitions_panel",
   "position": {
     "x": 16,
-    "y": 74,
+    "y": 110,
     "z": 2000,
-    "height": 557,
-    "width": 760,
+    "height": 417,
+    "width": 1248,
     "tabOrder": 300
   },
   "visual": {

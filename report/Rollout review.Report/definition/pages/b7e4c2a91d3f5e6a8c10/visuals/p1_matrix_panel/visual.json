@@ -3,9 +3,9 @@
   "name": "p1_matrix_panel",
   "position": {
     "x": 16,
-    "y": 74,
+    "y": 116,
     "z": 2000,
-    "height": 280,
+    "height": 268,
     "width": 1248,
     "tabOrder": 500
   },

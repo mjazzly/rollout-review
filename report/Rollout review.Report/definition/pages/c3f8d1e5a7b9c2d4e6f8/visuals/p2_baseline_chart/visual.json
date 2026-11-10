@@ -3,11 +3,11 @@
   "name": "p2_baseline_chart",
   "position": {
     "x": 884,
-    "y": 462,
+    "y": 476,
     "z": 3000,
-    "height": 228,
+    "height": 202,
     "width": 368,
-    "tabOrder": 2900
+    "tabOrder": 2800
   },
   "visual": {
     "visualType": "clusteredBarChart",

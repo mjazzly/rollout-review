@@ -3,10 +3,10 @@
   "name": "p3_first_panel",
   "position": {
     "x": 16,
-    "y": 102,
+    "y": 133,
     "z": 2000,
-    "height": 252,
-    "width": 520,
+    "height": 304,
+    "width": 634,
     "tabOrder": 500
   },
   "visual": {

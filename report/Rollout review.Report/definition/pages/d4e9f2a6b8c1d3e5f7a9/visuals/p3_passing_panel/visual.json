@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_passing_panel",
   "position": {
-    "x": 838,
-    "y": 358,
+    "x": 666,
+    "y": 453,
     "z": 2000,
-    "height": 336,
-    "width": 426,
-    "tabOrder": 2300
+    "height": 229,
+    "width": 598,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "textbox",

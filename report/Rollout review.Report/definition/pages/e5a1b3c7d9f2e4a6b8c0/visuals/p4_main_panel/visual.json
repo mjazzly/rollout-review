@@ -3,9 +3,9 @@
   "name": "p4_main_panel",
   "position": {
     "x": 16,
-    "y": 102,
+    "y": 133,
     "z": 2000,
-    "height": 300,
+    "height": 333,
     "width": 1248,
     "tabOrder": 400
   },

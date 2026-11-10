@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p4_retired_sub",
   "position": {
-    "x": 660,
-    "y": 432,
+    "x": 594,
+    "y": 508,
     "z": 3000,
     "height": 18,
-    "width": 592,
+    "width": 658,
     "tabOrder": 1800
   },
   "visual": {

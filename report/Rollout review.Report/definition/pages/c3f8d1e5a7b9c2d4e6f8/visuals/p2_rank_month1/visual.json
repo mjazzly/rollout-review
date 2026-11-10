@@ -3,11 +3,11 @@
   "name": "p2_rank_month1",
   "position": {
     "x": 28,
-    "y": 176,
+    "y": 181,
     "z": 3000,
-    "height": 232,
+    "height": 229,
     "width": 390,
-    "tabOrder": 900
+    "tabOrder": 800
   },
   "visual": {
     "visualType": "barChart",

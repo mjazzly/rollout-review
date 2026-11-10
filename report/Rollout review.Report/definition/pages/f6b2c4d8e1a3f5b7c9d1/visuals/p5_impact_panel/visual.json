@@ -3,9 +3,9 @@
   "name": "p5_impact_panel",
   "position": {
     "x": 16,
-    "y": 102,
+    "y": 133,
     "z": 2000,
-    "height": 368,
+    "height": 307,
     "width": 616,
     "tabOrder": 400
   },

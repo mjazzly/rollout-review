@@ -61,3 +61,11 @@ for m, cat, n, matched in c.execute("""
     FROM fact_question q JOIN dim_week w ON w.week_start = date_trunc('week', q.question_date)
     WHERE w.checkin_month IN (1, 6) GROUP BY 1, 2 ORDER BY 1, 3 DESC, 2""").fetchall():
     print(f"  Month {m}, {cat}: {matched} matched, {n - matched} not matched ({n})")
+
+print("\nRequests matched to a tested prompt, by check-in month (round 8 line)")
+for m, n, matched in c.execute("""
+    SELECT w.checkin_month, count(*), count(*) FILTER (WHERE action_taken = 'pointed to library')
+    FROM fact_question q JOIN dim_week w ON w.week_start = date_trunc('week', q.question_date)
+    GROUP BY 1 ORDER BY 1""").fetchall():
+    print(f"  Month {m}: {100 * matched / n:.1f}% ({matched} of {n})")
+print(f"\nAnswer key bar (round 8): {akf} written first, {items - akf} not first")

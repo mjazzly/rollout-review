@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_not_passing",
   "position": {
-    "x": 850,
-    "y": 500,
+    "x": 678,
+    "y": 509,
     "z": 3000,
-    "height": 166,
-    "width": 402,
-    "tabOrder": 2800
+    "height": 169,
+    "width": 574,
+    "tabOrder": 2400
   },
   "visual": {
     "visualType": "tableEx",
@@ -69,7 +69,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "250D"
+                  "Value": "388D"
                 }
               }
             }
@@ -83,7 +83,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "90D"
+                  "Value": "150D"
                 }
               }
             }

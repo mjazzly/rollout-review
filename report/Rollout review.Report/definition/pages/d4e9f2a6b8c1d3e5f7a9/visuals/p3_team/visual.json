@@ -2,15 +2,15 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_team",
   "position": {
-    "x": 1144,
-    "y": 40,
+    "x": 724,
+    "y": 60,
     "z": 3000,
-    "height": 30,
-    "width": 120,
+    "height": 40,
+    "width": 540,
     "tabOrder": 400
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "advancedSlicerVisual",
     "query": {
       "queryState": {
         "Values": {
@@ -27,8 +27,8 @@
                 }
               },
               "queryRef": "dim_team.team",
-              "nativeQueryRef": "team",
-              "active": true
+              "nativeQueryRef": "Team",
+              "displayName": "Team"
             }
           ]
         }
@@ -37,11 +37,16 @@
     "objects": {
       "data": [
         {
+          "properties": {}
+        }
+      ],
+      "header": [
+        {
           "properties": {
-            "mode": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dropdown'"
+                  "Value": "false"
                 }
               }
             }
@@ -59,26 +64,6 @@
               }
             },
             "strictSingleSelect": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "selectAllCheckboxEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "header": [
-        {
-          "properties": {
-            "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"

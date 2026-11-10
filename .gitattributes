@@ -1,0 +1,2 @@
+# the PC's double-click scripts need Windows line endings
+*.cmd text eol=crlf

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_largest_title",
   "position": {
-    "x": 712,
-    "y": 364,
+    "x": 692,
+    "y": 406,
     "z": 3000,
     "height": 20,
-    "width": 540,
-    "tabOrder": 2400
+    "width": 560,
+    "tabOrder": 2200
   },
   "visual": {
     "visualType": "textbox",
