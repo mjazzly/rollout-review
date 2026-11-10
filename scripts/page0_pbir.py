@@ -185,7 +185,7 @@ def build() -> Page:
           textbox([legend]), on="p0_split_latest_panel", group="t", legend=True)
 
     p.too_thin["p0_split_*_chart"] = ("Legal, In the air: 6.7% at its baseline and 7.5% at Month 6 are 22 and 25 px "
-                                      "of bar; a label needs about 30 (Desktop drops it)")
+                                      "of bar; a label needs about 30 (Desktop drops it). Left unlabelled: Megat, 10 Nov 2026")
     for stage, _, _ in TILES:
         p.unlabelled[f"p0_{stage.lower()}_sparkline"] = "a sparkline: the figure above it is the label"
 
