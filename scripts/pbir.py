@@ -28,7 +28,11 @@ below passes:
    before the first visual in a panel, a caption sitting on its visual aside; no working
    terms from the notes (WORKING_TERMS) anywhere on a page; every number shown in one of
    NUMBER_FORMATS (counts whole, percentages one decimal, points one decimal with a sign);
-9. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
+9. page 3's standing rules: no blank row or column in a grid (its value measure is
+   blank for Power BI's blank member); no subtitle or legend cut off (text is measured
+   with TEXT_INSET each side); the gap rule holds for boxed visuals too: the tab bar,
+   slicers and panels never touch (ROW_GAP down, COL_GAP across);
+10. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
    screenshot confirmed it) or in UNCONFIRMED (from the published schema, or a pattern
    Megat gave). Each push lists the unconfirmed names it used.
 """
@@ -67,17 +71,21 @@ TEXT_SNUG = 6        # a text box is at most this much taller than its text
 INSET_TYPES = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart", "tableEx",
                "pivotTable", "barChart", "clusteredColumnChart"}
 COLUMN_TYPES = {"clusteredColumnChart"}   # categories run across: the per-bar check uses width
+BOXED = {"shape", "pageNavigator", "slicer", "advancedSlicerVisual"}   # visuals drawn as a box
 
 # Page 2 standing rules (10 Nov 2026)
 WORKING_TERMS = ("headline", "FRAME-", "storyline", "helper", "measures.md", "CHECK.md", "DASH-",
                  "repeat-flagged", "repeat_flag", "Foundation tile", "Execution tile",
                  "Refinement tile", "Scale tile", "scratch")
-NUMBER_FORMATS = {"#,0": "count", "0.0%": "percentage", "+0.0;-0.0;0.0": "points"}
+NUMBER_FORMATS = {"#,0": "count", "0.0%": "percentage", "+0.0;-0.0;0.0": "points",
+                  "0.00": "ratio"}   # the cost index, two decimals as CHECK.md reads it
 
 # Text measured on the page 0 screenshots (10 Nov 2026): a 10pt line of 44 to 45
 # characters filled a 276 px text box, so about 0.62 px per character per point, with
 # almost no inner padding; lines are about 1.73 x the point size apart.
-CHAR_W, BOLD_W, LINE_H, TEXT_PAD, TEXT_INSET = 0.62, 1.08, 1.73, 2, 2
+CHAR_W, BOLD_W, LINE_H, TEXT_PAD, TEXT_INSET = 0.62, 1.08, 1.73, 2, 6
+# TEXT_INSET was 2; page 1 round 4 cut "Month only, not the toggle" (est. 145 px) in a 150 px
+# box, so a box keeps 6 px clear each side.
 
 # ------------------------------------------------------------------ setting names
 # (visual type or "container", object) -> property names, each written by Desktop in:
@@ -86,6 +94,8 @@ CHAR_W, BOLD_W, LINE_H, TEXT_PAD, TEXT_INSET = 0.62, 1.08, 1.73, 2, 2
 #   S3  confirmed by Megat on the page 0 round 3 screenshot (10 Nov 2026)
 #   P1  confirmed on the page 1 round 2 screenshots (10 Nov 2026)
 #   H1  Megat's hand reference on the page 1 gap chart (commit d1878b6)
+#   H2  Megat's button slicer on page 1 (commit 1141219): no colour settings, so the
+#       marine selected state with white text is the button slicer's own default
 SEEN: dict[tuple[str, str], set[str]] = {
     ("container", "title"): {"show", "text"},                        # RR, BR
     ("container", "subTitle"): {"show"},                             # BR
@@ -126,6 +136,9 @@ SEEN: dict[tuple[str, str], set[str]] = {
     ("slicer", "data"): {"mode"},                                    # BR
     ("slicer", "selection"): {"singleSelect", "strictSingleSelect", "selectAllCheckboxEnabled"},  # BR
     ("slicer", "header"): {"text"},                                  # BR
+    ("advancedSlicerVisual", "data"): set(),                         # H2: Megat's button slicer, 1141219
+    ("advancedSlicerVisual", "selection"): {"singleSelect", "strictSingleSelect"},  # H2
+    ("advancedSlicerVisual", "general"): {"filter"},                 # H2
     ("tableEx", "total"): {"totals"},                                # BR
     ("tableEx", "columnWidth"): {"value"},                           # BR
     ("tableEx", "values"): {"backColor", "fontColor"},               # BR
@@ -138,6 +151,11 @@ TEXT_STYLE_SEEN = {"fontWeight", "fontSize", "color"}                # RR, BR; c
 
 # Not yet in Megat's files or confirmed on screen. Listed with every push.
 UNCONFIRMED: dict[tuple[str, str], set[str]] = {}
+# Seen names given a value not yet seen: listed with every push.
+UNCONFIRMED_VALUES = [
+    "shape.tileShape 'rectangleRounded' with roundEdge 4 (panels; 'rectangleRounded' was seen on the page navigator)",
+]
+CORNER = 4   # one corner radius: panels, the tab bar, and every visual box (theme.json border radius)
 
 # Written as true, but a screenshot showed they did not take. Not set true again until a
 # hand reference shows the right form. Page 1 round 2: data labels on the 100% stacked gap chart.
@@ -194,8 +212,10 @@ MATRIX_COLUMN_PAD = 4
 # Data labels (page 1 round 2): on clustered bars thinner than a label, the label of the
 # lower bar sat on the bar above. A 9pt label is about 14 px tall; a two-digit label needs
 # a segment about 16 px wide. Category names take about 70 px left of a bar chart's plot.
-LABEL_H, LABEL_MIN_PX, AXIS_LABEL_W, DEFAULT_INNER_PADDING, LABEL_ROOM = 14, 16, 70, 20, 1.15
-LEGEND_SAFETY = 1.15   # a legend's text, estimated, fits its box with this much to spare
+LABEL_H, LABEL_MIN_PX, AXIS_LABEL_W, DEFAULT_INNER_PADDING, LABEL_ROOM = 14, 24, 70, 20, 1.15
+# LABEL_MIN_PX was 16; page 1 round 4: two-digit labels dropped from segments of 16 and 20 px
+# and showed in 25 px, so a stacked segment needs 24 px for its label.
+LEGEND_SAFETY = 1.05   # a legend's text, estimated, fits its box with this much to spare (and TEXT_INSET)
 
 
 # ------------------------------------------------------------------ expression helpers
@@ -306,7 +326,7 @@ def panel() -> dict:
     return {
         "visualType": "shape",
         "objects": {
-            "shape": [{"properties": {"tileShape": text("rectangle"), "roundEdge": lit("8L")}}],
+            "shape": [{"properties": {"tileShape": text("rectangleRounded"), "roundEdge": lit(f"{CORNER}L")}}],
             "rotation": [{"properties": {"shapeAngle": lit("0L")}}],
             "outline": [{"properties": OFF}],
             "fill": [{"properties": {"fillColor": colour(WHITE)}, "selector": {"id": "default"}}],
@@ -323,7 +343,7 @@ def navigator() -> dict:
         "objects": {
             "text": [{"properties": {"fontSize": lit("10D")}, "selector": {"id": "default"}}],
             "shape": [{"properties": {"tileShape": text("rectangleRounded"),
-                                      "rectangleRoundedCurve": lit("8L")},
+                                      "rectangleRoundedCurve": lit(f"{CORNER}L")},
                        "selector": {"id": "default"}}],
             "pages": [{"properties": {"showHiddenPages": lit("false")}}],
             "outline": [{"properties": OFF}],
@@ -452,6 +472,8 @@ class Visual:
     label_min_share: float = 0.0         # stacked: the thinnest labelled segment, as a share of its bar
     max_value: float = 0.0               # the longest bar, when the value axis end is fixed
     legend: bool = False                 # a legend text box: every entry on one line
+    longest_category: str = ""           # column charts: the longest axis label, kept on one line
+    longest_label: str = ""              # column charts: the longest data label, kept inside its column
     extra: dict = field(default_factory=dict)
 
     @property
@@ -546,6 +568,7 @@ class Page:
         problems += self._panel_text()
         problems += self._words()
         problems += self._formats()
+        problems += self._grids()
         problems += self._spacing()
         problems += self._text_fit()
         # 7 setting names
@@ -568,10 +591,18 @@ class Page:
                     thick = per_cat * (1 - pad / 100) / v.series
                     if thick < LABEL_H:
                         out.append(f"{v.name}: bars {thick:.1f} px thick, a label needs {LABEL_H}")
-                if v.label_min_share:
+                if v.label_min_share and v.name not in self.awaiting:
                     seg = (v.box[2] - AXIS_LABEL_W - 10) * v.label_min_share
                     if seg < LABEL_MIN_PX:
                         out.append(f"{v.name}: thinnest segment {seg:.1f} px, a label needs {LABEL_MIN_PX}")
+            if v.categories and v.vt in COLUMN_TYPES:
+                per_cat = (v.box[2] - 20) / v.categories
+                if v.longest_category and text_width([(v.longest_category, pt(9))]) > per_cat - 8:
+                    out.append(f"{v.name}: '{v.longest_category}' does not fit under its column on one line")
+                if labels_on and v.longest_label:
+                    col = per_cat * (1 - DEFAULT_INNER_PADDING / 100) / v.series
+                    if text_width([(v.longest_label, pt(9))]) + 6 > col:
+                        out.append(f"{v.name}: label '{v.longest_label}' is wider than its column ({col:.0f} px)")
             for it in objs.get("valueAxis", []):
                 end = it.get("properties", {}).get("end")
                 if end and v.max_value:
@@ -641,6 +672,24 @@ class Page:
                     fmt = fmts.get(("Measure", name))
                     if fmt not in NUMBER_FORMATS and fmt not in ("text", "dynamic"):
                         out.append(f"{v.name}: {name} is formatted '{fmt}', not a count, percentage or points")
+        return out
+
+    def _grids(self) -> list[str]:
+        """A grid's value measure is blank for Power BI's blank row and column member."""
+        out = []
+        bodies = measure_bodies()
+        for v in self.visuals:
+            if v.vt != "pivotTable":
+                continue
+            qs = v.visual["query"]["queryState"]
+            fields = [pr["field"]["Column"] for role in ("Rows", "Columns") for pr in qs.get(role, {}).get("projections", [])]
+            for pr in qs["Values"]["projections"]:
+                body = bodies.get(pr["field"]["Measure"]["Property"], "")
+                for f in fields:
+                    guard = f"ISBLANK ( SELECTEDVALUE ( {f['Expression']['SourceRef']['Entity']}[{f['Property']}] ) )"
+                    if guard not in body:
+                        out.append(f"{v.name}: {pr['field']['Measure']['Property']} does not blank the empty "
+                                   f"{f['Property']} member, so the grid can show a blank row")
         return out
 
     def _tables_hold_text(self) -> list[str]:
@@ -733,8 +782,16 @@ class Page:
             below = [b for b in page_level if b.top >= a.bottom and _overlap_x(a, b)]
             if below:
                 gap = min(b.top for b in below) - a.bottom
-                if gap not in (0, ROW_GAP):
-                    out.append(f"{a.name}: {gap} px to the row below, not 0 or {ROW_GAP}")
+                if 0 < gap < ROW_GAP:
+                    out.append(f"{a.name}: {gap} px to the row below, under {ROW_GAP}")
+            if a.vt in BOXED:
+                for b in page_level:
+                    if b is a or b.vt not in BOXED:
+                        continue
+                    if _overlap_x(a, b) and b.top >= a.top and b.top - a.bottom < ROW_GAP:
+                        out.append(f"{a.name} and {b.name}: {b.top - a.bottom} px apart, a box needs {ROW_GAP}")
+                    if a.top < b.bottom and b.top < a.bottom and b.left >= a.right and b.left - a.right < COL_GAP:
+                        out.append(f"{a.name} and {b.name}: {b.left - a.right} px apart side by side, a box needs {COL_GAP}")
         return out
 
     def _text_fit(self) -> list[str]:
@@ -786,6 +843,8 @@ class Page:
             print("  Names used through the cartesian family:\n    " + "\n    ".join(fam))
         unc = used_unconfirmed(self)
         print("  Unconfirmed names: " + (", ".join(unc) if unc else "none"))
+        if any(v.vt == "shape" for v in self.visuals):
+            print("  Unconfirmed values: " + "; ".join(UNCONFIRMED_VALUES))
         for name, note in self.awaiting.items():
             print(f"  Waiting for a hand reference: {name}: {note}")
 
@@ -820,6 +879,14 @@ def model_formats() -> dict[tuple[str, str], str]:
             elif cur and line.strip() == "dataType: string":
                 out[cur] = "text"
     return out
+
+
+def measure_bodies() -> dict[str, str]:
+    """Measure name -> DAX body, from measures.dax (the one written source)."""
+    import sys
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import dax_to_tmdl
+    return {o.name: "\n".join(o.body) for o in dax_to_tmdl.parse()}
 
 
 def check_questions(page: int) -> list[int]:

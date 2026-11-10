@@ -1,0 +1,86 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "p4_cost_legend",
+  "position": {
+    "x": 1032,
+    "y": 340,
+    "z": 3000,
+    "height": 18,
+    "width": 220,
+    "tabOrder": 1800
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "■",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#7E8E92"
+                    }
+                  },
+                  {
+                    "value": " Standard model  ",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  },
+                  {
+                    "value": "■",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#2C5F7C"
+                    }
+                  },
+                  {
+                    "value": " Smaller model",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#4F6166"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

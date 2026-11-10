@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_repeat_sub",
   "position": {
-    "x": 456,
+    "x": 564,
     "y": 128,
     "z": 3000,
     "height": 18,
-    "width": 796,
-    "tabOrder": 1200
+    "width": 688,
+    "tabOrder": 1300
   },
   "visual": {
     "visualType": "textbox",

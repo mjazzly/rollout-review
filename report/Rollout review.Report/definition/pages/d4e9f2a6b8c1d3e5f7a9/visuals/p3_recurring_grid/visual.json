@@ -2,17 +2,37 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_recurring_grid",
   "position": {
-    "x": 244,
+    "x": 224,
     "y": 430,
     "z": 3000,
     "height": 250,
-    "width": 574,
-    "tabOrder": 1900
+    "width": 594,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "pivotTable",
     "query": {
       "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_category"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "dim_category.category",
+              "nativeQueryRef": "Use",
+              "displayName": "Use",
+              "active": true
+            }
+          ]
+        },
         "Columns": {
           "projections": [
             {
@@ -32,26 +52,6 @@
             }
           ]
         },
-        "Rows": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_category"
-                    }
-                  },
-                  "Property": "category"
-                }
-              },
-              "queryRef": "dim_category.category",
-              "nativeQueryRef": "Use",
-              "active": true,
-              "displayName": "Use"
-            }
-          ]
-        },
         "Values": {
           "projections": [
             {
@@ -62,10 +62,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Repeat-flagged questions"
+                  "Property": "Recurring questions in grid"
                 }
               },
-              "queryRef": "_Measures.Repeat-flagged questions",
+              "queryRef": "_Measures.Recurring questions in grid",
               "nativeQueryRef": "Recurring questions",
               "displayName": "Recurring questions"
             }
@@ -138,7 +138,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Repeat-flagged questions"
+            "metadata": "_Measures.Recurring questions in grid"
           }
         }
       ],
@@ -168,13 +168,8 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Repeat-flagged questions"
+            "metadata": "_Measures.Recurring questions in grid"
           }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {}
         }
       ]
     },

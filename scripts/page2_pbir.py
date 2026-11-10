@@ -6,7 +6,9 @@
 Brief section 6, page 2, "Which uses matter most, and where do people get stuck?":
 - uses logged and ranked, Month 1 against Month 6 (two bar charts side by side on one
   scale, so the change is on the page without a slicer), and beside them every month as
-  two lines: Rules and allowed use (amber) against all other uses (marine);
+  paired columns: Rules and allowed use (amber) against all other uses (marine). Columns, not
+  lines (round 3): two lines crossing put Month 1's labels on top of each other, and each
+  column carries its own label;
 - requests matched to a tested prompt that already exists (the Foundation headline), whole
   period, with its count;
 - prompts tested against an answer key written first, with its count;
@@ -77,7 +79,7 @@ def bar_chart(measure_name: str, category: tuple[str, str], end: float, sort_by_
 def by_month() -> dict:
     series = (("Rules questions", "Rules and allowed use", AMBER), ("Other questions", "All other uses", MARINE))
     return {
-        "visualType": "lineChart",
+        "visualType": "clusteredColumnChart",
         "query": {"queryState": {
             "Category": {"projections": [proj_column("dim_month", "month_label", active=True)]},
             "Y": {"projections": [proj_measure(m, d) for m, d, _ in series]}}},
@@ -89,8 +91,6 @@ def by_month() -> dict:
             "categoryAxis": [{"properties": {"show": lit("true")}}],
             "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit(f"{LINE_END}D"),
                                           "gridlineShow": lit("false")}}],
-            "lineStyles": [{"properties": {"strokeWidth": lit("2D"), "showMarker": lit("true"),
-                                           "markerSize": lit("3D")}}],
         },
         "visualContainerObjects": NO_FRAME,
         "drillFilterOtherVisuals": True,
@@ -142,7 +142,7 @@ def build() -> Page:
         ("■", pt(9, color=MARINE)), (" All other uses", pt(9, color=INK_SOFT))]]),
         on=pan, group="c", legend=True)
     p.add("p2_month_chart", (lx, chart_y, LINE_CHART_W, chart_h), by_month(), on=pan, group="c",
-          max_value=106)
+          max_value=106, categories=6, series=2, longest_category="Month 6", longest_label="106")
 
     # ---- the two shares, each titled with its measure
     kpi(p, "matched", MATCHED_PANEL, "Requests matched to a tested prompt that already exists",

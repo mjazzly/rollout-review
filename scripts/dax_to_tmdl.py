@@ -36,6 +36,7 @@ COLUMN_TYPES = {
     "passing": "boolean",
     "baseline_month": "int64",
     "status_month": "int64",
+    "team_baseline_label": "string",
 }
 
 START = re.compile(r"^(?!VAR\b)([A-Za-z_][^=/]*?) =$")

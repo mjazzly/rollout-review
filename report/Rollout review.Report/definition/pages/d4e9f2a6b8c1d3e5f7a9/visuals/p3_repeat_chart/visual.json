@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_repeat_chart",
   "position": {
-    "x": 456,
+    "x": 564,
     "y": 148,
     "z": 3000,
     "height": 220,
-    "width": 796,
-    "tabOrder": 1300
+    "width": 688,
+    "tabOrder": 1400
   },
   "visual": {
     "visualType": "clusteredColumnChart",

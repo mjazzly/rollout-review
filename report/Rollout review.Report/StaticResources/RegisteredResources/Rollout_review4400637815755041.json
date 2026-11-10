@@ -545,7 +545,7 @@
                 "color": "#FFFFFF"
               }
             },
-            "radius": 8
+            "radius": 4
           }
         ],
         "dropShadow": [
@@ -589,7 +589,7 @@
                 "color": "#FFFFFF"
               }
             },
-            "radius": 8
+            "radius": 4
           }
         ]
       }
@@ -611,7 +611,7 @@
           {
             "$id": "default",
             "tileShape": "rectangleRoundedByPixel",
-            "rectangleRoundedCurve": 8,
+            "rectangleRoundedCurve": 4,
             "rectangleRoundedCurveCustomStyle": false
           }
         ]

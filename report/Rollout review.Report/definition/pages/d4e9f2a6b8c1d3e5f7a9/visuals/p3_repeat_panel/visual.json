@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_repeat_panel",
   "position": {
-    "x": 444,
+    "x": 552,
     "y": 102,
     "z": 2000,
     "height": 270,
-    "width": 820,
-    "tabOrder": 1000
+    "width": 712,
+    "tabOrder": 1100
   },
   "visual": {
     "visualType": "shape",
@@ -18,14 +18,14 @@
             "tileShape": {
               "expr": {
                 "Literal": {
-                  "Value": "'rectangle'"
+                  "Value": "'rectangleRounded'"
                 }
               }
             },
             "roundEdge": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "4L"
                 }
               }
             }

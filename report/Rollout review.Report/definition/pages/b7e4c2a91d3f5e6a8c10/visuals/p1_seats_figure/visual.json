@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_seats_figure",
   "position": {
-    "x": 546,
+    "x": 616,
     "y": 689,
     "z": 3000,
     "height": 23,
-    "width": 40,
+    "width": 30,
     "tabOrder": 2300
   },
   "visual": {

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_move_panel",
   "position": {
-    "x": 384,
-    "y": 386,
+    "x": 368,
+    "y": 410,
     "z": 2000,
-    "height": 330,
-    "width": 274,
+    "height": 306,
+    "width": 290,
     "tabOrder": 1700
   },
   "visual": {
@@ -18,14 +18,14 @@
             "tileShape": {
               "expr": {
                 "Literal": {
-                  "Value": "'rectangle'"
+                  "Value": "'rectangleRounded'"
                 }
               }
             },
             "roundEdge": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "4L"
                 }
               }
             }

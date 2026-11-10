@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_move_sub",
   "position": {
-    "x": 396,
-    "y": 412,
+    "x": 380,
+    "y": 436,
     "z": 3000,
     "height": 18,
-    "width": 150,
+    "width": 266,
     "tabOrder": 1900
   },
   "visual": {

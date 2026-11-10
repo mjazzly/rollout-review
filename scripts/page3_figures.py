@@ -51,3 +51,15 @@ if not team:
     for name, m, t in live:
         if m != t:
             print(f"  not passing: {name}, {m} of {t} cases")
+
+if not team:
+    print("\nFirst use within two weeks of training, by team")
+    for t, pct, ran, n in c.execute("""
+        WITH att AS (
+          SELECT t.session_id, t.person_id, bool_or(r.week_start IS NOT NULL) AS ran
+          FROM fact_training t LEFT JOIN fact_library_run_person r
+            ON r.person_id = t.person_id AND r.item_id = t.item_id_shown
+           AND r.week_start BETWEEN t.session_week AND t.session_week + 7 GROUP BY 1, 2)
+        SELECT p.team, 100 * avg(CASE WHEN ran THEN 1 ELSE 0 END), count(*) FILTER (WHERE ran), count(*)
+        FROM att JOIN dim_person p USING (person_id) GROUP BY 1 ORDER BY 1""").fetchall():
+        print(f"  {t}: {pct:.1f}% ({ran} of {n})")

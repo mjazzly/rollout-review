@@ -18,14 +18,14 @@
             "tileShape": {
               "expr": {
                 "Literal": {
-                  "Value": "'rectangle'"
+                  "Value": "'rectangleRounded'"
                 }
               }
             },
             "roundEdge": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "4L"
                 }
               }
             }

@@ -1,3 +1,57 @@
+// Impact shares (three measures: the bar length is the team's share giving that answer,
+// the label is the count, through the dynamic format string)
+// Create as: measure in _Measures. Page 5 impact chart.
+// format: 0.0%
+// format expression: """" & FORMAT ( CALCULATE ( [Impact in people's own words], fact_checkin[q5_if_gone] = "I would lose time every week" ), "#,0" ) & """"
+// description: Helper, not in measures.md. Check-in responses answering "I would lose time every week" over all responses, per team, for the check-in month, shown with the count as its label.
+Impact lose time share =
+DIVIDE ( CALCULATE ( [Impact in people's own words], fact_checkin[q5_if_gone] = "I would lose time every week" ), [Impact in people's own words] )
+
+// Create as: measure in _Measures. Page 5 impact chart.
+// format: 0.0%
+// format expression: """" & FORMAT ( CALCULATE ( [Impact in people's own words], fact_checkin[q5_if_gone] = "A little" ), "#,0" ) & """"
+// description: Helper, not in measures.md. Check-in responses answering "A little" over all responses, per team, for the check-in month, shown with the count as its label.
+Impact a little share =
+DIVIDE ( CALCULATE ( [Impact in people's own words], fact_checkin[q5_if_gone] = "A little" ), [Impact in people's own words] )
+
+// Create as: measure in _Measures. Page 5 impact chart.
+// format: 0.0%
+// format expression: """" & FORMAT ( CALCULATE ( [Impact in people's own words], fact_checkin[q5_if_gone] = "Nothing" ), "#,0" ) & """"
+// description: Helper, not in measures.md. Check-in responses answering "Nothing" over all responses, per team, for the check-in month, shown with the count as its label.
+Impact nothing share =
+DIVIDE ( CALCULATE ( [Impact in people's own words], fact_checkin[q5_if_gone] = "Nothing" ), [Impact in people's own words] )
+
+// Air change points
+// Create as: measure in _Measures. Page 5, beside the two shares.
+// format: +0.0;-0.0;0.0
+// description: Helper, not in measures.md. Share of people in the air latest minus Share of people in the air baseline, in points.
+Air change points =
+( [Share of people in the air latest] - [Share of people in the air baseline] ) * 100
+
+// team_baseline_label
+// Create as: calculated column on dim_team
+// format: text
+// description: Helper, not in measures.md. The team with its baseline month, as "Consulting · Month 3", for the page 5 axis.
+team_baseline_label =
+dim_team[team] & " · Month " & dim_team[baseline_month]
+
+// Uses taken up count
+// Create as: measure in _Measures. Page 5, under Uses taken up beyond the first team.
+// format: text
+// description: Helper, not in measures.md. Library items with runs from two or more teams, and all library items, as "4 of 23 library items".
+Uses taken up count =
+FORMAT ( [Uses taken up beyond the first team], "#,0" ) & " of " & FORMAT ( COUNTROWS ( ALL ( dim_library_item ) ), "#,0" ) & " library items"
+
+// Second team from
+// Create as: measure in _Measures. Page 5 table, beside Second team.
+// format: text
+// description: Helper, not in measures.md. Week the second team started as words, as "Week 7"; blank when no second team.
+Second team from =
+VAR w = [Week the second team started]
+RETURN
+    IF ( NOT ISBLANK ( w ), "Week " & w )
+
+
 // =====================================================================
 // Rollout review (DASH-02): measures.dax
 // =====================================================================
@@ -815,6 +869,17 @@ Gap lower share =
 DIVIDE ( [Gap lower], [Gap higher] + [Gap level] + [Gap lower] )
 
 
+// People at checkpoint in grid
+// Create as: measure in _Measures. The page 1 matrix cells: blank for Power BI's blank team or checkpoint, so the grid has no empty row or column.
+// format: #,0
+// description: Helper, not in measures.md. People at checkpoint, for a named team and checkpoint only.
+People at checkpoint in grid =
+IF (
+    NOT ISBLANK ( SELECTEDVALUE ( dim_team[team] ) ) && NOT ISBLANK ( SELECTEDVALUE ( dim_checkpoint[checkpoint] ) ),
+    [People at checkpoint]
+)
+
+
 // ---------------------------------------------------------------------
 // PAGE 2: FOUNDATION. Which uses matter most, and where do people get stuck?
 // ---------------------------------------------------------------------
@@ -1140,6 +1205,17 @@ RETURN
         FORMAT ( matched, "#,0" ) & " of " & FORMAT ( total, "#,0" ) & " cases" )
 
 
+// Recurring questions in grid
+// Create as: measure in _Measures. The page 3 grid cells: blank for Power BI's blank use or month, so the grid has no empty row.
+// format: #,0
+// description: Helper, not in measures.md. Questions with repeat_flag true, for a named use and month only.
+Recurring questions in grid =
+IF (
+    NOT ISBLANK ( SELECTEDVALUE ( dim_category[category] ) ) && NOT ISBLANK ( SELECTEDVALUE ( dim_month[month_label] ) ),
+    [Repeat-flagged questions]
+)
+
+
 // ---------------------------------------------------------------------
 // PAGE 4: REFINEMENT. What earns its place, and at what cost?
 // ---------------------------------------------------------------------
@@ -1198,6 +1274,44 @@ COUNTROWS (
             && dim_library_item[status_month] IN VALUES ( dim_month[checkin_month] )
     )
 ) + 0
+
+
+// Smaller model share line
+// Create as: measure in _Measures. Page 4, under Tested prompts that pass on a smaller model.
+// format: text
+// description: Helper, not in measures.md. The front page's Refinement figure in words, as "9.5% of live prompts at Week 24".
+Smaller model share line =
+FORMAT ( [Refinement tile], "0.0%" ) & " of live prompts at Week 24"
+
+// Smaller model cases when passing
+// Create as: measure in _Measures. Page 4 table: one row per item passing on the smaller model.
+// format: text
+// description: Helper, not in measures.md. For a library item whose latest smaller-tier run is passing, its cases matched out of its cases, as "11 of 11 cases"; blank for every other item, so the table lists only the items passing.
+Smaller model cases when passing =
+VAR itemId = SELECTEDVALUE ( dim_library_item[item_id] )
+VAR latestRun =
+    TOPN (
+        1,
+        FILTER ( ALL ( fact_test_run ), fact_test_run[item_id] = itemId && fact_test_run[model_tier] = "smaller" ),
+        fact_test_run[run_date], DESC,
+        fact_test_run[run_id], DESC
+    )
+VAR matched = MAXX ( latestRun, fact_test_run[cases_matched] )
+VAR total = MAXX ( latestRun, fact_test_run[cases_total] )
+RETURN
+    IF ( NOT ISBLANK ( itemId ) && NOT ISBLANK ( total ) && matched = total,
+        FORMAT ( matched, "#,0" ) & " of " & FORMAT ( total, "#,0" ) & " cases" )
+
+// Retired or merged change
+// Create as: measure in _Measures. Page 4 table: one row per item retired or merged.
+// format: text
+// description: Helper, not in measures.md. For a retired or merged library item, what happened and in which check-in month, as "Merged into LIB-10 in Month 5"; blank for every other item.
+Retired or merged change =
+VAR st = SELECTEDVALUE ( dim_library_item[status] )
+VAR m = SELECTEDVALUE ( dim_library_item[status_month] )
+VAR intoItem = SELECTEDVALUE ( dim_library_item[merged_into_item_id] )
+RETURN
+    SWITCH ( st, "retired", "Retired in Month " & m, "merged", "Merged into " & intoItem & " in Month " & m )
 
 
 // ---------------------------------------------------------------------

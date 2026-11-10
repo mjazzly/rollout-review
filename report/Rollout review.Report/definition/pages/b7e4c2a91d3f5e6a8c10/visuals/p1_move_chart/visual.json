@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_move_chart",
   "position": {
-    "x": 396,
-    "y": 432,
+    "x": 380,
+    "y": 456,
     "z": 3000,
-    "height": 247,
-    "width": 250,
-    "tabOrder": 2100
+    "height": 233,
+    "width": 266,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -82,7 +82,8 @@
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "objects": {

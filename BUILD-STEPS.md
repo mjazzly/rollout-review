@@ -573,15 +573,27 @@ Megat's hand reference (commit d1878b6) turned the gap chart's labels on: Deskto
 | Header | The shared header (section F, round 5), with the month note on the second line |
 | Two lines before the first visual | The gap and movement panels put the subtitle and legend on one line ("Month only, not the toggle"); Seats arrived moves under the movement chart |
 
-### On the PC (pages 1 and 2)
+### Round 6 (10 Nov 2026): fixes from the round 5 screenshots, every page
+
+| Fix asked | What changed |
+|---|---|
+| One corner style | Rounded, 4 px: `theme.json` border radius 8 to 4 (every visual box, slicers included), the tab bar's `rectangleRoundedCurve` 4, and every panel a rounded rectangle (`tileShape` 'rectangleRounded', `roundEdge` 4). The panels were sharp because `roundEdge` on a plain 'rectangle' does not round; 'rectangleRounded' is the navigator's value, so it is unconfirmed on a shape. If the panels stay sharp, the fallback is everything sharp |
+| Slicers touch the tab bar and panels | Slicers start 4 px below the tab bar and end 4 px above the panels. The check now holds boxes (tab bar, slicers, panels) to 4 px down and 16 px across |
+| Placement toggle clipped | Megat's button slicer (commit 1141219): no colour settings in its file, so marine and white is its default; 82 high, titled "Placement" through the field's display name, opening on Source. Page 1's body starts at y 126 under it |
+| Gap: Finance's 13 and Legal's 10 unlabelled | Waits for the hand reference above (Overflow text). The check now needs 24 px for a label in a stacked segment |
+| Subtitle cut, dark square before each legend | The subtitle had wrapped and its scrollbar was the square. Subtitles get their own line; legends sit under the chart; text boxes keep 6 px clear each side in the check (was 2) |
+| Page 2: Month 1 labels collide, month names wrap | The by-month chart is paired columns (Rules and allowed use, amber; all other uses, marine): each count sits on its own column, and "Month 6" fits under its pair. The check now tests that a column's label and axis name fit |
+| Page 3: blank first row, scrollbars in the grid | The blank row was Power BI's blank use: the cell measure added 0 for it. A new helper, `Recurring questions in grid`, is blank for the blank use and month; page 1's matrix uses `People at checkpoint in grid` the same way. The check now requires this guard on every grid |
+| Page 3: empty first use panel | A bar per team beside the figure (it does not fit under it at this height): Consulting 57.3%, Finance 28.9%, Legal 0.0%, Operations 58.5%, People 21.3%, Technology 45.5% |
+
+### On the PC (all six pages)
 
 50. Close Power BI Desktop (save first if it asks).
 51. In PowerShell, in the rollout-review folder: `git pull`.
 52. Open `report/Rollout review.pbip` and go to **Where people sit**.
-53. Send a screenshot of page 1 as it opens, then of **Foundation**.
-54. One hand reference on page 1, then save:
-    - **The Placement toggle**: with it selected, click **Button slicer** in the Visualizations pane to change its type (placement stays in the field well). Then in **Format visual**, set the selected state: fill `#2C5F7C`, text `#FFFFFF` (in the button slicer this is under the style or values card, **Apply settings to**, **Selected**). If the pane does not offer that, send a screenshot of it.
-55. Commit and push: `git add report`, `git commit -m "Page 1: toggle formatted by hand"`, `git push`. I read the settings from its file and write them into the scripts.
+53. Send a screenshot of each of the six pages as they open, then Where people sit with the toggle on **Check-in** and the month on **Month 4**, and Execution with the team on **Operations**.
+54. One hand reference on page 1, then save: **the gap chart**: **Format visual**, **Visual**, **Data labels**, **Options**, **Overflow text**: On. Nothing else. (Finance's 13 and Legal's 10 sit in segments of 16 and 20 px; round 4 showed a label needs about 24 px, so they need to overflow.)
+55. Commit and push: `git add report`, `git commit -m "Page 1: gap labels overflow by hand"`, `git push`.
 
 ### Figures page 1 should show
 
@@ -716,6 +728,42 @@ With the team on **Operations**, the Summarising row reads 0, 8, 8, 0, 0, 0.
 | 11 | Recurring questions covered by a tested prompt, figure and count | 89.4% (127 of 142 recurring questions) |
 | 12 | The grid with the team on Operations, Summarising row | 8 + 8 = 16 in Months 2 and 3; 0 in Months 4 to 6 |
 
+## J. Page 4: Refinement
+
+Written by `scripts/page4_pbir.py`; figures from `python3 scripts/page4_figures.py`. Header: "Refinement", then "What earns its place, and at what cost?". No slicer.
+
+| Piece | Built as |
+|---|---|
+| Tested prompts that pass on a smaller model | The count (2), the front page's share in words ("9.5% of live prompts at Week 24", helper `Smaller model share line`), and the prompts by name with their cases (a table: text; helper `Smaller model cases when passing`) |
+| Prompts retired or merged | Columns by check-in month, counts on them, and beside them each change in words (a table: text; helper `Retired or merged change`) |
+| Cost per use | Median tokens per run by prompt, standard (grey) beside smaller (marine), no labels; under it the cost index by prompt, labelled to two decimals (the one format outside counts, percentages and points, as CHECK.md reads it) |
+
+Figures: passing on the smaller model **2** (LIB-09 Code review checklist, LIB-13 Query explainer); 9.5% of live prompts. Retired or merged: Month 5, 2 (LIB-12 retired; LIB-14 merged into LIB-10). Cost index: every prompt between 0.95 and 1.16 except LIB-09 **2.02** and LIB-13 **2.07** (the full list from `page4_figures.py`).
+
+| Q | Read from | Should read |
+|---|---|---|
+| 13 | Passing on the smaller model, the table | LIB-09, LIB-13 |
+| 14 | Cost index, the LIB-09 and LIB-13 columns | 2.02, 2.07 |
+| 15 | Retired or merged, the table | LIB-12 retired in Month 5; LIB-14 merged into LIB-10 in Month 5 |
+
+## K. Page 5: Scale
+
+Written by `scripts/page5_pbir.py`; figures from `python3 scripts/page5_figures.py`. Header: "Scale", then "Where has it changed the work?". No slicer.
+
+| Piece | Built as |
+|---|---|
+| Impact in people's own words | Month 6 answers to "If AI disappeared from your work tomorrow, what would change?", one bar per team split I would lose time every week (marine), A little (pale), Nothing (grey), counts on the segments (share measures with a dynamic format string, as the page 1 gap) |
+| Share of people in the air against the baseline | Two bars per team, its baseline month (grey) and Month 6 (marine), the baseline month beside the team's name (new column `dim_team[team_baseline_label]`); beside them the change in points (helper `Air change points`) |
+| Uses taken up beyond the first team | The count (4, "4 of 23 library items") and the prompts by name: who made each, who took it up, from which week (a table: text; helper `Second team from`) |
+
+Figures: impact, lose time every week / a little / nothing: Consulting 162 / 74 / 62, Finance 86 / 67 / 44, Legal 17 / 28 / 75, Operations 73 / 106 / 65, People 48 / 37 / 35, Technology 90 / 52 / 46. In the air, baseline to Month 6: Consulting (Month 3) 47.0% to 60.3%, +13.3; Finance (Month 3) 9.5% to 13.0%, +3.5; Legal (Month 2) 6.7% to 7.5%, +0.8; Operations (Month 3) 9.2% to 26.8%, +17.6; People (Month 4) 22.3% to 30.0%, +7.7; Technology (Month 3) 42.5% to 52.0%, +9.5. Taken up: LIB-01 Proposal outline from a brief, made by Consulting, taken up by Technology from Week 7; LIB-03 Market scan in five questions, Consulting, Finance, Week 15; LIB-10 Error log explainer, Technology, Operations, Week 14; LIB-16 Shift handover summary, Operations, People, Week 18.
+
+| Q | Read from | Should read |
+|---|---|---|
+| 16 | Uses taken up, the earliest week in the table | LIB-01 (Consulting), taken up by Technology from Week 7 |
+| 17 | Share in the air, Consulting · Month 3, and the change | 47.0% at Month 3, 60.3% at Month 6, +13.3 points |
+| 18 | Impact, the "I would lose time every week" segments | Consulting 162, Technology 90, Finance 86, Operations 73, People 48, Legal 17 |
+
 ## Next
 
-- J. Page 4, Refinement, written by `scripts/page4_pbir.py` once pages 1 to 3 are approved; then page 5 the same way
+- All six pages are written. Next: the CHECK.md match from the screenshots (brief section 8), then Publish to web

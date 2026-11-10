@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p0_split_legend",
   "position": {
-    "x": 650,
+    "x": 660,
     "y": 484,
     "z": 3000,
     "height": 22,
-    "width": 282,
+    "width": 272,
     "tabOrder": 4300
   },
   "visual": {
@@ -26,7 +26,7 @@
                     }
                   },
                   {
-                    "value": " On the ground   ",
+                    "value": " On the ground  ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
@@ -40,7 +40,7 @@
                     }
                   },
                   {
-                    "value": " At the gate   ",
+                    "value": " At the gate  ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

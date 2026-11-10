@@ -7,7 +7,7 @@
     "z": 2000,
     "height": 340,
     "width": 418,
-    "tabOrder": 2000
+    "tabOrder": 2100
   },
   "visual": {
     "visualType": "shape",
@@ -18,14 +18,14 @@
             "tileShape": {
               "expr": {
                 "Literal": {
-                  "Value": "'rectangle'"
+                  "Value": "'rectangleRounded'"
                 }
               }
             },
             "roundEdge": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "4L"
                 }
               }
             }

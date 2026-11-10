@@ -3,11 +3,11 @@
   "name": "p1_gap_chart",
   "position": {
     "x": 28,
-    "y": 432,
+    "y": 456,
     "z": 3000,
-    "height": 280,
-    "width": 328,
-    "tabOrder": 1600
+    "height": 236,
+    "width": 312,
+    "tabOrder": 1500
   },
   "visual": {
     "visualType": "barChart",
@@ -97,7 +97,8 @@
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "objects": {

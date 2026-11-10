@@ -25,7 +25,7 @@
     "*": {
       "*": {
         "background": [{ "show": true, "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
-        "border": [{ "show": true, "width": 1, "color": { "solid": { "color": "#FFFFFF" } }, "radius": 8 }],
+        "border": [{ "show": true, "width": 1, "color": { "solid": { "color": "#FFFFFF" } }, "radius": 4 }],
         "dropShadow": [{ "show": false }],
         "title": [{ "fontFamily": "Arial", "bold": true, "fontSize": 12, "fontColor": { "solid": { "color": "#172529" } } }]
       }
@@ -33,14 +33,14 @@
     "slicer": {
       "*": {
         "background": [{ "show": true, "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }],
-        "border": [{ "show": true, "width": 1, "color": { "solid": { "color": "#FFFFFF" } }, "radius": 8 }]
+        "border": [{ "show": true, "width": 1, "color": { "solid": { "color": "#FFFFFF" } }, "radius": 4 }]
       }
     },
     "cardVisual": {
       "*": {
         "border": [{ "show": false }],
         "outline": [{ "$id": "default", "show": false }],
-        "shapeCustomRectangle": [{ "$id": "default", "tileShape": "rectangleRoundedByPixel", "rectangleRoundedCurve": 8, "rectangleRoundedCurveCustomStyle": false }]
+        "shapeCustomRectangle": [{ "$id": "default", "tileShape": "rectangleRoundedByPixel", "rectangleRoundedCurve": 4, "rectangleRoundedCurveCustomStyle": false }]
       }
     },
     "textbox": {

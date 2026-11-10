@@ -164,7 +164,7 @@ def build() -> Page:
     for pan, box, title, title_w, m in (
             ("p0_split_base_panel", SPLIT_BASE,
              "Stage by source placement, at each team's baseline month", 432, "Stage split baseline"),
-            ("p0_split_latest_panel", SPLIT_LATEST, "Latest count, Month 6", 150, "Stage split latest")):
+            ("p0_split_latest_panel", SPLIT_LATEST, "Latest count, Month 6", 160, "Stage split latest")):
         x, y, w, h = box
         p.add(pan, box, panel(), z=2000, row="bottom")
         p.add(f"{pan}_title", (x + 12, y + 6, title_w, 22), panel_title(title), on=pan, group="t")
@@ -173,8 +173,8 @@ def build() -> Page:
     legend = []
     for n, (stage, hex_) in enumerate(STAGES):
         legend += [("■", pt(9, color=hex_)),
-                   (f" {stage}" + ("   " if n < 2 else ""), pt(9, color=INK_SOFT))]
-    p.add("p0_split_legend", (SPLIT_LATEST[0] + 12 + 150, SPLIT_LATEST[1] + 6, 282, 22),
+                   (f" {stage}" + ("  " if n < 2 else ""), pt(9, color=INK_SOFT))]
+    p.add("p0_split_legend", (SPLIT_LATEST[0] + 12 + 160, SPLIT_LATEST[1] + 6, 272, 22),
           textbox([legend]), on="p0_split_latest_panel", group="t")
 
     # moved up: title; the count with its caption; seats arrived with its caption, apart

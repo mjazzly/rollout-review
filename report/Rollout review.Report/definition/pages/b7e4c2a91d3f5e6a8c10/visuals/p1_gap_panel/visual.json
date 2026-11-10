@@ -3,10 +3,10 @@
   "name": "p1_gap_panel",
   "position": {
     "x": 16,
-    "y": 386,
+    "y": 410,
     "z": 2000,
-    "height": 330,
-    "width": 352,
+    "height": 306,
+    "width": 336,
     "tabOrder": 1200
   },
   "visual": {
@@ -18,14 +18,14 @@
             "tileShape": {
               "expr": {
                 "Literal": {
-                  "Value": "'rectangle'"
+                  "Value": "'rectangleRounded'"
                 }
               }
             },
             "roundEdge": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "4L"
                 }
               }
             }

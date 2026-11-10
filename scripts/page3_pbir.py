@@ -24,17 +24,18 @@ from pbir import (
 PAGE = "d4e9f2a6b8c1d3e5f7a9"
 ORDER = ["93ede836331e460c840c", "b7e4c2a91d3f5e6a8c10", "c3f8d1e5a7b9c2d4e6f8", PAGE]
 
-TEAM = (1148, 36, 116, 62)
+TEAM = (1148, 40, 116, 58)          # ROW_GAP below the tab bar and above the panels
 ROW1_Y, ROW1_H = 102, 270
 ROW2_Y, ROW2_H = 376, 340
-FIRST_PANEL = (16, ROW1_Y, 412, ROW1_H)
-REPEAT_PANEL = (444, ROW1_Y, 820, ROW1_H)
+FIRST_PANEL = (16, ROW1_Y, 520, ROW1_H)        # the figure, and beside it a bar per team
+REPEAT_PANEL = (552, ROW1_Y, 712, ROW1_H)
 RECURRING_PANEL = (16, ROW2_Y, 814, ROW2_H)
 PASSING_PANEL = (846, ROW2_Y, 418, ROW2_H)
-FIGURE_W = 200
+FIGURE_W = 180
 USE_COL, MONTH_COL = 150, 64        # grid column widths
 NOT_PASSING_ROWS = 4                # live prompts not passing at Month 6 (scripts/page3_figures.py)
 ITEM_COL, CASES_COL = 250, 100
+FIRST_USE_MAX = 0.585               # the highest team: Operations, 58.5% (scripts/page3_figures.py)
 
 
 def heading(s: str) -> dict:
@@ -79,14 +80,35 @@ def repeat_chart() -> dict:
     }
 
 
+def team_bars(measure_name: str) -> dict:
+    return {
+        "visualType": "clusteredBarChart",
+        "query": {"queryState": {
+            "Category": {"projections": [proj_column("dim_team", "team", active=True)]},
+            "Y": {"projections": [proj_measure(measure_name)]}},
+            "sortDefinition": {"sort": [{"field": column("dim_team", "team"), "direction": "Ascending"}],
+                               "isDefaultSort": False}},
+        "objects": {
+            "dataPoint": [{"properties": {"fill": colour(MARINE)}, "selector": {"metadata": f"_Measures.{measure_name}"}}],
+            "labels": [{"properties": {"show": lit("true")}}],
+            "legend": [{"properties": OFF}],
+            "categoryAxis": [{"properties": {"show": lit("true")}}],
+            "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit("1D"),
+                                          "gridlineShow": lit("false")}}],
+        },
+        "visualContainerObjects": NO_FRAME,
+        "drillFilterOtherVisuals": True,
+    }
+
+
 def recurring_grid() -> dict:
-    cell = "_Measures.Repeat-flagged questions"
+    cell = "_Measures.Recurring questions in grid"
     return {
         "visualType": "pivotTable",
         "query": {"queryState": {
             "Rows": {"projections": [proj_column("dim_category", "category", active=True, display="Use")]},
             "Columns": {"projections": [proj_column("dim_month", "month_label", active=True)]},
-            "Values": {"projections": [proj_measure("Repeat-flagged questions", "Recurring questions")]}}},
+            "Values": {"projections": [proj_measure("Recurring questions in grid", "Recurring questions")]}}},
         "objects": {
             "subTotals": [{"properties": {"rowSubtotals": lit("false"), "columnSubtotals": lit("false")}}],
             "values": [{"properties": {"backColor": measure_colour("Recurring shade"),
@@ -129,7 +151,7 @@ def build() -> Page:
     p = Page(PAGE, "Execution", number=3)
     header(p, "p3", "Execution", "Read from the usage dashboards, the question log and the run log",
            "Week 1 to Week 24", question="Does it hold up in everyday use?", right=TEAM[0] - 16)
-    p.add("p3_team", TEAM, team_slicer())
+    p.add("p3_team", TEAM, team_slicer(), same="slicer")
 
     # ---- first use within two weeks of training
     x, y, w, h = FIRST_PANEL
@@ -141,6 +163,9 @@ def build() -> Page:
           on=pan, group="t")
     figure_with_count(p, "first", pan, x + 12, y + 54, FIGURE_W, "First use within two weeks of training",
                       "First use count")
+    bx = x + 12 + FIGURE_W + 16
+    p.add("p3_first_by_team", (bx, y + 46, x + w - 12 - bx, 202), team_bars("First use within two weeks of training"),
+          on=pan, group="b", categories=6, max_value=FIRST_USE_MAX)
 
     # ---- repeat use within 30 days, by month
     x, y, w, h = REPEAT_PANEL
@@ -190,7 +215,7 @@ def build() -> Page:
         10: [("p3_first_figure", "First use within two weeks of training"), ("p3_first_count", "First use count")],
         11: [("p3_recurring_figure", "Recurring questions covered by a tested prompt"),
              ("p3_recurring_count", "Recurring covered count")],
-        12: [("p3_recurring_grid", "Repeat-flagged questions")],
+        12: [("p3_recurring_grid", "Recurring questions in grid")],
     }
     return p
 

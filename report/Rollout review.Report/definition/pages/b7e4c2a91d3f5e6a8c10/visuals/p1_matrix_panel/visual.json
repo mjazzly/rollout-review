@@ -3,7 +3,7 @@
   "name": "p1_matrix_panel",
   "position": {
     "x": 16,
-    "y": 102,
+    "y": 126,
     "z": 2000,
     "height": 280,
     "width": 1248,
@@ -18,14 +18,14 @@
             "tileShape": {
               "expr": {
                 "Literal": {
-                  "Value": "'rectangle'"
+                  "Value": "'rectangleRounded'"
                 }
               }
             },
             "roundEdge": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "4L"
                 }
               }
             }

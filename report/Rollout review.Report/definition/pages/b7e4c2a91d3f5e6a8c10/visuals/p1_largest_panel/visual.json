@@ -3,9 +3,9 @@
   "name": "p1_largest_panel",
   "position": {
     "x": 674,
-    "y": 386,
+    "y": 410,
     "z": 2000,
-    "height": 330,
+    "height": 306,
     "width": 590,
     "tabOrder": 2400
   },
@@ -18,14 +18,14 @@
             "tileShape": {
               "expr": {
                 "Literal": {
-                  "Value": "'rectangle'"
+                  "Value": "'rectangleRounded'"
                 }
               }
             },
             "roundEdge": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "4L"
                 }
               }
             }

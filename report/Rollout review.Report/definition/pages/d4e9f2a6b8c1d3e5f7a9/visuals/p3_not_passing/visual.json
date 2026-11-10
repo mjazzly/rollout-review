@@ -7,7 +7,7 @@
     "z": 3000,
     "height": 166,
     "width": 394,
-    "tabOrder": 2600
+    "tabOrder": 2700
   },
   "visual": {
     "visualType": "tableEx",
@@ -91,11 +91,6 @@
           "selector": {
             "metadata": "_Measures.Cases matched when not passing"
           }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {}
         }
       ]
     },
