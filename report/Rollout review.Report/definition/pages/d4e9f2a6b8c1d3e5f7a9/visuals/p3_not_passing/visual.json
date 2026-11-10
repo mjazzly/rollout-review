@@ -92,6 +92,11 @@
             "metadata": "_Measures.Cases matched when not passing"
           }
         }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
       ]
     },
     "visualContainerObjects": {

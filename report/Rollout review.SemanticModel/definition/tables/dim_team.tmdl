@@ -18,20 +18,11 @@ table dim_team
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Helper, not in measures.md. The team with its baseline month, as "Consulting · Month 3", for the page 5 axis.
-	column team_baseline_label =
-			dim_team[team] & " · Month " & dim_team[baseline_month]
-		dataType: string
-		isDataTypeInferred
-		summarizeBy: none
-
 	/// The earliest seat_assigned_week among the team's people.
-	column seats_arrive_week =
-			CALCULATE ( MIN ( dim_person[seat_assigned_week] ) )
-		dataType: dateTime
-		isDataTypeInferred
-		summarizeBy: none
+	column seats_arrive_week = CALCULATE ( MIN ( dim_person[seat_assigned_week] ) )
 		formatString: yyyy-mm-dd
+		lineageTag: 772e7339-2633-428c-a4f5-6814f44e828c
+		summarizeBy: none
 
 	/// For each team, the first check-in month whose trailing eight weeks start on or after the week the team's seats arrive.
 	column baseline_month =
@@ -40,10 +31,14 @@ table dim_team
 			VAR firstMonth = ROUNDUP ( ( arrivalWeekNo + 7 ) / 4, 0 )
 			RETURN
 			    IF ( NOT ISBLANK ( arrivalWeekNo ) && firstMonth <= 6, firstMonth )
-		dataType: int64
-		isDataTypeInferred
-		summarizeBy: none
 		formatString: 0
+		lineageTag: ea991ce6-7405-481c-aedb-f9957d766fba
+		summarizeBy: none
+
+	/// Helper, not in measures.md. The team with its baseline month, as "Consulting · Month 3", for the page 5 axis.
+	column team_baseline_label = dim_team[team] & " · Month " & dim_team[baseline_month]
+		lineageTag: 636496a9-7f9a-45a9-bdd1-adb6eaf076e9
+		summarizeBy: none
 
 	partition dim_team = m
 		mode: import
@@ -57,3 +52,4 @@ table dim_team
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
+

@@ -92,6 +92,11 @@
             "metadata": "_Measures.Retired or merged change"
           }
         }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
       ]
     },
     "visualContainerObjects": {

@@ -179,6 +179,11 @@
             "metadata": "_Measures.Second team from"
           }
         }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
       ]
     },
     "visualContainerObjects": {

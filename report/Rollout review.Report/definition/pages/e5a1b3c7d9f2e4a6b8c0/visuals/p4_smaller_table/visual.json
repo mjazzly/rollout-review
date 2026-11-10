@@ -121,6 +121,11 @@
             "metadata": "_Measures.Smaller model cases when passing"
           }
         }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
       ]
     },
     "visualContainerObjects": {

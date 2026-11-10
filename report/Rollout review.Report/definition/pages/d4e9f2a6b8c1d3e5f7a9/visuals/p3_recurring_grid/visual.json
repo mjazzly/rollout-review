@@ -13,26 +13,6 @@
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Rows": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_category"
-                    }
-                  },
-                  "Property": "category"
-                }
-              },
-              "queryRef": "dim_category.category",
-              "nativeQueryRef": "Use",
-              "displayName": "Use",
-              "active": true
-            }
-          ]
-        },
         "Columns": {
           "projections": [
             {
@@ -49,6 +29,26 @@
               "queryRef": "dim_month.month_label",
               "nativeQueryRef": "month_label",
               "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_category"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "dim_category.category",
+              "nativeQueryRef": "Use",
+              "active": true,
+              "displayName": "Use"
             }
           ]
         },
@@ -170,6 +170,11 @@
           "selector": {
             "metadata": "_Measures.Recurring questions in grid"
           }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
         }
       ]
     },
