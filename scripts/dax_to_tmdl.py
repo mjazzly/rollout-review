@@ -37,6 +37,8 @@ COLUMN_TYPES = {
     "baseline_month": "int64",
     "status_month": "int64",
     "team_baseline_label": "string",
+    "match_label": "string",
+    "smaller_model_result": "string",
 }
 
 START = re.compile(r"^(?!VAR\b)([A-Za-z_][^=/]*?) =$")

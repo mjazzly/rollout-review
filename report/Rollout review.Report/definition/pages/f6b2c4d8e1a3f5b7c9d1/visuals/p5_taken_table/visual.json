@@ -3,11 +3,11 @@
   "name": "p5_taken_table",
   "position": {
     "x": 224,
-    "y": 532,
+    "y": 520,
     "z": 3000,
-    "height": 180,
+    "height": 170,
     "width": 668,
-    "tabOrder": 2100
+    "tabOrder": 1900
   },
   "visual": {
     "visualType": "tableEx",
@@ -178,11 +178,6 @@
           "selector": {
             "metadata": "_Measures.Second team from"
           }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {}
         }
       ]
     },

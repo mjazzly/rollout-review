@@ -3,11 +3,11 @@
   "name": "p0_seats_figure",
   "position": {
     "x": 972,
-    "y": 640,
+    "y": 614,
     "z": 3000,
     "height": 30,
     "width": 280,
-    "tabOrder": 4900
+    "tabOrder": 4800
   },
   "visual": {
     "visualType": "cardVisual",

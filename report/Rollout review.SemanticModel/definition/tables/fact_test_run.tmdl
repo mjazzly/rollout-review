@@ -82,14 +82,18 @@ table fact_test_run
 		annotation SummarizationSetBy = Automatic
 
 	/// tokens_in plus tokens_out for one test run.
-	column tokens_per_run = fact_test_run[tokens_in] + fact_test_run[tokens_out]
-		formatString: #,0
-		lineageTag: fa681728-4b3e-41ef-ac5c-e960777dbcdd
+	column tokens_per_run =
+			fact_test_run[tokens_in] + fact_test_run[tokens_out]
+		dataType: int64
+		isDataTypeInferred
 		summarizeBy: none
+		formatString: #,0
 
 	/// A test run where cases_matched equals cases_total.
-	column passing = fact_test_run[cases_matched] = fact_test_run[cases_total]
-		lineageTag: 2f3e383d-3650-42d4-ae79-4227446ef13e
+	column passing =
+			fact_test_run[cases_matched] = fact_test_run[cases_total]
+		dataType: boolean
+		isDataTypeInferred
 		summarizeBy: none
 
 	partition fact_test_run = m
@@ -108,4 +112,3 @@ table fact_test_run
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

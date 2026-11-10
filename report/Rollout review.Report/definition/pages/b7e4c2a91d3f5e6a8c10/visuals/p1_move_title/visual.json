@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_move_title",
   "position": {
-    "x": 380,
-    "y": 416,
+    "x": 466,
+    "y": 364,
     "z": 3000,
     "height": 20,
-    "width": 266,
-    "tabOrder": 1800
+    "width": 206,
+    "tabOrder": 1700
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Movement since the previous count",
+                    "value": "Movement since last count",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

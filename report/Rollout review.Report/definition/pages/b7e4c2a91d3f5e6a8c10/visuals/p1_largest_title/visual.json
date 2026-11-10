@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_largest_title",
   "position": {
-    "x": 686,
-    "y": 416,
+    "x": 712,
+    "y": 364,
     "z": 3000,
     "height": 20,
-    "width": 566,
-    "tabOrder": 2500
+    "width": 540,
+    "tabOrder": 2400
   },
   "visual": {
     "visualType": "textbox",
@@ -24,13 +24,6 @@
                       "fontSize": "10pt",
                       "fontWeight": "bold",
                       "color": "#172529"
-                    }
-                  },
-                  {
-                    "value": " · follows the placement toggle and the month",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#4F6166"
                     }
                   }
                 ]

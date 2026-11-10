@@ -32,7 +32,11 @@ below passes:
    blank for Power BI's blank member); no subtitle or legend cut off (text is measured
    with TEXT_INSET each side); the gap rule holds for boxed visuals too: the tab bar,
    slicers and panels never touch (ROW_GAP down, COL_GAP across);
-10. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
+10. page 4's standing rules (round 7): the header is the title and the question only; the
+   sources and period are one grey line at the foot of every page; a panel subtitle is at
+   most SUBTITLE_WORDS words and never a "follows" note; a legend sits at the top right of its
+   panel; no text is cut (a card's longest text fits its width);
+11. every format setting name is in SEEN (Desktop wrote it in Megat's own files, or a
    screenshot confirmed it) or in UNCONFIRMED (from the published schema, or a pattern
    Megat gave). Each push lists the unconfirmed names it used.
 """
@@ -69,12 +73,13 @@ COL_GAP = 16         # between panels side by side in a row
 ROW_GAP = 4          # between rows on the page (the header strip's pieces touch)
 TEXT_SNUG = 6        # a text box is at most this much taller than its text
 INSET_TYPES = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart", "tableEx",
-               "pivotTable", "barChart", "clusteredColumnChart"}
-COLUMN_TYPES = {"clusteredColumnChart"}   # categories run across: the per-bar check uses width
+               "pivotTable", "barChart", "clusteredColumnChart", "columnChart"}
+COLUMN_TYPES = {"clusteredColumnChart", "columnChart"}   # categories run across: the per-bar check uses width
 BOXED = {"shape", "pageNavigator", "slicer", "advancedSlicerVisual"}   # visuals drawn as a box
 
 # Page 2 standing rules (10 Nov 2026)
 WORKING_TERMS = ("headline", "FRAME-", "storyline", "helper", "measures.md", "CHECK.md", "DASH-",
+                 "follows the", "How to read",
                  "repeat-flagged", "repeat_flag", "Foundation tile", "Execution tile",
                  "Refinement tile", "Scale tile", "scratch")
 NUMBER_FORMATS = {"#,0": "count", "0.0%": "percentage", "+0.0;-0.0;0.0": "points",
@@ -96,11 +101,13 @@ CHAR_W, BOLD_W, LINE_H, TEXT_PAD, TEXT_INSET = 0.62, 1.08, 1.73, 2, 6
 #   H1  Megat's hand reference on the page 1 gap chart (commit d1878b6)
 #   H2  Megat's button slicer on page 1 (commit 1141219): no colour settings, so the
 #       marine selected state with white text is the button slicer's own default
+#   H3  Megat's hand reference on the page 1 gap chart: overflow text (commit 0df130b)
+#   TH  theme.json, Megat's theme file: visualStyles border show, color, radius; background color
 SEEN: dict[tuple[str, str], set[str]] = {
     ("container", "title"): {"show", "text"},                        # RR, BR
     ("container", "subTitle"): {"show"},                             # BR
-    ("container", "background"): {"show"},                           # RR, BR
-    ("container", "border"): {"show"},                               # RR
+    ("container", "background"): {"show", "color"},                  # RR, BR; color TH
+    ("container", "border"): {"show", "color", "radius"},            # RR; color, radius TH
     ("container", "visualHeader"): {"show"},                         # BR
     ("textbox", "general"): {"paragraphs"},                          # RR, BR
     ("shape", "shape"): {"tileShape", "roundEdge"},                  # RR
@@ -130,6 +137,7 @@ SEEN: dict[tuple[str, str], set[str]] = {
     ("clusteredBarChart", "valueAxis"): {"show", "start", "end"},    # BR
     ("hundredPercentStackedBarChart", "dataPoint"): {"fill"},        # S3 (selector by value)
     ("hundredPercentStackedBarChart", "labels"): {"show"},          # H1: Megat's hand reference, d1878b6
+    ("barChart", "labels"): {"show", "labelOverflow"},               # H3: Megat's hand reference, 0df130b
     ("lineClusteredColumnComboChart", "categoryAxis"): {"showAxisTitle"},  # BR
     ("lineClusteredColumnComboChart", "legend"): {"show"},           # BR
     ("lineClusteredColumnComboChart", "dataPoint"): {"fill", "fillTransparency"},  # BR
@@ -150,11 +158,13 @@ SEEN: dict[tuple[str, str], set[str]] = {
 TEXT_STYLE_SEEN = {"fontWeight", "fontSize", "color"}                # RR, BR; color S3
 
 # Not yet in Megat's files or confirmed on screen. Listed with every push.
-UNCONFIRMED: dict[tuple[str, str], set[str]] = {}
-# Seen names given a value not yet seen: listed with every push.
-UNCONFIRMED_VALUES = [
-    "shape.tileShape 'rectangleRounded' with roundEdge 4 (panels; 'rectangleRounded' was seen on the page navigator)",
-]
+UNCONFIRMED: dict[tuple[str, str], set[str]] = {
+    # every object in Megat's files turns off with "show" (title, legend, labels, divider,
+    # background, border, label, referenceLabelTitle): the slicer header is taken to do the same
+    ("slicer", "header"): {"show"},
+    ("advancedSlicerVisual", "header"): {"show"},
+}
+UNCONFIRMED_VALUES: list[str] = []
 CORNER = 4   # one corner radius: panels, the tab bar, and every visual box (theme.json border radius)
 
 # Written as true, but a screenshot showed they did not take. Not set true again until a
@@ -167,9 +177,10 @@ TEXT_STYLE_UNCONFIRMED: set[str] = set()
 
 # Microsoft's axis, legend, label and data colour objects are shared by the cartesian
 # charts, so a name seen on one of them counts for the others. Each use is listed.
-CARTESIAN = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart",
+CARTESIAN = {"lineChart", "clusteredBarChart", "hundredPercentStackedBarChart", "columnChart",
              "lineClusteredColumnComboChart", "barChart", "clusteredColumnChart"}
 FAMILY_OBJECTS = {"categoryAxis", "valueAxis", "legend", "labels", "dataPoint"}
+SUBTITLE_WORDS = 8
 
 # Smallest sizes Desktop drew on page 0. A line chart at 276 by 67 and 276 by 74 did not
 # draw; at 276 by 100 it did. Bars: the round 2 screenshot scrolled with bars 26.5 px
@@ -215,6 +226,9 @@ MATRIX_COLUMN_PAD = 4
 LABEL_H, LABEL_MIN_PX, AXIS_LABEL_W, DEFAULT_INNER_PADDING, LABEL_ROOM = 14, 24, 70, 20, 1.15
 # LABEL_MIN_PX was 16; page 1 round 4: two-digit labels dropped from segments of 16 and 20 px
 # and showed in 25 px, so a stacked segment needs 24 px for its label.
+# With labelOverflow on (H3), Legal's 10 showed in a 20.6 px segment and Finance's 13 did not
+# in 16 px (page 1 round 6), so an overflowing label needs 20 px.
+LABEL_MIN_PX_OVERFLOW = 20
 LEGEND_SAFETY = 1.05   # a legend's text, estimated, fits its box with this much to spare (and TEXT_INSET)
 
 
@@ -322,16 +336,17 @@ def caption(label: str, size: int, width: int, lines: int, color: str = INK_SOFT
 
 
 def panel() -> dict:
-    """A white rounded panel (a rectangle shape), as Desktop wrote it on the PC."""
+    """A white panel with rounded corners: an empty text box whose own box is drawn, white, with
+    the theme's corner radius (round 7: a rectangle shape did not round its corners; the
+    slicer boxes, drawn by their container, did)."""
     return {
-        "visualType": "shape",
-        "objects": {
-            "shape": [{"properties": {"tileShape": text("rectangleRounded"), "roundEdge": lit(f"{CORNER}L")}}],
-            "rotation": [{"properties": {"shapeAngle": lit("0L")}}],
-            "outline": [{"properties": OFF}],
-            "fill": [{"properties": {"fillColor": colour(WHITE)}, "selector": {"id": "default"}}],
+        "visualType": "textbox",
+        "objects": {"general": [{"properties": {"paragraphs": [{"textRuns": [{"value": "\u00a0"}]}]}}]},
+        "visualContainerObjects": {
+            "title": [{"properties": OFF}],
+            "background": [{"properties": {"show": lit("true"), "color": colour(WHITE)}}],
+            "border": [{"properties": {"show": lit("true"), "color": colour(WHITE), "radius": lit(f"{CORNER}D")}}],
         },
-        "visualContainerObjects": {"border": [{"properties": OFF}]},
         "drillFilterOtherVisuals": True,
     }
 
@@ -365,27 +380,53 @@ HEADER_NAV = (16, 4, 1248, 32)
 HEADER_TITLE_Y, HEADER_TITLE_H = 36, 34
 HEADER_SECOND_Y, HEADER_SECOND_H = 74, 24     # the question: its own line, 4 px below the title
 HEADER_BODY_Y = 102                           # the body starts ROW_GAP below the question
+HEADER_BODY_Y_NO_QUESTION = 74                # pages with no question: ROW_GAP below the title row
+CONTROL_Y, CONTROL_H = 40, 30                 # slicers: one slim row at the right of the title row
+FOOTER_Y, FOOTER_H = 698, 18                  # the sources and period, one grey line
+BODY_END = FOOTER_Y - ROW_GAP                 # 694: panels end here
 
 
-def header(p: "Page", prefix: str, title: str, sources: str, period: str,
-           question: str | None, right: int = 1264, second_w: int | None = None) -> None:
-    """Every page's header: navigator; the title, with the sources in small grey text at the
-    right of its row (ending at `right`, left of any slicers); the question on its own line
-    below. Page 0 puts its header line card on the second line instead of a question."""
+def header(p: "Page", prefix: str, title: str, question: str | None, sources: str, period: str) -> None:
+    """Every page: the tab bar; the title, and its question on its own line below (round 7: no
+    other text in the header); the sources and period as one grey line at the foot."""
     p.add(f"{prefix}_navigator", HEADER_NAV, navigator(), z=0)
     t_runs = [(title, pt(18, bold=True, color=INK))]
     tw = int(text_width(t_runs) * 1.1) + 12
     p.add(f"{prefix}_title", (16, HEADER_TITLE_Y, tw, HEADER_TITLE_H), textbox([t_runs]))
-    s_runs = [(sources + " · ", pt(9, color=INK_SOFT)), (period, pt(9, bold=True, color=INK_SOFT))]
-    sw = int(text_width(s_runs) * 1.08) + 8
-    sx = right - sw
-    if sx < 16 + tw + 16:
-        raise SystemExit(f"{prefix}: the sources line does not fit beside the title")
-    blank = [[("\u00a0", pt(9, color=INK_SOFT))]]
-    p.add(f"{prefix}_sources", (sx, HEADER_TITLE_Y, sw, HEADER_TITLE_H), textbox(blank + [s_runs]))
     if question:
-        p.add(f"{prefix}_question", (16, HEADER_SECOND_Y, second_w or right - 16, HEADER_SECOND_H),
+        p.add(f"{prefix}_question", (16, HEADER_SECOND_Y, 900, HEADER_SECOND_H),
               textbox([[(question, pt(12, color=INK_SOFT))]]))
+    p.add(f"{prefix}_footer", (16, FOOTER_Y, 1248, FOOTER_H), textbox([[
+        (sources + " · ", pt(9, color=INK_SOFT)), (period, pt(9, color=INK_SOFT))]]))
+
+
+def slim_slicer(table: str, col: str, start: str | None, single: bool = True, strict: bool = True) -> dict:
+    """A dropdown slicer on one slim row: no header, no box (round 7)."""
+    sel = {"singleSelect": lit("true" if single else "false"), "strictSingleSelect": lit("true" if strict else "false")}
+    if not strict:
+        sel["selectAllCheckboxEnabled"] = lit("true")
+    general = {}
+    if start:
+        general["filter"] = {"filter": {
+            "Version": 2, "From": [{"Name": "f", "Entity": table, "Type": 0}],
+            "Where": [{"Condition": {"In": {
+                "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "f"}}, "Property": col}}],
+                "Values": [[{"Literal": {"Value": f"'{start}'"}}]]}}}]}}
+    objects = {
+        "data": [{"properties": {"mode": text("Dropdown")}}],
+        "selection": [{"properties": sel}],
+        "header": [{"properties": OFF}],
+    }
+    if general:
+        objects["general"] = [{"properties": general}]
+    return {
+        "visualType": "slicer",
+        "query": {"queryState": {"Values": {"projections": [proj_column(table, col, active=True)]}}},
+        "objects": objects,
+        "visualContainerObjects": {"background": [{"properties": OFF}], "border": [{"properties": OFF}],
+                                   "title": [{"properties": OFF}]},
+        "drillFilterOtherVisuals": True,
+    }
 
 
 def value_card(measure_name: str, size: int, color: dict | None = None,
@@ -471,7 +512,9 @@ class Visual:
     series: int = 1                      # bars side by side in each category (clustered)
     label_min_share: float = 0.0         # stacked: the thinnest labelled segment, as a share of its bar
     max_value: float = 0.0               # the longest bar, when the value axis end is fixed
-    legend: bool = False                 # a legend text box: every entry on one line
+    legend: bool = False                 # a legend text box: every entry on one line, top right of its panel
+    kind: str | None = None              # "subtitle": at most SUBTITLE_WORDS words
+    longest_value: str = ""              # a card showing text: its longest text, which must fit
     longest_category: str = ""           # column charts: the longest axis label, kept on one line
     longest_label: str = ""              # column charts: the longest data label, kept inside its column
     extra: dict = field(default_factory=dict)
@@ -569,6 +612,7 @@ class Page:
         problems += self._words()
         problems += self._formats()
         problems += self._grids()
+        problems += self._round7()
         problems += self._spacing()
         problems += self._text_fit()
         # 7 setting names
@@ -591,9 +635,12 @@ class Page:
                     thick = per_cat * (1 - pad / 100) / v.series
                     if thick < LABEL_H:
                         out.append(f"{v.name}: bars {thick:.1f} px thick, a label needs {LABEL_H}")
+                overflow = any(it.get("properties", {}).get("labelOverflow") == lit("true")
+                               for it in objs.get("labels", []))
+                need_px = LABEL_MIN_PX_OVERFLOW if overflow else LABEL_MIN_PX
                 if v.label_min_share and v.name not in self.awaiting:
                     seg = (v.box[2] - AXIS_LABEL_W - 10) * v.label_min_share
-                    if seg < LABEL_MIN_PX:
+                    if seg < need_px:
                         out.append(f"{v.name}: thinnest segment {seg:.1f} px, a label needs {LABEL_MIN_PX}")
             if v.categories and v.vt in COLUMN_TYPES:
                 per_cat = (v.box[2] - 20) / v.categories
@@ -672,6 +719,42 @@ class Page:
                     fmt = fmts.get(("Measure", name))
                     if fmt not in NUMBER_FORMATS and fmt not in ("text", "dynamic"):
                         out.append(f"{v.name}: {name} is formatted '{fmt}', not a count, percentage or points")
+        return out
+
+    def panels(self) -> set[str]:
+        return {v.on for v in self.visuals if v.on}
+
+    def _round7(self) -> list[str]:
+        out = []
+        panels = self.panels()
+        if not any(v.name.endswith("_footer") and v.top == FOOTER_Y for v in self.visuals):
+            out.append("no sources line at the foot of the page")
+        for v in self.visuals:
+            if v.on is None and v.name not in panels and v.vt not in ("pageNavigator",) \
+                    and not v.name.endswith(("_footer", "_title", "_question", "_header_line")) \
+                    and v.vt not in ("slicer", "advancedSlicerVisual") and v.bottom > BODY_END:
+                out.append(f"{v.name} runs into the foot of the page")
+            if v.on in panels and v.bottom > BODY_END:
+                out.append(f"{v.name} runs into the foot of the page")
+            if v.kind == "subtitle":
+                words = " ".join(r["value"] for pa in v.visual["objects"]["general"][0]["properties"]["paragraphs"]
+                                 for r in pa["textRuns"]).split()
+                if len(words) > SUBTITLE_WORDS:
+                    out.append(f"{v.name}: subtitle has {len(words)} words, more than {SUBTITLE_WORDS}")
+            if v.legend and v.on:
+                p = self.get(v.on)
+                if v.right != p.right - PANEL_PAD_X:
+                    out.append(f"{v.name}: a legend sits at the top right of its panel")
+                firsts = [c.top for c in self.visuals if c.on == v.on and c.vt != "textbox"]
+                if firsts and v.top >= min(firsts):
+                    out.append(f"{v.name}: a legend sits above its chart, in the panel's top rows")
+            if v.longest_value:
+                size = float(v.visual["objects"]["value"][0]["properties"]["fontSize"]["expr"]["Literal"]["Value"].rstrip("D"))
+                if text_width([(v.longest_value, pt(int(size)))]) + 2 * TEXT_INSET > v.box[2]:
+                    out.append(f"{v.name}: '{v.longest_value}' is cut at {v.box[2]} px")
+        for p in panels:
+            if self.get(p).bottom > BODY_END:
+                out.append(f"{p} runs into the foot of the page")
         return out
 
     def _grids(self) -> list[str]:
@@ -784,9 +867,10 @@ class Page:
                 gap = min(b.top for b in below) - a.bottom
                 if 0 < gap < ROW_GAP:
                     out.append(f"{a.name}: {gap} px to the row below, under {ROW_GAP}")
-            if a.vt in BOXED:
+            panels = self.panels()
+            if a.vt in BOXED or a.name in panels:
                 for b in page_level:
-                    if b is a or b.vt not in BOXED:
+                    if b is a or not (b.vt in BOXED or b.name in panels):
                         continue
                     if _overlap_x(a, b) and b.top >= a.top and b.top - a.bottom < ROW_GAP:
                         out.append(f"{a.name} and {b.name}: {b.top - a.bottom} px apart, a box needs {ROW_GAP}")
@@ -796,7 +880,9 @@ class Page:
 
     def _text_fit(self) -> list[str]:
         out = []
-        need = {v.name: text_height(v.visual, v.box[2]) for v in self.visuals if v.vt == "textbox"}
+        panels = self.panels()
+        need = {v.name: text_height(v.visual, v.box[2]) for v in self.visuals
+                if v.vt == "textbox" and v.name not in panels}
         tallest: dict[str, float] = {}
         for v in self.visuals:
             if v.name in need and v.same:

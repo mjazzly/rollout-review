@@ -3,11 +3,11 @@
   "name": "p5_taken_figure",
   "position": {
     "x": 28,
-    "y": 540,
+    "y": 528,
     "z": 3000,
     "height": 62,
     "width": 180,
-    "tabOrder": 1900
+    "tabOrder": 1700
   },
   "visual": {
     "visualType": "cardVisual",

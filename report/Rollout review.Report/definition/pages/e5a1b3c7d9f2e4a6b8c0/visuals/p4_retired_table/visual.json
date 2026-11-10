@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p4_retired_table",
   "position": {
-    "x": 990,
-    "y": 148,
+    "x": 986,
+    "y": 452,
     "z": 3000,
-    "height": 158,
-    "width": 262,
-    "tabOrder": 1400
+    "height": 238,
+    "width": 266,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "tableEx",
@@ -91,11 +91,6 @@
           "selector": {
             "metadata": "_Measures.Retired or merged change"
           }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {}
         }
       ]
     },

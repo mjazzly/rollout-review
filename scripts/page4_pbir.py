@@ -3,35 +3,38 @@
 
     python3 scripts/page4_pbir.py
 
-Brief section 6, page 4, "What earns its place, and at what cost?":
-- tested prompts that pass on a smaller model: the count, the front page's share in words,
-  and the prompts by name (text, so a table);
-- prompts retired or merged by month, and what happened to each (a table: text);
-- cost per use: median tokens per run by prompt, standard beside smaller, and under it the
-  cost index (standard over smaller) by prompt, labelled.
-No slicer: the page reads Week 1 to Week 24, and the share at Week 24.
+Brief section 6, page 4, "What earns its place, and at what cost?" (round 7):
+- main chart: the live prompts ranked by cases matched on their latest smaller-model run,
+  the ones that pass (every case) in marine, the rest grey;
+- under it, for the passing prompts only: median tokens per run on each model, and the cost
+  index (standard over smaller). Below, not beside: 21 prompts need the full width for their
+  names to sit under their columns;
+- prompts retired or merged by month, and what happened to each (a table: text).
 """
 from __future__ import annotations
 
 from pbir import (
-    GREY, INK, INK_SOFT, MARINE, OFF, NO_FRAME, Page, colour, column, header, lit, panel,
-    proj_column, proj_measure, pt, set_page_order, table_height, table_width, textbox, value_card,
-    value_is, wrapped_lines, TEXT_INSET,
+    GREY, INK, INK_SOFT, MARINE, OFF, NO_FRAME, Page, colour, column, filter_in, header, lit, panel,
+    proj_column, proj_measure, pt, table_height, table_width, textbox, value_is, wrapped_lines,
+    BODY_END, HEADER_BODY_Y, TEXT_INSET,
 )
 
 PAGE = "e5a1b3c7d9f2e4a6b8c0"
-ORDER = ["93ede836331e460c840c", "b7e4c2a91d3f5e6a8c10", "c3f8d1e5a7b9c2d4e6f8", "d4e9f2a6b8c1d3e5f7a9", PAGE]
 
-ROW1_Y, ROW1_H = 102, 208
-SMALLER_PANEL = (16, ROW1_Y, 600, ROW1_H)
-RETIRED_PANEL = (632, ROW1_Y, 632, ROW1_H)
-COST_PANEL = (16, 314, 1248, 402)
-FIGURE_W = 180
-SMALLER_COLS = (56, 180, 96)        # prompt ID, prompt, cases on the smaller model
-RETIRED_CHART_W = 330
-RETIRED_COLS = (56, 170)            # prompt ID, what happened
-ITEMS = 23                          # library items with test runs (scripts/page4_figures.py)
+ROW1_Y, ROW1_H = HEADER_BODY_Y, 300
+ROW2_Y = ROW1_Y + ROW1_H + 4
+ROW2_H = BODY_END - ROW2_Y
+MAIN_PANEL = (16, ROW1_Y, 1248, ROW1_H)
+COST_PANEL = (16, ROW2_Y, 616, ROW2_H)
+RETIRED_PANEL = (648, ROW2_Y, 616, ROW2_H)
+LIVE = 21                           # live prompts at Week 24 (scripts/page4_figures.py)
+TOKENS_W = 360
+TOKENS_END = 4500                   # the most tokens on a passing prompt: 3,744 (LIB-09, standard)
 INDEX_END = 2.5                     # the highest cost index is 2.07 (LIB-13)
+RETIRED_CHART_W = 310
+RETIRED_COLS = (56, 170)            # prompt ID, what happened
+PASSES = (("Passes", MARINE), ("Does not pass", GREY))
+TIERS = (("standard", "Standard model", GREY), ("smaller", "Smaller model", MARINE))
 
 
 def heading(s: str) -> dict:
@@ -49,7 +52,99 @@ def legend(items) -> dict:
     return textbox([runs])
 
 
-def table(cols: list[tuple[dict, int]]) -> dict:
+def axis(end: float) -> dict:
+    return {"show": lit("false"), "start": lit("0D"), "end": lit(f"{end}D"), "gridlineShow": lit("false")}
+
+
+def ranked_live() -> dict:
+    m = "Smaller model cases share"
+    return {
+        "visualType": "columnChart",
+        "query": {"queryState": {
+            "Category": {"projections": [proj_column("dim_library_item", "item_id", active=True)]},
+            "Series": {"projections": [proj_column("dim_library_item", "smaller_model_result")]},
+            "Y": {"projections": [proj_measure(m)]}},
+            "sortDefinition": {"sort": [{"field": proj_measure(m)["field"], "direction": "Descending"}],
+                               "isDefaultSort": False}},
+        "objects": {
+            "dataPoint": [{"properties": {"fill": colour(c)},
+                           "selector": value_is("dim_library_item", "smaller_model_result", v)} for v, c in PASSES],
+            "labels": [{"properties": {"show": lit("true")}}],
+            "legend": [{"properties": OFF}],
+            "categoryAxis": [{"properties": {"show": lit("true")}}],
+            "valueAxis": [{"properties": axis(1.2)}],
+        },
+        "visualContainerObjects": NO_FRAME,
+        "drillFilterOtherVisuals": True,
+    }
+
+
+def passing_only(name: str) -> dict:
+    return {"filterConfig": {"filters": [filter_in("dim_library_item", "smaller_model_result", ["Passes"], name)]}}
+
+
+def tokens_chart() -> dict:
+    return {
+        "visualType": "clusteredBarChart",
+        "query": {"queryState": {
+            "Category": {"projections": [proj_column("dim_library_item", "item_id", active=True)]},
+            "Series": {"projections": [proj_column("fact_test_run", "model_tier")]},
+            "Y": {"projections": [proj_measure("Cost per use", "Median tokens per run")]}},
+            "sortDefinition": {"sort": [{"field": column("dim_library_item", "item_id"), "direction": "Ascending"}],
+                               "isDefaultSort": False}},
+        "objects": {
+            "dataPoint": [{"properties": {"fill": colour(c)}, "selector": value_is("fact_test_run", "model_tier", v)}
+                          for v, _, c in TIERS],
+            "labels": [{"properties": {"show": lit("true")}}],
+            "legend": [{"properties": OFF}],
+            "categoryAxis": [{"properties": {"show": lit("true")}}],
+            "valueAxis": [{"properties": axis(TOKENS_END)}],
+        },
+        "visualContainerObjects": NO_FRAME,
+        "drillFilterOtherVisuals": True,
+    }
+
+
+def index_chart() -> dict:
+    return {
+        "visualType": "clusteredBarChart",
+        "query": {"queryState": {
+            "Category": {"projections": [proj_column("dim_library_item", "item_id", active=True)]},
+            "Y": {"projections": [proj_measure("Cost index")]}},
+            "sortDefinition": {"sort": [{"field": column("dim_library_item", "item_id"), "direction": "Ascending"}],
+                               "isDefaultSort": False}},
+        "objects": {
+            "dataPoint": [{"properties": {"fill": colour(MARINE)}, "selector": {"metadata": "_Measures.Cost index"}}],
+            "labels": [{"properties": {"show": lit("true")}}],
+            "legend": [{"properties": OFF}],
+            "categoryAxis": [{"properties": {"show": lit("true")}}],
+            "valueAxis": [{"properties": axis(INDEX_END)}],
+        },
+        "visualContainerObjects": NO_FRAME,
+        "drillFilterOtherVisuals": True,
+    }
+
+
+def months_chart() -> dict:
+    m = "Prompts retired or merged"
+    return {
+        "visualType": "clusteredColumnChart",
+        "query": {"queryState": {
+            "Category": {"projections": [proj_column("dim_month", "month_label", active=True)]},
+            "Y": {"projections": [proj_measure(m)]}}},
+        "objects": {
+            "dataPoint": [{"properties": {"fill": colour(MARINE)}, "selector": {"metadata": f"_Measures.{m}"}}],
+            "labels": [{"properties": {"show": lit("true")}}],
+            "legend": [{"properties": OFF}],
+            "categoryAxis": [{"properties": {"show": lit("true")}}],
+            "valueAxis": [{"properties": axis(3)}],
+        },
+        "visualContainerObjects": NO_FRAME,
+        "drillFilterOtherVisuals": True,
+    }
+
+
+def table(cols) -> dict:
     return {
         "visualType": "tableEx",
         "query": {"queryState": {"Values": {"projections": [c for c, _ in cols]}}},
@@ -63,71 +158,48 @@ def table(cols: list[tuple[dict, int]]) -> dict:
     }
 
 
-def columns(measure_name: str, category: tuple[str, str], end: float | None, series_field=None,
-            series=None, labels=True, axis=True) -> dict:
-    q = {"Category": {"projections": [proj_column(*category, active=True)]},
-         "Y": {"projections": [proj_measure(measure_name)]}}
-    if series_field:
-        q["Series"] = {"projections": [proj_column(*series_field)]}
-    value_axis = {"show": lit("false"), "start": lit("0D"), "gridlineShow": lit("false")}
-    if end:
-        value_axis["end"] = lit(f"{end}D")
-    objects = {
-        "labels": [{"properties": {"show": lit("true" if labels else "false")}}],
-        "legend": [{"properties": OFF}],
-        "categoryAxis": [{"properties": {"show": lit("true" if axis else "false")}}],
-        "valueAxis": [{"properties": value_axis}],
-    }
-    if series:
-        objects["dataPoint"] = [{"properties": {"fill": colour(c)}, "selector": value_is(*series_field, v)}
-                                for v, c in series]
-    else:
-        objects["dataPoint"] = [{"properties": {"fill": colour(MARINE)},
-                                 "selector": {"metadata": f"_Measures.{measure_name}"}}]
-    return {
-        "visualType": "clusteredColumnChart",
-        "query": {"queryState": q,
-                  "sortDefinition": {"sort": [{"field": proj_column(*category)["field"], "direction": "Ascending"}],
-                                     "isDefaultSort": False}},
-        "objects": objects,
-        "visualContainerObjects": NO_FRAME,
-        "drillFilterOtherVisuals": True,
-    }
-
-
 def build() -> Page:
     p = Page(PAGE, "Refinement", number=4)
-    header(p, "p4", "Refinement", "Read from the run log and the library's records", "Week 1 to Week 24",
-           question="What earns its place, and at what cost?")
+    header(p, "p4", "Refinement", "What earns its place, and at what cost?",
+           "Read from the run log and the library's records", "Week 1 to Week 24")
 
-    # ---- passing on the smaller model
-    x, y, w, h = SMALLER_PANEL
-    pan, inner = "p4_smaller_panel", w - 24
-    p.add(pan, SMALLER_PANEL, panel(), z=2000, row="top")
-    p.add("p4_smaller_title", (x + 12, y + 6, inner, 20), heading("Tested prompts that pass on a smaller model"),
+    # ---- the main chart: live prompts ranked by cases matched on the smaller model
+    x, y, w, h = MAIN_PANEL
+    pan, inner = "p4_main_panel", w - 24
+    p.add(pan, MAIN_PANEL, panel(), z=2000)
+    p.add("p4_main_title", (x + 12, y + 6, inner, 20), heading("Tested prompts that pass on a smaller model"),
           on=pan, group="t")
-    p.add("p4_smaller_sub", (x + 12, y + 26, inner, 18), subtitle("Latest smaller-model run, every library item"),
-          on=pan, group="t")
-    p.add("p4_smaller_figure", (x + 12, y + 54, FIGURE_W, 62),
-          value_card("Tested prompts that pass on a smaller model", 36), on=pan, group="b", same="figure")
-    p.add("p4_smaller_count", (x + 12, y + 116, FIGURE_W, 24), value_card("Smaller model share line", 10, colour(INK_SOFT)),
-          on=pan, group="b", same="count")
-    tx = x + 12 + FIGURE_W + 16
-    cols = [(proj_column("dim_library_item", "item_id", display="ID"), SMALLER_COLS[0]),
-            (proj_column("dim_library_item", "item_name", display="Prompt"), SMALLER_COLS[1]),
-            (proj_measure("Smaller model cases when passing", "Smaller model"), SMALLER_COLS[2])]
-    p.add("p4_smaller_table", (tx, y + 46, x + w - 12 - tx, h - 50), table(cols), on=pan, group="b",
-          need_w=table_width(list(SMALLER_COLS)), need_h=table_height([1, 1]))
+    p.add("p4_main_sub", (x + 12, y + 26, inner - 170, 18), subtitle("Cases matched, latest smaller-model run, live prompts"),
+          on=pan, group="t", kind="subtitle")
+    p.add("p4_main_legend", (x + 12 + inner - 170, y + 26, 170, 18), legend(PASSES), on=pan, group="t", legend=True)
+    p.add("p4_main_chart", (x + 12, y + 46, inner, h - 50), ranked_live(), on=pan, group="c",
+          categories=LIVE, max_value=1.0, longest_category="LIB-23", longest_label="100.0%")
+
+    # ---- the cost of the passing prompts: tokens on each model, and the cost index
+    x, y, w, h = COST_PANEL
+    pan, inner = "p4_cost_panel", w - 24
+    p.add(pan, COST_PANEL, panel(), z=2000, row="bottom")
+    p.add("p4_cost_title", (x + 12, y + 6, inner - 220, 20), heading("Cost of the passing prompts"), on=pan, group="t")
+    p.add("p4_cost_legend", (x + 12 + inner - 220, y + 6, 220, 20),
+          legend(tuple((d, c) for _, d, c in TIERS)), on=pan, group="t", legend=True)
+    p.add("p4_tokens_sub", (x + 12, y + 26, TOKENS_W, 18), subtitle("Median tokens per run"),
+          on=pan, group="t", kind="subtitle")
+    ix = x + 12 + TOKENS_W + 16
+    p.add("p4_index_sub", (ix, y + 26, x + w - 12 - ix, 18), subtitle("Cost index, standard over smaller"),
+          on=pan, group="t", kind="subtitle")
+    p.add("p4_tokens_chart", (x + 12, y + 46, TOKENS_W, h - 50), tokens_chart(), on=pan, group="c",
+          categories=2, series=2, max_value=3744, extra=passing_only("passesTokens"))
+    p.add("p4_index_chart", (ix, y + 46, x + w - 12 - ix, h - 50), index_chart(), on=pan, group="c",
+          categories=2, max_value=2.07, extra=passing_only("passesIndex"))
 
     # ---- retired or merged
     x, y, w, h = RETIRED_PANEL
     pan, inner = "p4_retired_panel", w - 24
-    p.add(pan, RETIRED_PANEL, panel(), z=2000, row="top")
+    p.add(pan, RETIRED_PANEL, panel(), z=2000, row="bottom")
     p.add("p4_retired_title", (x + 12, y + 6, inner, 20), heading("Prompts retired or merged"), on=pan, group="t")
     p.add("p4_retired_sub", (x + 12, y + 26, inner, 18), subtitle("Counted in the check-in month of the change"),
-          on=pan, group="t")
-    p.add("p4_retired_chart", (x + 12, y + 46, RETIRED_CHART_W, h - 50),
-          columns("Prompts retired or merged", ("dim_month", "month_label"), 3),
+          on=pan, group="t", kind="subtitle")
+    p.add("p4_retired_chart", (x + 12, y + 46, RETIRED_CHART_W, h - 50), months_chart(),
           on=pan, group="b", categories=6, max_value=2, longest_category="Month 6", longest_label="2")
     tx = x + 12 + RETIRED_CHART_W + 16
     changes = ["Retired in Month 5", "Merged into LIB-10 in Month 5"]
@@ -137,28 +209,8 @@ def build() -> Page:
     p.add("p4_retired_table", (tx, y + 46, x + w - 12 - tx, h - 50), table(cols), on=pan, group="b",
           need_w=table_width(list(RETIRED_COLS)), need_h=table_height(lines))
 
-    # ---- cost per use, then the cost index, by prompt (one axis of prompt IDs, under the index)
-    x, y, w, h = COST_PANEL
-    pan, inner = "p4_cost_panel", w - 24
-    p.add(pan, COST_PANEL, panel(), z=2000)
-    p.add("p4_cost_title", (x + 12, y + 6, inner, 20), heading("Cost per use"), on=pan, group="t")
-    p.add("p4_cost_sub", (x + 12, y + 26, inner - 220, 18), subtitle(
-        "Median tokens per run, by prompt, on the standard model and on the smaller model"), on=pan, group="t")
-    p.add("p4_cost_legend", (x + 12 + inner - 220, y + 26, 220, 18),
-          legend((("Standard model", GREY), ("Smaller model", MARINE))), on=pan, group="t", legend=True)
-    p.add("p4_tokens_chart", (x + 12, y + 46, inner, 180),
-          columns("Cost per use", ("dim_library_item", "item_id"), None, ("fact_test_run", "model_tier"),
-                  (("standard", GREY), ("smaller", MARINE)), labels=False, axis=False),
-          on=pan, group="c1", categories=ITEMS, series=2)
-    p.add("p4_index_name", (x + 12, y + 236, inner, 20),
-          heading("Cost index: standard over smaller, by prompt"), on=pan, group="c2")
-    p.add("p4_index_chart", (x + 12, y + 256, inner, 142),
-          columns("Cost index", ("dim_library_item", "item_id"), INDEX_END),
-          on=pan, group="c2", categories=ITEMS, max_value=2.07, longest_category="LIB-23", longest_label="2.07")
-
     p.answers = {
-        13: [("p4_smaller_table", "item_id"), ("p4_smaller_table", "Smaller model cases when passing"),
-             ("p4_smaller_figure", "Tested prompts that pass on a smaller model")],
+        13: [("p4_main_chart", "item_id"), ("p4_main_chart", "Smaller model cases share")],
         14: [("p4_index_chart", "Cost index")],
         15: [("p4_retired_table", "item_id"), ("p4_retired_table", "Retired or merged change")],
     }
@@ -167,4 +219,3 @@ def build() -> Page:
 
 if __name__ == "__main__":
     build().write()
-    set_page_order(ORDER)

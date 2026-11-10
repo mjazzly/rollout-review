@@ -15,7 +15,8 @@ from __future__ import annotations
 
 from pbir import (
     AMBER, GREY, INK, INK_SOFT, MARINE, MATRIX_COLUMN_PAD, OFF, PALE, NO_FRAME, Page, caption,
-    colour, column, header, lit, measure_colour, panel, proj_column, proj_measure, pt,
+    colour, column, header, lit, measure_colour, panel, proj_column, proj_measure, pt, slim_slicer,
+    BODY_END, CONTROL_H, CONTROL_Y, HEADER_BODY_Y_NO_QUESTION,
     set_page_order, table_height, table_width, text, textbox, value_card, wrapped_lines, TEXT_INSET,
 )
 
@@ -26,21 +27,21 @@ TEAMS = ("Consulting", "Finance", "Legal", "Operations", "People", "Technology")
 STAGE_NAMES = ("On the ground", "At the gate", "In the air")
 
 # ---------------------------------------------------------------- header strip
-# pbir.header(): title, sources at the right of its row (left of the slicers), and the
-# month note on the second line; the slicers span both header lines
-# Round 5: the slicers sit ROW_GAP below the tab bar, and the button slicer is 82 high so
-# its title and buttons are not clipped (62 clipped them); the body starts ROW_GAP below.
-TOGGLE = (944, 40, 188, 82)
-MONTH = (1148, 40, 116, 82)
+# Round 7: the title only; the two controls on one slim row at its right, no boxes.
+TOGGLE = (948, CONTROL_Y, 180, CONTROL_H)
+MONTH = (1144, CONTROL_Y, 120, CONTROL_H)
 
 # ---------------------------------------------------------------- body
-MATRIX_PANEL = (16, 126, 1248, 280)
+MATRIX_PANEL = (16, HEADER_BODY_Y_NO_QUESTION, 1248, 280)
 TEAM_COL, CP_COL = 120, 116            # matrix column widths: team, then each checkpoint
-BOTTOM_Y, BOTTOM_H = 410, 306
-GAP_PANEL = (16, BOTTOM_Y, 336, BOTTOM_H)
-MOVE_PANEL = (368, BOTTOM_Y, 290, BOTTOM_H)
-LARGEST_PANEL = (674, BOTTOM_Y, 590, BOTTOM_H)
-LARGEST_COLS = (90, 136, 292)          # team (no name breaks); largest group with its people; lever
+BOTTOM_Y = MATRIX_PANEL[1] + MATRIX_PANEL[3] + 4
+BOTTOM_H = BODY_END - BOTTOM_Y
+# Round 7: the gap is 422 wide so Finance's 13 gets 20 px of bar (it overflows its segment);
+# movement narrows to 230, and the lever table keeps a 292 px lever column.
+GAP_PANEL = (16, BOTTOM_Y, 422, BOTTOM_H)
+MOVE_PANEL = (454, BOTTOM_Y, 230, BOTTOM_H)
+LARGEST_PANEL = (700, BOTTOM_Y, 564, BOTTOM_H)
+LARGEST_COLS = (80, 120, 292)          # team; largest group with its people; lever
 
 # The thinnest gap segment at Month 6: Finance, lower, 13 of 200 (scripts/page1_figures.py)
 GAP_MIN_SHARE = 13 / 200
@@ -109,7 +110,7 @@ def gap_chart() -> dict:
         },
         "objects": {
             "dataPoint": [series_colour(m, c) for m, _, c in series],
-            "labels": [{"properties": {"show": lit("true")}}],
+            "labels": [{"properties": {"show": lit("true"), "labelOverflow": lit("true")}}],
             "legend": [{"properties": OFF}],
             "categoryAxis": [{"properties": {"show": lit("true")}}],
             "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit("1D"),
@@ -176,6 +177,7 @@ def button_toggle() -> dict:
             proj_column("placement_toggle", "placement", display="Placement")]}}},
         "objects": {
             "data": [{"properties": {}}],
+            "header": [{"properties": OFF}],
             "selection": [{"properties": {"singleSelect": lit("true"), "strictSingleSelect": lit("true")}}],
             "general": [{"properties": {"filter": {"filter": {
                 "Version": 2, "From": [{"Name": "p", "Entity": "placement_toggle", "Type": 0}],
@@ -183,6 +185,8 @@ def button_toggle() -> dict:
                     "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "p"}}, "Property": "placement"}}],
                     "Values": [[{"Literal": {"Value": "'Source'"}}]]}}}]}}}}],
         },
+        "visualContainerObjects": {"background": [{"properties": OFF}], "border": [{"properties": OFF}],
+                                   "title": [{"properties": OFF}]},
         "drillFilterOtherVisuals": True,
     }
 
@@ -203,27 +207,24 @@ def heading_with_note(s: str, note: str) -> dict:
     return textbox([[(s, pt(10, bold=True, color=INK)), (" · " + note, pt(9, color=INK_SOFT))]])
 
 
-def subtitle(s: str) -> dict:
+def subtitle(s: str) -> dict:  # noqa: D401
     return textbox([[(s, pt(9, color=INK_SOFT))]])
 
 
 def build() -> Page:
     p = Page(PAGE, "Where people sit", number=1)
-    header(p, "p1", "Where people sit",
+    header(p, "p1", "Where people sit", None,
            "Read from the check-in, the usage dashboards, the library's records and the question log",
-           "Week 1 to Week 24", question="Month 6 shown; pick another month at the top right",
-           right=TOGGLE[0] - 16)
-    p.add("p1_toggle", TOGGLE, button_toggle(), same="slicer")
-    p.add("p1_month", MONTH, slicer("dim_month", "month_label", "Month 6", "Month", buttons=False))
+           "the month picked at the top right, Month 6 to start")
+    p.add("p1_toggle", TOGGLE, button_toggle(), same="control")
+    p.add("p1_month", MONTH, slim_slicer("dim_month", "month_label", "Month 6"), same="control height")
 
     # ---- the matrix: teams by checkpoints, stage names over their three checkpoints
     x, y, w, h = MATRIX_PANEL
     pan = "p1_matrix_panel"
     p.add(pan, MATRIX_PANEL, panel(), z=2000)
-    p.add("p1_matrix_title", (x + 12, y + 6, w - 24, 20), heading_with_note(
-        "People at each checkpoint, by team",
-        "follows the placement toggle and the month · each cell is shaded by the team's share at that "
-        "checkpoint, white at none to marine at 60% or more"), on=pan, group="t")
+    p.add("p1_matrix_title", (x + 12, y + 6, w - 24, 20), heading("People at each checkpoint, by team"),
+          on=pan, group="t")
     for k, stage in enumerate(STAGE_NAMES):
         p.add(f"p1_stage_{k + 1}", (x + 12 + TEAM_COL + k * 3 * CP_COL, y + 36, 3 * CP_COL, 20),
               heading(stage), on=pan, group="m", same="stage name")
@@ -231,45 +232,44 @@ def build() -> Page:
           need_w=table_width([TEAM_COL] + [CP_COL] * 9, MATRIX_COLUMN_PAD),
           need_h=table_height([1] * 6))
 
-    # ---- the gap: title; subtitle; the chart, its legend directly under it
+    # ---- the gap: title; subtitle, legend top right; the chart
     x, y, w, h = GAP_PANEL
     pan, inner = "p1_gap_panel", w - 24
     p.add(pan, GAP_PANEL, panel(), z=2000, row="bottom")
     p.add("p1_gap_title", (x + 12, y + 6, inner, 20), heading("The gap: check-in against source"),
           on=pan, group="t")
-    p.add("p1_gap_sub", (x + 12, y + 26, inner, 18), subtitle("Month only, not the toggle"), on=pan, group="t")
-    chart_h = h - 6 - 38 - 2 - 20 - 4
-    p.add("p1_gap_chart", (x + 12, y + 46, inner, chart_h), gap_chart(), on=pan, group="c", categories=6,
+    p.add("p1_gap_sub", (x + 12, y + 26, inner - 170, 18), subtitle("People, the month picked"),
+          on=pan, group="t", kind="subtitle")
+    p.add("p1_gap_legend", (x + 12 + inner - 170, y + 26, 170, 18),
+          legend((("Higher", AMBER), ("Level", PALE), ("Lower", GREY))), on=pan, group="t", legend=True)
+    p.add("p1_gap_chart", (x + 12, y + 46, inner, h - 50), gap_chart(), on=pan, group="c", categories=6,
           label_min_share=GAP_MIN_SHARE)
-    p.add("p1_gap_legend", (x + 12, y + 46 + chart_h, inner, 20),
-          legend((("Higher", AMBER), ("Level", PALE), ("Lower", GREY))), on=pan, group="c", legend=True)
-    p.awaiting["p1_gap_chart"] = ("labels on the thinnest segments (Finance's 13, Legal's 10): Data labels, "
-                                  "Options, Overflow text on, by hand (BUILD-STEPS section G, step 54)")
+    p.awaiting["p1_gap_chart:label colour"] = "Level labels in ink on the pale segment: a hand reference (step 54)"
 
-    # ---- movement: title; subtitle; the chart; under it the legend and seats arrived, apart
+    # ---- movement: title; subtitle, legend top right; the chart; under it seats arrived, apart
     x, y, w, h = MOVE_PANEL
     pan, inner = "p1_move_panel", w - 24
     p.add(pan, MOVE_PANEL, panel(), z=2000, row="bottom")
-    p.add("p1_move_title", (x + 12, y + 6, inner, 20), heading("Movement since the previous count"),
+    p.add("p1_move_title", (x + 12, y + 6, inner, 20), heading("Movement since last count"),
           on=pan, group="t")
-    p.add("p1_move_sub", (x + 12, y + 26, inner, 18), subtitle("Month only, not the toggle"), on=pan, group="t")
+    p.add("p1_move_sub", (x + 12, y + 26, inner - 90, 18), subtitle("Checkpoints moved"),
+          on=pan, group="t", kind="subtitle")
+    p.add("p1_move_legend", (x + 12 + inner - 90, y + 26, 90, 18), legend((("Up", MARINE), ("Down", GREY))),
+          on=pan, group="t", legend=True)
     chart_h = h - 6 - 38 - 2 - 23 - 4
     p.add("p1_move_chart", (x + 12, y + 46, inner, chart_h), movement_chart(), on=pan, group="c",
           categories=6, series=2)
     ry = y + 46 + chart_h
-    p.add("p1_move_legend", (x + 12, ry, 84, 23), legend((("Up", MARINE), ("Down", GREY))),
-          on=pan, group="c", legend=True)
-    p.add("p1_seats_caption", (x + 12 + 84, ry, 152, 23),
+    p.add("p1_seats_caption", (x + 12, ry, 152, 23),
           textbox([[("Seats arrived, all teams:", pt(9, color=INK_SOFT))]]), on=pan, group="c")
-    p.add("p1_seats_figure", (x + 12 + 236, ry, inner - 236, 23), value_card("Seats arrived", 10),
+    p.add("p1_seats_figure", (x + 12 + 152, ry, inner - 152, 23), value_card("Seats arrived", 10),
           on=pan, group="c")
 
     # ---- largest group and its lever: text, so a table
     x, y, w, h = LARGEST_PANEL
     pan, inner = "p1_largest_panel", w - 24
     p.add(pan, LARGEST_PANEL, panel(), z=2000, row="bottom")
-    p.add("p1_largest_title", (x + 12, y + 6, inner, 20),
-          heading_with_note("Largest group per team, and its lever", "follows the placement toggle and the month"),
+    p.add("p1_largest_title", (x + 12, y + 6, inner, 20), heading("Largest group per team, and its lever"),
           on=pan, group="t")
     team_w, group_w, lever_w = LARGEST_COLS
     # a table cell's text area is its column width (wrapped_lines takes off TEXT_INSET each side)

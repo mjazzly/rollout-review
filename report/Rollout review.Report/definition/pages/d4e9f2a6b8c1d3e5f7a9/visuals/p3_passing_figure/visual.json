@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_passing_figure",
   "position": {
-    "x": 858,
-    "y": 430,
+    "x": 850,
+    "y": 412,
     "z": 3000,
     "height": 62,
     "width": 180,
-    "tabOrder": 2400
+    "tabOrder": 2600
   },
   "visual": {
     "visualType": "cardVisual",

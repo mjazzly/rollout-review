@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p5_impact_legend",
   "position": {
-    "x": 288,
+    "x": 290,
     "y": 128,
     "z": 3000,
     "height": 18,
-    "width": 332,
+    "width": 330,
     "tabOrder": 700
   },
   "visual": {

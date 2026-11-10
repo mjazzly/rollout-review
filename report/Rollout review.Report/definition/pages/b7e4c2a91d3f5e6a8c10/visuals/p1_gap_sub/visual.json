@@ -3,11 +3,11 @@
   "name": "p1_gap_sub",
   "position": {
     "x": 28,
-    "y": 436,
+    "y": 384,
     "z": 3000,
     "height": 18,
-    "width": 312,
-    "tabOrder": 1400
+    "width": 228,
+    "tabOrder": 1300
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Month only, not the toggle",
+                    "value": "People, the month picked",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

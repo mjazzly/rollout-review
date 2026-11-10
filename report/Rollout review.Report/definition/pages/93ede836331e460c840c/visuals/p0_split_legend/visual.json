@@ -3,11 +3,11 @@
   "name": "p0_split_legend",
   "position": {
     "x": 660,
-    "y": 484,
+    "y": 458,
     "z": 3000,
     "height": 22,
     "width": 272,
-    "tabOrder": 4300
+    "tabOrder": 4200
   },
   "visual": {
     "visualType": "textbox",

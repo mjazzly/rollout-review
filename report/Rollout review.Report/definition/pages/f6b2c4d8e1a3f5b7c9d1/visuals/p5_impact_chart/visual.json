@@ -5,7 +5,7 @@
     "x": 28,
     "y": 148,
     "z": 3000,
-    "height": 330,
+    "height": 318,
     "width": 592,
     "tabOrder": 800
   },
@@ -97,7 +97,8 @@
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "objects": {

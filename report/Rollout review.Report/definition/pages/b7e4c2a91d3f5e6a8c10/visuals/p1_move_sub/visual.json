@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_move_sub",
   "position": {
-    "x": 380,
-    "y": 436,
+    "x": 466,
+    "y": 384,
     "z": 3000,
     "height": 18,
-    "width": 266,
-    "tabOrder": 1900
+    "width": 116,
+    "tabOrder": 1800
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Month only, not the toggle",
+                    "value": "Checkpoints moved",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

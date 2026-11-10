@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p4_retired_title",
   "position": {
-    "x": 644,
-    "y": 108,
+    "x": 660,
+    "y": 412,
     "z": 3000,
     "height": 20,
-    "width": 608,
-    "tabOrder": 1100
+    "width": 592,
+    "tabOrder": 1700
   },
   "visual": {
     "visualType": "textbox",

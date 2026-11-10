@@ -764,6 +764,54 @@ Figures: impact, lose time every week / a little / nothing: Consulting 162 / 74 
 | 17 | Share in the air, Consulting · Month 3, and the change | 47.0% at Month 3, 60.3% at Month 6, +13.3 points |
 | 18 | Impact, the "I would lose time every week" segments | Consulting 162, Technology 90, Finance 86, Operations 73, People 48, Legal 17 |
 
+## L. Round 7 (10 Nov 2026): declutter and purpose, all six pages, and Notes
+
+Megat's overflow reference (commit 0df130b) confirmed `labels.labelOverflow`. Every page is rewritten by its script; the checks in `scripts/pbir.py` now also hold: a sources line at the foot of every page, panel subtitles of eight words or fewer and no "follows" notes, legends at the top right of their panel, no card text cut, nothing running into the foot.
+
+| Ask | What changed |
+|---|---|
+| Header: title and question only | `pbir.header()` writes the tab bar, the title and the question. Page 0 keeps its people and seats line under the title; pages 0, 1 and Notes have no question |
+| Sources and period at the foot | One grey line at y 698 on every page; panels end at y 694 |
+| Plain titles, short subtitles | Every "follows the..." note, the shading explanation and "How to read a tile" moved to Notes |
+| Notes tab | `scripts/page6_pbir.py`: what each measure means (18, in plain words, checked against measures.md), sources by page, thresholds and how a stage reads, controls, shading, and cost in tokens |
+| Nothing cut | "127 of 142 recurring questions" now reads "127 of 142 questions"; page 5's count read "4 of 24" because ALL() counted Power BI's blank library item, now ALLNOBLANKROW: "4 of 23" |
+| Rounded corners | Panels are now drawn by their own box (an empty text box with a white background and a white border, radius 4, the setting name from Megat's theme), the way the slicer boxes were drawn when they showed rounded. The shape panels did not round |
+| Label colours | Waits for a hand reference (step 54): no file of Megat's has set a data label colour yet |
+| Slim controls | Page 1: Placement (two buttons) and Month on one 30 px row at the right of the title, no header, no box; page 3: Team the same. Header off is unconfirmed (`header.show`, by the pattern every other object in Megat's files follows). Dropdown text size waits for a hand reference (step 54) |
+| Page 0: label In the air only | Waits for a hand reference (step 54) |
+| Page 1: Finance's 13 | The gap panel is 422 wide (was 360): Finance's 13 gets 20 px of bar; Legal's 10 showed at 20.6 px with overflow on. Movement is 230 wide, the lever table 564 (lever column still 292) |
+| Page 2: Month 6 matched or not | Both months split: matched to a tested prompt (marine), not matched (amber), sorted by the total (new column `fact_question[match_label]`). Month 1 is split too, so one legend reads both. Questions by month is its own panel (its amber means Rules and allowed use) |
+| Page 3: repeat use | One figure (83.6%, Month 6) with a small line by month beside it. Legal's 0.0% first use is real: 19 Legal attendees, none ran the prompt shown |
+| Page 4: cost charts replaced | Main chart: the 21 live prompts ranked by cases matched on their latest smaller-model run, the two that pass in marine (new column `dim_library_item[smaller_model_result]`, helper `Smaller model cases share`). Under it, for the passing prompts: median tokens per run on each model, and the cost index. Below rather than beside: 21 prompt IDs need the full width to sit under their columns |
+| Page 5: change in the label | One chart; the Month 6 bar reads "60.3% (+13.3)" (helper `Share in the air latest with change`, a dynamic format string) |
+
+### Step 54, round 7: three hand references, then save, commit and push
+
+1. **Where people sit, the gap chart**: **Format visual**, **Visual**, **Data labels**, **Values**, **Apply settings to** series **Level**: **Color** `#172529`. (Dark text on the pale segment; read and applied to every pale segment.)
+2. **Rollout review, Stage by team, Month 6**: **Data labels** On; **Apply settings to** series **On the ground**: **Show for this series** Off; series **At the gate**: Off. (Labels on In the air only; read and applied to both stage charts.)
+3. **Where people sit, the Month dropdown**: **Format visual**, **Visual**, **Values**, **Font** size **10**. (Read and applied to the Team dropdown on Execution.)
+
+If a panel's corners are still square: select one panel (the white box behind the Foundation tile), **Format visual**, **General**, **Effects**, **Visual border** On, **Rounded corners** 4, and push that too.
+
+### What each page should read (round 7)
+
+- **Rollout review**: unchanged figures. No "How to read a tile" line; the sources line at the foot.
+- **Where people sit** (Source, Month 6): as section G; Finance's gap reads 111 / 76 / 13 with the 13 labelled.
+- **Foundation**: Month 1, matched / not matched: Rules and allowed use 0 / 52, Drafting 9 / 3, Analysis 0 / 9, Summarising 2 / 6, Coding 1 / 3, Formatting 0 / 2, Research 0 / 1. Month 6: Analysis 10 / 13, Coding 9 / 9, Formatting 9 / 9, Rules and allowed use 11 / 5, Summarising 9 / 5, Drafting 4 / 9, Research 3 / 6. The rest as section H.
+- **Execution**: Repeat use within 30 days **83.6%**, the line 86.1%, 85.7%, 84.7%, 83.8%, 83.6% (Month 2 to 6). Recurring: 89.4%, "127 of 142 questions". The rest as section I.
+- **Refinement**: LIB-09 and LIB-13 at 100.0% in marine, then LIB-07 91.7%, LIB-04 and LIB-20 90.9%, LIB-11 90.0%, down to LIB-02 and LIB-21 at 57.1% (the full list from `page4_figures.py`). Passing prompts: LIB-09 standard 3,744 and smaller 1,854 tokens, cost index 2.02; LIB-13 3,105 and 1,502, 2.07. Retired or merged as section J.
+- **Scale**: Month 6 bars labelled with the change: Consulting 60.3% (+13.3), Finance 13.0% (+3.5), Legal 7.5% (+0.8), Operations 26.8% (+17.6), People 30.0% (+7.7), Technology 52.0% (+9.5). "4 of 23 library items". The rest as section K.
+
+### CHECK.md answers that moved on the page
+
+| Q | Was | Now |
+|---|---|---|
+| 8 | Month 6, Analysis: one bar labelled 23 | Analysis is still the top bar; it reads 10 matched + 13 not matched. Month 1, Rules and allowed use: 52, all not matched |
+| 11 | "127 of 142 recurring questions" | "127 of 142 questions" under the same figure, 89.4% |
+| 13 | A list: LIB-09, LIB-13 | The two marine columns in the main chart, both 100.0% |
+| 14 | The cost index chart of all 23 prompts | The passing prompts' cost index: LIB-09 2.02, LIB-13 2.07 |
+| 17 | 60.3% and 47.0%, +13.3 in a second chart | One chart: 47.0% (grey) and "60.3% (+13.3)" (marine), Consulting · Month 3 |
+
 ## Next
 
 - All six pages are written. Next: the CHECK.md match from the screenshots (brief section 8), then Publish to web

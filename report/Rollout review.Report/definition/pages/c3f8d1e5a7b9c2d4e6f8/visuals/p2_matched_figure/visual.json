@@ -3,11 +3,11 @@
   "name": "p2_matched_figure",
   "position": {
     "x": 28,
-    "y": 518,
+    "y": 470,
     "z": 3000,
     "height": 62,
     "width": 388,
-    "tabOrder": 1500
+    "tabOrder": 1900
   },
   "visual": {
     "visualType": "cardVisual",

@@ -106,9 +106,27 @@ table dim_library_item
 		annotation UnderlyingDateTimeDataType = Date
 
 	/// Library items with status retired or merged, counted by the check-in month of their status_week, with merged_into_item_id shown for merged items.
-	column status_month = LOOKUPVALUE ( dim_week[checkin_month], dim_week[week_start], dim_library_item[status_week] )
+	column status_month =
+			LOOKUPVALUE ( dim_week[checkin_month], dim_week[week_start], dim_library_item[status_week] )
+		dataType: int64
+		isDataTypeInferred
+		summarizeBy: none
 		formatString: \M\o\n\t\h 0
-		lineageTag: 94681a65-9e90-4786-ac82-bc61189274a3
+
+	/// Helper, not in measures.md. Whether the item's latest smaller-tier run is passing, as "Passes" or "Does not pass", for the page 4 colours.
+	column smaller_model_result =
+			VAR itemId = dim_library_item[item_id]
+			VAR latestRun =
+			    TOPN (
+			        1,
+			        FILTER ( fact_test_run, fact_test_run[item_id] = itemId && fact_test_run[model_tier] = "smaller" ),
+			        fact_test_run[run_date], DESC,
+			        fact_test_run[run_id], DESC
+			    )
+			RETURN
+			    IF ( MAXX ( latestRun, IF ( fact_test_run[passing], 1, 0 ) ) = 1, "Passes", "Does not pass" )
+		dataType: string
+		isDataTypeInferred
 		summarizeBy: none
 
 	partition dim_library_item = m
@@ -128,4 +146,3 @@ table dim_library_item
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

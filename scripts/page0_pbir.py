@@ -38,10 +38,10 @@ C_TREND = (200, 24)         # 10
 C_THRESHOLD = (224, 24)     # 9, grey
 D_LINE = (250, 100)
 
-RULE = (16, 452, 1248, 22)
+# The rule line ("How to read a tile") moved to the Notes page in round 7.
 
 # ---------------------------------------------------------------- bottom row
-BOTTOM_Y, BOTTOM_H = 478, 238
+BOTTOM_Y, BOTTOM_H = 452, 242       # to BODY_END (694), above the sources line
 SPLIT_BASE = (16, BOTTOM_Y, 456, BOTTOM_H)
 SPLIT_LATEST = (488, BOTTOM_Y, 456, BOTTOM_H)
 MOVED = (960, BOTTOM_Y, 304, BOTTOM_H)
@@ -55,9 +55,7 @@ TILES = (
     ("Scale", "Where has it changed the work?",
      "Share of people in the air against the baseline, in points"),
 )
-RULE_TEXT = ("How to read a tile: Working when the month's figure meets the threshold. "
-             "Trend: against two check-ins earlier, flat within 1 point. "
-             "The line runs from Month 2 to Month 6.")
+
 
 
 # ---------------------------------------------------------------- visuals
@@ -130,9 +128,9 @@ def panel_title(s: str) -> dict:
 
 def build() -> Page:
     p = Page(PAGE, "Rollout review")
-    header(p, "p0", "Rollout review",
+    header(p, "p0", "Rollout review", None,
            "Read from the question log, the usage dashboards, the library's records, the run log and the check-in",
-           "Week 1 to Week 24, six check-ins", question=None)
+           "Week 1 to Week 24, six check-ins")
     p.add("p0_header_line", HEADER_LINE, header_line())
 
     for x, (stage, question, label) in zip(TILE_XS, TILES):
@@ -158,24 +156,24 @@ def build() -> Page:
               extra={"filterConfig": {"filters": [
                   filter_in("dim_month", "month_label", ["Month 1"], f"notMonth1{stage}", negate=True)]}})
 
-    p.add("p0_rule", RULE, textbox([[(RULE_TEXT, pt(9, color=INK_SOFT))]]))
-
-    # stage split: two panels, each a title then its chart; the shared legend on the right one
+    # stage split: two panels, each a title then its chart; the shared legend at the top right of
+    # the right one
     for pan, box, title, title_w, m in (
-            ("p0_split_base_panel", SPLIT_BASE,
-             "Stage by source placement, at each team's baseline month", 432, "Stage split baseline"),
-            ("p0_split_latest_panel", SPLIT_LATEST, "Latest count, Month 6", 160, "Stage split latest")):
+            ("p0_split_base_panel", SPLIT_BASE, "Stage by team, at its baseline month", 432, "Stage split baseline"),
+            ("p0_split_latest_panel", SPLIT_LATEST, "Stage by team, Month 6", 160, "Stage split latest")):
         x, y, w, h = box
         p.add(pan, box, panel(), z=2000, row="bottom")
         p.add(f"{pan}_title", (x + 12, y + 6, title_w, 22), panel_title(title), on=pan, group="t")
-        p.add(f"{pan}_chart", (x + 12, y + 30, w - 24, 204), stage_split(m), on=pan, group="c",
+        p.add(f"{pan}_chart", (x + 12, y + 30, w - 24, h - 34), stage_split(m), on=pan, group="c",
               same="stage chart", categories=6)
     legend = []
     for n, (stage, hex_) in enumerate(STAGES):
         legend += [("■", pt(9, color=hex_)),
                    (f" {stage}" + ("  " if n < 2 else ""), pt(9, color=INK_SOFT))]
     p.add("p0_split_legend", (SPLIT_LATEST[0] + 12 + 160, SPLIT_LATEST[1] + 6, 272, 22),
-          textbox([legend]), on="p0_split_latest_panel", group="t")
+          textbox([legend]), on="p0_split_latest_panel", group="t", legend=True)
+    p.awaiting["p0_split_latest_panel_chart"] = ("labels on the In the air share only: a hand reference "
+                                                 "(BUILD-STEPS step 54)")
 
     # moved up: title; the count with its caption; seats arrived with its caption, apart
     x, y, w, h = MOVED

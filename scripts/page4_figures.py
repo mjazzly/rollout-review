@@ -28,3 +28,15 @@ for m, item, status, into in c.execute("""
     FROM dim_library_item i JOIN dim_week w ON w.week_start = i.status_week
     WHERE i.status IN ('retired', 'merged') ORDER BY 1, 2""").fetchall():
     print(f"  Month {m}: {item} {status}" + (f" into {into}" if into else ""))
+
+print("\nLive prompts at Week 24, cases matched on the latest smaller-model run (round 7 main chart)")
+for item, m, t in c.execute("""
+    WITH c6 AS (SELECT w FROM cw WHERE m = 6),
+    live AS (SELECT i.* FROM dim_library_item i, c6
+             WHERE i.published_week <= c6.w AND (i.status_week IS NULL OR i.status_week > c6.w)),
+    lr AS (SELECT item_id, cases_matched, cases_total,
+                  row_number() OVER (PARTITION BY item_id ORDER BY run_date DESC, run_id DESC) AS rk
+           FROM fact_test_run WHERE model_tier = 'smaller')
+    SELECT l.item_id, lr.cases_matched, lr.cases_total FROM live l JOIN lr ON lr.item_id = l.item_id AND rk = 1
+    ORDER BY lr.cases_matched * 1.0 / lr.cases_total DESC, 1""").fetchall():
+    print(f"  {item}: {100 * m / t:.1f}% ({m} of {t})" + ("  passes" if m == t else ""))

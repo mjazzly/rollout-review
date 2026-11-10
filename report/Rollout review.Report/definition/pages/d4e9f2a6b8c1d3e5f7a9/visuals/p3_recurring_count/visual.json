@@ -3,11 +3,11 @@
   "name": "p3_recurring_count",
   "position": {
     "x": 28,
-    "y": 492,
+    "y": 474,
     "z": 3000,
     "height": 24,
     "width": 180,
-    "tabOrder": 1900
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",

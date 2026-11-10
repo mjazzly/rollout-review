@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p2_month_chart",
   "position": {
-    "x": 844,
-    "y": 158,
+    "x": 864,
+    "y": 148,
     "z": 3000,
-    "height": 298,
-    "width": 408,
-    "tabOrder": 1100
+    "height": 260,
+    "width": 388,
+    "tabOrder": 1500
   },
   "visual": {
     "visualType": "clusteredColumnChart",

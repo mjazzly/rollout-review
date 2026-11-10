@@ -5,33 +5,37 @@
 
 Brief section 6, page 5, "Where has it changed the work?":
 - impact in people's own words: the Month 6 check-in answers to "If AI disappeared from
-  your work tomorrow, what would change?", per team, counts on the bars;
+  your work tomorrow, what would change?", per team, counts on the segments;
 - share of people in the air against the baseline: each team at its baseline month (named
-  beside the team) and at Month 6, and the change in points;
-- uses taken up beyond the first team: the count, and the prompts by name with the team
-  that took each up and the week it started (text, so a table).
-No slicer: the page reads Month 6 and Week 1 to Week 24.
+  by the team) and at Month 6, the Month 6 bar labelled with its change in points (round 7:
+  one chart, the change is the label);
+- uses taken up beyond the first team: the count, and the prompts by name with the team that
+  took each up and the week it started (text, so a table).
 """
 from __future__ import annotations
 
 from pbir import (
-    AMBER, GREY, INK, INK_SOFT, MARINE, OFF, PALE, NO_FRAME, Page, colour, column, header, lit,
-    panel, proj_column, proj_measure, pt, set_page_order, table_height, table_width, textbox, value_card,
+    GREY, INK, INK_SOFT, MARINE, OFF, PALE, NO_FRAME, Page, colour, column, header, lit, panel,
+    proj_column, proj_measure, pt, table_height, table_width, textbox, value_card,
+    BODY_END, HEADER_BODY_Y,
 )
 
 PAGE = "f6b2c4d8e1a3f5b7c9d1"
-ORDER = ["93ede836331e460c840c", "b7e4c2a91d3f5e6a8c10", "c3f8d1e5a7b9c2d4e6f8", "d4e9f2a6b8c1d3e5f7a9",
-         "e5a1b3c7d9f2e4a6b8c0", PAGE]
 
-ROW1_Y, ROW1_H = 102, 380
+ROW2_H = 220
+ROW2_Y = BODY_END - ROW2_H
+ROW1_Y, ROW1_H = HEADER_BODY_Y, ROW2_Y - 4 - HEADER_BODY_Y
 IMPACT_PANEL = (16, ROW1_Y, 616, ROW1_H)
 AIR_PANEL = (648, ROW1_Y, 616, ROW1_H)
-TAKEN_PANEL = (16, 486, 1248, 230)
-AIR_CHART_W = 368
+TAKEN_PANEL = (16, ROW2_Y, 1248, ROW2_H)
 FIGURE_W = 180
 TAKEN_COLS = (56, 240, 110, 110, 80)   # ID, prompt, made by, taken up by, from
 IMPACT_MIN_SHARE = 17 / 120            # the thinnest segment: Legal, "I would lose time every week"
-AIR_MAX, POINTS_MAX = 0.603, 17.6      # Consulting at Month 6; Operations' change (scripts/page5_figures.py)
+AIR_MAX = 0.603                        # Consulting at Month 6 (scripts/page5_figures.py)
+IMPACT = (("Impact lose time share", "I would lose time every week", MARINE),
+          ("Impact a little share", "A little", PALE), ("Impact nothing share", "Nothing", GREY))
+AIR = (("Share of people in the air baseline", "Baseline month", GREY),
+       ("Share in the air latest with change", "Month 6", MARINE))
 
 
 def heading(s: str) -> dict:
@@ -50,7 +54,6 @@ def legend(items) -> dict:
 
 
 def by_team(chart: str, measures, category=("dim_team", "team"), end=1.0, inner_padding=None) -> dict:
-    """Bars per team. measures: (measure, display, colour)."""
     axis = {"show": lit("true")}
     if inner_padding is not None:
         axis["innerPadding"] = lit(f"{inner_padding}L")
@@ -74,61 +77,47 @@ def by_team(chart: str, measures, category=("dim_team", "team"), end=1.0, inner_
     }
 
 
+def panel_top(p: Page, key: str, box, title: str, sub: str | None, legend_items=None, legend_w=0, row=None):
+    x, y, w, h = box
+    pan, inner = f"p5_{key}_panel", w - 24
+    p.add(pan, box, panel(), z=2000, row=row)
+    p.add(f"p5_{key}_title", (x + 12, y + 6, inner, 20), heading(title), on=pan, group="t")
+    if sub:
+        p.add(f"p5_{key}_sub", (x + 12, y + 26, inner - legend_w, 18), subtitle(sub), on=pan, group="t", kind="subtitle")
+    if legend_items:
+        p.add(f"p5_{key}_legend", (x + 12 + inner - legend_w, y + 26, legend_w, 18), legend(legend_items),
+              on=pan, group="t", legend=True)
+    return pan, x, y, w, h, inner
+
+
 def build() -> Page:
     p = Page(PAGE, "Scale", number=5)
-    header(p, "p5", "Scale", "Read from the question log, the usage dashboards and the check-in",
-           "Week 1 to Week 24", question="Where has it changed the work?")
+    header(p, "p5", "Scale", "Where has it changed the work?",
+           "Read from the question log, the usage dashboards and the check-in", "Week 1 to Week 24")
 
     # ---- impact in people's own words
-    x, y, w, h = IMPACT_PANEL
-    pan, inner = "p5_impact_panel", w - 24
-    p.add(pan, IMPACT_PANEL, panel(), z=2000, row="top")
-    p.add("p5_impact_title", (x + 12, y + 6, inner, 20), heading("Impact in people's own words"), on=pan, group="t")
-    p.add("p5_impact_sub", (x + 12, y + 26, 260, 18), subtitle("Month 6: if AI disappeared tomorrow?"),
-          on=pan, group="t")
-    p.add("p5_impact_legend", (x + 12 + 260, y + 26, inner - 260, 18), legend((
-        ("I would lose time every week", MARINE), ("A little", PALE), ("Nothing", GREY))),
-        on=pan, group="t", legend=True)
-    impact = (("Impact lose time share", "I would lose time every week", MARINE),
-              ("Impact a little share", "A little", PALE), ("Impact nothing share", "Nothing", GREY))
-    p.add("p5_impact_chart", (x + 12, y + 46, inner, h - 50), by_team("barChart", impact),
+    pan, x, y, w, h, inner = panel_top(p, "impact", IMPACT_PANEL, "Impact in people's own words",
+                                       "Month 6: if AI disappeared tomorrow?",
+                                       tuple((d, c) for _, d, c in IMPACT), 330, "top")
+    p.add("p5_impact_chart", (x + 12, y + 46, inner, h - 50), by_team("barChart", IMPACT),
           on=pan, group="c", categories=6, label_min_share=IMPACT_MIN_SHARE)
+    p.awaiting["p5_impact_chart:label colour"] = "A little labels in ink on the pale segment, as the gap's (step 54)"
 
-    # ---- share in the air: baseline against Month 6, and the change in points
-    x, y, w, h = AIR_PANEL
-    pan, inner = "p5_air_panel", w - 24
-    p.add(pan, AIR_PANEL, panel(), z=2000, row="top")
-    p.add("p5_air_title", (x + 12, y + 6, inner, 20), heading("Share of people in the air against the baseline"),
-          on=pan, group="t")
-    p.add("p5_air_sub", (x + 12, y + 26, AIR_CHART_W, 18),
-          subtitle("Each team at its baseline month (by its name) and at Month 6"), on=pan, group="t")
-    px = x + 12 + AIR_CHART_W + 16
-    p.add("p5_points_name", (px, y + 26, x + w - 12 - px, 18), subtitle("Change, in points"), on=pan, group="t")
-    air = (("Share of people in the air baseline", "Baseline", GREY),
-           ("Share of people in the air latest", "Month 6", MARINE))
-    chart_h = h - 50 - 20
-    p.add("p5_air_chart", (x + 12, y + 46, AIR_CHART_W, chart_h),
-          by_team("clusteredBarChart", air, ("dim_team", "team_baseline_label"), 0.8, inner_padding=10),
+    # ---- share in the air: baseline against Month 6, the change in points on the Month 6 label
+    pan, x, y, w, h, inner = panel_top(p, "air", AIR_PANEL, "Share of people in the air against the baseline",
+                                       "Baseline month by each team, then Month 6",
+                                       tuple((d, c) for _, d, c in AIR), 190, "top")
+    p.add("p5_air_chart", (x + 12, y + 46, inner, h - 50),
+          by_team("clusteredBarChart", AIR, ("dim_team", "team_baseline_label"), 0.8, inner_padding=10),
           on=pan, group="c", categories=6, series=2, max_value=AIR_MAX)
-    p.add("p5_air_legend", (x + 12, y + 46 + chart_h, AIR_CHART_W, 20),
-          legend((("Baseline", GREY), ("Month 6", MARINE))), on=pan, group="c", legend=True)
-    p.add("p5_points_chart", (px, y + 46, x + w - 12 - px, h - 50),
-          by_team("clusteredBarChart", (("Air change points", "Change, in points", MARINE),), end=22),
-          on=pan, group="c", categories=6, max_value=POINTS_MAX)
 
     # ---- uses taken up beyond the first team
-    x, y, w, h = TAKEN_PANEL
-    pan, inner = "p5_taken_panel", w - 24
-    p.add(pan, TAKEN_PANEL, panel(), z=2000)
-    p.add("p5_taken_title", (x + 12, y + 6, inner, 20), heading("Uses taken up beyond the first team"),
-          on=pan, group="t")
-    p.add("p5_taken_sub", (x + 12, y + 26, inner, 18),
-          subtitle("Prompts with runs from two or more teams, Week 1 to Week 24, and the team that took each up"),
-          on=pan, group="t")
+    pan, x, y, w, h, inner = panel_top(p, "taken", TAKEN_PANEL, "Uses taken up beyond the first team",
+                                       "Prompts run by two or more teams")
     p.add("p5_taken_figure", (x + 12, y + 54, FIGURE_W, 62), value_card("Uses taken up beyond the first team", 36),
           on=pan, group="b", same="figure")
     p.add("p5_taken_count", (x + 12, y + 116, FIGURE_W, 24), value_card("Uses taken up count", 10, colour(INK_SOFT)),
-          on=pan, group="b", same="count")
+          on=pan, group="b", same="count", longest_value="4 of 23 library items")
     tx = x + 12 + FIGURE_W + 16
     cols = [(proj_column("dim_library_item", "item_id", display="ID"), TAKEN_COLS[0]),
             (proj_column("dim_library_item", "item_name", display="Prompt"), TAKEN_COLS[1]),
@@ -149,8 +138,7 @@ def build() -> Page:
 
     p.answers = {
         16: [("p5_taken_table", "item_id"), ("p5_taken_table", "Second team"), ("p5_taken_table", "Second team from")],
-        17: [("p5_air_chart", "Share of people in the air latest"), ("p5_air_chart", "Share of people in the air baseline"),
-             ("p5_points_chart", "Air change points")],
+        17: [("p5_air_chart", "Share in the air latest with change"), ("p5_air_chart", "Share of people in the air baseline")],
         18: [("p5_impact_chart", "Impact lose time share")],
     }
     return p
@@ -158,4 +146,3 @@ def build() -> Page:
 
 if __name__ == "__main__":
     build().write()
-    set_page_order(ORDER)

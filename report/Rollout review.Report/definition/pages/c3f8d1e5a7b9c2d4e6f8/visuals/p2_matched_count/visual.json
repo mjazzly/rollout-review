@@ -3,11 +3,11 @@
   "name": "p2_matched_count",
   "position": {
     "x": 28,
-    "y": 580,
+    "y": 532,
     "z": 3000,
     "height": 24,
     "width": 388,
-    "tabOrder": 1600
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",

@@ -3,16 +3,36 @@
   "name": "p3_recurring_grid",
   "position": {
     "x": 224,
-    "y": 430,
+    "y": 432,
     "z": 3000,
     "height": 250,
-    "width": 594,
-    "tabOrder": 2000
+    "width": 586,
+    "tabOrder": 2200
   },
   "visual": {
     "visualType": "pivotTable",
     "query": {
       "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_category"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "dim_category.category",
+              "nativeQueryRef": "Use",
+              "displayName": "Use",
+              "active": true
+            }
+          ]
+        },
         "Columns": {
           "projections": [
             {
@@ -29,26 +49,6 @@
               "queryRef": "dim_month.month_label",
               "nativeQueryRef": "month_label",
               "active": true
-            }
-          ]
-        },
-        "Rows": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_category"
-                    }
-                  },
-                  "Property": "category"
-                }
-              },
-              "queryRef": "dim_category.category",
-              "nativeQueryRef": "Use",
-              "active": true,
-              "displayName": "Use"
             }
           ]
         },
@@ -170,11 +170,6 @@
           "selector": {
             "metadata": "_Measures.Recurring questions in grid"
           }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {}
         }
       ]
     },

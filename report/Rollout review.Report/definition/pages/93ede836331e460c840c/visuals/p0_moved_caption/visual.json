@@ -3,11 +3,11 @@
   "name": "p0_moved_caption",
   "position": {
     "x": 972,
-    "y": 516,
+    "y": 490,
     "z": 3000,
     "height": 34,
     "width": 280,
-    "tabOrder": 4600
+    "tabOrder": 4500
   },
   "visual": {
     "visualType": "textbox",

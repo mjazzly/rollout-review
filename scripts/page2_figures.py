@@ -54,3 +54,10 @@ for team, b in c.execute("""
       GROUP BY 1, 2)
     SELECT team, avg(s) FROM share GROUP BY 1 ORDER BY 1""").fetchall():
     print(f"  {team}: {100 * b:.1f}%")
+
+print("\nMonth 1 and Month 6, matched to a tested prompt / not matched (round 7 split)")
+for m, cat, n, matched in c.execute("""
+    SELECT w.checkin_month, q.category, count(*), count(*) FILTER (WHERE action_taken = 'pointed to library')
+    FROM fact_question q JOIN dim_week w ON w.week_start = date_trunc('week', q.question_date)
+    WHERE w.checkin_month IN (1, 6) GROUP BY 1, 2 ORDER BY 1, 3 DESC, 2""").fetchall():
+    print(f"  Month {m}, {cat}: {matched} matched, {n - matched} not matched ({n})")

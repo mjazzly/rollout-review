@@ -3,11 +3,11 @@
   "name": "p2_key_count",
   "position": {
     "x": 456,
-    "y": 580,
+    "y": 532,
     "z": 3000,
     "height": 24,
     "width": 388,
-    "tabOrder": 2100
+    "tabOrder": 2500
   },
   "visual": {
     "visualType": "cardVisual",

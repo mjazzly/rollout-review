@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_largest_table",
   "position": {
-    "x": 686,
-    "y": 438,
+    "x": 712,
+    "y": 386,
     "z": 3000,
-    "height": 274,
-    "width": 566,
-    "tabOrder": 2600
+    "height": 304,
+    "width": 540,
+    "tabOrder": 2500
   },
   "visual": {
     "visualType": "tableEx",
@@ -78,7 +78,8 @@
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "objects": {
@@ -101,7 +102,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "90D"
+                  "Value": "80D"
                 }
               }
             }
@@ -115,7 +116,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "136D"
+                  "Value": "120D"
                 }
               }
             }
@@ -137,11 +138,6 @@
           "selector": {
             "metadata": "_Measures.Largest group lever"
           }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {}
         }
       ]
     },

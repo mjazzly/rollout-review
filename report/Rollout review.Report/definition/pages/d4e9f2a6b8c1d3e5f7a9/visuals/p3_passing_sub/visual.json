@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_passing_sub",
   "position": {
-    "x": 858,
-    "y": 402,
+    "x": 850,
+    "y": 384,
     "z": 3000,
     "height": 18,
-    "width": 394,
-    "tabOrder": 2300
+    "width": 402,
+    "tabOrder": 2500
   },
   "visual": {
     "visualType": "textbox",

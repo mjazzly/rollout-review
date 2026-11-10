@@ -3,11 +3,11 @@
   "name": "p4_cost_title",
   "position": {
     "x": 28,
-    "y": 320,
+    "y": 412,
     "z": 3000,
     "height": 20,
-    "width": 1224,
-    "tabOrder": 1600
+    "width": 372,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Cost per use",
+                    "value": "Cost of the passing prompts",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

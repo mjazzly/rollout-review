@@ -3,11 +3,11 @@
   "name": "p0_split_base_panel_title",
   "position": {
     "x": 28,
-    "y": 484,
+    "y": 458,
     "z": 3000,
     "height": 22,
     "width": 432,
-    "tabOrder": 3800
+    "tabOrder": 3700
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Stage by source placement, at each team's baseline month",
+                    "value": "Stage by team, at its baseline month",
                     "textStyle": {
                       "fontSize": "10pt",
                       "fontWeight": "bold",

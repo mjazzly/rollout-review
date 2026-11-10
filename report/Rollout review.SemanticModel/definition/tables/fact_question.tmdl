@@ -97,6 +97,13 @@ table fact_question
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	/// Helper, not in measures.md. Whether the question was pointed to the library, as "Matched to a tested prompt" or "Not matched", for the page 2 ranking.
+	column match_label =
+			IF ( fact_question[action_taken] = "pointed to library", "Matched to a tested prompt", "Not matched" )
+		dataType: string
+		isDataTypeInferred
+		summarizeBy: none
+
 	partition fact_question = m
 		mode: import
 		source =
@@ -115,4 +122,3 @@ table fact_question
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

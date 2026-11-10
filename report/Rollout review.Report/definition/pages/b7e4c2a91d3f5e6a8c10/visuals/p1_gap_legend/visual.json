@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p1_gap_legend",
   "position": {
-    "x": 28,
-    "y": 692,
+    "x": 256,
+    "y": 384,
     "z": 3000,
-    "height": 20,
-    "width": 312,
-    "tabOrder": 1600
+    "height": 18,
+    "width": 170,
+    "tabOrder": 1400
   },
   "visual": {
     "visualType": "textbox",

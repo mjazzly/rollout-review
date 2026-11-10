@@ -40,7 +40,7 @@ dim_team[team] & " · Month " & dim_team[baseline_month]
 // format: text
 // description: Helper, not in measures.md. Library items with runs from two or more teams, and all library items, as "4 of 23 library items".
 Uses taken up count =
-FORMAT ( [Uses taken up beyond the first team], "#,0" ) & " of " & FORMAT ( COUNTROWS ( ALL ( dim_library_item ) ), "#,0" ) & " library items"
+FORMAT ( [Uses taken up beyond the first team], "#,0" ) & " of " & FORMAT ( COUNTROWS ( ALLNOBLANKROW ( dim_library_item ) ), "#,0" ) & " library items"
 
 // Second team from
 // Create as: measure in _Measures. Page 5 table, beside Second team.
@@ -50,6 +50,15 @@ Second team from =
 VAR w = [Week the second team started]
 RETURN
     IF ( NOT ISBLANK ( w ), "Week " & w )
+
+
+// Share in the air latest with change
+// Create as: measure in _Measures. Page 5: the Month 6 bar, labelled with its share and the change in points.
+// format: 0.0%
+// format expression: """" & FORMAT ( [Share of people in the air latest], "0.0%" ) & " (" & FORMAT ( [Air change points], "+0.0;-0.0;0.0" ) & ")" & """"
+// description: Helper, not in measures.md. Share of people in the air latest, labelled with Air change points beside it, as "60.3% (+13.3)".
+Share in the air latest with change =
+[Share of people in the air latest]
 
 
 // =====================================================================
@@ -966,6 +975,14 @@ Other questions =
 CALCULATE ( COUNTROWS ( fact_question ), fact_question[category] <> "Rules and allowed use" ) + 0
 
 
+// match_label
+// Create as: calculated column on fact_question
+// format: text
+// description: Helper, not in measures.md. Whether the question was pointed to the library, as "Matched to a tested prompt" or "Not matched", for the page 2 ranking.
+match_label =
+IF ( fact_question[action_taken] = "pointed to library", "Matched to a tested prompt", "Not matched" )
+
+
 // ---------------------------------------------------------------------
 // PAGE 3: EXECUTION. Does it hold up in everyday use?
 // ---------------------------------------------------------------------
@@ -1097,7 +1114,7 @@ RETURN
 // Recurring covered count
 // Create as: measure in _Measures. Page 3, under Recurring questions covered by a tested prompt.
 // format: text
-// description: Helper, not in measures.md. Recurring questions covered by a tested prompt, and all recurring questions, as "127 of 142 recurring questions".
+// description: Helper, not in measures.md. Recurring questions covered by a tested prompt, and all recurring questions, as "127 of 142 questions".
 Recurring covered count =
 VAR repeatQuestions = FILTER ( fact_question, fact_question[repeat_flag] )
 VAR covered =
@@ -1116,7 +1133,7 @@ VAR covered =
             )
     )
 RETURN
-    FORMAT ( COUNTROWS ( covered ) + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( repeatQuestions ) + 0, "#,0" ) & " recurring questions"
+    FORMAT ( COUNTROWS ( covered ) + 0, "#,0" ) & " of " & FORMAT ( COUNTROWS ( repeatQuestions ) + 0, "#,0" ) & " questions"
 
 // Recurring shade
 // Create as: measure in _Measures. The cell background of the page 3 grid (use by month).
@@ -1312,6 +1329,44 @@ VAR m = SELECTEDVALUE ( dim_library_item[status_month] )
 VAR intoItem = SELECTEDVALUE ( dim_library_item[merged_into_item_id] )
 RETURN
     SWITCH ( st, "retired", "Retired in Month " & m, "merged", "Merged into " & intoItem & " in Month " & m )
+
+
+// smaller_model_result
+// Create as: calculated column on dim_library_item
+// format: text
+// description: Helper, not in measures.md. Whether the item's latest smaller-tier run is passing, as "Passes" or "Does not pass", for the page 4 colours.
+smaller_model_result =
+VAR itemId = dim_library_item[item_id]
+VAR latestRun =
+    TOPN (
+        1,
+        FILTER ( fact_test_run, fact_test_run[item_id] = itemId && fact_test_run[model_tier] = "smaller" ),
+        fact_test_run[run_date], DESC,
+        fact_test_run[run_id], DESC
+    )
+RETURN
+    IF ( MAXX ( latestRun, IF ( fact_test_run[passing], 1, 0 ) ) = 1, "Passes", "Does not pass" )
+
+// Smaller model cases share
+// Create as: measure in _Measures. Page 4 main chart: one column per live prompt.
+// format: 0.0%
+// description: Helper, not in measures.md. For a library item live at the check-in week, cases matched over cases on its latest smaller-tier run; blank for items not live.
+Smaller model cases share =
+VAR checkinWeek = [Check-in week]
+VAR itemId = SELECTEDVALUE ( dim_library_item[item_id] )
+VAR published = SELECTEDVALUE ( dim_library_item[published_week] )
+VAR changed = SELECTEDVALUE ( dim_library_item[status_week] )
+VAR isLive = published <= checkinWeek && ( ISBLANK ( changed ) || changed > checkinWeek )
+VAR latestRun =
+    TOPN (
+        1,
+        FILTER ( ALL ( fact_test_run ), fact_test_run[item_id] = itemId && fact_test_run[model_tier] = "smaller" ),
+        fact_test_run[run_date], DESC,
+        fact_test_run[run_id], DESC
+    )
+RETURN
+    IF ( HASONEVALUE ( dim_library_item[item_id] ) && isLive,
+        DIVIDE ( MAXX ( latestRun, fact_test_run[cases_matched] ), MAXX ( latestRun, fact_test_run[cases_total] ) ) )
 
 
 // ---------------------------------------------------------------------

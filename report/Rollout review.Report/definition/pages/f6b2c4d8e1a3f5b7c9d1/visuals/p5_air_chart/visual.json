@@ -5,8 +5,8 @@
     "x": 660,
     "y": 148,
     "z": 3000,
-    "height": 310,
-    "width": 368,
+    "height": 318,
+    "width": 592,
     "tabOrder": 1300
   },
   "visual": {
@@ -46,8 +46,8 @@
                 }
               },
               "queryRef": "_Measures.Share of people in the air baseline",
-              "nativeQueryRef": "Baseline",
-              "displayName": "Baseline"
+              "nativeQueryRef": "Baseline month",
+              "displayName": "Baseline month"
             },
             {
               "field": {
@@ -57,10 +57,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Share of people in the air latest"
+                  "Property": "Share in the air latest with change"
                 }
               },
-              "queryRef": "_Measures.Share of people in the air latest",
+              "queryRef": "_Measures.Share in the air latest with change",
               "nativeQueryRef": "Month 6",
               "displayName": "Month 6"
             }
@@ -82,7 +82,8 @@
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "objects": {
@@ -120,7 +121,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Share of people in the air latest"
+            "metadata": "_Measures.Share in the air latest with change"
           }
         }
       ],

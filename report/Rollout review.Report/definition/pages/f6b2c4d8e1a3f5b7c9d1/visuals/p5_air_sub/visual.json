@@ -6,7 +6,7 @@
     "y": 128,
     "z": 3000,
     "height": 18,
-    "width": 368,
+    "width": 402,
     "tabOrder": 1100
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Each team at its baseline month (by its name) and at Month 6",
+                    "value": "Baseline month by each team, then Month 6",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

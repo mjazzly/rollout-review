@@ -3,11 +3,11 @@
   "name": "p3_recurring_title",
   "position": {
     "x": 28,
-    "y": 382,
+    "y": 364,
     "z": 3000,
     "height": 20,
-    "width": 790,
-    "tabOrder": 1600
+    "width": 782,
+    "tabOrder": 1700
   },
   "visual": {
     "visualType": "textbox",

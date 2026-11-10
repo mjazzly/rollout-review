@@ -4,37 +4,38 @@
     python3 scripts/page3_pbir.py
 
 Brief section 6, page 3, "Does it hold up in everyday use?":
-- first use within two weeks of training, with its count;
-- repeat use within 30 days, by month (the page 0 Execution figure is Month 6);
-- recurring questions covered by a tested prompt, with its count, beside a grid of
-  recurring questions by use and month (where coverage came in shows as the grid emptying);
-- tested prompts passing their cases, with its count, and the live prompts not passing
-  at their latest run, by name (text, so a table).
-A team slicer (all teams to start) lets CHECK.md question 12 (Operations) be read on the
-page. Every visual on the page is replaced; the checks in scripts/pbir.py run first.
+- first use within two weeks of training: the figure, its count, and a bar per team;
+- repeat use within 30 days: one figure (Month 6) and a small line by month (round 7);
+- recurring questions covered by a tested prompt: the figure, its count, and a grid of
+  recurring questions in each use by month;
+- tested prompts passing their cases: the figure, its count, and the live prompts not
+  passing at their latest run, by name (text, so a table).
+A team slicer (all teams to start) lets CHECK.md question 12 (Operations) be read on the page.
+Legal's 0.0% first use is real: 19 Legal attendees, none ran the item they were shown.
 """
 from __future__ import annotations
 
 from pbir import (
     INK, INK_SOFT, MARINE, MATRIX_COLUMN_PAD, OFF, NO_FRAME, Page, colour, column, filter_in,
-    header, lit, measure_colour, panel, proj_column, proj_measure, pt, set_page_order, table_height,
-    table_width, text, textbox, value_card,
+    header, lit, measure_colour, panel, proj_column, proj_measure, pt, slim_slicer,
+    table_height, table_width, textbox, value_card,
+    BODY_END, CONTROL_H, CONTROL_Y, HEADER_BODY_Y,
 )
 
 PAGE = "d4e9f2a6b8c1d3e5f7a9"
-ORDER = ["93ede836331e460c840c", "b7e4c2a91d3f5e6a8c10", "c3f8d1e5a7b9c2d4e6f8", PAGE]
 
-TEAM = (1148, 40, 116, 58)          # ROW_GAP below the tab bar and above the panels
-ROW1_Y, ROW1_H = 102, 270
-ROW2_Y, ROW2_H = 376, 340
-FIRST_PANEL = (16, ROW1_Y, 520, ROW1_H)        # the figure, and beside it a bar per team
+TEAM = (1144, CONTROL_Y, 120, CONTROL_H)
+ROW1_Y, ROW1_H = HEADER_BODY_Y, 252
+ROW2_Y = ROW1_Y + ROW1_H + 4
+ROW2_H = BODY_END - ROW2_Y
+FIRST_PANEL = (16, ROW1_Y, 520, ROW1_H)
 REPEAT_PANEL = (552, ROW1_Y, 712, ROW1_H)
-RECURRING_PANEL = (16, ROW2_Y, 814, ROW2_H)
-PASSING_PANEL = (846, ROW2_Y, 418, ROW2_H)
+RECURRING_PANEL = (16, ROW2_Y, 806, ROW2_H)
+PASSING_PANEL = (838, ROW2_Y, 426, ROW2_H)
 FIGURE_W = 180
 USE_COL, MONTH_COL = 150, 64        # grid column widths
 NOT_PASSING_ROWS = 4                # live prompts not passing at Month 6 (scripts/page3_figures.py)
-ITEM_COL, CASES_COL = 250, 100
+ITEM_COL, CASES_COL = 250, 90
 FIRST_USE_MAX = 0.585               # the highest team: Operations, 58.5% (scripts/page3_figures.py)
 
 
@@ -44,40 +45,6 @@ def heading(s: str) -> dict:
 
 def subtitle(s: str) -> dict:
     return textbox([[(s, pt(9, color=INK_SOFT))]])
-
-
-def team_slicer() -> dict:
-    # as Branch review's branch slicer: a dropdown, one team or all of them
-    return {
-        "visualType": "slicer",
-        "query": {"queryState": {"Values": {"projections": [proj_column("dim_team", "team", active=True)]}}},
-        "objects": {
-            "data": [{"properties": {"mode": text("Dropdown")}}],
-            "selection": [{"properties": {"strictSingleSelect": lit("false"), "selectAllCheckboxEnabled": lit("true"),
-                                          "singleSelect": lit("true")}}],
-            "header": [{"properties": {"text": text("Team")}}],
-        },
-        "drillFilterOtherVisuals": True,
-    }
-
-
-def repeat_chart() -> dict:
-    return {
-        "visualType": "clusteredColumnChart",
-        "query": {"queryState": {
-            "Category": {"projections": [proj_column("dim_month", "month_label", active=True)]},
-            "Y": {"projections": [proj_measure("Execution tile", "Repeat use within 30 days")]}}},
-        "objects": {
-            "dataPoint": [{"properties": {"fill": colour(MARINE)}, "selector": {"metadata": "_Measures.Execution tile"}}],
-            "labels": [{"properties": {"show": lit("true")}}],
-            "legend": [{"properties": OFF}],
-            "categoryAxis": [{"properties": {"show": lit("true")}}],
-            "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit("1D"),
-                                          "gridlineShow": lit("false")}}],
-        },
-        "visualContainerObjects": NO_FRAME,
-        "drillFilterOtherVisuals": True,
-    }
 
 
 def team_bars(measure_name: str) -> dict:
@@ -95,6 +62,26 @@ def team_bars(measure_name: str) -> dict:
             "categoryAxis": [{"properties": {"show": lit("true")}}],
             "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit("1D"),
                                           "gridlineShow": lit("false")}}],
+        },
+        "visualContainerObjects": NO_FRAME,
+        "drillFilterOtherVisuals": True,
+    }
+
+
+def repeat_line() -> dict:
+    return {
+        "visualType": "lineChart",
+        "query": {"queryState": {
+            "Category": {"projections": [proj_column("dim_month", "month_label", active=True)]},
+            "Y": {"projections": [proj_measure("Execution tile", "Repeat use within 30 days")]}}},
+        "objects": {
+            "categoryAxis": [{"properties": {"show": lit("true")}}],
+            "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit("1D"),
+                                          "gridlineShow": lit("false")}}],
+            "legend": [{"properties": OFF}],
+            "labels": [{"properties": {"show": lit("true")}}],
+            "lineStyles": [{"properties": {"strokeWidth": lit("2D"), "showMarker": lit("true"),
+                                           "markerSize": lit("3D")}}],
         },
         "visualContainerObjects": NO_FRAME,
         "drillFilterOtherVisuals": True,
@@ -125,7 +112,7 @@ def recurring_grid() -> dict:
 
 
 def not_passing_table() -> dict:
-    cols = [(proj_column("dim_library_item", "item_name", display="Prompt"), ITEM_COL),
+    cols = [(proj_column("dim_library_item", "item_name", display="Not passing at the latest run"), ITEM_COL),
             (proj_measure("Cases matched when not passing", "Cases matched"), CASES_COL)]
     return {
         "visualType": "tableEx",
@@ -140,75 +127,64 @@ def not_passing_table() -> dict:
     }
 
 
-def figure_with_count(p: Page, key: str, pan: str, x: int, y: int, w: int, figure: str, count: str,
-                      group: str = "b") -> None:
-    p.add(f"p3_{key}_figure", (x, y, w, 62), value_card(figure, 36), on=pan, group=group, same="figure")
-    p.add(f"p3_{key}_count", (x, y + 62, w, 24), value_card(count, 10, colour(INK_SOFT)),
-          on=pan, group=group, same="count")
+def panel_top(p: Page, key: str, box, title: str, sub: str, row: str):
+    x, y, w, h = box
+    pan = f"p3_{key}_panel"
+    p.add(pan, box, panel(), z=2000, row=row)
+    p.add(f"p3_{key}_title", (x + 12, y + 6, w - 24, 20), heading(title), on=pan, group="t")
+    p.add(f"p3_{key}_sub", (x + 12, y + 26, w - 24, 18), subtitle(sub), on=pan, group="t", kind="subtitle")
+    return pan, x, y, w, h, w - 24
+
+
+def figure_with_count(p: Page, key: str, pan: str, x: int, y: int, figure: str, count: str | None,
+                      longest: str = "") -> None:
+    p.add(f"p3_{key}_figure", (x, y, FIGURE_W, 62), value_card(figure, 36), on=pan, group="b", same="figure")
+    if count:
+        p.add(f"p3_{key}_count", (x, y + 62, FIGURE_W, 24), value_card(count, 10, colour(INK_SOFT)),
+              on=pan, group="b", same="count", longest_value=longest)
 
 
 def build() -> Page:
     p = Page(PAGE, "Execution", number=3)
-    header(p, "p3", "Execution", "Read from the usage dashboards, the question log and the run log",
-           "Week 1 to Week 24", question="Does it hold up in everyday use?", right=TEAM[0] - 16)
-    p.add("p3_team", TEAM, team_slicer(), same="slicer")
+    header(p, "p3", "Execution", "Does it hold up in everyday use?",
+           "Read from the usage dashboards, the question log and the run log", "Week 1 to Week 24")
+    p.add("p3_team", TEAM, slim_slicer("dim_team", "team", None, single=True, strict=False))
 
-    # ---- first use within two weeks of training
-    x, y, w, h = FIRST_PANEL
-    pan, inner = "p3_first_panel", w - 24
-    p.add(pan, FIRST_PANEL, panel(), z=2000, row="top")
-    p.add("p3_first_title", (x + 12, y + 6, inner, 20), heading("First use within two weeks of training"),
-          on=pan, group="t")
-    p.add("p3_first_sub", (x + 12, y + 26, inner, 18), subtitle("Every session, Week 1 to Week 24 · follows the team"),
-          on=pan, group="t")
-    figure_with_count(p, "first", pan, x + 12, y + 54, FIGURE_W, "First use within two weeks of training",
-                      "First use count")
+    # ---- first use: the figure and its count, a bar per team beside them
+    pan, x, y, w, h, inner = panel_top(p, "first", FIRST_PANEL, "First use within two weeks of training",
+                                       "Training sessions, Week 1 to Week 24", "top")
+    figure_with_count(p, "first", pan, x + 12, y + 54, "First use within two weeks of training",
+                      "First use count", "174 of 391 attendees")
     bx = x + 12 + FIGURE_W + 16
-    p.add("p3_first_by_team", (bx, y + 46, x + w - 12 - bx, 202), team_bars("First use within two weeks of training"),
+    p.add("p3_first_by_team", (bx, y + 46, x + w - 12 - bx, h - 50), team_bars("First use within two weeks of training"),
           on=pan, group="b", categories=6, max_value=FIRST_USE_MAX)
 
-    # ---- repeat use within 30 days, by month
-    x, y, w, h = REPEAT_PANEL
-    pan, inner = "p3_repeat_panel", w - 24
-    p.add(pan, REPEAT_PANEL, panel(), z=2000, row="top")
-    p.add("p3_repeat_title", (x + 12, y + 6, inner, 20), heading("Repeat use within 30 days, by month"),
-          on=pan, group="t")
-    p.add("p3_repeat_sub", (x + 12, y + 26, inner, 18), subtitle(
-        "People active again within 30 days of their first active week, read at each check-in · follows the team"),
-        on=pan, group="t")
-    p.add("p3_repeat_chart", (x + 12, y + 46, inner, h - 50), repeat_chart(), on=pan, group="c", categories=5,
-          extra={"filterConfig": {"filters": [
-              filter_in("dim_month", "month_label", ["Month 1"], "notMonth1", negate=True)]}})
+    # ---- repeat use: the Month 6 figure, and a small line by month beside it
+    pan, x, y, w, h, inner = panel_top(p, "repeat", REPEAT_PANEL, "Repeat use within 30 days",
+                                       "Read at each check-in", "top")
+    figure_with_count(p, "repeat", pan, x + 12, y + 54, "Repeat use within 30 days", None)
+    lx = x + 12 + FIGURE_W + 16
+    p.add("p3_repeat_line", (lx, y + 46, x + w - 12 - lx, h - 50), repeat_line(), on=pan, group="b",
+          extra={"filterConfig": {"filters": [filter_in("dim_month", "month_label", ["Month 1"], "notMonth1", negate=True)]}})
 
-    # ---- recurring questions covered, beside the grid of recurring questions
-    x, y, w, h = RECURRING_PANEL
-    pan, inner = "p3_recurring_panel", w - 24
-    p.add(pan, RECURRING_PANEL, panel(), z=2000, row="bottom")
-    p.add("p3_recurring_title", (x + 12, y + 6, inner, 20), heading("Recurring questions covered by a tested prompt"),
-          on=pan, group="t")
-    p.add("p3_recurring_sub", (x + 12, y + 26, inner, 18), subtitle(
-        "Week 1 to Week 24 · the grid: recurring questions in each use, by month, darker for more · follows the team"),
-        on=pan, group="t")
-    figure_with_count(p, "recurring", pan, x + 12, y + 54, FIGURE_W, "Recurring questions covered by a tested prompt",
-                      "Recurring covered count")
+    # ---- recurring questions covered: the figure and its count, the grid beside them
+    pan, x, y, w, h, inner = panel_top(p, "recurring", RECURRING_PANEL, "Recurring questions covered by a tested prompt",
+                                       "Week 1 to Week 24", "bottom")
+    figure_with_count(p, "recurring", pan, x + 12, y + 54, "Recurring questions covered by a tested prompt",
+                      "Recurring covered count", "127 of 142 questions")
     gx = x + 12 + FIGURE_W + 16
-    p.add("p3_recurring_grid", (gx, y + 54, x + w - 12 - gx, 250), recurring_grid(), on=pan, group="b",
+    p.add("p3_recurring_grid_name", (gx, y + 54, x + w - 12 - gx, 20),
+          heading("Recurring questions in each use, by month"), on=pan, group="b")
+    p.add("p3_recurring_grid", (gx, y + 74, x + w - 12 - gx, 250), recurring_grid(), on=pan, group="b",
           need_w=table_width([USE_COL] + [MONTH_COL] * 6, MATRIX_COLUMN_PAD), need_h=table_height([1] * 7))
 
-    # ---- tested prompts passing, and the ones that are not
-    x, y, w, h = PASSING_PANEL
-    pan, inner = "p3_passing_panel", w - 24
-    p.add(pan, PASSING_PANEL, panel(), z=2000, row="bottom")
-    p.add("p3_passing_title", (x + 12, y + 6, inner, 20), heading("Tested prompts passing their cases"),
-          on=pan, group="t")
-    p.add("p3_passing_sub", (x + 12, y + 26, inner, 18), subtitle("Live prompts at Week 24, latest standard run"),
-          on=pan, group="t")
-    figure_with_count(p, "passing", pan, x + 12, y + 54, FIGURE_W, "Tested prompts passing their cases",
-                      "Passing count")
-    p.add("p3_not_passing_caption", (x + 12, y + 150, inner, 18), subtitle("Not passing at their latest run"),
-          on=pan, group="c")
+    # ---- tested prompts passing: the figure and its count, the ones not passing under them
+    pan, x, y, w, h, inner = panel_top(p, "passing", PASSING_PANEL, "Tested prompts passing their cases",
+                                       "Live prompts at Week 24, latest standard run", "bottom")
+    figure_with_count(p, "passing", pan, x + 12, y + 54, "Tested prompts passing their cases", "Passing count",
+                      "17 of 21 live prompts")
     need = table_height([1] * NOT_PASSING_ROWS)
-    p.add("p3_not_passing", (x + 12, y + 168, inner, need), not_passing_table(), on=pan, group="c",
+    p.add("p3_not_passing", (x + 12, y + 142, inner, need), not_passing_table(), on=pan, group="c",
           need_w=table_width([ITEM_COL, CASES_COL]), need_h=need)
 
     p.answers = {
@@ -222,4 +198,3 @@ def build() -> Page:
 
 if __name__ == "__main__":
     build().write()
-    set_page_order(ORDER)

@@ -3,11 +3,11 @@
   "name": "p2_baseline_sub",
   "position": {
     "x": 884,
-    "y": 490,
+    "y": 442,
     "z": 3000,
     "height": 18,
     "width": 368,
-    "tabOrder": 2400
+    "tabOrder": 2800
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Weekly active share, each team's first four weeks with seats",
+                    "value": "Weekly active share, first four weeks with seats",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p3_not_passing",
   "position": {
-    "x": 858,
-    "y": 544,
+    "x": 850,
+    "y": 500,
     "z": 3000,
     "height": 166,
-    "width": 394,
-    "tabOrder": 2700
+    "width": 402,
+    "tabOrder": 2800
   },
   "visual": {
     "visualType": "tableEx",
@@ -27,8 +27,8 @@
                 }
               },
               "queryRef": "dim_library_item.item_name",
-              "nativeQueryRef": "Prompt",
-              "displayName": "Prompt"
+              "nativeQueryRef": "Not passing at the latest run",
+              "displayName": "Not passing at the latest run"
             },
             {
               "field": {
@@ -83,7 +83,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "100D"
+                  "Value": "90D"
                 }
               }
             }
@@ -91,11 +91,6 @@
           "selector": {
             "metadata": "_Measures.Cases matched when not passing"
           }
-        }
-      ],
-      "columnHeaders": [
-        {
-          "properties": {}
         }
       ]
     },

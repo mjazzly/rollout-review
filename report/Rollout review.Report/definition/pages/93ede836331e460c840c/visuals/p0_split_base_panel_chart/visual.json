@@ -3,11 +3,11 @@
   "name": "p0_split_base_panel_chart",
   "position": {
     "x": 28,
-    "y": 508,
+    "y": 482,
     "z": 3000,
-    "height": 204,
+    "height": 208,
     "width": 432,
-    "tabOrder": 3900
+    "tabOrder": 3800
   },
   "visual": {
     "visualType": "hundredPercentStackedBarChart",
@@ -84,7 +84,8 @@
             },
             "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "objects": {
@@ -315,51 +316,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "0a0d6620ac6374eb4873",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dim_team"
-              }
-            },
-            "Property": "team"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "9d730479cbb6b5804ab2",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dim_checkpoint_source"
-              }
-            },
-            "Property": "stage"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "a49a1b8f42eca88108e9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Stage split baseline"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "p5_air_legend",
   "position": {
-    "x": 660,
-    "y": 458,
+    "x": 1062,
+    "y": 128,
     "z": 3000,
-    "height": 20,
-    "width": 368,
-    "tabOrder": 1400
+    "height": 18,
+    "width": 190,
+    "tabOrder": 1200
   },
   "visual": {
     "visualType": "textbox",
@@ -26,7 +26,7 @@
                     }
                   },
                   {
-                    "value": " Baseline  ",
+                    "value": " Baseline month  ",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#4F6166"
