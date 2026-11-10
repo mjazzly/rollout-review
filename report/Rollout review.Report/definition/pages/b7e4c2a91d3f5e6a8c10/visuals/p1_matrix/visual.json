@@ -13,26 +13,6 @@
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Rows": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_team"
-                    }
-                  },
-                  "Property": "team"
-                }
-              },
-              "queryRef": "dim_team.team",
-              "nativeQueryRef": "Team",
-              "displayName": "Team",
-              "active": true
-            }
-          ]
-        },
         "Columns": {
           "projections": [
             {
@@ -49,6 +29,26 @@
               "queryRef": "dim_checkpoint.checkpoint",
               "nativeQueryRef": "checkpoint",
               "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_team"
+                    }
+                  },
+                  "Property": "team"
+                }
+              },
+              "queryRef": "dim_team.team",
+              "nativeQueryRef": "Team",
+              "active": true,
+              "displayName": "Team"
             }
           ]
         },
@@ -87,8 +87,7 @@
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "objects": {

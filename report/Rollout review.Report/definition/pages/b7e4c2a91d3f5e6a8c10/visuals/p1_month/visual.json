@@ -90,13 +90,6 @@
                   "Value": "10D"
                 }
               }
-            },
-            "outline": {
-              "expr": {
-                "Literal": {
-                  "Value": "'None'"
-                }
-              }
             }
           }
         }
