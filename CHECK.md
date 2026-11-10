@@ -1,5 +1,7 @@
 # The recorded check: Rollout review (DASH-02)
 
+**Result: 18 of 18 matched.** Every expected answer below was read off the Power BI build and confirmed by Megat on 10 Nov 2026.
+
 > **Change note.** The expected answers to questions 1 and 16 were reworded from calendar dates to week numbers (Week 24, Week 7) before the Power BI build began, so that they read the way every page labels weeks. No calendar date appears on any page. This was not done to make a match. The figures behind them are unchanged.
 
 Eighteen questions, three per page (pages 0 to 5 in section 6 of `DASH-02-DESIGN.md`). `check.py` answers each one straight from `data/*.csv` with DuckDB and prints the question, the SQL and the answer. Each answer is then read off the matching Power BI visual and compared.
@@ -29,7 +31,7 @@ python3 check.py
 | 5 | 1 | In month 6, what is Legal's largest group by source placement, how many people are in it, and what is its lever? | Ticket held, 84 people. Lever: A first task done side by side with someone who already uses AI | Yes. Where people sit, Source, Month 6, largest group: Legal, Ticket held, 84; A first task done side by side with someone who already uses AI |
 | 6 | 1 | How many Operations people moved up between month 3 and month 4, and how many Operations seats arrived? | 87 moved up; 0 seats arrived | Yes. Where people sit, Check-in, Month 4: movement Operations 87 up; 0 seats arrived (all teams) |
 | 7 | 2 | What share of requests were matched to a tested prompt that already exists? | 49.5% (385 of 778 questions) | Yes. Foundation: 49.5%, 385 of 778 questions |
-| 8 | 2 | Which use led the ranking in month 1, and which in month 6? | Month 1: Rules and allowed use, 52 questions; Month 6: Analysis, 23 questions | Pending: read from the next Foundation screenshot (bar totals) |
+| 8 | 2 | Which use led the ranking in month 1, and which in month 6? | Month 1: Rules and allowed use, 52 questions; Month 6: Analysis, 23 questions | Yes. Foundation, ranked bars with their totals: Month 1, Rules and allowed use 52; Month 6, Analysis 23 (10 matched + 13 not) |
 | 9 | 2 | Which team had the lowest usage baseline, and what was it? (Legal storyline) | Legal, 11.9% | Yes. Foundation, usage baseline: Legal 11.9%, the lowest |
 | 10 | 3 | What share of training attendees ran the item they were shown within two weeks of the session? | 44.5% (174 of 391 attendees) | Yes. Execution, all teams: 44.5%, 174 of 391 attendees |
 | 11 | 3 | What share of recurring questions were covered by a tested prompt? | 89.4% (127 of 142 repeat-flagged questions) | Yes. Execution, all teams: 89.4%, 127 of 142 recurring questions |
@@ -41,4 +43,4 @@ python3 check.py
 | 17 | 5 | What share of Consulting is in the air in month 6, against Consulting's baseline month? | 60.3% in month 6 against 47.0% in month 3, the baseline (+13.3 points) | Yes. Scale: Consulting · Month 3 47.0%; Month 6 60.3% (+13.3) |
 | 18 | 5 | In month 6, how many people in each team said that without AI they would lose time every week? | Consulting 162; Technology 90; Finance 86; Operations 73; People 48; Legal 17 | Yes. Scale, impact: Consulting 162, Finance 86, Legal 17, Operations 73, People 48, Technology 90 |
 
-**Match record:** 17 of 18 read so far (question 8 pending), against the Power BI build at commit c2c9709, screenshots of 10 Nov 2026. Awaiting Megat's confirmation.
+**Match record:** 18 of 18, checked against the Power BI build on 10 Nov 2026 (commit 87f7683 for question 8, c2c9709 for the rest), confirmed by Megat.
