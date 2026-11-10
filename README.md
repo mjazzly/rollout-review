@@ -68,3 +68,5 @@ Every measure finds the latest check-in for itself: `Check-in month` is `MAX ( d
 | [measures.md](measures.md) | Every measure and placement rule, worded for the DAX descriptions |
 | [CHECK.md](CHECK.md) | The questions, the expected answers and the match record |
 | [DASH-02-DESIGN.md](DASH-02-DESIGN.md) | The design note |
+| [PUBLISH.md](PUBLISH.md) | The Publish to web link |
+| `get.cmd`, `send.cmd` | The PC's two scripts: bring the project up to date and open it; send a save from Desktop |

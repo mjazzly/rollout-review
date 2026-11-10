@@ -970,6 +970,46 @@ If the totals do not show: select a ranked chart on Foundation, **Format visual*
 1. Double-click **get.cmd**.
 2. Send Foundation. Question 8 is read from it: Month 1, Rules and allowed use, 52; Month 6, Analysis, 23.
 
+## Q. Publish (10 Nov 2026)
+
+The check is 18 of 18, confirmed by Megat. The Checks page is removed from the project (`pages.json` and its folder), so nothing hidden is published.
+
+### Step 59: open the final build
+
+1. Double-click **get.cmd**. It ends with DONE and opens the report.
+2. Check the tabs at the bottom of Desktop: Rollout review, Where people sit, Foundation, Execution, Refinement, Scale, Notes. No Checks tab.
+
+### Step 60: publish to My workspace
+
+1. **Home**, **Publish**. If Desktop asks to save first, choose **Save**.
+2. Sign in if asked, with the Power BI account you publish under.
+3. Pick **My workspace**, **Select**. Wait for **Success!**
+4. Click **Open 'Rollout review.pbip' in Power BI** (the browser opens the report in the Power BI service).
+5. Close Desktop. If it saved in step 1, double-click **send.cmd** and type `Saved for publish`; if it did not, nothing to send.
+
+### Step 61: Publish to web
+
+1. In the browser, on the open report: **File**, **Embed report**, **Publish to web (public)**.
+2. **Create embed code**, then **Publish** on the warning (the data is synthetic; anyone with the link can view it).
+3. Copy the **Link you can send in email** (the link, not the HTML), and paste it to Claude in chat.
+4. If the menu shows no Publish to web, or says to contact your admin, stop and say so: the tenant setting is off, and that is the admin's call.
+
+### Step 62: record the link
+
+Claude writes the link into `PUBLISH.md` (the link only, no date) and pushes. send.cmd sends only `report/`, so the link does not go through it. Then double-click **get.cmd** on the PC whenever you next open the project.
+
+### Step 63: check it in a private window
+
+Open the link in an InPrivate (Edge) or Incognito (Chrome) window, signed in to nothing:
+
+1. It opens on Rollout review with no sign-in prompt.
+2. The tab bar moves between all seven pages; there is no Checks page.
+3. Spot figures: Rollout review 49.5%, 83.6%, 9.5%, +10.1, moved up 98; Where people sit Finance 111 / 76 / 13; Foundation Rules and allowed use 52 in Month 1; Scale Consulting 60.3% (+13.3).
+4. The controls work: Placement Check-in and Source; Month 4 in the dropdown (Operations moves 87 up); Operations on Execution (Summarising 8, 8, then 0); clicking Operations again shows every team.
+5. Nothing is cut, every label shows (Legal's In the air stays unlabelled by decision), and Notes shows without scrollbars.
+
+Send a screenshot of the private window on Rollout review and on one page with a control changed.
+
 ## Next
 
 - All six pages are written. Next: the CHECK.md match from the screenshots (brief section 8), then Publish to web

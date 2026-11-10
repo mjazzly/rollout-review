@@ -1351,7 +1351,10 @@ def used_by_family(page: Page) -> list[str]:
 
 
 def hide_checks_page() -> None:
+    """The Checks page was hidden until the check was confirmed (18 of 18, 10 Nov 2026), then removed."""
     path = PAGES / CHECKS_PAGE / "page.json"
+    if not path.exists():
+        return
     page = json.loads(path.read_text(encoding="utf-8"))
     if page.get("visibility") != "HiddenInViewMode":
         page["visibility"] = "HiddenInViewMode"
