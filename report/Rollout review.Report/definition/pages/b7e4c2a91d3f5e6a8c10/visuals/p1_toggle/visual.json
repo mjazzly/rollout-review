@@ -10,7 +10,7 @@
     "tabOrder": 400
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "advancedSlicerVisual",
     "query": {
       "queryState": {
         "Values": {
@@ -27,8 +27,7 @@
                 }
               },
               "queryRef": "placement_toggle.placement",
-              "nativeQueryRef": "placement",
-              "active": true
+              "nativeQueryRef": "placement"
             }
           ]
         }
@@ -37,15 +36,7 @@
     "objects": {
       "data": [
         {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Basic'"
-                }
-              }
-            }
-          }
+          "properties": {}
         }
       ],
       "selection": [
@@ -76,7 +67,7 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "f",
+                    "Name": "p",
                     "Entity": "placement_toggle",
                     "Type": 0
                   }
@@ -90,7 +81,7 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "f"
+                                  "Source": "p"
                                 }
                               },
                               "Property": "placement"
@@ -101,7 +92,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Source'"
+                                "Value": "'Check-in'"
                               }
                             }
                           ]
@@ -111,31 +102,29 @@
                   }
                 ]
               }
-            },
-            "orientation": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "header": [
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Placement'"
-                }
-              }
             }
           }
         }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "97df13d9200366450310",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "placement_toggle"
+              }
+            },
+            "Property": "placement"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }
