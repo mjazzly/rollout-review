@@ -1010,6 +1010,12 @@ Open the link in an InPrivate (Edge) or Incognito (Chrome) window, signed in to 
 
 Send a screenshot of the private window on Rollout review and on one page with a control changed.
 
+## R. Published (10 Nov 2026)
+
+Published to My workspace and to the web; the link is in `PUBLISH.md`. Megat's private-window check passed: no sign-in, opens on Rollout review (1 of 7), front page figures as expected; Where people sit on Check-in and Month 4 reads Operations 87 up; Execution on Operations reads Summarising 0, 8, 8, 0, 0, 0, and clicking Operations again returns every team (44.5%).
+
+Megat's "Saved for publish" (commit 908b00e) is Desktop's own re-save of the project: final newlines dropped, `isDefaultSort` dropped, keys reordered, lineage tags added, and two settings Desktop treats as defaults dropped (`header.show` false on the button slicers, `items.outline` on the dropdown). The model still holds all 108 measures and 8 calculated columns of measures.dax. send.cmd stalled there because git paged its file list; both scripts now set `GIT_PAGER=cat` and print lists with `--no-pager`.
+
 ## Next
 
 - All six pages are written. Next: the CHECK.md match from the screenshots (brief section 8), then Publish to web

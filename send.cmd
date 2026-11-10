@@ -6,6 +6,9 @@ rem   it worked.
 title Rollout review: send
 set CLOSE_HINT=Save in it, close it, then run send.cmd again.
 setlocal
+rem git never opens its pager here: a long list would wait at a ":" (round 11)
+set GIT_PAGER=cat
+set PAGER=cat
 cd /d "%~dp0"
 
 where git >nul 2>&1
@@ -40,7 +43,7 @@ git diff --cached --quiet
 if not errorlevel 1 goto nothing_new
 
 echo Changed under report\:
-git diff --cached --stat
+git --no-pager diff --cached --stat
 echo.
 set MSG=
 set /p MSG=Type a message for this save, then press Enter: 
@@ -92,7 +95,7 @@ exit /b 0
 
 :outside
 echo STOPPED: there are changes outside report\, which send.cmd does not send:
-git status --short -- . ":!report"
+git --no-pager status --short -- . ":!report"
 echo Nothing was committed or sent. Tell Claude.
 :fail
 echo.

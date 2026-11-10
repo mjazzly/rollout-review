@@ -1,3 +1,3 @@
 # Rollout review: published link
 
-Publish to web link: _not yet published_
+https://app.powerbi.com/view?r=eyJrIjoiMGRmMTZkZWMtYzNlYi00ZWEwLTgyNjAtZDY4OGI2ZDQ5YmJmIiwidCI6ImY0ZjM0NzE0LWYzZTEtNGY1NC04ZTg0LTYxYWQyYWQ3ZWRkNCIsImMiOjEwfQ%3D%3D

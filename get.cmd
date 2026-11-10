@@ -5,6 +5,9 @@ rem   (the Mac's files are the source), pulls, and opens report\Rollout review.p
 title Rollout review: get
 set CLOSE_HINT=Close it, no need to save, then run get.cmd again.
 setlocal
+rem git never opens its pager here: a long list would wait at a ":" (round 11)
+set GIT_PAGER=cat
+set PAGER=cat
 cd /d "%~dp0"
 
 where git >nul 2>&1
@@ -34,7 +37,7 @@ set OTHER=
 for /f "delims=" %%l in ('git status --porcelain') do set OTHER=1
 if defined OTHER (
   echo STOPPED: there are changes outside report\ that get.cmd will not touch:
-  git status --short
+  git --no-pager status --short
   echo Nothing was pulled or opened.
   goto fail
 )
